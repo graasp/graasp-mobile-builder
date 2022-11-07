@@ -1,0 +1,115 @@
+import React, { FC } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useItem } from '../hooks';
+import { useFocusQuery } from '../utils/functions/useQuery';
+import ActivityIndicator from '../components/ActivityIndicator';
+import { Text } from 'react-native-elements';
+import ItemIcon from '../components/ItemIcon';
+import { formatDate } from '../utils/functions/date';
+import { getFileExtra, getS3FileExtra } from '../utils/functions/itemExtra';
+import { ITEM_TYPES } from '../config/constants/constants';
+import { humanFileSize } from '../utils/functions/fileSize';
+import { useMember } from '../hooks/member';
+import { StackScreenProps } from '@react-navigation/stack';
+import { CommonStackParamList } from '../navigation/CommonStackNavigator';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/RootNavigator';
+
+type CommonStackDetailProps = CompositeScreenProps<
+  StackScreenProps<CommonStackParamList, 'CommonStackDetail', 'CommonStackNavigator'>,
+  StackScreenProps<RootStackParamList>
+>;
+
+const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
+  const { itemId } = route.params;
+
+  const { data: item, isLoading: isLoadingItem, isError: isErrorItem, refetch: refetchItem } = useItem(itemId);
+  useFocusQuery(refetchItem);
+
+  if (isLoadingItem || !item?.name) {
+    return <ActivityIndicator />;
+  }
+
+  if (isErrorItem || !item) {
+    throw new Error();
+  }
+
+  const { data: creatorData, isLoading: isLoadingName, refetch: refetchMember } = useMember(item.creator, { enabled: Boolean(item) });
+  useFocusQuery(refetchMember);
+
+  const { createdAt, creator, description, extra, id, name, type, updatedAt } = item;
+  if (isLoadingName || !creatorData?.name) {
+    return <ActivityIndicator />;
+  }
+  let typeContent = null;
+  let sizeContent = null;
+
+  if (type === ITEM_TYPES.S3_FILE) {
+    const extraContent = getS3FileExtra(extra);
+    ({ mimetype: typeContent, size: sizeContent } = extraContent);
+  } else if (type === ITEM_TYPES.FILE) {
+    const extraContent = getFileExtra(extra);
+    ({ mimetype: typeContent, size: sizeContent } = extraContent);
+  } else {
+    typeContent = type;
+  }
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={{
+          flex: 1,
+          width: '100%',
+          height: '100%',
+          paddingHorizontal: 20,
+        }}
+      >
+        <ItemIcon
+          type={type}
+          extra={extra}
+          name={name}
+          size={100}
+          style={styles.icon}
+        />
+        <Text h4 style={styles.value}>
+          {name}
+        </Text>
+        <Text style={styles.header}>Type</Text>
+        <Text style={styles.value}>{typeContent}</Text>
+        {sizeContent != null && (
+          <>
+            <Text style={styles.header}>Size</Text>
+            <Text style={styles.value}>{humanFileSize(sizeContent, true)}</Text>
+          </>
+        )}
+        <Text style={styles.header}>Creator</Text>
+        <Text style={styles.value}>{creatorData.name}</Text>
+        <Text style={styles.header}>Created At</Text>
+        <Text style={styles.value}>{formatDate(createdAt)}</Text>
+        <Text style={styles.header}>Updated At</Text>
+        <Text style={styles.value}>{formatDate(updatedAt)}</Text>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+  },
+  icon: {
+    alignSelf: 'center',
+  },
+  header: {
+    color: '#4e4e4e',
+  },
+  value: {
+    paddingBottom: 20,
+  },
+});
+
+export default DetailsScreen;

@@ -1,0 +1,54 @@
+import React, { FC, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '../context/authContext';
+import { Entypo } from '@expo/vector-icons';
+import { Text } from 'react-native-elements';
+import { RootStackParamList } from '../navigation/RootNavigator';
+import { StackScreenProps } from '@react-navigation/stack';
+
+type EmailSentProps = StackScreenProps<RootStackParamList, 'EmailSent', 'RootStackNavigator'>;
+
+const EmailSentScreen: FC<EmailSentProps> = ({ route }) => {
+  const authContext = useAuth();
+  const signInWithToken = authContext?.signIn
+  const token = route.params?.t;
+
+  useEffect(() => {
+    if (token) {
+      signInWithToken(token);
+    }
+  }, [token]);
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text
+        h2Style={{ fontWeight: '700' }}
+        style={styles.textInput}
+        h2
+      >
+        Graasp
+      </Text>
+      <Entypo style={{ alignSelf: 'center' }} name="mail" size={120} color="white" />
+      <Text
+        style={styles.textInput}
+        h4
+      >
+        Please check your email for your login link.
+      </Text>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#5050d2',
+    justifyContent: 'space-between',
+    padding: 30,
+  },
+  textInput: {
+    color: '#fff',
+  },
+});
+
+export default EmailSentScreen;
