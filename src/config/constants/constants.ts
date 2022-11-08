@@ -156,19 +156,19 @@ export const ACTION_CELL_WIDTH = 230;
 export enum LOGIN_TYPE {
   EMAIL_LINK = 'emailLink',
   EMAIL_PASSWORD = 'emailPassword',
-};
+}
 
 export enum SECURE_STORE_VALUES {
   AUTH_TOKEN = 'userToken',
   REFRESH_TOKEN = 'refreshToken',
   NONCE = 'nonce',
-};
+}
 
 export enum AuthActionKind {
   RESTORE_TOKEN = 'RESTORE_TOKEN',
   SIGN_IN = 'SIGN_IN',
   SIGN_OUT = 'SIGN_OUT',
-};
+}
 
 export const SHARE_OPTIONS = {
   COMPOSE: 1,

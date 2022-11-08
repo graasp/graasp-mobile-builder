@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const EmptyList = () => {
   return (
@@ -7,7 +7,7 @@ const EmptyList = () => {
       <Text>No items found.</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

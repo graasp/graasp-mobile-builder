@@ -1,8 +1,9 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+
 import { defaultScreenOptions } from '../config/constants/navigation';
 import TabNavigator, { TabParamList } from './TabNavigator';
-import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type HomeDrawerParamList = {
   StackHomeStack: NavigatorScreenParams<TabParamList>;
@@ -11,8 +12,7 @@ export type HomeDrawerParamList = {
 const HomeDrawerStack = createStackNavigator<HomeDrawerParamList>();
 
 const HomeDrawerStackNavigator = () => {
-
-  const screenOptions = { headerShown: false, ...defaultScreenOptions};
+  const screenOptions = { headerShown: false, ...defaultScreenOptions };
   return (
     <HomeDrawerStack.Navigator
       id="HomeDrawerStackNavigator"
@@ -30,6 +30,6 @@ const HomeDrawerStackNavigator = () => {
       />
     </HomeDrawerStack.Navigator>
   );
-}
+};
 
 export default HomeDrawerStackNavigator;

@@ -1,8 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen';
 import React from 'react';
-import { defaultScreenOptions } from '../config/constants/navigation';
+
 import DrawerHeader from '../components/common/DrawerHeader';
+import { defaultScreenOptions } from '../config/constants/navigation';
+import HomeScreen from '../screens/HomeScreen';
 
 export type StackParamList = {
   HomeStack: undefined;
@@ -29,6 +30,6 @@ const StackNavigator = () => {
       />
     </Stack.Navigator>
   );
-}
+};
 
 export default StackNavigator;

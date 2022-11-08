@@ -1,35 +1,36 @@
+import { axiosContentInstance } from '../config/axios';
 import { API_HOST } from '../config/constants/constants';
+import { UUID } from '../types';
+import { getParentsIdsFromPath } from '../utils/functions/item';
 import {
   buildGetChildrenRoute,
   buildGetItemRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
 } from './routes';
-import {
-  DEFAULT_GET,
-} from './utils';
-import { getParentsIdsFromPath } from '../utils/functions/item';
-import { UUID } from '../types';
-import { axiosContentInstance } from '../config/axios';
+import { DEFAULT_GET } from './utils';
 
 export const getItem = async (id: UUID, token?: string) => {
   const res = await axiosContentInstance.get(
-    `${API_HOST}/${buildGetItemRoute(id)}`, 
-    DEFAULT_GET(token));
+    `${API_HOST}/${buildGetItemRoute(id)}`,
+    DEFAULT_GET(token),
+  );
   return res.data;
 };
 
 export const getOwnItems = async (userToken: string) => {
   const res = await axiosContentInstance.get(
-    `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`, 
-    DEFAULT_GET(userToken));
+    `${API_HOST}/${GET_OWN_ITEMS_ROUTE}`,
+    DEFAULT_GET(userToken),
+  );
   return res.data;
 };
 
 export const getChildren = async (id: UUID, token: string) => {
   const res = await axiosContentInstance.get(
-    `${API_HOST}/${buildGetChildrenRoute(id)}`, 
-    DEFAULT_GET(token));
+    `${API_HOST}/${buildGetChildrenRoute(id)}`,
+    DEFAULT_GET(token),
+  );
   return res.data;
 };
 
@@ -43,7 +44,8 @@ export const getParents = async ({ path }: { path: string }) => {
 
 export const getSharedItems = async (token: string) => {
   const res = await axiosContentInstance.get(
-    `${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`, 
-    DEFAULT_GET(token));
+    `${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`,
+    DEFAULT_GET(token),
+  );
   return res.data;
 };

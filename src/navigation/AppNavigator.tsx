@@ -1,10 +1,11 @@
-import React from 'react';
-import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
-import { AuthProvider } from '../context/authContext';
-import RootNavigator, { RootStackParamList } from './RootNavigator';
-import { Text } from 'react-native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { Text } from 'react-native';
+
+import { AuthProvider } from '../context/authContext';
 import { AxiosInterceptor } from '../context/axiosInterceptor';
+import RootNavigator, { RootStackParamList } from './RootNavigator';
 
 const AppNavigator = () => {
   const config = {
@@ -32,6 +33,6 @@ const AppNavigator = () => {
       </BottomSheetModalProvider>
     </NavigationContainer>
   );
-}
+};
 
 export default AppNavigator;

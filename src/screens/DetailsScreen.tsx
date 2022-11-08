@@ -1,30 +1,40 @@
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useItem } from '../hooks';
-import { useFocusQuery } from '../utils/functions/useQuery';
-import ActivityIndicator from '../components/ActivityIndicator';
 import { Text } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
-import { formatDate } from '../utils/functions/date';
-import { getFileExtra, getS3FileExtra } from '../utils/functions/itemExtra';
 import { ITEM_TYPES } from '../config/constants/constants';
-import { humanFileSize } from '../utils/functions/fileSize';
+import { useItem } from '../hooks';
 import { useMember } from '../hooks/member';
-import { StackScreenProps } from '@react-navigation/stack';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
-import { CompositeScreenProps } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { formatDate } from '../utils/functions/date';
+import { humanFileSize } from '../utils/functions/fileSize';
+import { getFileExtra, getS3FileExtra } from '../utils/functions/itemExtra';
+import { useFocusQuery } from '../utils/functions/useQuery';
 
 type CommonStackDetailProps = CompositeScreenProps<
-  StackScreenProps<CommonStackParamList, 'CommonStackDetail', 'CommonStackNavigator'>,
+  StackScreenProps<
+    CommonStackParamList,
+    'CommonStackDetail',
+    'CommonStackNavigator'
+  >,
   StackScreenProps<RootStackParamList>
 >;
 
 const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   const { itemId } = route.params;
 
-  const { data: item, isLoading: isLoadingItem, isError: isErrorItem, refetch: refetchItem } = useItem(itemId);
+  const {
+    data: item,
+    isLoading: isLoadingItem,
+    isError: isErrorItem,
+    refetch: refetchItem,
+  } = useItem(itemId);
   useFocusQuery(refetchItem);
 
   if (isLoadingItem || !item?.name) {
@@ -35,10 +45,15 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
     throw new Error();
   }
 
-  const { data: creatorData, isLoading: isLoadingName, refetch: refetchMember } = useMember(item.creator, { enabled: Boolean(item) });
+  const {
+    data: creatorData,
+    isLoading: isLoadingName,
+    refetch: refetchMember,
+  } = useMember(item.creator, { enabled: Boolean(item) });
   useFocusQuery(refetchMember);
 
-  const { createdAt, creator, description, extra, id, name, type, updatedAt } = item;
+  const { createdAt, creator, description, extra, id, name, type, updatedAt } =
+    item;
   if (isLoadingName || !creatorData?.name) {
     return <ActivityIndicator />;
   }
@@ -91,7 +106,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

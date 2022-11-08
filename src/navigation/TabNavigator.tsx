@@ -1,9 +1,12 @@
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import StackNavigator, { StackParamList } from './StackNavigator';
-import SharedStackNavigator, { SharedStackParamList } from './SharedStackNavigator';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import React from 'react';
+
+import SharedStackNavigator, {
+  SharedStackParamList,
+} from './SharedStackNavigator';
+import StackNavigator, { StackParamList } from './StackNavigator';
 
 export type TabParamList = {
   HomeTab: NavigatorScreenParams<StackParamList>;
@@ -14,14 +17,15 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator 
-        id="TabNavigator" 
-        initialRouteName="HomeTab"       
-        screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      id="TabNavigator"
+      initialRouteName="HomeTab"
+      screenOptions={{ headerShown: false }}
+    >
       <Tab.Screen
         name="HomeTab"
         component={StackNavigator}
-        options={({route}) => ({
+        options={({ route }) => ({
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
@@ -40,6 +44,6 @@ const TabNavigator = () => {
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default TabNavigator;

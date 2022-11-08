@@ -1,27 +1,27 @@
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useSharedItems } from '../hooks';
-import ItemsList from '../components/ItemsList';
-import ActivityIndicator from '../components/ActivityIndicator';
-import { useFocusQuery } from '../utils/functions/useQuery';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StackScreenProps } from '@react-navigation/stack';
-import { SharedStackParamList } from '../navigation/SharedStackNavigator';
-import { CompositeScreenProps } from '@react-navigation/native';
+
+import ActivityIndicator from '../components/ActivityIndicator';
+import ItemsList from '../components/ItemsList';
+import { useSharedItems } from '../hooks';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { SharedStackParamList } from '../navigation/SharedStackNavigator';
+import { useFocusQuery } from '../utils/functions/useQuery';
 
 type SharedStackSharedProps = CompositeScreenProps<
-  StackScreenProps<SharedStackParamList, 'SharedStackShared', 'SharedStackNavigator'>,
+  StackScreenProps<
+    SharedStackParamList,
+    'SharedStackShared',
+    'SharedStackNavigator'
+  >,
   StackScreenProps<RootStackParamList>
 >;
 
 const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
-  const {
-    data: sharedItems,
-    isLoading,
-    isError,
-    refetch,
-  } = useSharedItems();
+  const { data: sharedItems, isLoading, isError, refetch } = useSharedItems();
   useFocusQuery(refetch);
 
   if (isLoading) {
@@ -41,7 +41,7 @@ const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
