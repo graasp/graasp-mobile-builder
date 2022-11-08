@@ -1,13 +1,14 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
-import SignInScreen from '../screens/SignInScreen';
-import DrawerNavigator, { DrawerParamList } from './DrawerNavigator';
-
 import { useAuth } from '../context/authContext';
 import EmailSentScreen from '../screens/EmailSentScreen';
-import CommonStackNavigator, { CommonStackParamList } from './CommonStackNavigator';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import SignInScreen from '../screens/SignInScreen';
+import CommonStackNavigator, {
+  CommonStackParamList,
+} from './CommonStackNavigator';
+import DrawerNavigator, { DrawerParamList } from './DrawerNavigator';
 
 export type RootStackParamList = {
   SignIn: { signUp: boolean };
@@ -41,6 +42,6 @@ const RootNavigator = () => {
       <RootStack.Screen name="CommonStack" component={CommonStackNavigator} />
     </RootStack.Navigator>
   );
-}
+};
 
 export default RootNavigator;

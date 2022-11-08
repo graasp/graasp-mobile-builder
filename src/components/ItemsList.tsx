@@ -1,21 +1,18 @@
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import {
-  StyleSheet,
-  FlatList,
-  Share,
-} from 'react-native';
-import Item from './Item';
-import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
-import EmptyList from './common/EmptyList';
-import CustomBackdrop from './common/CustomBackdrop';
-import ItemIcon from './ItemIcon';
 import { MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
+import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { StyleSheet, FlatList, Share } from 'react-native';
+import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Item as ItemType, UUID } from '../types';
-import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
+
 import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
+import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
+import { Item as ItemType, UUID } from '../types';
+import Item from './Item';
+import ItemIcon from './ItemIcon';
+import CustomBackdrop from './common/CustomBackdrop';
+import EmptyList from './common/EmptyList';
 
 interface ItemsListProps {
   items: ItemType[];
@@ -23,12 +20,11 @@ interface ItemsListProps {
   isLoading: boolean;
 }
 
-const ItemsList: FC<ItemsListProps> = ({
-  items,
-  refresh,
-  isLoading,
-}) => {
-  const [modalVisible, setModalVisible] = useState< { toggle: boolean, itemId: UUID | null } >({
+const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
+  const [modalVisible, setModalVisible] = useState<{
+    toggle: boolean;
+    itemId: UUID | null;
+  }>({
     toggle: false,
     itemId: null,
   });
@@ -37,7 +33,7 @@ const ItemsList: FC<ItemsListProps> = ({
   const snapPoints = useMemo(() => ['30%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<ItemType | null>(null);
   const insets = useSafeAreaInsets();
-  
+
   const handlePresentModalPress = useCallback(
     ({ id }: { id: UUID }) => {
       console.log('pressed itemId: ', id);
@@ -48,25 +44,21 @@ const ItemsList: FC<ItemsListProps> = ({
         bottomSheetModalRef.current?.present();
       }
     },
-    [items]);
+    [items],
+  );
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
-    return (
-      <Item
-        item={item}
-        openOptions={handlePresentModalPress}
-      />
-    );
+    return <Item item={item} openOptions={handlePresentModalPress} />;
   };
 
   const onShare = async (itemId: UUID | null, linkType: any) => {
     try {
       if (itemId === null) {
-        throw new Error("No itemId");
+        throw new Error('No itemId');
       }
       const result = await Share.share({
         message: `Check out this on Graasp: ${
@@ -142,7 +134,7 @@ const ItemsList: FC<ItemsListProps> = ({
           />
         )}
       />
-    <BottomSheetModal
+      <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}
@@ -154,10 +146,14 @@ const ItemsList: FC<ItemsListProps> = ({
             onBackDropPressed={() => bottomSheetModalRef.current?.close()}
           />
         )}
-      >            
-        { itemSelected && Boolean(itemSelected?.name) && (
+      >
+        {itemSelected && Boolean(itemSelected?.name) && (
           <>
-            <ListItem style={{ paddingLeft: insets.left }} hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}>
+            <ListItem
+              style={{ paddingLeft: insets.left }}
+              hasTVPreferredFocus={undefined}
+              tvParallaxProperties={undefined}
+            >
               <ItemIcon
                 type={itemSelected.type}
                 extra={itemSelected.extra}
@@ -178,12 +174,12 @@ const ItemsList: FC<ItemsListProps> = ({
             />
           </>
         )}
-        { itemSelected && (
+        {itemSelected && (
           <BottomSheetScrollView contentContainerStyle={null}>
             <ListItem
               onPress={() => handleDetailsPress({ itemId: itemSelected.id })}
               style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined} 
+              hasTVPreferredFocus={undefined}
               tvParallaxProperties={undefined}
             >
               <MaterialIcons name="info" size={24} color="grey" />
@@ -194,7 +190,7 @@ const ItemsList: FC<ItemsListProps> = ({
             <ListItem
               onPress={() => handleSharePress({ itemId: itemSelected.id })}
               style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined} 
+              hasTVPreferredFocus={undefined}
               tvParallaxProperties={undefined}
             >
               <MaterialIcons name="share" size={24} color="grey" />
@@ -207,7 +203,7 @@ const ItemsList: FC<ItemsListProps> = ({
       </BottomSheetModal>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   itemContainer: {

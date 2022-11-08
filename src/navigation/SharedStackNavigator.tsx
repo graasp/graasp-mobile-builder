@@ -1,8 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import SharedScreen from '../screens/SharedScreen';
 import React from 'react';
-import { defaultScreenOptions } from '../config/constants/navigation';
+
 import DrawerHeader from '../components/common/DrawerHeader';
+import { defaultScreenOptions } from '../config/constants/navigation';
+import SharedScreen from '../screens/SharedScreen';
 
 export type SharedStackParamList = {
   SharedStackShared: undefined;
@@ -29,6 +30,5 @@ const SharedStackNavigator = () => {
     </SharedStack.Navigator>
   );
 };
-
 
 export default SharedStackNavigator;

@@ -3,7 +3,10 @@ import { UUID } from '../../types';
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id: UUID) => id.replace(/\-/g, '_');
 
-export const getParentsIdsFromPath = (path: string, { ignoreSelf = false } = {}) => {
+export const getParentsIdsFromPath = (
+  path: string,
+  { ignoreSelf = false } = {},
+) => {
   if (!path) {
     return [];
   }
@@ -29,4 +32,5 @@ export const isChild = (id: UUID) => {
   return ({ path }: { path: any }) => path.match(reg);
 };
 
-export const getChildren = (items: any[], id: UUID) => items.filter(isChild(id));
+export const getChildren = (items: any[], id: UUID) =>
+  items.filter(isChild(id));

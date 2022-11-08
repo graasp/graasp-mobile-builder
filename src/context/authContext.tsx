@@ -1,12 +1,20 @@
-import React, { createContext, useReducer } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { API_HOST, AuthActionKind, SECURE_STORE_VALUES } from '../config/constants/constants';
+import React, { createContext, useReducer } from 'react';
+
 import { axiosAuthInstance } from '../config/axios';
+import {
+  API_HOST,
+  AuthActionKind,
+  SECURE_STORE_VALUES,
+} from '../config/constants/constants';
 
 interface AuthContextInterface {
-  signIn: (data: any) => {};
-  signOut: () => {};
-  restoreUserRefreshToken: (newAuthToken: string, newRefreshToken: string) => {};
+  signIn: (data: any) => object;
+  signOut: () => object;
+  restoreUserRefreshToken: (
+    newAuthToken: string,
+    newRefreshToken: string,
+  ) => object;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
 }
@@ -15,21 +23,21 @@ const AuthContext = createContext<AuthContextInterface | null>(null);
 AuthContext.displayName = 'AuthContext';
 
 type AuthAction = {
-  type: AuthActionKind,
-  token: string | null,
-}
+  type: AuthActionKind;
+  token: string | null;
+};
 
 type AuthState = {
   isLoading: boolean;
   isSignout: boolean;
   userToken: string | null;
-}
+};
 
 const initialCounterState: AuthState = {
   isLoading: true,
   isSignout: false,
   userToken: null,
-}
+};
 
 const AuthProvider = (props: any) => {
   const [state, dispatch] = useReducer(
@@ -57,13 +65,15 @@ const AuthProvider = (props: any) => {
     },
     initialCounterState,
   );
-  
+
   React.useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken;
 
       try {
-        userToken = await SecureStore.getItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
+        userToken = await SecureStore.getItemAsync(
+          SECURE_STORE_VALUES.AUTH_TOKEN,
+        );
       } catch (e) {
         userToken = null;
       }
@@ -86,7 +96,10 @@ const AuthProvider = (props: any) => {
           const refreshToken = response.data?.refreshToken;
           dispatch({ type: AuthActionKind.SIGN_IN, token });
           await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
-          await SecureStore.setItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN, refreshToken);
+          await SecureStore.setItemAsync(
+            SECURE_STORE_VALUES.REFRESH_TOKEN,
+            refreshToken,
+          );
         }
       },
       signOut: async () => {
@@ -97,17 +110,23 @@ const AuthProvider = (props: any) => {
       },
       restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
         dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: newAuthToken });
-        await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, newAuthToken);
-        await SecureStore.setItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN, newRefreshToken);
+        await SecureStore.setItemAsync(
+          SECURE_STORE_VALUES.AUTH_TOKEN,
+          newAuthToken,
+        );
+        await SecureStore.setItemAsync(
+          SECURE_STORE_VALUES.REFRESH_TOKEN,
+          newRefreshToken,
+        );
       },
       state,
       dispatch,
     }),
     [state],
   );
-  
+
   return <AuthContext.Provider value={authContext} {...props} />;
-}
+};
 
 const useAuth = () => {
   const context = React.useContext(AuthContext);
@@ -115,6 +134,6 @@ const useAuth = () => {
     throw new Error(`useAuth must be used within a AuthProvider`);
   }
   return context;
-}
+};
 
 export { AuthProvider, useAuth };

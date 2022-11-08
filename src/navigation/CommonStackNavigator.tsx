@@ -1,14 +1,15 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+
 import { defaultScreenOptions } from '../config/constants/navigation';
+import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';
 import ItemScreen from '../screens/ItemScreen';
-import DetailsScreen from '../screens/DetailsScreen';
 import { UUID } from '../types';
 
 export type CommonStackParamList = {
-  CommonStackFolder: { headerTitle: string, itemId: UUID };
-  CommonStackItem: { headerTitle: string, itemId: UUID };
+  CommonStackFolder: { headerTitle: string; itemId: UUID };
+  CommonStackItem: { headerTitle: string; itemId: UUID };
   CommonStackDetail: { itemId: UUID };
 };
 
@@ -21,7 +22,6 @@ const CommonStackNavigator = () => {
       initialRouteName="CommonStackFolder"
       screenOptions={defaultScreenOptions}
     >
-
       <CommonStack.Screen
         name="CommonStackFolder"
         component={FolderScreen}
@@ -56,10 +56,8 @@ const CommonStackNavigator = () => {
           headerBackTitleVisible: false,
         }}
       />
-
-
     </CommonStack.Navigator>
   );
-}
+};
 
 export default CommonStackNavigator;

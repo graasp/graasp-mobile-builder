@@ -1,17 +1,18 @@
 import { useQuery } from 'react-query';
+
 import { buildItemKey } from '../config/keys';
 import queryClient from '../config/queryClient';
+import { UUID, Item } from '../types';
+import { NullArgument } from '../utils/errors';
+import { getUserToken } from '../utils/functions/token';
 import {
   buildChildren,
-  buildGetItem, buildItemLogin,
+  buildGetItem,
+  buildItemLogin,
   buildOwnItems,
   buildParents,
   buildSharedItems,
 } from './utils';
-import { UUID } from '../types';
-import { NullArgument } from '../utils/errors';
-import { getUserToken } from '../utils/functions/token';
-import { Item } from '../types';
 
 export const useOwnItems = () => {
   const userToken: any = getUserToken();
@@ -47,9 +48,17 @@ export const useChildren = (itemId: UUID | null) => {
     },
     enabled: Boolean(itemId),
   });
-}
+};
 
-export const useParents = ({ id, path, enabled }: { id: UUID, path: string, enabled: boolean }) =>
+export const useParents = ({
+  id,
+  path,
+  enabled,
+}: {
+  id: UUID;
+  path: string;
+  enabled: boolean;
+}) =>
   useQuery({
     ...buildParents({ id, path }),
     onSuccess: async (items: Item[]) => {
@@ -57,7 +66,7 @@ export const useParents = ({ id, path, enabled }: { id: UUID, path: string, enab
         // save items in their own key
         items.forEach(async (item) => {
           const { id: itemId } = item;
-          queryClient.setQueryData(buildItemKey(itemId), (item));
+          queryClient.setQueryData(buildItemKey(itemId), item);
         });
       }
     },

@@ -1,4 +1,4 @@
-import { ItemType } from "@graasp/sdk";
+import { ItemType } from '@graasp/sdk';
 
 export type UUID = string;
 
@@ -13,9 +13,16 @@ export type Tag = {
   name: string;
 };
 
-export declare type Anything = string | number | boolean | null | undefined | Anything[] | {
-  [key: string]: Anything;
-};
+export declare type Anything =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Anything[]
+  | {
+      [key: string]: Anything;
+    };
 
 export interface UnknownExtra {
   [key: string]: any;

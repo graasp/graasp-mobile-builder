@@ -1,14 +1,15 @@
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useOwnItems } from '../hooks';
-import ItemsList from '../components/ItemsList';
-import ActivityIndicator from '../components/ActivityIndicator';
-import { useFocusQuery } from '../utils/functions/useQuery';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StackScreenProps } from '@react-navigation/stack';
-import { StackParamList } from '../navigation/StackNavigator';
-import { CompositeScreenProps } from '@react-navigation/native';
+
+import ActivityIndicator from '../components/ActivityIndicator';
+import ItemsList from '../components/ItemsList';
+import { useOwnItems } from '../hooks';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { StackParamList } from '../navigation/StackNavigator';
+import { useFocusQuery } from '../utils/functions/useQuery';
 
 type HomeStackProps = CompositeScreenProps<
   StackScreenProps<StackParamList, 'HomeStack', 'StackNavigator'>,
@@ -17,7 +18,6 @@ type HomeStackProps = CompositeScreenProps<
 
 export type HomeStackPropsNavigationProp = HomeStackProps['navigation'];
 export type HomeStackPropsRouteProp = HomeStackProps['route'];
-
 
 const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
   const { data: ownItems, isLoading, isError, refetch } = useOwnItems();
@@ -40,7 +40,7 @@ const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

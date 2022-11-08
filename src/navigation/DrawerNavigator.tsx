@@ -1,13 +1,23 @@
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { Divider, Text } from 'react-native-elements';
 import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+} from '@react-navigation/drawer';
+import { NavigatorScreenParams } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import React, { FC } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
-import ProfileStackNavigator, { ProfileStackParamList } from './ProfileStackNavigator';
+import { Divider, Text } from 'react-native-elements';
+
 import { useAuth } from '../context/authContext';
-import HomeDrawerStackNavigator, { HomeDrawerParamList } from './HomeDrawerStackNavigator';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import HomeDrawerStackNavigator, {
+  HomeDrawerParamList,
+} from './HomeDrawerStackNavigator';
+import ProfileStackNavigator, {
+  ProfileStackParamList,
+} from './ProfileStackNavigator';
 
 interface CustomDrawerContentProps {
   props: any;
@@ -48,7 +58,7 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
       />
     </DrawerContentScrollView>
   );
-}
+};
 
 const DrawerNavigator = () => {
   const dimensions = useWindowDimensions();
@@ -60,7 +70,7 @@ const DrawerNavigator = () => {
       initialRouteName="HomeDrawer"
       screenOptions={{
         drawerType: 'front',
-        headerShown: false
+        headerShown: false,
       }}
     >
       <Drawer.Screen
@@ -85,7 +95,7 @@ const DrawerNavigator = () => {
       />
     </Drawer.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   drawerTitle: {

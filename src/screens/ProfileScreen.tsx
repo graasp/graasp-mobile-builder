@@ -4,11 +4,16 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 
 type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<ProfileStackParamList, 'ProfileStackProfile', 'ProfileStackNavigator'>,
+  StackScreenProps<
+    ProfileStackParamList,
+    'ProfileStackProfile',
+    'ProfileStackNavigator'
+  >,
   DrawerScreenProps<DrawerParamList>
 >;
 
@@ -18,7 +23,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       <Text>Profile</Text>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

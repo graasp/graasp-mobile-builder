@@ -7,7 +7,7 @@ const ActivityIndicator: FC = () => {
       <ActInd size="large" color="#5050d2" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

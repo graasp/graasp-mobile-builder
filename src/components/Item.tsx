@@ -1,11 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
-import { Icon, ListItem } from 'react-native-elements';
 import { Pressable, View } from 'react-native';
-import { ITEM_TYPES, ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
-import ItemIcon from './ItemIcon';
-import { Item as ItemType, UUID } from '../types';
+import { Icon, ListItem } from 'react-native-elements';
+
+import {
+  ITEM_TYPES,
+  ITEMS_TABLE_ROW_ICON_COLOR,
+} from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
+import { Item as ItemType, UUID } from '../types';
+import ItemIcon from './ItemIcon';
 
 interface ItemProps {
   item: ItemType;
@@ -27,9 +31,9 @@ const Item: FC<ItemProps> = ({
         break;
       case ITEM_TYPES.S3_FILE:
         push('CommonStack', {
-            screen: 'CommonStackItem',
-            params: { itemId: id, headerTitle: name },
-          });
+          screen: 'CommonStackItem',
+          params: { itemId: id, headerTitle: name },
+        });
         break;
       case ITEM_TYPES.LINK:
       case ITEM_TYPES.APP:
@@ -44,7 +48,10 @@ const Item: FC<ItemProps> = ({
 
   function renderListItem() {
     return (
-      <ListItem hasTVPreferredFocus={undefined} tvParallaxProperties={undefined}>
+      <ListItem
+        hasTVPreferredFocus={undefined}
+        tvParallaxProperties={undefined}
+      >
         <ItemIcon type={type} extra={extra} name={name} />
         <ListItem.Content style={{ flexDirection: 'row' }}>
           <ListItem.Title style={{ flex: 2 }}>{name}</ListItem.Title>
@@ -69,6 +76,6 @@ const Item: FC<ItemProps> = ({
       />
     </View>
   );
-}
+};
 
 export default Item;

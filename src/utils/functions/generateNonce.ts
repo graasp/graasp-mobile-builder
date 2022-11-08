@@ -1,6 +1,7 @@
+import * as Crypto from 'expo-crypto';
 import * as Random from 'expo-random';
 import * as SecureStore from 'expo-secure-store';
-import * as Crypto from 'expo-crypto';
+
 import { SECURE_STORE_VALUES } from '../../config/constants/constants';
 
 export const generateNonce = async () => {

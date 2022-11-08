@@ -1,25 +1,30 @@
+import { CompositeScreenProps, useRoute } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
-import { useChildren } from '../hooks';
-import { useFocusQuery } from '../utils/functions/useQuery';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import { CompositeScreenProps, useRoute } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useChildren } from '../hooks';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { useFocusQuery } from '../utils/functions/useQuery';
 
 type CommonStackFolderProps = CompositeScreenProps<
-  StackScreenProps<CommonStackParamList, 'CommonStackFolder', 'CommonStackNavigator'>,
+  StackScreenProps<
+    CommonStackParamList,
+    'CommonStackFolder',
+    'CommonStackNavigator'
+  >,
   StackScreenProps<RootStackParamList>
 >;
 type FolderScreenRouteProp = CommonStackFolderProps['route'];
 
 const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
-  let route = useRoute<FolderScreenRouteProp>();
-  let { itemId, headerTitle } = route.params;
-  
+  const route = useRoute<FolderScreenRouteProp>();
+  const { itemId, headerTitle } = route.params;
+
   const { data: children, isLoading, isError, refetch } = useChildren(itemId);
   useFocusQuery(refetch);
 
@@ -40,7 +45,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

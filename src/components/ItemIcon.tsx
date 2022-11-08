@@ -1,15 +1,17 @@
-import React, { FC } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ItemType, UnknownExtra } from '@graasp/sdk';
+import React, { FC } from 'react';
+import { Image } from 'react-native';
 
+import {
+  ITEM_TYPES,
+  ITEMS_TABLE_ROW_ICON_COLOR,
+  MIME_TYPES,
+} from '../config/constants/constants';
 import {
   getEmbeddedLinkExtra,
   getS3FileExtra,
 } from '../utils/functions/itemExtra';
-
-import { Image } from 'react-native';
-
-import { ITEM_TYPES, ITEMS_TABLE_ROW_ICON_COLOR, MIME_TYPES } from '../config/constants/constants';
-import { ItemType, UnknownExtra } from '@graasp/sdk';
 
 interface ItemIconProps {
   name: string;
@@ -19,14 +21,20 @@ interface ItemIconProps {
   style?: any;
 }
 
-const ItemIcon: FC<ItemIconProps> = ({ name, type, extra, size = 20, style }) => {
+const ItemIcon: FC<ItemIconProps> = ({
+  name,
+  type,
+  extra,
+  size = 20,
+  style,
+}) => {
   const mimetype = getS3FileExtra(extra)?.mimetype;
   const icon = getEmbeddedLinkExtra(extra)?.icons?.[0];
 
   if (icon) {
     return <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />;
   }
-  
+
   enum icons {
     INSERT_DRIVE_FILE = 'insert-drive-file',
     FOLDER = 'folder',
@@ -36,8 +44,8 @@ const ItemIcon: FC<ItemIconProps> = ({ name, type, extra, size = 20, style }) =>
     PICTURE_AS_PDF = 'picture-as-pdf',
     INSERT_LINK = 'insert-link',
     APPS = 'apps',
-    DESCRIPTION = 'description'
-  };
+    DESCRIPTION = 'description',
+  }
 
   let Icon = icons.INSERT_DRIVE_FILE;
   switch (type) {
@@ -80,7 +88,14 @@ const ItemIcon: FC<ItemIconProps> = ({ name, type, extra, size = 20, style }) =>
     default:
       break;
   }
-  return <MaterialIcons name={Icon} color={ITEMS_TABLE_ROW_ICON_COLOR} size={size} style={style} />;
+  return (
+    <MaterialIcons
+      name={Icon}
+      color={ITEMS_TABLE_ROW_ICON_COLOR}
+      size={size}
+      style={style}
+    />
+  );
 };
 
 export default ItemIcon;
