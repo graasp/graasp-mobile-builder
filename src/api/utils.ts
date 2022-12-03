@@ -21,11 +21,14 @@ export const DEFAULT_DELETE = {
   withCredentials: true,
 };
 
-export const DEFAULT_PATCH = {
-  method: 'PATCH',
-  headers: { 'Content-Type': 'application/json' },
+export const DEFAULT_PATCH = (token: string) => ({
   withCredentials: true,
-};
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: token ? `Bearer ${token}` : undefined,
+  },
+});
 
 export const DEFAULT_PUT = {
   method: 'PUT',

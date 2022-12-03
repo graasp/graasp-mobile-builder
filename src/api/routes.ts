@@ -9,6 +9,7 @@ export const SHARE_ITEM_WITH_ROUTE = `${ITEMS_ROUTE}/shared-with`;
 export const buildGetChildrenRoute = (id: UUID) =>
   `${ITEMS_ROUTE}/${id}/children`;
 export const buildGetItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
+export const buildEditItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
 
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>
