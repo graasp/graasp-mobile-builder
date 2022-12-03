@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
+import EditItem from './EditItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
@@ -21,7 +22,14 @@ interface ItemsListProps {
 }
 
 const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
-  const [modalVisible, setModalVisible] = useState<{
+  const [shareModalVisible, setShareModalVisible] = useState<{
+    toggle: boolean;
+    itemId: UUID | null;
+  }>({
+    toggle: false,
+    itemId: null,
+  });
+  const [editItemModalVisible, setEditItemModalVisible] = useState<{
     toggle: boolean;
     itemId: UUID | null;
   }>({
@@ -69,9 +77,9 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          setModalVisible({ toggle: false, itemId: null });
+          setShareModalVisible({ toggle: false, itemId: null });
         } else {
-          setModalVisible({ toggle: false, itemId: null });
+          setShareModalVisible({ toggle: false, itemId: null });
         }
       } else if (result.action === Share.dismissedAction) {
         //setModalVisible({ toggle: false, itemId: null });
@@ -89,16 +97,22 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
     });
   };
 
+  const handleEditItemPress = ({ itemId }: { itemId: UUID }) => {
+    setEditItemModalVisible({ toggle: true, itemId });
+  };
+
   const handleSharePress = ({ itemId }: { itemId: UUID }) => {
-    setModalVisible({ toggle: true, itemId });
+    setShareModalVisible({ toggle: true, itemId });
   };
 
   return (
     <>
       <Overlay
         overlayStyle={styles.modalView}
-        isVisible={modalVisible.toggle && modalVisible.itemId != null}
-        onBackdropPress={() => setModalVisible({ toggle: false, itemId: null })}
+        isVisible={shareModalVisible.toggle && shareModalVisible.itemId != null}
+        onBackdropPress={() =>
+          setShareModalVisible({ toggle: false, itemId: null })
+        }
       >
         <Button
           title="Perform"
@@ -106,7 +120,7 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
           buttonStyle={{ backgroundColor: '#5050d2' }}
           containerStyle={{ marginBottom: 20 }}
           onPress={async () => {
-            await onShare(modalVisible.itemId, SHARE_OPTIONS.PERFORM);
+            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PERFORM);
           }}
         />
         <Divider />
@@ -115,9 +129,26 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
           raised={true}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           onPress={async () => {
-            await onShare(modalVisible.itemId, SHARE_OPTIONS.COMPOSE);
+            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.COMPOSE);
           }}
         />
+      </Overlay>
+      <Overlay
+        overlayStyle={styles.modalEditItemView}
+        isVisible={
+          editItemModalVisible.toggle && editItemModalVisible.itemId != null
+        }
+        onBackdropPress={() =>
+          setEditItemModalVisible({ toggle: false, itemId: null })
+        }
+      >
+        {editItemModalVisible.itemId && itemSelected && (
+          <EditItem
+            itemId={editItemModalVisible.itemId}
+            item={itemSelected}
+            setEditItemModalVisible={setEditItemModalVisible}
+          />
+        )}
       </Overlay>
       <FlatList
         data={items}
@@ -188,6 +219,17 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
               </ListItem.Content>
             </ListItem>
             <ListItem
+              onPress={() => handleEditItemPress({ itemId: itemSelected.id })}
+              style={{ paddingLeft: insets.left }}
+              hasTVPreferredFocus={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <MaterialIcons name="info" size={24} color="grey" />
+              <ListItem.Content style={{ flexDirection: 'row' }}>
+                <ListItem.Title style={{ flex: 2 }}>Edit</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+            <ListItem
               onPress={() => handleSharePress({ itemId: itemSelected.id })}
               style={{ paddingLeft: insets.left }}
               hasTVPreferredFocus={undefined}
@@ -226,6 +268,23 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modalEditItemView: {
+    justifyContent: 'center',
+    margin: 0,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 50,
+    alignItems: 'stretch',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    width: '85%',
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
