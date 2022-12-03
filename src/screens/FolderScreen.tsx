@@ -33,7 +33,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   }
 
   if (isError || !children) {
-    throw new Error();
+    return null;
   }
 
   return (

@@ -1,5 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useLayoutEffect } from 'react';
 
 import * as Api from '../api';
 import { axiosContentInstance } from '../config/axios';
@@ -18,7 +18,7 @@ const AxiosInterceptor = ({
     throw new Error(`Context error`);
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const interceptor = axiosContentInstance.interceptors.response.use(
       (response) => {
         return response;
@@ -29,6 +29,7 @@ const AxiosInterceptor = ({
           try {
             const refreshToken = await SecureStore.getItemAsync('refreshToken');
             if (!refreshToken) {
+              alert('You must log in again');
               signOut();
               return Promise.reject(error);
             }
@@ -42,6 +43,7 @@ const AxiosInterceptor = ({
             restoreUserRefreshToken(newAuthToken, newRefreshToken);
             return axiosContentInstance(originalRequest);
           } catch {
+            alert('You must log in again');
             signOut();
             return Promise.reject(error);
           }

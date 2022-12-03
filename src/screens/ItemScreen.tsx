@@ -36,7 +36,7 @@ const ItemScreen: FC<CommonStackItemProps> = () => {
   }
 
   if (isError || !item) {
-    throw new Error();
+    return null;
   }
 
   const renderContent = () => {

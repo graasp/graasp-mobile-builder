@@ -42,7 +42,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   }
 
   if (isErrorItem || !item) {
-    throw new Error();
+    return null;
   }
 
   const {

@@ -29,7 +29,7 @@ const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
   }
 
   if (isError || !sharedItems) {
-    throw new Error();
+    return null;
   }
 
   return (

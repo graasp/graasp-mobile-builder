@@ -28,7 +28,7 @@ const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
   }
 
   if (isError || !ownItems) {
-    throw new Error();
+    return null;
   }
 
   return (
