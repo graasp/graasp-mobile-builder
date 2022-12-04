@@ -16,10 +16,14 @@ export const DEFAULT_POST = {
   headers: { 'Content-Type': 'application/json' },
 };
 
-export const DEFAULT_DELETE = {
+export const DEFAULT_DELETE = (token: string) => ({
   method: 'DELETE',
   withCredentials: true,
-};
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: token ? `Bearer ${token}` : undefined,
+  },
+});
 
 export const DEFAULT_PATCH = (token: string) => ({
   withCredentials: true,
