@@ -9,7 +9,7 @@ import {
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
 } from './routes';
-import { DEFAULT_GET, DEFAULT_PATCH } from './utils';
+import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_PATCH } from './utils';
 
 export const getItem = async (id: UUID, token?: string) => {
   const res = await axiosContentInstance.get(
@@ -57,6 +57,16 @@ export const editItem = async (newItem: any, userToken: string) => {
     newItem,
     {
       ...DEFAULT_PATCH(userToken),
+    },
+  );
+  return res.data;
+};
+
+export const deleteItem = async (itemId: UUID, userToken: string) => {
+  const res = await axiosContentInstance.delete(
+    `${API_HOST}/${buildEditItemRoute(itemId)}`,
+    {
+      ...DEFAULT_DELETE(userToken),
     },
   );
   return res.data;

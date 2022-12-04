@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
+import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
@@ -30,6 +31,13 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
     itemId: null,
   });
   const [editItemModalVisible, setEditItemModalVisible] = useState<{
+    toggle: boolean;
+    itemId: UUID | null;
+  }>({
+    toggle: false,
+    itemId: null,
+  });
+  const [deleteItemModalVisible, setDeleteItemModalVisible] = useState<{
     toggle: boolean;
     itemId: UUID | null;
   }>({
@@ -101,6 +109,10 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
     setEditItemModalVisible({ toggle: true, itemId });
   };
 
+  const handleDeleteItemPress = ({ itemId }: { itemId: UUID }) => {
+    setDeleteItemModalVisible({ toggle: true, itemId });
+  };
+
   const handleSharePress = ({ itemId }: { itemId: UUID }) => {
     setShareModalVisible({ toggle: true, itemId });
   };
@@ -147,6 +159,24 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
             itemId={editItemModalVisible.itemId}
             item={itemSelected}
             setEditItemModalVisible={setEditItemModalVisible}
+          />
+        )}
+      </Overlay>
+      <Overlay
+        overlayStyle={styles.modalEditItemView}
+        isVisible={
+          deleteItemModalVisible.toggle && deleteItemModalVisible.itemId != null
+        }
+        onBackdropPress={() =>
+          setDeleteItemModalVisible({ toggle: false, itemId: null })
+        }
+      >
+        {deleteItemModalVisible.itemId && itemSelected && (
+          <DeleteItem
+            itemId={deleteItemModalVisible.itemId}
+            item={itemSelected}
+            setDeleteItemModalVisible={setDeleteItemModalVisible}
+            refresh={refresh}
           />
         )}
       </Overlay>
@@ -224,9 +254,20 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
               hasTVPreferredFocus={undefined}
               tvParallaxProperties={undefined}
             >
-              <MaterialIcons name="info" size={24} color="grey" />
+              <MaterialIcons name="edit" size={24} color="grey" />
               <ListItem.Content style={{ flexDirection: 'row' }}>
                 <ListItem.Title style={{ flex: 2 }}>Edit</ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+            <ListItem
+              onPress={() => handleDeleteItemPress({ itemId: itemSelected.id })}
+              style={{ paddingLeft: insets.left }}
+              hasTVPreferredFocus={undefined}
+              tvParallaxProperties={undefined}
+            >
+              <MaterialIcons name="delete" size={24} color="grey" />
+              <ListItem.Content style={{ flexDirection: 'row' }}>
+                <ListItem.Title style={{ flex: 2 }}>Delete</ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
