@@ -29,15 +29,10 @@ const Item: FC<ItemProps> = ({
           params: { itemId: id, headerTitle: name },
         });
         break;
-      case ITEM_TYPES.S3_FILE:
-        push('CommonStack', {
-          screen: 'CommonStackItem',
-          params: { itemId: id, headerTitle: name },
-        });
-        break;
       case ITEM_TYPES.LINK:
       case ITEM_TYPES.APP:
       case ITEM_TYPES.DOCUMENT:
+      case ITEM_TYPES.S3_FILE:
         push('CommonStack', {
           screen: 'CommonStackItem',
           params: { itemId: id, headerTitle: name },

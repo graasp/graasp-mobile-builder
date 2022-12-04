@@ -10,6 +10,8 @@ export const buildGetChildrenRoute = (id: UUID) =>
   `${ITEMS_ROUTE}/${id}/children`;
 export const buildGetItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
 export const buildEditItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
+export const buildGetItemFileUrlRoute = (id: UUID) =>
+  `${ITEMS_ROUTE}/${id}/download?replyUrl=true`;
 
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>

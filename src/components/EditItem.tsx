@@ -26,7 +26,9 @@ const EditItem: FC<EditItemProps> = ({
 }) => {
   const [itemName, setItemName] = useState<string | undefined>(item.name);
   const userToken: any = getUserToken();
-  const editItemMutation = useMutation({ ...buildEditItem(userToken, refresh) });
+  const editItemMutation = useMutation({
+    ...buildEditItem(userToken, refresh),
+  });
 
   const mutateItem = () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');

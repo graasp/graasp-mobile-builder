@@ -5,6 +5,7 @@ import { getParentsIdsFromPath } from '../utils/functions/item';
 import {
   buildEditItemRoute,
   buildGetChildrenRoute,
+  buildGetItemFileUrlRoute,
   buildGetItemRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
@@ -68,6 +69,14 @@ export const deleteItem = async (itemId: UUID, userToken: string) => {
     {
       ...DEFAULT_DELETE(userToken),
     },
+  );
+  return res.data;
+};
+
+export const getItemFileUrl = async (id: UUID, token?: string) => {
+  const res = await axiosContentInstance.get(
+    `${API_HOST}/${buildGetItemFileUrlRoute(id)}`,
+    DEFAULT_GET(token),
   );
   return res.data;
 };
