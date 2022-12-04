@@ -1,12 +1,13 @@
 import { CompositeScreenProps, useRoute } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import Document from '../components/Document';
+import FileItem from '../components/FileItem';
 import { ITEM_TYPES } from '../config/constants/constants';
 import { useItem } from '../hooks';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
@@ -84,13 +85,7 @@ const ItemScreen: FC<CommonStackItemProps> = () => {
         );
       }
       case ITEM_TYPES.S3_FILE: {
-        return (
-          <>
-            <Text style={styles.value}>{name}</Text>
-            <Text style={styles.header}>Type</Text>
-            <Text style={styles.value}>S3 File</Text>
-          </>
-        );
+        return <FileItem item={item} />;
       }
     }
   };

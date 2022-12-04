@@ -50,3 +50,12 @@ export interface Item<T extends UnknownExtra = UnknownExtra, S = ItemSettings> {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface S3FileItemExtra extends UnknownExtra {
+  s3File: S3FileItemExtraProp;
+}
+
+export type S3FileItemExtraProp = {
+  mimetype: string;
+  name: string;
+};
