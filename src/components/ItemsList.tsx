@@ -159,6 +159,7 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
             itemId={editItemModalVisible.itemId}
             item={itemSelected}
             setEditItemModalVisible={setEditItemModalVisible}
+            refresh={refresh}
           />
         )}
       </Overlay>
