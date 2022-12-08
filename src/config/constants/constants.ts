@@ -197,3 +197,8 @@ export const SHARE_HOST = {
   COMPOSE: 'https://builder.graasp.org/items',
   PERFORM: 'https://player.graasp.org',
 };
+
+export const MEDIA_LIBRARY_PERMISSION_STATUS = {
+  GRANTED: 'granted',
+  DENIED: 'denied',
+};

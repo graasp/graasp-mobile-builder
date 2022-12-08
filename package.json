@@ -32,6 +32,7 @@
     "expo-crypto": "~11.0.0",
     "expo-font": "~10.2.1",
     "expo-linking": "~3.2.2",
+    "expo-media-library": "~14.2.0",
     "expo-random": "~12.3.0",
     "expo-secure-store": "~11.3.0",
     "expo-sharing": "~10.3.0",

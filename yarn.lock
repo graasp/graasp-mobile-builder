@@ -6365,6 +6365,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-media-library@npm:~14.2.0":
+  version: 14.2.0
+  resolution: "expo-media-library@npm:14.2.0"
+  dependencies:
+    "@expo/config-plugins": ~5.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: d525f2c9ce1bd32e421fa8abe19b0033b01d18f790dfc7b5267dda1f05b75533891f7b0ba2754d1d54d9aa642c869c1a7b5c6ea2648a87c0f196424dfd02fa9f
+  languageName: node
+  linkType: hard
+
 "expo-modules-autolinking@npm:0.10.3":
   version: 0.10.3
   resolution: "expo-modules-autolinking@npm:0.10.3"
@@ -7307,6 +7318,7 @@ __metadata:
     expo-crypto: ~11.0.0
     expo-font: ~10.2.1
     expo-linking: ~3.2.2
+    expo-media-library: ~14.2.0
     expo-random: ~12.3.0
     expo-secure-store: ~11.3.0
     expo-sharing: ~10.3.0
