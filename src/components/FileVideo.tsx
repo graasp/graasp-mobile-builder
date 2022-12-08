@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { saveMedia } from '../utils/functions/media';
 
 interface FileVideoProps {
   localPath: string;
@@ -19,21 +20,27 @@ const FileVideo: FC<FileVideoProps> = ({ localPath, handleSaveFile }) => {
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
+  const handleSaveVideo = () => {
+    saveMedia(localPath);
+  };
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          buttonStyle={{ backgroundColor: '#5050d2' }}
-          icon={
-            <MaterialIcons
-              name={'ios-share'}
-              color="#ffffff"
-              size={25}
-              style={{ paddingRight: 3 }}
-            />
-          }
-          onPress={handleSaveFile}
-        ></Button>
+        <View style={styles.headerButtons}>
+          <Button
+            buttonStyle={{ backgroundColor: '#5050d2' }}
+            icon={<MaterialIcons name={'save-alt'} color="#ffffff" size={25} />}
+            onPress={handleSaveVideo}
+          ></Button>
+          <Button
+            buttonStyle={{ backgroundColor: '#5050d2' }}
+            icon={
+              <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
+            }
+            onPress={handleSaveFile}
+          ></Button>
+        </View>
       ),
     });
   }, []);
@@ -62,6 +69,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    width: 82,
   },
 });
 

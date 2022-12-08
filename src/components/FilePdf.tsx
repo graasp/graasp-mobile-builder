@@ -18,14 +18,7 @@ const FilePdf: FC<FilePdfProps> = ({ localPath, handleSaveFile }) => {
       headerRight: () => (
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
-          icon={
-            <MaterialIcons
-              name={'ios-share'}
-              color="#ffffff"
-              size={25}
-              style={{ paddingRight: 3 }}
-            />
-          }
+          icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
           onPress={handleSaveFile}
         ></Button>
       ),
