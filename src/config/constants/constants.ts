@@ -32,9 +32,27 @@ export const ITEM_TYPES = {
 };
 export const MIME_TYPES = {
   IMAGE: ['image/png', 'image/jpg', 'image/gif', 'image/jpeg'],
-  VIDEO: ['video/mp4'],
+  IMAGE_EXTENSIONS: ['png', 'jpg', 'gif', 'jpeg'],
+  VIDEO: ['video/mp4', 'video/quicktime'],
+  VIDEO_EXTENSIONS: ['mp4', 'mov'],
   AUDIO: ['audio/mpeg', 'audio/mp3'],
+  AUDIO_EXTENSIONS: ['mp3', 'mp3'],
   PDF: ['application/pdf'],
+  PDF_EXTENSIONS: ['pdf'],
+};
+export const MIME_TYPES_EXTENSIONS = {
+  MIME_TYPES: [
+    ...MIME_TYPES.IMAGE,
+    ...MIME_TYPES.VIDEO,
+    ...MIME_TYPES.AUDIO,
+    ...MIME_TYPES.PDF,
+  ],
+  EXTENSIONS: [
+    ...MIME_TYPES.IMAGE_EXTENSIONS,
+    ...MIME_TYPES.VIDEO_EXTENSIONS,
+    ...MIME_TYPES.AUDIO_EXTENSIONS,
+    ...MIME_TYPES.PDF_EXTENSIONS,
+  ],
 };
 export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';

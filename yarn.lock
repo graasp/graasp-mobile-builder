@@ -6256,6 +6256,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-av@npm:~12.0.4":
+  version: 12.0.4
+  resolution: "expo-av@npm:12.0.4"
+  dependencies:
+    "@expo/config-plugins": ~5.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 5d985ab18159f45e1a2857af8b671285d940c457797eef489888c019fb1a760e1dcc01ea7eaff6f06cd80d4d9b17f2573568cd4c01799e6f054df76f89e312ec
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~13.2.4":
   version: 13.2.4
   resolution: "expo-constants@npm:13.2.4"
@@ -6396,6 +6407,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: ac3973ff3f9aa18e7c55a73ee50abe15c76aa8d1c7ca882058161c170b08e9d184ead1b73341f01af8a5fcdbf96becc9f237e0bc26c9b6c4452aab4be8ed078a
+  languageName: node
+  linkType: hard
+
+"expo-sharing@npm:~10.3.0":
+  version: 10.3.0
+  resolution: "expo-sharing@npm:10.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 37959f9e33d506af3b937f71c7f0b3bee417c14e93fdc350948909f5581672bba692bb390fa612ae03e4d1f24df894a96c4f808be2d83cfae45256af1454394f
   languageName: node
   linkType: hard
 
@@ -7282,12 +7302,14 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.6.1
     expo: ~46.0.16
     expo-asset: ~8.6.1
+    expo-av: ~12.0.4
     expo-constants: ~13.2.4
     expo-crypto: ~11.0.0
     expo-font: ~10.2.1
     expo-linking: ~3.2.2
     expo-random: ~12.3.0
     expo-secure-store: ~11.3.0
+    expo-sharing: ~10.3.0
     expo-splash-screen: ~0.16.2
     expo-status-bar: ~1.4.0
     expo-system-ui: ~1.3.0

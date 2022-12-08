@@ -1,4 +1,4 @@
-import { CompositeScreenProps, useRoute } from '@react-navigation/native';
+import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -22,11 +22,11 @@ type CommonStackItemProps = CompositeScreenProps<
   >,
   StackScreenProps<RootStackParamList>
 >;
-type ItemScreenRouteProp = CommonStackItemProps['route'];
 
-const ItemScreen: FC<CommonStackItemProps> = () => {
+export type ItemScreenNavigationProp = CommonStackItemProps['navigation'];
+
+const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
   const dimensions = useWindowDimensions();
-  const route = useRoute<ItemScreenRouteProp>();
   const { itemId } = route.params;
   const { data: item, isLoading, isError, refetch } = useItem(itemId);
   useFocusQuery(refetch);
