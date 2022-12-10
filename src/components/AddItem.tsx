@@ -58,7 +58,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
       | Extract<DocumentPicker.DocumentResult, { type: 'success' }>,
   ) => {
     try {
-      console.log(buildUploadFilesRoute(parentId))
       setIsUploading(true);
       const uploadResponse = await FileSystem.uploadAsync(
         buildUploadFilesRoute(parentId),
