@@ -1,4 +1,5 @@
 import qs from 'qs';
+import { API_HOST } from '../config/constants/constants';
 
 import { UUID } from '../types';
 
@@ -17,10 +18,10 @@ export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>
   `${MEMBERS_ROUTE}?email=${email}`;
 export const buildGetMember = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
-export const buildUploadFilesRoute = (parentId: UUID) =>
+export const buildUploadFilesRoute = (parentId?: UUID) =>
   parentId
-    ? `${ITEMS_ROUTE}/upload?parentId=${parentId}`
-    : `${ITEMS_ROUTE}/upload`;
+    ? `${API_HOST}/${ITEMS_ROUTE}/upload?parentId=${parentId}`
+    : `${API_HOST}/${ITEMS_ROUTE}/upload`;
 export const GET_CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
 export const buildSignInPath = (to: any) => {
   const queryString = qs.stringify({ to }, { addQueryPrefix: true });

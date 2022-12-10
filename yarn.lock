@@ -6300,6 +6300,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-document-picker@npm:~10.3.0":
+  version: 10.3.0
+  resolution: "expo-document-picker@npm:10.3.0"
+  dependencies:
+    "@expo/config-plugins": ~5.0.0
+    uuid: ^3.3.2
+  peerDependencies:
+    expo: "*"
+  checksum: 7c5173b4ca21453702705a099679c68a9def089202733ce64dc5e10197d92f874f59e91d4def8fafa77e24e01cad448062591c926ed280a3fc968fd9bd8efa76
+  languageName: node
+  linkType: hard
+
 "expo-error-recovery@npm:~3.2.0":
   version: 3.2.0
   resolution: "expo-error-recovery@npm:3.2.0"
@@ -6340,6 +6352,28 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: fa82616614b393ecb8e7dce91de8043c0e7b5ebc2145ec816b37179bef5ac2b81fdf3ea750b93d47e3702978f08f6b40373c91844098cc62ed43b42d7d73ed63
+  languageName: node
+  linkType: hard
+
+"expo-image-loader@npm:~3.2.0":
+  version: 3.2.0
+  resolution: "expo-image-loader@npm:3.2.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 0d24716c7c2dd194cbc0d360765b822ca2b53eaafab6d9cb8dcc84f088dedce68d13d6d3a6eba998e24944333ba8856dbb11a0dceb367ac30b2ae488b1339626
+  languageName: node
+  linkType: hard
+
+"expo-image-picker@npm:~13.3.1":
+  version: 13.3.1
+  resolution: "expo-image-picker@npm:13.3.1"
+  dependencies:
+    "@expo/config-plugins": ~5.0.0
+    expo-image-loader: ~3.2.0
+    uuid: 7.0.2
+  peerDependencies:
+    expo: "*"
+  checksum: 9cad4fb7563af0e3a3f95a65f94a6c0cbd988ffc4dc2e6f5e427f90964ab1b4a09fbb8dcd66d2a3baf1034a3a7bef8395767678543daa24b9c7ba9ff56eead20
   languageName: node
   linkType: hard
 
@@ -7316,7 +7350,9 @@ __metadata:
     expo-av: ~12.0.4
     expo-constants: ~13.2.4
     expo-crypto: ~11.0.0
+    expo-document-picker: ~10.3.0
     expo-font: ~10.2.1
+    expo-image-picker: ~13.3.1
     expo-linking: ~3.2.2
     expo-media-library: ~14.2.0
     expo-random: ~12.3.0
@@ -14326,6 +14362,15 @@ __metadata:
   bin:
     uuid: ./bin/uuid
   checksum: 8793629d2799f500aeea9fcd0aec6c4e9fbcc4d62ed42159ad96be345c3fffac1bbf61a23e18e2782600884fee05e6d4012ce4b70d0037c8e987533ae6a77870
+  languageName: node
+  linkType: hard
+
+"uuid@npm:7.0.2":
+  version: 7.0.2
+  resolution: "uuid@npm:7.0.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: f80af114b67e1f66020c70897be9ba889b1996fbfde8fc46eb7405e95d3448908a793bab36d16d11a082a16ca7e1d27ab5203e505dd3c1bab7efbb647bd94823
   languageName: node
   linkType: hard
 

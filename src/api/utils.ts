@@ -10,11 +10,14 @@ export const DEFAULT_GET = (token?: string) => ({
   },
 });
 
-export const DEFAULT_POST = {
-  method: 'POST',
+export const DEFAULT_POST = (token: string) => ({
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
-};
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: token ? `Bearer ${token}` : undefined,
+  },
+});
 
 export const DEFAULT_DELETE = (token: string) => ({
   method: 'DELETE',
