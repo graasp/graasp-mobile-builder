@@ -38,6 +38,7 @@ const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
         items={[...sharedItems]}
         isLoading={isLoading}
         refresh={refetch}
+        isSharedScreen={true}
       />
     </SafeAreaView>
   );

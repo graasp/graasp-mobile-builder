@@ -39,6 +39,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
       <ItemsList
+        parentId={itemId}
         items={[...children]}
         isLoading={isLoading}
         refresh={refetch}

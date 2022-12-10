@@ -2,13 +2,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, FlatList, Share } from 'react-native';
+import { StyleSheet, FlatList, Share, TouchableOpacity } from 'react-native';
 import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
+import AddItem from './AddItem';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 import Item from './Item';
@@ -17,12 +18,20 @@ import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
 
 interface ItemsListProps {
+  parentId?: UUID;
   items: ItemType[];
   refresh: () => void;
   isLoading: boolean;
+  isSharedScreen?: boolean;
 }
 
-const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
+const ItemsList: FC<ItemsListProps> = ({
+  parentId,
+  items,
+  refresh,
+  isLoading,
+  isSharedScreen = false,
+}) => {
   const [shareModalVisible, setShareModalVisible] = useState<{
     toggle: boolean;
     itemId: UUID | null;
@@ -285,6 +294,7 @@ const ItemsList: FC<ItemsListProps> = ({ items, refresh, isLoading }) => {
           </BottomSheetScrollView>
         )}
       </BottomSheetModal>
+      {!isSharedScreen && <AddItem parentId={parentId} refresh={refresh} />}
     </>
   );
 };
@@ -342,6 +352,22 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  addItemButton: {
+    position: 'absolute',
+    width: 56,
+    height: 56,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 20,
+    backgroundColor: '#5050d2',
+    borderRadius: 30,
+    elevation: 8,
+  },
+  fabIcon: {
+    fontSize: 40,
+    color: 'white',
   },
 });
 

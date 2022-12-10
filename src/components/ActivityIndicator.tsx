@@ -1,10 +1,18 @@
 import React, { FC } from 'react';
 import { ActivityIndicator as ActInd, StyleSheet, View } from 'react-native';
 
-const ActivityIndicator: FC = () => {
+interface ActivityIndicatorProps {
+  color?: string;
+  size?: 'small' | 'large' | undefined;
+}
+
+const ActivityIndicator: FC<ActivityIndicatorProps> = ({
+  color = '#5050d2',
+  size = 'large',
+}) => {
   return (
     <View style={styles.container}>
-      <ActInd size="large" color="#5050d2" />
+      <ActInd size={size} color={color} />
     </View>
   );
 };
