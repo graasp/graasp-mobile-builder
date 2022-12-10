@@ -101,8 +101,8 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   return (
     <>
       <BottomSheetModal
-        style={styles.contentContainer}
         ref={bottomSheetAddItemModalRef}
+        style={styles.bottomSheetModal}
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     elevation: 8,
   },
-  contentContainer: {
+  bottomSheetModal: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

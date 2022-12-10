@@ -55,7 +55,7 @@ const ItemsList: FC<ItemsListProps> = ({
   });
   const navigation = useNavigation<HomeStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['30%', '60%', '90%'], []);
+  const snapPoints = useMemo(() => ['40%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<ItemType | null>(null);
   const insets = useSafeAreaInsets();
 
@@ -207,6 +207,7 @@ const ItemsList: FC<ItemsListProps> = ({
       />
       <BottomSheetModal
         ref={bottomSheetModalRef}
+        style={styles.bottomSheetModal}
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -365,9 +366,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     elevation: 8,
   },
-  fabIcon: {
-    fontSize: 40,
-    color: 'white',
+  bottomSheetModal: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
   },
 });
 
