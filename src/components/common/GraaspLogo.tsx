@@ -7,7 +7,11 @@ interface GraaspLogoProps {
   color?: string;
 }
 
-const GraaspLogo: FC<GraaspLogoProps> = ( { height = 150, width = 150, color='#fff' } ) => {
+const GraaspLogo: FC<GraaspLogoProps> = ({
+  height = 150,
+  width = 150,
+  color = '#fff',
+}) => {
   return (
     <Svg fill={color} height={height} width={width} viewBox="130 130 290 290">
       <Path
