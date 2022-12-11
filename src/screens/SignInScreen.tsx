@@ -3,8 +3,8 @@ import React, { FC, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import GraaspLogo from '../components/common/GraaspLogo';
 
+import GraaspLogo from '../components/common/GraaspLogo';
 import { axiosAuthInstance } from '../config/axios';
 import { API_HOST, LOGIN_TYPE } from '../config/constants/constants';
 import { useAuth } from '../context/authContext';
