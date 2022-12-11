@@ -81,8 +81,8 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-      <View style={styles.logo}>
-        <GraaspLogo />
+        <View style={styles.logo}>
+          <GraaspLogo />
         </View>
         <Text
           h2Style={{ fontWeight: '700' }}
@@ -91,8 +91,8 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
         >
           Graasp
         </Text>
-        </View>
-        <ScrollView>
+      </View>
+      <ScrollView>
         {isSignUp && (
           <Input
             label="Name"
@@ -127,47 +127,23 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
           placeholderTextColor="#cccccc"
           autoCompleteType={undefined}
         />
-        {!isSignUp && (
-          <>
-            {loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
-              <>
-                <Input
-                  label="Password"
-                  secureTextEntry={true}
-                  inputStyle={styles.textInput}
-                  onChangeText={(value) => setPassword(value)}
-                  value={password}
-                  underlineColorAndroid={'#fff'}
-                  labelStyle={{
-                    color: '#fff',
-                    fontWeight: '700',
-                  }}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholderTextColor="#cccccc"
-                  autoCompleteType={undefined}
-                />
-                <Text
-                  style={{
-                    color: '#fff',
-                    alignSelf: 'flex-end',
-                    paddingEnd: 8,
-                  }}
-                  onPress={() => setLoginType(LOGIN_TYPE.EMAIL_LINK)}
-                >
-                  Email login
-                </Text>
-              </>
-            )}
-            {loginType === LOGIN_TYPE.EMAIL_LINK && (
-              <Text
-                style={{ color: '#fff', alignSelf: 'flex-end', paddingEnd: 8 }}
-                onPress={() => setLoginType(LOGIN_TYPE.EMAIL_PASSWORD)}
-              >
-                Password login
-              </Text>
-            )}
-          </>
+        {!isSignUp && loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
+          <Input
+            label="Password"
+            secureTextEntry={true}
+            inputStyle={styles.textInput}
+            onChangeText={(value) => setPassword(value)}
+            value={password}
+            underlineColorAndroid={'#fff'}
+            labelStyle={{
+              color: '#fff',
+              fontWeight: '700',
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholderTextColor="#cccccc"
+            autoCompleteType={undefined}
+          />
         )}
         {isSignUp ? (
           <Button
@@ -191,11 +167,46 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
           />
         )}
         {!isSignUp && (
+          <>
+            {loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
+              <Text
+                style={{
+                  color: '#fff',
+                  alignSelf: 'center',
+                  paddingEnd: 8,
+                  paddingTop: 30,
+                }}
+                onPress={() => setLoginType(LOGIN_TYPE.EMAIL_LINK)}
+              >
+                Change to email login {'->'}
+              </Text>
+            )}
+            {loginType === LOGIN_TYPE.EMAIL_LINK && (
+              <Text
+                style={{
+                  color: '#fff',
+                  alignSelf: 'center',
+                  paddingEnd: 8,
+                  paddingTop: 30,
+                }}
+                onPress={() => setLoginType(LOGIN_TYPE.EMAIL_PASSWORD)}
+              >
+                Change to password login {'->'}
+              </Text>
+            )}
+          </>
+        )}
+        {!isSignUp && (
           <Text
-            style={{ color: '#fff', alignSelf: 'center', paddingEnd: 8 }}
+            style={{
+              color: '#fff',
+              alignSelf: 'center',
+              paddingEnd: 8,
+              paddingTop: 20,
+            }}
             onPress={() => navigation.push('SignIn', { signUp: true })}
           >
-            Dont have an account yet? Sign up now
+            Don't have an account yet? Sign up now {'->'}
           </Text>
         )}
       </ScrollView>
