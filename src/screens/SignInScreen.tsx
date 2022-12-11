@@ -1,8 +1,9 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import GraaspLogo from '../components/common/GraaspLogo';
 
 import { axiosAuthInstance } from '../config/axios';
 import { API_HOST, LOGIN_TYPE } from '../config/constants/constants';
@@ -11,7 +12,6 @@ import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { validateEmail } from '../utils/functions/helper';
 import { useAsync } from '../utils/hooks/useAsync';
-//import GraaspLogo from '../utils/GraaspLogo';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -80,15 +80,19 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <View>
+      <View style={styles.logo}>
+        <GraaspLogo />
+        </View>
         <Text
           h2Style={{ fontWeight: '700' }}
-          style={[styles.textInput, { marginBottom: 0 }]}
+          style={[styles.appName, { marginBottom: 0 }]}
           h2
         >
           Graasp
         </Text>
-
+        </View>
+        <ScrollView>
         {isSignUp && (
           <Input
             label="Name"
@@ -205,6 +209,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#5050d2',
     justifyContent: 'space-between',
     padding: 30,
+  },
+  logo: {
+    alignSelf: 'center',
+  },
+  appName: {
+    color: '#fff',
+    alignSelf: 'center',
+    paddingTop: 10,
+    paddingBottom: 30,
   },
   textInput: {
     color: '#fff',
