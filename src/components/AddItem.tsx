@@ -39,7 +39,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
     if (!file.cancelled) {
       uploadImage(file);
-      bottomSheetAddItemModalRef.current?.close()
+      bottomSheetAddItemModalRef.current?.close();
     }
   };
 
@@ -48,7 +48,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
     if (file.type !== 'cancel') {
       uploadImage(file);
-      bottomSheetAddItemModalRef.current?.close()
+      bottomSheetAddItemModalRef.current?.close();
     }
   };
 
