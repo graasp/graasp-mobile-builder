@@ -1,6 +1,6 @@
 import qs from 'qs';
-import { API_HOST } from '../config/constants/constants';
 
+import { API_HOST } from '../config/constants/constants';
 import { UUID } from '../types';
 
 export const ITEMS_ROUTE = 'items';
