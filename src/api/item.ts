@@ -7,6 +7,7 @@ import {
   buildGetChildrenRoute,
   buildGetItemFileUrlRoute,
   buildGetItemRoute,
+  buildGetMemberAvatarRoute,
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
 } from './routes';
@@ -76,6 +77,14 @@ export const deleteItem = async (itemId: UUID, userToken: string) => {
 export const getItemFileUrl = async (id: UUID, token?: string) => {
   const res = await axiosContentInstance.get(
     `${API_HOST}/${buildGetItemFileUrlRoute(id)}`,
+    DEFAULT_GET(token),
+  );
+  return res.data;
+};
+
+export const getMemberAvatarUrl = async (id: UUID, token?: string) => {
+  const res = await axiosContentInstance.get(
+    `${API_HOST}/${buildGetMemberAvatarRoute(id)}`,
     DEFAULT_GET(token),
   );
   return res.data;

@@ -24,10 +24,10 @@ export const getMember = async ({ id, token }: { id: UUID; token: string }) => {
   return res.data;
 };
 
-export const getCurrentMember = async () => {
+export const getCurrentMember = async ({ token }: { token: string }) => {
   const res = await axiosContentInstance.get(
     `${API_HOST}/${GET_CURRENT_MEMBER_ROUTE}`,
-    { ...DEFAULT_GET },
+    { ...DEFAULT_GET(token) },
   );
   return res.data;
 };
