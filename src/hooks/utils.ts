@@ -1,3 +1,5 @@
+import { Member } from '@graasp/sdk';
+
 import * as Api from '../api';
 import {
   STALE_TIME_MILLISECONDS,
@@ -9,6 +11,7 @@ import {
   buildItemLoginKey,
   buildItemParentsKey,
   buildMemberIdKey,
+  buildCurrentMemberIdKey,
   OWN_ITEMS_KEY,
   SHARED_ITEMS_KEY,
 } from '../config/keys';
@@ -58,6 +61,13 @@ export const buildMemberKey = (id: UUID, token: string, enabled: boolean) => ({
   queryKey: buildMemberIdKey(id),
   queryFn: () => Api.getMember({ id, token }).then((data) => data),
   enabled: enabled && Boolean(id),
+  ...itemQueryConfig,
+});
+
+export const buildCurrentMemberKey = (token: string) => ({
+  queryKey: buildCurrentMemberIdKey(),
+  queryFn: (): Promise<Member> =>
+    Api.getCurrentMember({ token }).then((data) => data),
   ...itemQueryConfig,
 });
 

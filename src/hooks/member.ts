@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { UUID } from '../types';
 import { getUserToken } from '../utils/functions/token';
-import { buildMemberKey } from './utils';
+import { buildCurrentMemberKey, buildMemberKey } from './utils';
 
 export const useMember = (
   id: UUID,
@@ -12,6 +12,15 @@ export const useMember = (
 
   return useQuery({
     ...buildMemberKey(id, userToken, enabled),
+    retry: false,
+  });
+};
+
+export const useCurrentMember = () => {
+  const userToken: any = getUserToken();
+
+  return useQuery({
+    ...buildCurrentMemberKey(userToken),
     retry: false,
   });
 };
