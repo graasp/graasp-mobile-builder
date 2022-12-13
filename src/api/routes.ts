@@ -24,6 +24,8 @@ export const buildUploadFilesRoute = (parentId?: UUID) =>
   parentId
     ? `${API_HOST}/${ITEMS_ROUTE}/upload?id=${parentId}`
     : `${API_HOST}/${ITEMS_ROUTE}/upload`;
+export const buildUploadAvatarImageRoute = (id: UUID) =>
+  `${API_HOST}/${MEMBERS_ROUTE}/avatars/upload?id=${id}`;
 export const GET_CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
 export const buildSignInPath = (to: any) => {
   const queryString = qs.stringify({ to }, { addQueryPrefix: true });
