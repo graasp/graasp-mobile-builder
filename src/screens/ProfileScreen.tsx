@@ -1,11 +1,13 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
 import React, { FC, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Text, Avatar } from 'react-native-elements';
+import { Alert, ScrollView, StyleSheet } from 'react-native';
+import { Text, Avatar, Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
 
 import * as Api from '../api';
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -14,6 +16,10 @@ import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 import { formatDate } from '../utils/functions/date';
 import { getUserToken } from '../utils/functions/token';
+import { STATUS_CODES_OK } from '../config/constants/constants';
+import {
+  buildUploadAvatarImageRoute,
+} from '../api/routes';
 
 type ProfileStackProfileProps = CompositeScreenProps<
   StackScreenProps<
@@ -25,8 +31,13 @@ type ProfileStackProfileProps = CompositeScreenProps<
 >;
 
 const ProfileScreen: FC<ProfileStackProfileProps> = () => {
-  const { data: currentMember, isLoading, isError } = useCurrentMember();
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
+  const {
+    data: currentMember,
+    isLoading,
+    isError,
+  } = useCurrentMember();
   const userToken: any = getUserToken();
 
   const downloadAvatar = async () => {
@@ -44,8 +55,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           localPath,
         );
         await downloadResumable.downloadAsync();
-
         setLocalPath(localPath);
+        setIsUpdating(false);
       }
     } catch {
       throw new Error();
@@ -62,6 +73,73 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     return <ActivityIndicator />;
   }
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const file = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!file.cancelled) {
+      uploadAvatarImage(file);
+    }
+  };
+
+  const uploadAvatarImage = async (file: any) => {
+    try {
+      setIsUpdating(true);
+      const uploadResponse = await FileSystem.uploadAsync(
+        buildUploadAvatarImageRoute(currentMember.id),
+        file.uri,
+        {
+          httpMethod: 'POST',
+          uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        },
+      );
+      if (!STATUS_CODES_OK.includes(uploadResponse.status)) {
+        throw new Error('Upload file error');
+      }
+      downloadAvatar();
+    } catch {
+      setIsUpdating(false);
+      Alert.alert('Upload error', 'Please try again', [{ text: 'OK' }]);
+    }
+  };
+
+  const handleChangeAvatar = () => {
+    pickImage();
+  };
+
+  let AvatarComponent = null;
+  if (!isUpdating) {
+    if (localPath) {
+      AvatarComponent = (
+        <Avatar
+          rounded
+          size={120}
+          title={currentMember.name.charAt(0)}
+          containerStyle={styles.avatarContainer}
+          source={{
+            uri: localPath,
+          }}
+        />
+      );
+    } else {
+      AvatarComponent = (
+        <Avatar
+          rounded
+          size={120}
+          title={currentMember.name.charAt(0)}
+          containerStyle={styles.avatarContainer}
+        />
+      );
+    }
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -72,23 +150,15 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           paddingHorizontal: 20,
         }}
       >
-        {localPath ? (
+        {isUpdating && (
           <Avatar
             rounded
             size={120}
-            source={{
-              uri: localPath,
-            }}
-            containerStyle={styles.avatarContainer}
-          />
-        ) : (
-          <Avatar
-            size="xlarge"
-            rounded
-            title={currentMember.name.charAt(0)}
+            icon={{ name: 'sync', type: 'material', size: 40 }}
             containerStyle={styles.avatarContainer}
           />
         )}
+        {AvatarComponent}
         <Text h4 style={styles.name}>
           {currentMember.name}
         </Text>
@@ -98,6 +168,16 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         <Text style={styles.value}>{currentMember.email}</Text>
         <Text style={styles.header}>Member Since</Text>
         <Text style={styles.value}>{formatDate(currentMember.createdAt)}</Text>
+
+        <Button
+          title=" Change avatar"
+          style={styles.changeAvatarButton}
+          buttonStyle={{ backgroundColor: '#5050d2' }}
+          icon={
+            <MaterialIcons name={'account-circle'} color="#ffffff" size={25} />
+          }
+          onPress={handleChangeAvatar}
+        ></Button>
       </ScrollView>
     </SafeAreaView>
   );
@@ -128,6 +208,11 @@ const styles = StyleSheet.create({
   avatarContainer: {
     backgroundColor: '#5050d2',
     alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: '#5050d2',
+  },
+  changeAvatarButton: {
+    marginTop: 20,
   },
 });
 

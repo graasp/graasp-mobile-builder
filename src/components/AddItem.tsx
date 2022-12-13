@@ -4,7 +4,6 @@ import * as DocumentPicker from 'expo-document-picker';
 import {} from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import { ImageInfo } from 'expo-image-picker';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -54,7 +53,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
   const uploadImage = async (
     file:
-      | ImageInfo
+      | ImagePicker.ImageInfo
       | Extract<DocumentPicker.DocumentResult, { type: 'success' }>,
   ) => {
     try {
