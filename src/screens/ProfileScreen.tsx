@@ -5,7 +5,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
 import React, { FC, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
-import { Text, Avatar, Button } from 'react-native-elements';
+import { Text, Avatar, Button, Overlay } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -17,9 +17,8 @@ import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 import { formatDate } from '../utils/functions/date';
 import { getUserToken } from '../utils/functions/token';
 import { STATUS_CODES_OK } from '../config/constants/constants';
-import {
-  buildUploadAvatarImageRoute,
-} from '../api/routes';
+import { buildUploadAvatarImageRoute } from '../api/routes';
+import LanguageSelector from '../components/LanguageSelector';
 
 type ProfileStackProfileProps = CompositeScreenProps<
   StackScreenProps<
@@ -33,13 +32,14 @@ type ProfileStackProfileProps = CompositeScreenProps<
 const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
-  const {
-    data: currentMember,
-    isLoading,
-    isError,
-  } = useCurrentMember();
+  const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
+    toggle: boolean;
+  }>({
+    toggle: false,
+  });
+  const { data: currentMember, isLoading, isError } = useCurrentMember();
   const userToken: any = getUserToken();
-
+  console.log(currentMember);
   const downloadAvatar = async () => {
     try {
       if (currentMember) {
@@ -114,6 +114,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     pickImage();
   };
 
+  const handleChangeLanguage = () => {
+    setChangeLanguageModalVisible({ toggle: true });
+  };
+
   let AvatarComponent = null;
   if (!isUpdating) {
     if (localPath) {
@@ -142,6 +146,13 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Overlay
+        overlayStyle={styles.modalEditLanguage}
+        isVisible={changeLanguageModalVisible.toggle}
+        onBackdropPress={() => setChangeLanguageModalVisible({ toggle: false })}
+      >
+        <LanguageSelector currentMember={currentMember} setChangeLanguageModalVisible={setChangeLanguageModalVisible} />
+      </Overlay>
       <ScrollView
         style={{
           flex: 1,
@@ -178,6 +189,14 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           }
           onPress={handleChangeAvatar}
         ></Button>
+
+        <Button
+          title=" Change language"
+          style={styles.changeAvatarButton}
+          buttonStyle={{ backgroundColor: '#5050d2' }}
+          icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}
+          onPress={handleChangeLanguage}
+        ></Button>
       </ScrollView>
     </SafeAreaView>
   );
@@ -213,6 +232,19 @@ const styles = StyleSheet.create({
   },
   changeAvatarButton: {
     marginTop: 20,
+  },
+  modalEditLanguage: {
+    justifyContent: 'center',
+    margin: 0,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 50,
+    alignItems: 'stretch',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
   },
 });
 

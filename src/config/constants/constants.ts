@@ -204,3 +204,8 @@ export const MEDIA_LIBRARY_PERMISSION_STATUS = {
 };
 
 export const STATUS_CODES_OK = [200, 201, 202, 203, 204, 205, 206, 297];
+
+export enum LANGUAGES {
+  EN = 'en',
+  FR = 'fr',
+}
