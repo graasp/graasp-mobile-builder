@@ -33,6 +33,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
+          tabBarActiveTintColor: '#5050d2',
         })}
       />
       <Tab.Screen
@@ -43,6 +44,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="folder-shared" size={size} color={color} />
           ),
+          tabBarActiveTintColor: '#5050d2',
         }}
       />
     </Tab.Navigator>
