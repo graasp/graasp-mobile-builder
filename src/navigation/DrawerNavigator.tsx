@@ -83,6 +83,7 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, focused, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
+          drawerActiveTintColor: '#5050d2',
         })}
       />
       <Drawer.Screen
@@ -93,6 +94,7 @@ const DrawerNavigator = () => {
           drawerIcon: ({ color, focused, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
+          drawerActiveTintColor: '#5050d2',
         }}
       />
     </Drawer.Navigator>
