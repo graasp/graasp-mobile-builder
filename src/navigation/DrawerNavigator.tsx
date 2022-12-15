@@ -34,6 +34,8 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
   const authContext = useAuth();
   const { signOut } = authContext;
+  const { t } = useTranslation();
+
   return (
     <DrawerContentScrollView {...props}>
       <Text h3 style={styles.drawerTitle}>
@@ -44,14 +46,14 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
       />
       <DrawerItemList {...props} />
       <DrawerItem
-        label="Help"
+        label={t('Help')!}
         icon={({ color, size, focused }) => (
           <Feather name="external-link" size={size} color={color} />
         )}
         onPress={() => Linking.openURL('https://graasp.eu/')}
       />
       <DrawerItem
-        label="Log Out"
+        label={t('Log Out')!}
         icon={({ color, size, focused }) => (
           <MaterialIcons name="logout" size={size} color={color} />
         )}

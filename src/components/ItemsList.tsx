@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, FlatList, Share, TouchableOpacity } from 'react-native';
 import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,7 +17,6 @@ import Item from './Item';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
-import { useTranslation } from 'react-i18next';
 
 interface ItemsListProps {
   parentId?: UUID;
