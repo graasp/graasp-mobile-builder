@@ -20,6 +20,7 @@ export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>
   `${MEMBERS_ROUTE}?email=${email}`;
 export const buildGetMember = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
+export const buildEditMemberRoute = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
 export const buildUploadFilesRoute = (parentId?: UUID) =>
   parentId
     ? `${API_HOST}/${ITEMS_ROUTE}/upload?id=${parentId}`

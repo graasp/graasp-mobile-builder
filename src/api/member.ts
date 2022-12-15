@@ -5,8 +5,9 @@ import {
   buildGetMemberBy,
   buildGetMember,
   GET_CURRENT_MEMBER_ROUTE,
+  buildEditMemberRoute,
 } from './routes';
-import { DEFAULT_GET, buildGetItemLoginRoute } from './utils';
+import { DEFAULT_GET, buildGetItemLoginRoute, DEFAULT_PATCH } from './utils';
 
 export const getMemberBy = async ({ email }: { email: string }) => {
   const res = await axiosContentInstance.get(
@@ -36,6 +37,17 @@ export const getItemLogin = async (id: UUID) => {
   const res = await axiosContentInstance.get(
     `${API_HOST}/${buildGetItemLoginRoute(id)}`,
     { ...DEFAULT_GET },
+  );
+  return res.data;
+};
+
+export const editMember = async (newMember: any, userToken: string) => {
+  const res = await axiosContentInstance.patch(
+    `${API_HOST}/${buildEditMemberRoute(newMember.id)}`,
+    newMember,
+    {
+      ...DEFAULT_PATCH(userToken),
+    },
   );
   return res.data;
 };
