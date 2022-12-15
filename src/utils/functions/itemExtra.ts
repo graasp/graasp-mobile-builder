@@ -15,6 +15,9 @@ export const getS3FileExtra = (extra: UnknownExtra) =>
 export const getEmbeddedLinkExtra = (extra: UnknownExtra) =>
   extra?.[ITEM_TYPES.LINK];
 
+export const getLangExtra = (extra: UnknownExtra): string | undefined =>
+  extra?.lang;
+
 export const fileExtraPropTypes = PropTypes.shape({
   mimetype: PropTypes.string.isRequired,
 });
