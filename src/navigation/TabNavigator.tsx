@@ -2,6 +2,7 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import SharedStackNavigator, {
   SharedStackParamList,
@@ -16,6 +17,8 @@ export type TabParamList = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <Tab.Navigator
       id="TabNavigator"
@@ -26,7 +29,7 @@ const TabNavigator = () => {
         name="HomeTab"
         component={StackNavigator}
         options={({ route }) => ({
-          tabBarLabel: 'Home',
+          tabBarLabel: t('Home')!,
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
@@ -36,7 +39,7 @@ const TabNavigator = () => {
         name="SharedTab"
         component={SharedStackNavigator}
         options={{
-          tabBarLabel: 'Shared Items',
+          tabBarLabel: t('Shared Items')!,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="folder-shared" size={size} color={color} />
           ),

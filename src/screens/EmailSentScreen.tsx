@@ -1,6 +1,7 @@
 import { Entypo } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +16,7 @@ type EmailSentProps = StackScreenProps<
 >;
 
 const EmailSentScreen: FC<EmailSentProps> = ({ route }) => {
+  const { t } = useTranslation();
   const authContext = useAuth();
   const signInWithToken = authContext?.signIn;
   const token = route.params?.t;
@@ -36,7 +38,7 @@ const EmailSentScreen: FC<EmailSentProps> = ({ route }) => {
         color="white"
       />
       <Text style={styles.textInput} h4>
-        Please check your email for your login link.
+        {t('Please check your email for your login link.')}
       </Text>
     </SafeAreaView>
   );

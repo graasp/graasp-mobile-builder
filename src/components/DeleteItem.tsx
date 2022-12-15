@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { useMutation } from 'react-query';
@@ -25,6 +26,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
   setDeleteItemModalVisible,
   refresh,
 }) => {
+  const { t } = useTranslation();
   const userToken: any = getUserToken();
   const deleteItemMutation = useMutation({
     ...buildDeleteItem(userToken, refresh),
@@ -41,17 +43,17 @@ const DeleteItem: FC<DeleteItemProps> = ({
 
   return (
     <>
-      <Text style={styles.value}>{`Delete ${item.name}?`}</Text>
+      <Text style={styles.value}>{`${t('Delete')} ${item.name}?`}</Text>
       <View style={styles.deleteItem}>
         <Button
-          title="Delete item"
+          title={t('Delete item')!}
           raised={true}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           onPress={deleteItem}
         />
       </View>
       <Button
-        title="Cancel"
+        title={t('Cancel')!}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelDeleteItem}

@@ -5,6 +5,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Text, Avatar, Button, Overlay } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,6 +33,7 @@ type ProfileStackProfileProps = CompositeScreenProps<
 const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
+  const { t } = useTranslation();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -182,15 +184,15 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         <Text h4 style={styles.name}>
           {currentMember.name}
         </Text>
-        <Text style={styles.header}>Member ID</Text>
+        <Text style={styles.header}>{t('Member ID')}</Text>
         <Text style={styles.value}>{currentMember.id}</Text>
-        <Text style={styles.header}>Email</Text>
+        <Text style={styles.header}>{t('Email')}</Text>
         <Text style={styles.value}>{currentMember.email}</Text>
-        <Text style={styles.header}>Member Since</Text>
+        <Text style={styles.header}>{t('Member Since')}</Text>
         <Text style={styles.value}>{formatDate(currentMember.createdAt)}</Text>
 
         <Button
-          title=" Change avatar"
+          title={t(' Change avatar')!}
           style={styles.changeAvatarButton}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={
@@ -200,7 +202,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title=" Change language"
+          title={t(' Change language')!}
           style={styles.changeAvatarButton}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}

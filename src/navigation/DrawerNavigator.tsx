@@ -8,6 +8,7 @@ import {
 import { NavigatorScreenParams } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
 
@@ -62,6 +63,7 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
 
 const DrawerNavigator = () => {
   const dimensions = useWindowDimensions();
+  const { t } = useTranslation();
 
   return (
     <Drawer.Navigator
@@ -77,7 +79,7 @@ const DrawerNavigator = () => {
         name="HomeDrawer"
         component={HomeDrawerStackNavigator}
         options={({ route }) => ({
-          drawerLabel: 'Home',
+          drawerLabel: t('Home')!,
           drawerIcon: ({ color, focused, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
@@ -87,7 +89,7 @@ const DrawerNavigator = () => {
         name="Profile"
         component={ProfileStackNavigator}
         options={{
-          drawerLabel: 'Profile',
+          drawerLabel: t('Profile')!,
           drawerIcon: ({ color, focused, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),

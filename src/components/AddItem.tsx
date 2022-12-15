@@ -5,6 +5,7 @@ import {} from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -27,6 +28,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const token: any = getUserToken();
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -124,7 +126,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
             <MaterialIcons name="image" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
               <ListItem.Title style={{ flex: 2 }}>
-                Images and videos
+                {t('Images and videos')}
               </ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -136,7 +138,9 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
           >
             <MaterialIcons name="insert-drive-file" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
-              <ListItem.Title style={{ flex: 2 }}>Documents</ListItem.Title>
+              <ListItem.Title style={{ flex: 2 }}>
+                {t('Documents')}
+              </ListItem.Title>
             </ListItem.Content>
           </ListItem>
         </BottomSheetScrollView>

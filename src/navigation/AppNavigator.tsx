@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 
 import { AuthProvider } from '../context/authContext';
 import { AxiosInterceptor } from '../context/axiosInterceptor';
+import { CurrentMemberProvider } from '../context/CurrentMemberContext';
 import RootNavigator, { RootStackParamList } from './RootNavigator';
 
 const AppNavigator = () => {
@@ -27,7 +28,9 @@ const AppNavigator = () => {
       <BottomSheetModalProvider>
         <AuthProvider>
           <AxiosInterceptor>
-            <RootNavigator />
+            <CurrentMemberProvider>
+              <RootNavigator />
+            </CurrentMemberProvider>
           </AxiosInterceptor>
         </AuthProvider>
       </BottomSheetModalProvider>

@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-elements';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
@@ -12,6 +13,7 @@ interface FilePdfProps {
 
 const FilePdf: FC<FilePdfProps> = ({ localPath, handleSaveFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,7 +29,7 @@ const FilePdf: FC<FilePdfProps> = ({ localPath, handleSaveFile }) => {
 
   return (
     <Button
-      title="Save PDF"
+      title={t('Save PDF')!}
       raised={true}
       buttonStyle={{ backgroundColor: '#5050d2' }}
       onPress={handleSaveFile}

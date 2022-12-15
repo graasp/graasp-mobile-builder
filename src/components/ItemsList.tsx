@@ -16,6 +16,7 @@ import Item from './Item';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
+import { useTranslation } from 'react-i18next';
 
 interface ItemsListProps {
   parentId?: UUID;
@@ -58,6 +59,7 @@ const ItemsList: FC<ItemsListProps> = ({
   const snapPoints = useMemo(() => ['40%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<ItemType | null>(null);
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const handlePresentModalPress = useCallback(
     ({ id }: { id: UUID }) => {
@@ -256,7 +258,9 @@ const ItemsList: FC<ItemsListProps> = ({
             >
               <MaterialIcons name="info" size={24} color="grey" />
               <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>Details</ListItem.Title>
+                <ListItem.Title style={{ flex: 2 }}>
+                  {t('Details')}
+                </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
@@ -267,7 +271,7 @@ const ItemsList: FC<ItemsListProps> = ({
             >
               <MaterialIcons name="edit" size={24} color="grey" />
               <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>Edit</ListItem.Title>
+                <ListItem.Title style={{ flex: 2 }}>{t('Edit')}</ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
@@ -278,7 +282,9 @@ const ItemsList: FC<ItemsListProps> = ({
             >
               <MaterialIcons name="delete" size={24} color="grey" />
               <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>Delete</ListItem.Title>
+                <ListItem.Title style={{ flex: 2 }}>
+                  {t('Delete')}
+                </ListItem.Title>
               </ListItem.Content>
             </ListItem>
             <ListItem
@@ -289,7 +295,9 @@ const ItemsList: FC<ItemsListProps> = ({
             >
               <MaterialIcons name="share" size={24} color="grey" />
               <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>Share</ListItem.Title>
+                <ListItem.Title style={{ flex: 2 }}>
+                  {t('Share')}
+                </ListItem.Title>
               </ListItem.Content>
             </ListItem>
           </BottomSheetScrollView>
