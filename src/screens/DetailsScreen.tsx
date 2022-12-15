@@ -1,6 +1,7 @@
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,6 +29,7 @@ type CommonStackDetailProps = CompositeScreenProps<
 
 const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   const { itemId } = route.params;
+  const { t } = useTranslation();
 
   const {
     data: item,
@@ -89,19 +91,19 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
         <Text h4 style={styles.value}>
           {name}
         </Text>
-        <Text style={styles.header}>Type</Text>
+        <Text style={styles.header}>{t('Type')}</Text>
         <Text style={styles.value}>{typeContent}</Text>
         {sizeContent != null && (
           <>
-            <Text style={styles.header}>Size</Text>
+            <Text style={styles.header}>{t('Size')}</Text>
             <Text style={styles.value}>{humanFileSize(sizeContent, true)}</Text>
           </>
         )}
-        <Text style={styles.header}>Creator</Text>
+        <Text style={styles.header}>{t('Creator')}</Text>
         <Text style={styles.value}>{creatorData.name}</Text>
-        <Text style={styles.header}>Created At</Text>
+        <Text style={styles.header}>{t('Creation')}</Text>
         <Text style={styles.value}>{formatDate(createdAt)}</Text>
-        <Text style={styles.header}>Updated At</Text>
+        <Text style={styles.header}>{t('Last update')}</Text>
         <Text style={styles.value}>{formatDate(updatedAt)}</Text>
       </ScrollView>
     </SafeAreaView>

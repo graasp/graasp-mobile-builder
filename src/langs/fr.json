@@ -1,5 +1,39 @@
 {
-  "translations": {
-    
+  "translations" : {
+    "No items found." : "Aucun élément trouvé.",
+    "Delete" : "Supprimer",
+    "Delete item" : "Supprimer l'élément",
+    "Cancel" : "Annuler",
+    "Item name" : "Nom de l'élément",
+    "Edit item" : "Editer l'élément",
+    "Play audio" : "Lire l'audio",
+    "Save PDF" : "Enregistrer le PDF",
+    "Save file" : "Enregistrer le fichier",
+    "Details" : "Détails",
+    "Edit" : "Editer",
+    "Share" : "Partager",
+    "Home" : "Home",
+    "Profile" : "Profil",
+    "Shared Items" : "Eléments partagés",
+    "Type" : "Type",
+    "Size" : "Taille",
+    "Creator" : "Creator",
+    "Creation" : "Creation",
+    "Last update" : "Last update",
+    "Please check your email for your login link." : "Veuillez vérifier votre email pour votre lien de connexion",
+    "Member ID" : "Member ID",
+    "Email" : "Email",
+    "Member Since" : "Membre depuis",
+    " Change avatar" : " Changer d'avatar",
+    " Change language" : " Changer de langue",
+    "Name" : "Nom",
+    "name" : "nom",
+    "Email address" : "Adresse e-mail",
+    "Password" : "Mot de passe",
+    "Use password login": "Utiliser le mot de passe pour se connecter",
+    "Use email magic link login": "Utiliser un lien magique pour se connecter",
+    "Don't have an account yet? Sign up now" : "Vous n'avez pas encore de compte ? Sign up now",
+    "Documents": "Documents",
+    "Images and videos": "Images et vidéos"
   }
 }

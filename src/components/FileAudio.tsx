@@ -2,6 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -15,6 +16,7 @@ interface FileAudioProps {
 const FileAudio: FC<FileAudioProps> = ({ localPath, handleSaveFile }) => {
   const [sound, setSound] = useState<any>();
   const navigation = useNavigation<ItemScreenNavigationProp>();
+  const { t } = useTranslation();
 
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync({ uri: localPath });
@@ -46,7 +48,7 @@ const FileAudio: FC<FileAudioProps> = ({ localPath, handleSaveFile }) => {
   return (
     <View style={styles.container}>
       <Button
-        title="Play audio"
+        title={t('Play audio')!}
         raised={true}
         buttonStyle={{ backgroundColor: '#5050d2' }}
         onPress={playSound}

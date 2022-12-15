@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-elements';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
@@ -13,6 +13,7 @@ interface FileImageProps {
 
 const FileImage: FC<FileImageProps> = ({ handleSaveFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,7 +29,7 @@ const FileImage: FC<FileImageProps> = ({ handleSaveFile }) => {
 
   return (
     <Button
-      title="Save file"
+      title={t('Save file')!}
       raised={true}
       buttonStyle={{ backgroundColor: '#5050d2' }}
       onPress={handleSaveFile}

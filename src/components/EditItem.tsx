@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Input } from 'react-native-elements';
 import { useMutation } from 'react-query';
 
@@ -25,6 +26,7 @@ const EditItem: FC<EditItemProps> = ({
   refresh,
 }) => {
   const [itemName, setItemName] = useState<string | undefined>(item.name);
+  const { t } = useTranslation();
   const userToken: any = getUserToken();
   const editItemMutation = useMutation({
     ...buildEditItem(userToken, refresh),
@@ -39,8 +41,8 @@ const EditItem: FC<EditItemProps> = ({
   return (
     <>
       <Input
-        label="Item name"
-        placeholder="Item name"
+        label={t('Item name')}
+        placeholder={t('Item name')!}
         onChangeText={(value) => setItemName(value)}
         value={itemName}
         underlineColorAndroid={'black'}
@@ -54,7 +56,7 @@ const EditItem: FC<EditItemProps> = ({
         autoCompleteType={undefined}
       />
       <Button
-        title="Edit item"
+        title={t('Edit item')!}
         raised={true}
         buttonStyle={{ backgroundColor: '#5050d2' }}
         onPress={mutateItem}

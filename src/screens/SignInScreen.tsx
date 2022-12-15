@@ -1,5 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Input, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,6 +25,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loginType, setLoginType] = useState<LOGIN_TYPE>(LOGIN_TYPE.EMAIL_LINK);
+  const { t } = useTranslation();
   const isSignUp = Boolean(params?.signUp);
   const { run, isLoading } = useAsync(null);
   const authContext = useAuth();
@@ -95,8 +97,8 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
       <ScrollView>
         {isSignUp && (
           <Input
-            label="Name"
-            placeholder="name"
+            label={t('Name')}
+            placeholder={t('name')!}
             inputStyle={styles.textInput}
             onChangeText={(value) => setName(value)}
             value={name}
@@ -112,7 +114,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
           />
         )}
         <Input
-          label="Email address"
+          label={t('Email address')}
           placeholder="email@example.com"
           inputStyle={styles.textInput}
           onChangeText={(value) => setEmail(value.toLowerCase())}
@@ -129,7 +131,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
         />
         {!isSignUp && loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
           <Input
-            label="Password"
+            label={t('Password')}
             secureTextEntry={true}
             inputStyle={styles.textInput}
             onChangeText={(value) => setPassword(value)}
@@ -178,7 +180,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
                 }}
                 onPress={() => setLoginType(LOGIN_TYPE.EMAIL_LINK)}
               >
-                Change to email login {'->'}
+                {t('Use email magic link login')} {'->'}
               </Text>
             )}
             {loginType === LOGIN_TYPE.EMAIL_LINK && (
@@ -191,7 +193,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
                 }}
                 onPress={() => setLoginType(LOGIN_TYPE.EMAIL_PASSWORD)}
               >
-                Change to password login {'->'}
+                {t('Use password login')} {'->'}
               </Text>
             )}
           </>
@@ -206,7 +208,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
             }}
             onPress={() => navigation.push('SignIn', { signUp: true })}
           >
-            Don't have an account yet? Sign up now {'->'}
+            {t("Don't have an account yet? Sign up now")} {'->'}
           </Text>
         )}
       </ScrollView>

@@ -1,10 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 
 const EmptyList = () => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
-      <Text>No items found.</Text>
+      <Text>{t('No items found.')}</Text>
     </View>
   );
 };
