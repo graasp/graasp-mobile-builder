@@ -3,22 +3,22 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Text, Avatar, Button, Overlay } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as ImagePicker from 'expo-image-picker';
 
 import * as Api from '../api';
+import { buildUploadAvatarImageRoute } from '../api/routes';
 import ActivityIndicator from '../components/ActivityIndicator';
+import LanguageSelector from '../components/LanguageSelector';
+import { STATUS_CODES_OK } from '../config/constants/constants';
 import { useCurrentMember } from '../hooks/member';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 import { formatDate } from '../utils/functions/date';
 import { getUserToken } from '../utils/functions/token';
-import { STATUS_CODES_OK } from '../config/constants/constants';
-import { buildUploadAvatarImageRoute } from '../api/routes';
-import LanguageSelector from '../components/LanguageSelector';
 
 type ProfileStackProfileProps = CompositeScreenProps<
   StackScreenProps<
@@ -37,7 +37,12 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   }>({
     toggle: false,
   });
-  const { data: currentMember, isLoading, isError } = useCurrentMember();
+  const {
+    data: currentMember,
+    isLoading,
+    isError,
+    refetch,
+  } = useCurrentMember();
   const userToken: any = getUserToken();
   console.log(currentMember);
   const downloadAvatar = async () => {
@@ -151,7 +156,11 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         isVisible={changeLanguageModalVisible.toggle}
         onBackdropPress={() => setChangeLanguageModalVisible({ toggle: false })}
       >
-        <LanguageSelector currentMember={currentMember} setChangeLanguageModalVisible={setChangeLanguageModalVisible} />
+        <LanguageSelector
+          currentMember={currentMember}
+          setChangeLanguageModalVisible={setChangeLanguageModalVisible}
+          refresh={refetch}
+        />
       </Overlay>
       <ScrollView
         style={{

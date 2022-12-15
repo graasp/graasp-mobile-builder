@@ -1,5 +1,7 @@
+import { Member } from '@graasp/sdk';
+
 import * as Api from '../api';
-import { buildItemKey } from '../config/keys';
+import { buildCurrentMemberIdKey, buildItemKey } from '../config/keys';
 import queryClient from '../config/queryClient';
 import { Item, UUID } from '../types';
 
@@ -20,5 +22,14 @@ export const buildDeleteItem = (userToken: any, refresh: () => void) => ({
   onSuccess: (item: Item) => {
     refresh();
     queryClient.setQueryData(buildItemKey(item.id), item);
+  },
+});
+
+export const buildEditMember = (userToken: any, refresh: () => void) => ({
+  mutationFn: async (newMember: Partial<Member>) => {
+    return Api.editMember(newMember, userToken).then((data) => data);
+  },
+  onSuccess: () => {
+    refresh();
   },
 });

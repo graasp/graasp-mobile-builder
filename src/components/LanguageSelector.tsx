@@ -2,25 +2,44 @@ import { Member } from '@graasp/sdk';
 import React, { FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
+import { useMutation } from 'react-query';
+
 import { LANGUAGES } from '../config/constants/constants';
+import { buildEditMember } from '../mutations/utils';
 import { getLangExtra } from '../utils/functions/itemExtra';
+import { getUserToken } from '../utils/functions/token';
 
 interface LanguageSelectorProps {
   currentMember: Member;
   setChangeLanguageModalVisible: React.Dispatch<
-  React.SetStateAction<{
-    toggle: boolean;
-  }>
->;
+    React.SetStateAction<{
+      toggle: boolean;
+    }>
+  >;
+  refresh: () => void;
 }
 
-const LanguageSelector: FC<LanguageSelectorProps> = ({ currentMember, setChangeLanguageModalVisible }) => {
+const LanguageSelector: FC<LanguageSelectorProps> = ({
+  currentMember,
+  setChangeLanguageModalVisible,
+  refresh,
+}) => {
   const lang = getLangExtra(currentMember.extra);
-
-  const [checkBoxOption, setCheckBoxOption] = useState<string>(lang || LANGUAGES.EN);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(
+    lang || LANGUAGES.EN,
+  );
+  const userToken: any = getUserToken();
+  const editMemberMutation = useMutation({
+    ...buildEditMember(userToken, refresh),
+  });
 
   const acceptChangeLanguage = () => {
-    // TODO: mutation to change language
+    editMemberMutation.mutate({
+      id: currentMember.id,
+      extra: {
+        lang: `${selectedLanguage}`,
+      },
+    });
     setChangeLanguageModalVisible({ toggle: false });
   };
 
@@ -38,8 +57,8 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ currentMember, setChangeL
         uncheckedIcon="circle-o"
         checkedColor="#5050d2"
         containerStyle={styles.checkBoxContainer}
-        checked={Boolean(checkBoxOption === LANGUAGES.EN)}
-        onPress={() => setCheckBoxOption(LANGUAGES.EN)}
+        checked={Boolean(selectedLanguage === LANGUAGES.EN)}
+        onPress={() => setSelectedLanguage(LANGUAGES.EN)}
       />
       <CheckBox
         center
@@ -48,8 +67,8 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ currentMember, setChangeL
         uncheckedIcon="circle-o"
         checkedColor="#5050d2"
         containerStyle={styles.checkBoxContainer}
-        checked={Boolean(checkBoxOption === LANGUAGES.FR)}
-        onPress={() => setCheckBoxOption(LANGUAGES.FR)}
+        checked={Boolean(selectedLanguage === LANGUAGES.FR)}
+        onPress={() => setSelectedLanguage(LANGUAGES.FR)}
       />
       <View style={styles.acceptChangeLanguageButton}>
         <Button
