@@ -33,3 +33,7 @@ export const buildSignInPath = (to: any) => {
   return `signin${queryString}`;
 };
 export const SIGN_OUT_ROUTE = 'logout';
+export const buildGraaspAssetsPdfViewerRoute = (filePath: string) =>
+  `https://assets.graasp.org/pdf-viewer/web/viewer.html?file=${encodeURIComponent(
+    filePath,
+  )}`;

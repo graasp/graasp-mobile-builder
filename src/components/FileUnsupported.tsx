@@ -7,11 +7,11 @@ import { Button } from 'react-native-elements';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 
 interface FileImageProps {
-  localPath: string;
-  handleSaveFile: () => void;
+  filePath: string;
+  handleShareFile: () => void;
 }
 
-const FileImage: FC<FileImageProps> = ({ handleSaveFile }) => {
+const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
 
@@ -21,7 +21,7 @@ const FileImage: FC<FileImageProps> = ({ handleSaveFile }) => {
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={handleSaveFile}
+          onPress={handleShareFile}
         ></Button>
       ),
     });
@@ -32,7 +32,7 @@ const FileImage: FC<FileImageProps> = ({ handleSaveFile }) => {
       title={t('Save file')!}
       raised={true}
       buttonStyle={{ backgroundColor: '#5050d2' }}
-      onPress={handleSaveFile}
+      onPress={handleShareFile}
       icon={
         <MaterialIcons
           name={'save'}
