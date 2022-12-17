@@ -8,15 +8,15 @@ import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { saveMedia } from '../utils/functions/media';
 
 interface FileImageProps {
-  localPath: string;
-  handleSaveFile: () => void;
+  filePath: string;
+  handleShareFile: () => void;
 }
 
-const FileImage: FC<FileImageProps> = ({ localPath, handleSaveFile }) => {
+const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
 
   const handleSaveImage = () => {
-    saveMedia(localPath);
+    saveMedia(filePath);
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const FileImage: FC<FileImageProps> = ({ localPath, handleSaveFile }) => {
             icon={
               <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
             }
-            onPress={handleSaveFile}
+            onPress={handleShareFile}
           ></Button>
         </View>
       ),
@@ -45,7 +45,7 @@ const FileImage: FC<FileImageProps> = ({ localPath, handleSaveFile }) => {
       resizeMode="contain"
       style={styles.image}
       source={{
-        uri: localPath,
+        uri: filePath,
       }}
     />
   );

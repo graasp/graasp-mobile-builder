@@ -9,17 +9,17 @@ import { Button } from 'react-native-elements';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 
 interface FileAudioProps {
-  localPath: string;
-  handleSaveFile: () => void;
+  filePath: string;
+  handleShareFile: () => void;
 }
 
-const FileAudio: FC<FileAudioProps> = ({ localPath, handleSaveFile }) => {
+const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
   const [sound, setSound] = useState<any>();
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
 
   async function playSound() {
-    const { sound } = await Audio.Sound.createAsync({ uri: localPath });
+    const { sound } = await Audio.Sound.createAsync({ uri: filePath });
     setSound(sound);
     await sound.playAsync();
   }
@@ -39,7 +39,7 @@ const FileAudio: FC<FileAudioProps> = ({ localPath, handleSaveFile }) => {
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={handleSaveFile}
+          onPress={handleShareFile}
         ></Button>
       ),
     });
