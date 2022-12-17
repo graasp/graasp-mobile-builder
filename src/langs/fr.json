@@ -34,6 +34,8 @@
     "Use email magic link login": "Utiliser un lien magique pour se connecter",
     "Don't have an account yet? Sign up now" : "Vous n'avez pas encore de compte ? Sign up now",
     "Documents": "Documents",
-    "Images and videos": "Images et vidéos"
+    "Images and videos": "Images et vidéos",
+    "Help": "Aide",
+    "Log out": "Déconnexion"
   }
 }
