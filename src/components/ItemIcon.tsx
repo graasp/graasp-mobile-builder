@@ -1,5 +1,4 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { ItemType, UnknownExtra } from '@graasp/sdk';
 import React, { FC } from 'react';
 import { Image } from 'react-native';
 
@@ -8,6 +7,7 @@ import {
   ITEMS_TABLE_ROW_ICON_COLOR,
   MIME_TYPES,
 } from '../config/constants/constants';
+import { ItemType, UnknownExtra } from '../types';
 import {
   getEmbeddedLinkExtra,
   getS3FileExtra,

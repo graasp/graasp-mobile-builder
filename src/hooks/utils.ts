@@ -1,5 +1,3 @@
-import { Member } from '@graasp/sdk';
-
 import * as Api from '../api';
 import {
   STALE_TIME_MILLISECONDS,
@@ -15,7 +13,7 @@ import {
   OWN_ITEMS_KEY,
   SHARED_ITEMS_KEY,
 } from '../config/keys';
-import { Item, UUID } from '../types';
+import { Item, Member, UUID } from '../types';
 
 const itemQueryConfig = {
   staleTime: STALE_TIME_MILLISECONDS, // time until data in cache considered stale if cache not invalidated

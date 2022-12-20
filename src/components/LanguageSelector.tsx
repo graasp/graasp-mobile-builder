@@ -1,4 +1,3 @@
-import { Member } from '@graasp/sdk';
 import React, { FC, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
@@ -6,6 +5,7 @@ import { useMutation } from 'react-query';
 
 import { LANGUAGES } from '../config/constants/constants';
 import { buildEditMember } from '../mutations/utils';
+import { Member } from '../types';
 import { getLangExtra } from '../utils/functions/itemExtra';
 import { getUserToken } from '../utils/functions/token';
 

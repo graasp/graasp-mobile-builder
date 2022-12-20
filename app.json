@@ -21,7 +21,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.graasp.mobile",
-      "version": "0.1.0",
       "buildNumber": "6"
     },
     "android": {

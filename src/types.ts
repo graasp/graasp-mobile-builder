@@ -1,4 +1,3 @@
-import { ItemType } from '@graasp/sdk';
 
 export type UUID = string;
 
@@ -38,6 +37,17 @@ export interface ItemSettings extends Serializable {
   hasThumbnail?: boolean;
 }
 
+export enum ItemType {
+  APP = 'app',
+  DOCUMENT = 'document',
+  FOLDER = 'folder',
+  LINK = 'embeddedLink',
+  LOCAL_FILE = 'file',
+  S3_FILE = 's3File',
+  SHORTCUT = 'shortcut',
+  H5P = 'h5p',
+}
+
 export interface Item<T extends UnknownExtra = UnknownExtra, S = ItemSettings> {
   id: string;
   name: string;
@@ -49,6 +59,25 @@ export interface Item<T extends UnknownExtra = UnknownExtra, S = ItemSettings> {
   creator: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export enum MemberType {
+  Individual = 'individual',
+  Group = 'group',
+}
+
+export interface Actor {
+  id: string;
+}
+
+export interface Member<E extends UnknownExtra = UnknownExtra> extends Actor {
+  name: string;
+  email: string;
+  type: MemberType;
+  extra: E;
+  createdAt: string;
+  updatedAt: string;
+  password?: string;
 }
 
 export interface S3FileItemExtra extends UnknownExtra {
