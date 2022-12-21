@@ -1,8 +1,6 @@
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { LogBox, AppState } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClientProvider, focusManager } from 'react-query';
