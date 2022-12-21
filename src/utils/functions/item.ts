@@ -1,6 +1,9 @@
-
-
-import { ItemType, S3FileItemExtra, S3FileItemExtraProp, UUID } from '../../types';
+import {
+  ItemType,
+  S3FileItemExtra,
+  S3FileItemExtraProp,
+  UUID,
+} from '../../types';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id: UUID) => id.replace(/\-/g, '_');
