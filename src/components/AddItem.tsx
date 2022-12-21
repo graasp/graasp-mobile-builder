@@ -83,7 +83,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   };
 
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+    console.log('handleAddItemSheetChanges', index);
   }, []);
 
   const handleAddImageOrVideoPress = () => {

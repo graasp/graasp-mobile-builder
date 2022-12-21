@@ -24,8 +24,8 @@ const PlayerView: FC<PlayerViewProps> = ({ itemId }) => {
   return (
     <View>
       {children.map((item) => (
-        <View style={styles.item}>
-          <PlayerItem key={item.id} item={item} />
+        <View key={item.id} style={styles.item}>
+          <PlayerItem item={item} />
         </View>
       ))}
     </View>
