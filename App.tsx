@@ -32,11 +32,7 @@ function App() {
       <I18nextProvider i18n={i18nConfig}>
         <SafeAreaProvider>
           <RootSiblingParent>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <BottomSheetModalProvider>
-                <AppNavigator />
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
+            <AppNavigator />
           </RootSiblingParent>
         </SafeAreaProvider>
       </I18nextProvider>
