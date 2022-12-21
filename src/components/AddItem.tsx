@@ -94,9 +94,9 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     pickDocument();
   };
 
-  const handleOpenBottomSheetAddItemModal = () => {
+  const handleOpenBottomSheetAddItemModal = useCallback(() => {
     bottomSheetAddItemModalRef.current?.present();
-  };
+  }, []);
 
   return (
     <>

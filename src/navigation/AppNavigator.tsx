@@ -1,6 +1,8 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { Text } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { CurrentMemberProvider } from '../context/CurrentMemberContext';
 import { AuthProvider } from '../context/authContext';
@@ -27,7 +29,11 @@ const AppNavigator = () => {
       <AuthProvider>
         <AxiosInterceptor>
           <CurrentMemberProvider>
-            <RootNavigator />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <BottomSheetModalProvider>
+                <RootNavigator />
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
           </CurrentMemberProvider>
         </AxiosInterceptor>
       </AuthProvider>
