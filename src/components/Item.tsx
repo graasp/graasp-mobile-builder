@@ -60,9 +60,8 @@ const Item: FC<ItemProps> = ({
       <Pressable onPress={handleItemPress} style={{ flex: 2 }}>
         {renderListItem()}
       </Pressable>
-      {
-        openOptions && (
-          <Icon
+      {openOptions && (
+        <Icon
           type="material"
           name="more-vert"
           size={24}
@@ -71,8 +70,7 @@ const Item: FC<ItemProps> = ({
           containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
           tvParallaxProperties={undefined}
         />
-        )
-      }
+      )}
     </View>
   );
 };
