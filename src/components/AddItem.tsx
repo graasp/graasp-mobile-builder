@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import { buildUploadFilesRoute } from '../api/routes';
 import { STATUS_CODES_OK } from '../config/constants/constants';
@@ -76,9 +77,19 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
       }
       refresh();
       setIsUploading(false);
+      Toast.show({
+        type: 'success',
+        text1: t('Success')!,
+        text2: t('File uploaded correctly')!
+      });
     } catch {
       setIsUploading(false);
-      Alert.alert('Upload error', 'Please try again', [{ text: 'OK' }]);
+      Toast.show({
+        type: 'error',
+        text1: t('Error')!,
+        text2: t('There was an error uploading the file')!
+      });
+      Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
     }
   };
 
