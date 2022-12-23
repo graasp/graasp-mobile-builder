@@ -7,11 +7,7 @@ import { StyleSheet, FlatList, Share } from 'react-native';
 import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import {
-  ITEM_TYPES,
-  SHARE_HOST,
-  SHARE_OPTIONS,
-} from '../config/constants/constants';
+import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
 import AddItem from './AddItem';
@@ -19,7 +15,6 @@ import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
-import PlayerView from './PlayerView';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
 
@@ -62,8 +57,6 @@ const ItemsList: FC<ItemsListProps> = ({
   const navigation = useNavigation<HomeStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
-  const bottomSheetPlayerViewModalRef = useRef<BottomSheetModal>(null);
-  const snapPointsPlayerViewModal = useMemo(() => ['100%'], []);
   const [itemSelected, setItemSelected] = useState<ItemType | null>(null);
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -81,16 +74,8 @@ const ItemsList: FC<ItemsListProps> = ({
     [items],
   );
 
-  const handlePresentPlayerViewModalPress = useCallback(() => {
-    bottomSheetPlayerViewModalRef.current?.present();
-  }, []);
-
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
-  }, []);
-
-  const handlePlayerViewSheetChanges = useCallback((index: number) => {
-    console.log('handlePlayerViewSheetChanges', index);
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
@@ -129,10 +114,6 @@ const ItemsList: FC<ItemsListProps> = ({
       screen: 'CommonStackDetail',
       params: { itemId },
     });
-  };
-
-  const handlePlayerViewPress = () => {
-    handlePresentPlayerViewModalPress();
   };
 
   const handleEditItemPress = ({ itemId }: { itemId: UUID }) => {
@@ -282,25 +263,6 @@ const ItemsList: FC<ItemsListProps> = ({
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>
-            {itemSelected.type === ITEM_TYPES.FOLDER && (
-              <ListItem
-                onPress={() => handlePlayerViewPress()}
-                style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
-              >
-                <MaterialIcons
-                  name="play-circle-outline"
-                  size={24}
-                  color="grey"
-                />
-                <ListItem.Content style={{ flexDirection: 'row' }}>
-                  <ListItem.Title style={{ flex: 2 }}>
-                    {t('Player view')}
-                  </ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-            )}
             <ListItem
               onPress={() => handleEditItemPress({ itemId: itemSelected.id })}
               style={{ paddingLeft: insets.left }}
@@ -340,66 +302,6 @@ const ItemsList: FC<ItemsListProps> = ({
             </ListItem>
           </BottomSheetScrollView>
         )}
-      </BottomSheetModal>
-      <BottomSheetModal
-        ref={bottomSheetPlayerViewModalRef}
-        style={styles.bottomSheetModal}
-        index={0}
-        snapPoints={snapPointsPlayerViewModal}
-        onChange={handlePlayerViewSheetChanges}
-        backdropComponent={({ animatedIndex, style: backDropStyle }) => (
-          <CustomBackdrop
-            animatedIndex={animatedIndex}
-            style={backDropStyle}
-            onBackDropPressed={() =>
-              bottomSheetPlayerViewModalRef.current?.close()
-            }
-          />
-        )}
-      >
-        {itemSelected && Boolean(itemSelected?.name) && (
-          <>
-            <ListItem
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <ItemIcon
-                type={itemSelected.type}
-                extra={itemSelected.extra}
-                name={itemSelected.name}
-              />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {itemSelected.name}
-                </ListItem.Title>
-              </ListItem.Content>
-              <Button
-                raised={false}
-                buttonStyle={{ backgroundColor: '#fff' }}
-                onPress={() => bottomSheetPlayerViewModalRef.current?.close()}
-                icon={
-                  <MaterialIcons
-                    name={'close'}
-                    color="#000"
-                    size={20}
-                    style={{ paddingRight: 3 }}
-                  />
-                }
-              ></Button>
-            </ListItem>
-
-            <Divider
-              style={{
-                width: '100%',
-                marginLeft: insets.left,
-              }}
-            />
-          </>
-        )}
-        <BottomSheetScrollView contentContainerStyle={null}>
-          {itemSelected && <PlayerView itemId={itemSelected?.id} />}
-        </BottomSheetScrollView>
       </BottomSheetModal>
       {!isSharedScreen && <AddItem parentId={parentId} refresh={refresh} />}
     </>

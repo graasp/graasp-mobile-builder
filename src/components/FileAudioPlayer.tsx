@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginLeft: 40,
-    marginRight: 40
+    marginRight: 40,
   },
 });
 
