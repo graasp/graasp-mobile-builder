@@ -36,7 +36,9 @@
     "Documents": "Documents",
     "Images and videos": "Images et vidéos",
     "Help": "Aide",
-    "Log out": "Déconnexion",
-    "Player view": "Player view"
+    "Log Out": "Déconnexion",
+    "Player view": "Player view",
+    "content": "contenu",
+    "folders": "folders"
   }
 }
