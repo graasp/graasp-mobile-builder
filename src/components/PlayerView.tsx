@@ -7,6 +7,7 @@ import { divideContentAndFolderItems } from '../utils/functions/item';
 import Item from './Item';
 import PlayerItem from './PlayerItem';
 import EmptyList from './common/EmptyList';
+import { useTranslation } from 'react-i18next';
 
 interface PlayerViewProps {
   children: ItemType[];
@@ -18,6 +19,7 @@ const PlayerView: FC<PlayerViewProps> = ({ children }) => {
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [folderItems, setFolderItems] = useState<ItemType[] | null>(null);
   const [contentItems, setContentItems] = useState<ItemType[] | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (children) {
@@ -47,12 +49,12 @@ const PlayerView: FC<PlayerViewProps> = ({ children }) => {
           indicatorStyle={{ backgroundColor: '#5050d2' }}
         >
           <Tab.Item
-            title="content"
+            title={t('content')!}
             buttonStyle={styles.tabButton}
             titleStyle={styles.tabTitle}
           />
           <Tab.Item
-            title="folders"
+            title={t('folders')!}
             buttonStyle={styles.tabButton}
             titleStyle={styles.tabTitle}
           />
