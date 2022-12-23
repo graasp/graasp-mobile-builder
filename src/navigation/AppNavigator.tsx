@@ -3,6 +3,7 @@ import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import { Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 
 import { CurrentMemberProvider } from '../context/CurrentMemberContext';
 import { ViewProvider } from '../context/ViewContext';
@@ -34,6 +35,7 @@ const AppNavigator = () => {
               <GestureHandlerRootView style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
                   <RootNavigator />
+                    <Toast />
                 </BottomSheetModalProvider>
               </GestureHandlerRootView>
             </ViewProvider>

@@ -39,6 +39,17 @@
     "Log Out": "Déconnexion",
     "Player view": "Player view",
     "content": "contenu",
-    "folders": "folders"
+    "Success": "Succès",
+    "Avatar updated correctly": "Avatar mis à jour correctement",
+    "Error": "Erreur",
+    "There was an error updating the avatar": "Une erreur s'est produite lors de la mise à jour de l'avatar",
+    "Upload error": "Erreur de téléchargement",
+    "Please try again": "Veuillez réessayer",
+    "File uploaded correctly": "Fichier téléchargé correctement",
+    "There was an error uploading the file": "Une erreur s'est produite lors du téléchargement du fichier",
+    "Saved correctly in your media gallery": "Enregistré correctement dans votre galerie de médias",
+    "There was an error saving the file": "Une erreur s'est produite lors de l'enregistrement du fichier",
+    "You need to allow photos permission to Graasp": "Vous devez autoriser les photos à Graasp",
+    "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Allez dans Paramètres > Graasp > Photos > Sélectionnez \"Toutes les photos\""
   }
 }

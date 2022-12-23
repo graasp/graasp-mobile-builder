@@ -1,6 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Image, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -14,9 +15,10 @@ interface FileImageProps {
 
 const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
+  const { t } = useTranslation();
 
   const handleSaveImage = () => {
-    saveMedia(filePath);
+    saveMedia(filePath, t);
   };
 
   useEffect(() => {

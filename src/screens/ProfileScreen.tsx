@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet } from 'react-native';
 import { Text, Avatar, Button, Overlay } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import * as Api from '../api';
 import { buildUploadAvatarImageRoute } from '../api/routes';
@@ -110,10 +111,20 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       if (!STATUS_CODES_OK.includes(uploadResponse.status)) {
         throw new Error('Upload file error');
       }
+      Toast.show({
+        type: 'success',
+        text1: t('Success')!,
+        text2: t('Avatar updated correctly')!
+      });
       downloadAvatar();
     } catch {
       setIsUpdating(false);
-      Alert.alert('Upload error', 'Please try again', [{ text: 'OK' }]);
+      Toast.show({
+        type: 'error',
+        text1: t('Error')!,
+        text2: t('There was an error updating the avatar')!
+      });
+      Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
     }
   };
 
