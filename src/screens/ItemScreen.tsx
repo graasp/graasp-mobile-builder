@@ -61,7 +61,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
             cacheEnabled={true}
             style={{
               width: dimensions.width - insets.left,
-              height: 400,
+              height: '100%',
               marginLeft: insets.left,
               marginBottom: insets.bottom,
             }}
@@ -76,9 +76,10 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
             scalesPageToFit={false}
             startInLoadingState={true}
             overScrollMode="never"
+            cacheEnabled={true}
             style={{
               width: dimensions.width - insets.left,
-              height: 400,
+              height: '100%',
               marginLeft: insets.left,
             }}
           />

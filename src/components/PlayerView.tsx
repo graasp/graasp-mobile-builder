@@ -31,12 +31,7 @@ const PlayerView: FC<PlayerViewProps> = ({ children }) => {
 
   const renderItem = ({ item }: { item: any }) => {
     return (
-      <Item
-        item={item}
-        openOptions={function ({ id }: { id: string }): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      <Item item={item} />
     );
   };
 

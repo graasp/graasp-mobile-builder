@@ -74,7 +74,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       cacheEnabled={true}
       style={{
         width: dimensions.width - insets.left,
-        height: 400,
+        height: '100%',
         marginLeft: insets.left,
         marginBottom: insets.bottom,
       }}
