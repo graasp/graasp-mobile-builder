@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Dimensions, useWindowDimensions } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -16,6 +16,7 @@ interface PlayerItemProps {
 const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
   const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
+  const height = Dimensions.get('window').height * 0.8;
 
   switch (item.type) {
     case ITEM_TYPES.DOCUMENT: {
@@ -35,7 +36,7 @@ const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
           cacheEnabled={true}
           style={{
             width: dimensions.width - insets.left,
-            height: 400,
+            height: height,
             marginLeft: insets.left,
             marginBottom: insets.bottom,
           }}
@@ -50,9 +51,10 @@ const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
           scalesPageToFit={false}
           startInLoadingState={true}
           overScrollMode="never"
+          cacheEnabled={true}
           style={{
             width: dimensions.width - insets.left,
-            height: 400,
+            height: height,
             marginLeft: insets.left,
           }}
         />

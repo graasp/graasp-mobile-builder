@@ -13,7 +13,7 @@ import ItemIcon from './ItemIcon';
 
 interface ItemProps {
   item: ItemType;
-  openOptions: ({ id }: { id: UUID }) => void;
+  openOptions?: ({ id }: { id: UUID }) => void;
 }
 
 const Item: FC<ItemProps> = ({
@@ -60,15 +60,19 @@ const Item: FC<ItemProps> = ({
       <Pressable onPress={handleItemPress} style={{ flex: 2 }}>
         {renderListItem()}
       </Pressable>
-      <Icon
-        type="material"
-        name="more-vert"
-        size={24}
-        color={ITEMS_TABLE_ROW_ICON_COLOR}
-        onPress={() => openOptions({ id })}
-        containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
-        tvParallaxProperties={undefined}
-      />
+      {
+        openOptions && (
+          <Icon
+          type="material"
+          name="more-vert"
+          size={24}
+          color={ITEMS_TABLE_ROW_ICON_COLOR}
+          onPress={() => openOptions({ id })}
+          containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
+          tvParallaxProperties={undefined}
+        />
+        )
+      }
     </View>
   );
 };
