@@ -80,14 +80,14 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
       Toast.show({
         type: 'success',
         text1: t('Success')!,
-        text2: t('File uploaded correctly')!
+        text2: t('File uploaded correctly')!,
       });
     } catch {
       setIsUploading(false);
       Toast.show({
         type: 'error',
         text1: t('Error')!,
-        text2: t('There was an error uploading the file')!
+        text2: t('There was an error uploading the file')!,
       });
       Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
     }

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { Divider, Tab } from 'react-native-elements';
 
@@ -7,7 +8,6 @@ import { divideContentAndFolderItems } from '../utils/functions/item';
 import Item from './Item';
 import PlayerItem from './PlayerItem';
 import EmptyList from './common/EmptyList';
-import { useTranslation } from 'react-i18next';
 
 interface PlayerViewProps {
   children: ItemType[];
@@ -30,9 +30,7 @@ const PlayerView: FC<PlayerViewProps> = ({ children }) => {
   }, [children]);
 
   const renderItem = ({ item }: { item: any }) => {
-    return (
-      <Item item={item} />
-    );
+    return <Item item={item} />;
   };
 
   return (

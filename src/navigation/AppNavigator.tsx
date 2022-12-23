@@ -35,7 +35,7 @@ const AppNavigator = () => {
               <GestureHandlerRootView style={{ flex: 1 }}>
                 <BottomSheetModalProvider>
                   <RootNavigator />
-                    <Toast />
+                  <Toast />
                 </BottomSheetModalProvider>
               </GestureHandlerRootView>
             </ViewProvider>

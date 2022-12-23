@@ -18,7 +18,7 @@ export const saveMedia = async (uri: string, t: any) => {
       Toast.show({
         type: 'success',
         text1: t('Success')!,
-        text2: t('Saved correctly in your media gallery')!
+        text2: t('Saved correctly in your media gallery')!,
       });
       console.log('Media successfully saved');
     } else {
@@ -32,7 +32,7 @@ export const saveMedia = async (uri: string, t: any) => {
     Toast.show({
       type: 'error',
       text1: t('Error')!,
-      text2: t('There was an error saving the file')!
+      text2: t('There was an error saving the file')!,
     });
     throw new Error();
   }
@@ -55,12 +55,15 @@ export const downloadFileFromS3Url = async (
       localPath = `${FileSystem.documentDirectory}/${itemId}`;
     }
 
-    const downloadResumable = FileSystem.createDownloadResumable(
-      remoteUrl,
-      localPath,
-    );
-    await downloadResumable.downloadAsync();
+    const fileInfo = await FileSystem.getInfoAsync(localPath);
 
+    if (!fileInfo.exists) {
+      const downloadResumable = FileSystem.createDownloadResumable(
+        remoteUrl,
+        localPath,
+      );
+      await downloadResumable.downloadAsync();
+    }
     return localPath;
   } catch {
     throw new Error();

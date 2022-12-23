@@ -114,7 +114,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       Toast.show({
         type: 'success',
         text1: t('Success')!,
-        text2: t('Avatar updated correctly')!
+        text2: t('Avatar updated correctly')!,
       });
       downloadAvatar();
     } catch {
@@ -122,7 +122,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       Toast.show({
         type: 'error',
         text1: t('Error')!,
-        text2: t('There was an error updating the avatar')!
+        text2: t('There was an error updating the avatar')!,
       });
       Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
     }

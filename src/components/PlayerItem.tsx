@@ -36,7 +36,7 @@ const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
           cacheEnabled={true}
           style={{
             width: dimensions.width - insets.left,
-            height: height,
+            height,
             marginLeft: insets.left,
             marginBottom: insets.bottom,
           }}
@@ -54,7 +54,7 @@ const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
           cacheEnabled={true}
           style={{
             width: dimensions.width - insets.left,
-            height: height,
+            height,
             marginLeft: insets.left,
           }}
         />

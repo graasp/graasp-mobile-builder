@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Video, ResizeMode } from 'expo-av';
 import * as Sharing from 'expo-sharing';
 import React, { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -23,13 +24,14 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
   const video = React.useRef(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const handleSaveFileFromS3Url = async () => {
     if (filePath) {
       setIsDownloading(true);
       const localPath = await downloadFileFromS3Url(filePath, itemId, mimetype);
       setIsDownloading(false);
-      saveMedia(localPath);
+      saveMedia(localPath, t);
     }
   };
 
