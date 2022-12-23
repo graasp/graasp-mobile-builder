@@ -1,4 +1,8 @@
+import { useCallback } from 'react';
+
+import { ITEM_TYPES } from '../../config/constants/constants';
 import {
+  Item,
   ItemType,
   S3FileItemExtra,
   S3FileItemExtraProp,
@@ -43,3 +47,15 @@ export const getChildren = (items: any[], id: UUID) =>
 export const getS3FileExtra = (
   extra?: S3FileItemExtra,
 ): S3FileItemExtraProp | undefined => extra?.[ItemType.S3_FILE];
+
+export const divideContentAndFolderItems = (children: Item[]) => {
+  const folders = [];
+  const content = [];
+  for (const item of children) {
+    item.type === ITEM_TYPES.FOLDER ? folders.push(item) : content.push(item);
+  }
+  return {
+    folders,
+    content,
+  };
+};

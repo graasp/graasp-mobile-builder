@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
-import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -12,9 +17,9 @@ const Document: FC<DocumentProps> = ({ content }) => {
   return (
     <SafeAreaView edges={['left']}>
       <View style={styles.container}>
-      <ScrollView>
-        <RenderHtml contentWidth={width} source={{ html: content }} />
-      </ScrollView>
+        <ScrollView>
+          <RenderHtml contentWidth={width} source={{ html: content }} />
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

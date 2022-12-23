@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from 'react-native-elements';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
+import { useView } from '../context/ViewContext';
 import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';
 import ItemScreen from '../screens/ItemScreen';
@@ -18,6 +19,9 @@ export type CommonStackParamList = {
 const CommonStack = createStackNavigator<CommonStackParamList>();
 
 const CommonStackNavigator = () => {
+  const { isPlayerView, setIsPlayerView } = useView();
+  const viewIcon = isPlayerView ? 'folder-open' : 'play-circle-outline';
+
   return (
     <CommonStack.Navigator
       id="CommonStackNavigator"
@@ -35,6 +39,20 @@ const CommonStackNavigator = () => {
           title: headerTitle,
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
+          headerRight: () => (
+            <Button
+              buttonStyle={{ backgroundColor: '#5050d2' }}
+              onPress={() => setIsPlayerView(!isPlayerView)}
+              icon={
+                <MaterialIcons
+                  name={viewIcon}
+                  color="#fff"
+                  size={25}
+                  style={{ paddingRight: 3 }}
+                />
+              }
+            ></Button>
+          ),
         })}
       />
       <CommonStack.Screen
