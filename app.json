@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "graasp-mobile-builder",
-    "slug": "graasp-mobile-builder",
+    "name": "Graasp Builder",
+    "slug": "graasp",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#5050d2"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
