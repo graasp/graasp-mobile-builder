@@ -209,3 +209,10 @@ export enum LANGUAGES {
   EN = 'en',
   FR = 'fr',
 }
+
+export enum TEXT_ALIGNMENT {
+  LEFT = 'left',
+  CENTER = 'center',
+  RIGHT = 'right',
+  JUSTIFY = 'justify',
+}
