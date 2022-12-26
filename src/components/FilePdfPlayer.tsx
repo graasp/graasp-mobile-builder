@@ -21,7 +21,7 @@ const FilePdfPlayer: FC<FilePdfPlayerProps> = ({ filePath }) => {
       startInLoadingState={true}
       overScrollMode="never"
       cacheMode="LOAD_CACHE_ELSE_NETWORK"
-      cacheEnabled={true}
+      cacheEnabled={false}
       style={{
         width: dimensions.width - insets.left,
         height,
