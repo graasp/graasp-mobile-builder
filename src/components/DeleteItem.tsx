@@ -1,3 +1,4 @@
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -17,6 +18,7 @@ interface DeleteItemProps {
       itemId: UUID | null;
     }>
   >;
+  bottomSheetModalRef: React.RefObject<BottomSheetModalMethods>;
   refresh: () => void;
 }
 
@@ -24,6 +26,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
   itemId,
   item,
   setDeleteItemModalVisible,
+  bottomSheetModalRef,
   refresh,
 }) => {
   const { t } = useTranslation();
@@ -35,6 +38,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
   const deleteItem = () => {
     deleteItemMutation.mutate(itemId);
     setDeleteItemModalVisible({ toggle: false, itemId: null });
+    bottomSheetModalRef.current?.close();
   };
 
   const cancelDeleteItem = () => {

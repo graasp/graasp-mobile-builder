@@ -188,6 +188,7 @@ const ItemsList: FC<ItemsListProps> = ({
             itemId={deleteItemModalVisible.itemId}
             item={itemSelected}
             setDeleteItemModalVisible={setDeleteItemModalVisible}
+            bottomSheetModalRef={bottomSheetModalRef}
             refresh={refresh}
           />
         )}
