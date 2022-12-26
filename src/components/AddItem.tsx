@@ -6,8 +6,9 @@ import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, Alert, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -127,34 +128,42 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
           />
         )}
       >
-        <BottomSheetScrollView contentContainerStyle={null}>
-          <ListItem
-            onPress={() => handleAddImageOrVideoPress()}
-            style={{ paddingLeft: insets.left }}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
-          >
-            <MaterialIcons name="image" size={24} color="grey" />
-            <ListItem.Content style={{ flexDirection: 'row' }}>
-              <ListItem.Title style={{ flex: 2 }}>
-                {t('Images and videos')}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-          <ListItem
-            onPress={() => handleAddDocumentPress()}
-            style={{ paddingLeft: insets.left }}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
-          >
-            <MaterialIcons name="insert-drive-file" size={24} color="grey" />
-            <ListItem.Content style={{ flexDirection: 'row' }}>
-              <ListItem.Title style={{ flex: 2 }}>
-                {t('Documents')}
-              </ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        </BottomSheetScrollView>
+        <NativeViewGestureHandler disallowInterruption={true}>
+          <View style={{ flex: 1 }}>
+            <BottomSheetScrollView contentContainerStyle={null}>
+              <ListItem
+                onPress={() => handleAddImageOrVideoPress()}
+                style={{ paddingLeft: insets.left }}
+                hasTVPreferredFocus={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <MaterialIcons name="image" size={24} color="grey" />
+                <ListItem.Content style={{ flexDirection: 'row' }}>
+                  <ListItem.Title style={{ flex: 2 }}>
+                    {t('Images and videos')}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+              <ListItem
+                onPress={() => handleAddDocumentPress()}
+                style={{ paddingLeft: insets.left }}
+                hasTVPreferredFocus={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <MaterialIcons
+                  name="insert-drive-file"
+                  size={24}
+                  color="grey"
+                />
+                <ListItem.Content style={{ flexDirection: 'row' }}>
+                  <ListItem.Title style={{ flex: 2 }}>
+                    {t('Documents')}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            </BottomSheetScrollView>
+          </View>
+        </NativeViewGestureHandler>
       </BottomSheetModal>
 
       {isUploading ? (

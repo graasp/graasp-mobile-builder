@@ -2,7 +2,6 @@ import { CompositeScreenProps, useRoute } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ActivityIndicator from '../components/ActivityIndicator';

@@ -3,8 +3,9 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, FlatList, Share } from 'react-native';
+import { StyleSheet, FlatList, Share, View, Text } from 'react-native';
 import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
@@ -222,87 +223,99 @@ const ItemsList: FC<ItemsListProps> = ({
           />
         )}
       >
-        {itemSelected && Boolean(itemSelected?.name) && (
-          <>
-            <ListItem
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <ItemIcon
-                type={itemSelected.type}
-                extra={itemSelected.extra}
-                name={itemSelected.name}
-              />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {itemSelected.name}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <Divider
-              style={{
-                width: '100%',
-                marginBottom: 10,
-                marginLeft: insets.left,
-              }}
-            />
-          </>
-        )}
-        {itemSelected && (
-          <BottomSheetScrollView contentContainerStyle={null}>
-            <ListItem
-              onPress={() => handleDetailsPress({ itemId: itemSelected.id })}
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <MaterialIcons name="info" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {t('Details')}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              onPress={() => handleEditItemPress({ itemId: itemSelected.id })}
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <MaterialIcons name="edit" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>{t('Edit')}</ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              onPress={() => handleDeleteItemPress({ itemId: itemSelected.id })}
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <MaterialIcons name="delete" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {t('Delete')}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              onPress={() => handleSharePress({ itemId: itemSelected.id })}
-              style={{ paddingLeft: insets.left }}
-              hasTVPreferredFocus={undefined}
-              tvParallaxProperties={undefined}
-            >
-              <MaterialIcons name="share" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {t('Share')}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          </BottomSheetScrollView>
-        )}
+        <NativeViewGestureHandler disallowInterruption={true}>
+          <View style={{ flex: 1 }}>
+            {itemSelected && Boolean(itemSelected?.name) && (
+              <>
+                <ListItem
+                  style={{ paddingLeft: insets.left }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}
+                >
+                  <ItemIcon
+                    type={itemSelected.type}
+                    extra={itemSelected.extra}
+                    name={itemSelected.name}
+                  />
+                  <ListItem.Content style={{ flexDirection: 'row' }}>
+                    <ListItem.Title style={{ flex: 2 }}>
+                      {itemSelected.name}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+                <Divider
+                  style={{
+                    width: '100%',
+                    marginBottom: 10,
+                    marginLeft: insets.left,
+                  }}
+                />
+              </>
+            )}
+            {itemSelected && (
+              <BottomSheetScrollView contentContainerStyle={null}>
+                <ListItem
+                  onPress={() =>
+                    handleDetailsPress({ itemId: itemSelected.id })
+                  }
+                  style={{ paddingLeft: insets.left }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}
+                >
+                  <MaterialIcons name="info" size={24} color="grey" />
+                  <ListItem.Content style={{ flexDirection: 'row' }}>
+                    <ListItem.Title style={{ flex: 2 }}>
+                      {t('Details')}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+                <ListItem
+                  onPress={() =>
+                    handleEditItemPress({ itemId: itemSelected.id })
+                  }
+                  style={{ paddingLeft: insets.left }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}
+                >
+                  <MaterialIcons name="edit" size={24} color="grey" />
+                  <ListItem.Content style={{ flexDirection: 'row' }}>
+                    <ListItem.Title style={{ flex: 2 }}>
+                      {t('Edit')}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+                <ListItem
+                  onPress={() =>
+                    handleDeleteItemPress({ itemId: itemSelected.id })
+                  }
+                  style={{ paddingLeft: insets.left }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}
+                >
+                  <MaterialIcons name="delete" size={24} color="grey" />
+                  <ListItem.Content style={{ flexDirection: 'row' }}>
+                    <ListItem.Title style={{ flex: 2 }}>
+                      {t('Delete')}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+                <ListItem
+                  onPress={() => handleSharePress({ itemId: itemSelected.id })}
+                  style={{ paddingLeft: insets.left }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}
+                >
+                  <MaterialIcons name="share" size={24} color="grey" />
+                  <ListItem.Content style={{ flexDirection: 'row' }}>
+                    <ListItem.Title style={{ flex: 2 }}>
+                      {t('Share')}
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              </BottomSheetScrollView>
+            )}
+          </View>
+        </NativeViewGestureHandler>
       </BottomSheetModal>
       {!isSharedScreen && <AddItem parentId={parentId} refresh={refresh} />}
     </>
