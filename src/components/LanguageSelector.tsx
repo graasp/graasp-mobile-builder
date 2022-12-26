@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 import { useMutation } from 'react-query';
@@ -24,6 +25,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
   setChangeLanguageModalVisible,
   refresh,
 }) => {
+  const { t } = useTranslation();
   const lang = getLangExtra(currentMember.extra);
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
     lang || LANGUAGES.EN,
@@ -72,14 +74,14 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
       />
       <View style={styles.acceptChangeLanguageButton}>
         <Button
-          title="Accept"
+          title={t('Save')!}
           raised={true}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           onPress={acceptChangeLanguage}
         />
       </View>
       <Button
-        title="Cancel"
+        title={t('Cancel')!}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelChangeLanguage}
