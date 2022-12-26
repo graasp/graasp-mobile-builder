@@ -64,7 +64,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
 
 const styles = StyleSheet.create({
   deleteItem: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   value: {
     paddingBottom: 30,
