@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Graasp Builder",
-    "slug": "graasp",
+    "slug": "graasp-mobile-builder",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
