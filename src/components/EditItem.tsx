@@ -58,10 +58,10 @@ const EditItem: FC<EditItemProps> = ({
       />
       <View style={styles.acceptSaveItem}>
         <Button
-        title={t('Save')!}
-        raised={true}
-        buttonStyle={{ backgroundColor: '#5050d2' }}
-        onPress={mutateItem}
+          title={t('Save')!}
+          raised={true}
+          buttonStyle={{ backgroundColor: '#5050d2' }}
+          onPress={mutateItem}
         />
       </View>
       <Button
