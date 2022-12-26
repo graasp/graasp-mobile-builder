@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { TEXT_ALIGNMENT } from '../config/constants/constants';
 
 interface DocumentProps {
