@@ -115,6 +115,8 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
         )}
         <Input
           label={t('Email address')}
+          textContentType="username"
+          autoComplete="email"
           placeholder="email@example.com"
           inputStyle={styles.textInput}
           onChangeText={(value) => setEmail(value.toLowerCase())}
@@ -132,6 +134,8 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
         {!isSignUp && loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
           <Input
             label={t('Password')}
+            textContentType="password"
+            autoComplete="password"
             secureTextEntry={true}
             inputStyle={styles.textInput}
             onChangeText={(value) => setPassword(value)}
