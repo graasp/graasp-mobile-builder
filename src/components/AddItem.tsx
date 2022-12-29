@@ -46,8 +46,8 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
       quality: 1,
     });
 
-    if (!file.cancelled) {
-      uploadImage(file);
+    if (!file.canceled && file.assets && file.assets.length !== 0) {
+      uploadFile(file.assets[0].uri);
       bottomSheetAddItemModalRef.current?.close();
     }
   };
@@ -56,21 +56,17 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     const file = await DocumentPicker.getDocumentAsync();
 
     if (file.type !== 'cancel') {
-      uploadImage(file);
+      uploadFile(file.uri);
       bottomSheetAddItemModalRef.current?.close();
     }
   };
 
-  const uploadImage = async (
-    file:
-      | ImagePicker.ImageInfo
-      | Extract<DocumentPicker.DocumentResult, { type: 'success' }>,
-  ) => {
+  const uploadFile = async (fileUri: string) => {
     try {
       setIsUploading(true);
       const uploadResponse = await FileSystem.uploadAsync(
         buildUploadFilesRoute(parentId),
-        file.uri,
+        fileUri,
         {
           httpMethod: 'POST',
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,

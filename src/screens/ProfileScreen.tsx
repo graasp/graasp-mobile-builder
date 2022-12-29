@@ -105,7 +105,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       quality: 1,
     });
 
-    if (!file.cancelled) {
+    if (!file.canceled) {
       uploadAvatarImage(file);
     }
   };
@@ -128,17 +128,20 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     // Explore the result
     console.log(file);
 
-    if (!file.cancelled) {
+    if (!file.canceled) {
       uploadAvatarImage(file);
     }
   };
 
-  const uploadAvatarImage = async (file: any) => {
+  const uploadAvatarImage = async (file: ImagePicker.ImagePickerResult) => {
     try {
+      if (!file.assets || file.assets.length === 0) {
+        throw new Error('Upload file error');
+      };
       setIsUpdating(true);
       const uploadResponse = await FileSystem.uploadAsync(
         buildUploadAvatarImageRoute(currentMember.id),
-        file.uri,
+        file.assets[0].uri,
         {
           httpMethod: 'POST',
           uploadType: FileSystem.FileSystemUploadType.MULTIPART,
