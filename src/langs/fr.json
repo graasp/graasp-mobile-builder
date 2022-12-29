@@ -51,6 +51,10 @@
     "There was an error saving the file": "Une erreur s'est produite lors de l'enregistrement du fichier",
     "You need to allow photos permission to Graasp": "Vous devez autoriser les photos à Graasp",
     "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Allez dans Paramètres > Graasp > Photos > Sélectionnez \"Toutes les photos\"",
-    "Folder": "Dossier"
+    "Folder": "Dossier",
+    "You need to allow camera permission to Graasp": "Vous devez autoriser la caméra à Graasp",
+    "Go to Settings > Graasp > Activate camera option": "Aller à Réglages > Graasp > Activer l'option caméra",
+    "Take photo": "Prendre une photo",
+    "Select image from media gallery": "Sélectionner une image dans la galerie multimédia"
   }
 }
