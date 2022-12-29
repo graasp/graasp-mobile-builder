@@ -11,9 +11,7 @@ export const buildGetChildrenRoute = (id: UUID) =>
   `${ITEMS_ROUTE}/${id}/children?ordered=true`;
 export const buildGetItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
 export const buildCreateItemRoute = (parentId?: UUID) =>
-  parentId
-  ? `${ITEMS_ROUTE}?parentId=${parentId}`
-  : `${ITEMS_ROUTE}`;
+  parentId ? `${ITEMS_ROUTE}?parentId=${parentId}` : `${ITEMS_ROUTE}`;
 export const buildEditItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
 export const buildGetItemFileUrlRoute = (id: UUID) =>
   `${ITEMS_ROUTE}/${id}/download?replyUrl=true`;

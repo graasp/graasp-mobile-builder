@@ -10,9 +10,11 @@ import { ItemType, UUID } from '../types';
 import { getUserToken } from '../utils/functions/token';
 
 interface CreateFolderProps {
-  setCreateItemModalVisible: React.Dispatch<React.SetStateAction<{
-    toggle: boolean;
-}>>;
+  setCreateItemModalVisible: React.Dispatch<
+    React.SetStateAction<{
+      toggle: boolean;
+    }>
+  >;
   bottomSheetAddItemModalRef: React.RefObject<BottomSheetModalMethods>;
   refresh: () => void;
   parentId?: UUID;
@@ -33,7 +35,10 @@ const CreateFolder: FC<CreateFolderProps> = ({
 
   const mutateItem = () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
-    createItemMutation.mutate({ name: itemNameSingleSpaces, type: ItemType.FOLDER });
+    createItemMutation.mutate({
+      name: itemNameSingleSpaces,
+      type: ItemType.FOLDER,
+    });
     setCreateItemModalVisible({ toggle: false });
     bottomSheetAddItemModalRef.current?.close();
   };

@@ -12,7 +12,12 @@ import {
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
 } from './routes';
-import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_PATCH, DEFAULT_POST } from './utils';
+import {
+  DEFAULT_DELETE,
+  DEFAULT_GET,
+  DEFAULT_PATCH,
+  DEFAULT_POST,
+} from './utils';
 
 export const getItem = async (id: UUID, token?: string) => {
   const res = await axiosContentInstance.get(
@@ -54,7 +59,11 @@ export const getSharedItems = async (token: string) => {
   return res.data;
 };
 
-export const createItem = async (newItem: any, userToken: string, parentId?: UUID) => {
+export const createItem = async (
+  newItem: any,
+  userToken: string,
+  parentId?: UUID,
+) => {
   const res = await axiosContentInstance.post(
     `${API_HOST}/${buildCreateItemRoute(parentId)}`,
     newItem,

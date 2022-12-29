@@ -17,8 +17,8 @@ import { STATUS_CODES_OK } from '../config/constants/constants';
 import { UUID } from '../types';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
-import CustomBackdrop from './common/CustomBackdrop';
 import CreateFolder from './CreateFolder';
+import CustomBackdrop from './common/CustomBackdrop';
 
 interface AddItemProps {
   parentId?: UUID;
@@ -124,14 +124,15 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     <>
       <Overlay
         overlayStyle={styles.modalCreateItemView}
-        isVisible={
-          createItemModalVisible.toggle
-        }
-        onBackdropPress={() =>
-          setCreateItemModalVisible({ toggle: false })
-        }
+        isVisible={createItemModalVisible.toggle}
+        onBackdropPress={() => setCreateItemModalVisible({ toggle: false })}
       >
-        <CreateFolder refresh={refresh} setCreateItemModalVisible={setCreateItemModalVisible} bottomSheetAddItemModalRef={bottomSheetAddItemModalRef} parentId={parentId} />
+        <CreateFolder
+          refresh={refresh}
+          setCreateItemModalVisible={setCreateItemModalVisible}
+          bottomSheetAddItemModalRef={bottomSheetAddItemModalRef}
+          parentId={parentId}
+        />
       </Overlay>
       <BottomSheetModal
         ref={bottomSheetAddItemModalRef}
@@ -152,7 +153,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         <NativeViewGestureHandler disallowInterruption={true}>
           <View style={{ flex: 1 }}>
             <BottomSheetScrollView contentContainerStyle={null}>
-            <ListItem
+              <ListItem
                 onPress={() => handleAddFolderPress()}
                 style={{ paddingLeft: insets.left }}
                 hasTVPreferredFocus={undefined}

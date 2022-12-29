@@ -3,7 +3,11 @@ import { buildItemKey } from '../config/keys';
 import queryClient from '../config/queryClient';
 import { Item, Member, UUID } from '../types';
 
-export const buildCreateItem = (userToken: any, refresh: () => void, parentId?: UUID) => ({
+export const buildCreateItem = (
+  userToken: any,
+  refresh: () => void,
+  parentId?: UUID,
+) => ({
   mutationFn: async (newItem: Partial<Item>) => {
     return Api.createItem(newItem, userToken, parentId).then((data) => data);
   },
