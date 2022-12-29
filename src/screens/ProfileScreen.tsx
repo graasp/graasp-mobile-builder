@@ -1,20 +1,33 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Alert, ScrollView, StyleSheet } from 'react-native';
-import { Text, Avatar, Button, Overlay } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Text, Avatar, Button, Overlay, ListItem } from 'react-native-elements';
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import * as Api from '../api';
 import { buildUploadAvatarImageRoute } from '../api/routes';
 import ActivityIndicator from '../components/ActivityIndicator';
 import LanguageSelector from '../components/LanguageSelector';
+import CustomBackdrop from '../components/common/CustomBackdrop';
 import { STATUS_CODES_OK } from '../config/constants/constants';
 import { useCurrentMember } from '../hooks/member';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
@@ -35,6 +48,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -47,7 +61,9 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     refetch,
   } = useCurrentMember();
   const userToken: any = getUserToken();
-  console.log(currentMember);
+  const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+
   const downloadAvatar = async () => {
     try {
       if (currentMember) {
@@ -94,6 +110,29 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     }
   };
 
+  const takePhoto = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Alert.alert(
+        t('You need to allow camera permission to Graasp'),
+        t('Go to Settings > Graasp > Activate camera option')!,
+        [{ text: 'OK' }],
+      );
+      return;
+    }
+
+    const file = await ImagePicker.launchCameraAsync();
+
+    // Explore the result
+    console.log(file);
+
+    if (!file.cancelled) {
+      uploadAvatarImage(file);
+    }
+  };
+
   const uploadAvatarImage = async (file: any) => {
     try {
       setIsUpdating(true);
@@ -117,6 +156,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         text2: t('Avatar updated correctly')!,
       });
       downloadAvatar();
+      bottomSheetChangeAvatarModalRef.current?.close();
     } catch {
       setIsUpdating(false);
       Toast.show({
@@ -128,9 +168,13 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     }
   };
 
-  const handleChangeAvatar = () => {
-    pickImage();
-  };
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleChangeAvatarSheetChanges', index);
+  }, []);
+
+  const handleOpenBottomSheetChangeAvatarModal = useCallback(() => {
+    bottomSheetChangeAvatarModalRef.current?.present();
+  }, []);
 
   const handleChangeLanguage = () => {
     setChangeLanguageModalVisible({ toggle: true });
@@ -209,7 +253,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           icon={
             <MaterialIcons name={'account-circle'} color="#ffffff" size={25} />
           }
-          onPress={handleChangeAvatar}
+          onPress={handleOpenBottomSheetChangeAvatarModal}
         ></Button>
 
         <Button
@@ -220,6 +264,56 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           onPress={handleChangeLanguage}
         ></Button>
       </ScrollView>
+
+      <BottomSheetModal
+        ref={bottomSheetChangeAvatarModalRef}
+        style={styles.bottomSheetModal}
+        index={0}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+        backdropComponent={({ animatedIndex, style: backDropStyle }) => (
+          <CustomBackdrop
+            animatedIndex={animatedIndex}
+            style={backDropStyle}
+            onBackDropPressed={() =>
+              bottomSheetChangeAvatarModalRef.current?.close()
+            }
+          />
+        )}
+      >
+        <NativeViewGestureHandler disallowInterruption={true}>
+          <View style={{ flex: 1 }}>
+            <BottomSheetScrollView contentContainerStyle={null}>
+              <ListItem
+                onPress={() => takePhoto()}
+                style={{ paddingLeft: insets.left }}
+                hasTVPreferredFocus={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <MaterialIcons name="camera-alt" size={24} color="grey" />
+                <ListItem.Content style={{ flexDirection: 'row' }}>
+                  <ListItem.Title style={{ flex: 2 }}>
+                    {t('Take photo')}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+              <ListItem
+                onPress={() => pickImage()}
+                style={{ paddingLeft: insets.left }}
+                hasTVPreferredFocus={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <MaterialIcons name="image" size={24} color="grey" />
+                <ListItem.Content style={{ flexDirection: 'row' }}>
+                  <ListItem.Title style={{ flex: 2 }}>
+                    {t('Select image from media gallery')}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
+            </BottomSheetScrollView>
+          </View>
+        </NativeViewGestureHandler>
+      </BottomSheetModal>
     </SafeAreaView>
   );
 };
@@ -267,6 +361,16 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+  },
+  bottomSheetModal: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 24,
   },
 });
 
