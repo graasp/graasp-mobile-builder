@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity, StyleSheet, Alert, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
@@ -18,6 +18,7 @@ import { UUID } from '../types';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
 import CustomBackdrop from './common/CustomBackdrop';
+import CreateFolder from './CreateFolder';
 
 interface AddItemProps {
   parentId?: UUID;
@@ -31,6 +32,11 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   const token: any = getUserToken();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const [createItemModalVisible, setCreateItemModalVisible] = useState<{
+    toggle: boolean;
+  }>({
+    toggle: false,
+  });
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -98,6 +104,10 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     console.log('handleAddItemSheetChanges', index);
   }, []);
 
+  const handleAddFolderPress = () => {
+    setCreateItemModalVisible({ toggle: true });
+  };
+
   const handleAddImageOrVideoPress = () => {
     pickImage();
   };
@@ -112,6 +122,17 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
   return (
     <>
+      <Overlay
+        overlayStyle={styles.modalCreateItemView}
+        isVisible={
+          createItemModalVisible.toggle
+        }
+        onBackdropPress={() =>
+          setCreateItemModalVisible({ toggle: false })
+        }
+      >
+        <CreateFolder refresh={refresh} setCreateItemModalVisible={setCreateItemModalVisible} bottomSheetAddItemModalRef={bottomSheetAddItemModalRef} parentId={parentId} />
+      </Overlay>
       <BottomSheetModal
         ref={bottomSheetAddItemModalRef}
         style={styles.bottomSheetModal}
@@ -131,6 +152,19 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         <NativeViewGestureHandler disallowInterruption={true}>
           <View style={{ flex: 1 }}>
             <BottomSheetScrollView contentContainerStyle={null}>
+            <ListItem
+                onPress={() => handleAddFolderPress()}
+                style={{ paddingLeft: insets.left }}
+                hasTVPreferredFocus={undefined}
+                tvParallaxProperties={undefined}
+              >
+                <MaterialIcons name="folder" size={24} color="grey" />
+                <ListItem.Content style={{ flexDirection: 'row' }}>
+                  <ListItem.Title style={{ flex: 2 }}>
+                    {t('Folder')}
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
               <ListItem
                 onPress={() => handleAddImageOrVideoPress()}
                 style={{ paddingLeft: insets.left }}
@@ -204,6 +238,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
     elevation: 24,
+  },
+  modalCreateItemView: {
+    justifyContent: 'center',
+    margin: 0,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 50,
+    alignItems: 'stretch',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    width: '85%',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

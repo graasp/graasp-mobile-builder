@@ -50,6 +50,7 @@
     "Saved correctly in your media gallery": "Enregistré correctement dans votre galerie de médias",
     "There was an error saving the file": "Une erreur s'est produite lors de l'enregistrement du fichier",
     "You need to allow photos permission to Graasp": "Vous devez autoriser les photos à Graasp",
-    "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Allez dans Paramètres > Graasp > Photos > Sélectionnez \"Toutes les photos\""
+    "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Allez dans Paramètres > Graasp > Photos > Sélectionnez \"Toutes les photos\"",
+    "Folder": "Dossier"
   }
 }
