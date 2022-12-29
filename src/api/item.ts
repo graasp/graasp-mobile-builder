@@ -3,6 +3,7 @@ import { API_HOST } from '../config/constants/constants';
 import { UUID } from '../types';
 import { getParentsIdsFromPath } from '../utils/functions/item';
 import {
+  buildCreateItemRoute,
   buildEditItemRoute,
   buildGetChildrenRoute,
   buildGetItemFileUrlRoute,
@@ -11,7 +12,7 @@ import {
   GET_OWN_ITEMS_ROUTE,
   SHARE_ITEM_WITH_ROUTE,
 } from './routes';
-import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_PATCH } from './utils';
+import { DEFAULT_DELETE, DEFAULT_GET, DEFAULT_PATCH, DEFAULT_POST } from './utils';
 
 export const getItem = async (id: UUID, token?: string) => {
   const res = await axiosContentInstance.get(
@@ -49,6 +50,17 @@ export const getSharedItems = async (token: string) => {
   const res = await axiosContentInstance.get(
     `${API_HOST}/${SHARE_ITEM_WITH_ROUTE}`,
     DEFAULT_GET(token),
+  );
+  return res.data;
+};
+
+export const createItem = async (newItem: any, userToken: string, parentId?: UUID) => {
+  const res = await axiosContentInstance.post(
+    `${API_HOST}/${buildCreateItemRoute(parentId)}`,
+    newItem,
+    {
+      ...DEFAULT_POST(userToken),
+    },
   );
   return res.data;
 };
