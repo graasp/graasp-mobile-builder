@@ -228,6 +228,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           width: '100%',
           height: '100%',
           paddingHorizontal: 20,
+          paddingTop: 20
         }}
       >
         {isUpdating && (
@@ -251,8 +252,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
         <Button
           title={t(' Change avatar')!}
-          style={styles.changeAvatarButton}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
           icon={
             <MaterialIcons name={'account-circle'} color="#ffffff" size={25} />
           }
@@ -261,8 +261,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
         <Button
           title={t(' Change language')!}
-          style={styles.changeAvatarButton}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
           icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}
           onPress={handleChangeLanguage}
         ></Button>
@@ -348,9 +347,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: '#5050d2',
-  },
-  changeAvatarButton: {
-    marginTop: 20,
   },
   modalEditLanguage: {
     justifyContent: 'center',
