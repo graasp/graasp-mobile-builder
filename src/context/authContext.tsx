@@ -6,11 +6,12 @@ import { axiosAuthInstance } from '../config/axios';
 import {
   API_HOST,
   AuthActionKind,
+  LOGIN_TYPE,
   SECURE_STORE_VALUES,
 } from '../config/constants/constants';
 
 interface AuthContextInterface {
-  signIn: (data: any) => object;
+  signIn: (data: any, loginType: LOGIN_TYPE) => object;
   signOut: () => object;
   restoreUserRefreshToken: (
     newAuthToken: string,
@@ -86,7 +87,7 @@ const AuthProvider = (props: any) => {
 
   const authContext: AuthContextInterface = React.useMemo(
     () => ({
-      signIn: async (data) => {
+      signIn: async (data, loginType) => {
         const nonce = await SecureStore.getItemAsync(SECURE_STORE_VALUES.NONCE);
         const response = await axiosAuthInstance.post(`${API_HOST}/m/auth`, {
           t: data,
@@ -96,7 +97,7 @@ const AuthProvider = (props: any) => {
           const token = response.data?.authToken;
           const refreshToken = response.data?.refreshToken;
           dispatch({ type: AuthActionKind.SIGN_IN, token });
-          await analytics().logEvent("sign_in");
+          await analytics().logLogin({ method: loginType });
           await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
           await SecureStore.setItemAsync(
             SECURE_STORE_VALUES.REFRESH_TOKEN,

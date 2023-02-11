@@ -31,8 +31,6 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
   const authContext = useAuth();
   const signInWithToken = authContext?.signIn;
 
-  const state = authContext.state;
-
   const signIn = async (email: string) => {
     const challenge = await generateNonce();
     if (loginType === LOGIN_TYPE.EMAIL_LINK) {
@@ -54,7 +52,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
           })
           .then((res) => {
             if (res.data.t) {
-              signInWithToken(res.data.t);
+              signInWithToken(res.data.t, LOGIN_TYPE.EMAIL_PASSWORD);
             }
           })
           .catch((error) => {
