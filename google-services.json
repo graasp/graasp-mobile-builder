@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "332960612951",
+    "project_id": "graasp-mobile-builder",
+    "storage_bucket": "graasp-mobile-builder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332960612951:android:c7afca5d5ab5657a279912",
+        "android_client_info": {
+          "package_name": "org.graasp.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332960612951-tsldad7pknlbepohs57p75n9umbdji8k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmzcBXUE0pHH6Su8LWTDVO9OdItF0j9M8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332960612951-tsldad7pknlbepohs57p75n9umbdji8k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "332960612951-2p4d7tdttphdhaorl27i3g53ajbudk93.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.graasp.mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
