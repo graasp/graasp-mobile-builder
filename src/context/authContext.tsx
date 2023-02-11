@@ -1,15 +1,19 @@
+import analytics from '@react-native-firebase/analytics';
 import * as SecureStore from 'expo-secure-store';
 import React, { createContext, useReducer } from 'react';
 
 import { axiosAuthInstance } from '../config/axios';
 import {
+  ANALYTICS_EVENTS,
   API_HOST,
   AuthActionKind,
+  LOGIN_TYPE,
   SECURE_STORE_VALUES,
 } from '../config/constants/constants';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {
-  signIn: (data: any) => object;
+  signIn: (data: any, loginType: LOGIN_TYPE) => object;
   signOut: () => object;
   restoreUserRefreshToken: (
     newAuthToken: string,
@@ -85,7 +89,7 @@ const AuthProvider = (props: any) => {
 
   const authContext: AuthContextInterface = React.useMemo(
     () => ({
-      signIn: async (data) => {
+      signIn: async (data, loginType) => {
         const nonce = await SecureStore.getItemAsync(SECURE_STORE_VALUES.NONCE);
         const response = await axiosAuthInstance.post(`${API_HOST}/m/auth`, {
           t: data,
@@ -95,6 +99,7 @@ const AuthProvider = (props: any) => {
           const token = response.data?.authToken;
           const refreshToken = response.data?.refreshToken;
           dispatch({ type: AuthActionKind.SIGN_IN, token });
+          await analytics().logLogin({ method: loginType });
           await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
           await SecureStore.setItemAsync(
             SECURE_STORE_VALUES.REFRESH_TOKEN,
@@ -107,6 +112,7 @@ const AuthProvider = (props: any) => {
         dispatch({ type: AuthActionKind.SIGN_OUT, token: null });
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
+        await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
       },
       restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
         dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: newAuthToken });

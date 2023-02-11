@@ -5,10 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'react-native-elements';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { FileType } from '../types';
 
 interface FileImageProps {
   filePath: string;
-  handleShareFile: () => void;
+  handleShareFile: (itemType: FileType) => void;
 }
 
 const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
@@ -21,7 +22,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={handleShareFile}
+          onPress={() => handleShareFile(FileType.UNSUPPORTED)}
         ></Button>
       ),
     });
@@ -32,7 +33,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
       title={t('Save file')!}
       raised={true}
       buttonStyle={{ backgroundColor: '#5050d2' }}
-      onPress={handleShareFile}
+      onPress={() => handleShareFile(FileType.UNSUPPORTED)}
       icon={
         <MaterialIcons
           name={'save'}

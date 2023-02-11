@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { LOGIN_TYPE } from '../config/constants/constants';
 import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 
@@ -23,7 +24,7 @@ const EmailSentScreen: FC<EmailSentProps> = ({ route }) => {
 
   useEffect(() => {
     if (token) {
-      signInWithToken(token);
+      signInWithToken(token, LOGIN_TYPE.EMAIL_LINK);
     }
   }, [token]);
   return (

@@ -8,8 +8,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
 import { buildGraaspAssetsPdfViewerRoute } from '../api/routes';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { UUID } from '../types';
+import { FileType, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';
 
 interface FilePdfProps {
@@ -30,6 +32,9 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       const localPath = await downloadFileFromS3Url(filePath, itemId, mimetype);
       setIsDownloading(false);
       Sharing.shareAsync(localPath);
+      await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
+        item_type: FileType.PDF,
+      });
     }
   };
 

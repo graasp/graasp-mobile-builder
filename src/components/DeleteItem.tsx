@@ -5,8 +5,10 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { useMutation } from 'react-query';
 
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { buildDeleteItem } from '../mutations/utils';
 import { Item, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 interface DeleteItemProps {
@@ -35,10 +37,13 @@ const DeleteItem: FC<DeleteItemProps> = ({
     ...buildDeleteItem(userToken, refresh),
   });
 
-  const deleteItem = () => {
+  const deleteItem = async () => {
     deleteItemMutation.mutate(itemId);
     setDeleteItemModalVisible({ toggle: false, itemId: null });
     bottomSheetModalRef.current?.close();
+    await customAnalyticsEvent(ANALYTICS_EVENTS.DELETE_ITEM, {
+      itemType: item.type,
+    });
   };
 
   const cancelDeleteItem = () => {

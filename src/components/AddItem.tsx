@@ -13,8 +13,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import { buildUploadFilesRoute } from '../api/routes';
-import { STATUS_CODES_OK } from '../config/constants/constants';
+import {
+  ANALYTICS_EVENTS,
+  STATUS_CODES_OK,
+} from '../config/constants/constants';
 import { UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
 import CreateFolder from './CreateFolder';
@@ -49,6 +53,10 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     if (!file.canceled && file.assets && file.assets.length !== 0) {
       uploadFile(file.assets[0].uri);
       bottomSheetAddItemModalRef.current?.close();
+      await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
+        source: 'gallery',
+        type: file.assets[0].type,
+      });
     }
   };
 
@@ -58,6 +66,10 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     if (file.type !== 'cancel') {
       uploadFile(file.uri);
       bottomSheetAddItemModalRef.current?.close();
+      await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
+        source: 'file_manager',
+        type: file.mimeType,
+      });
     }
   };
 

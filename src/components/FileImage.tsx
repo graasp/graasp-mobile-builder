@@ -5,20 +5,26 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Image, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { FileType } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { saveMedia } from '../utils/functions/media';
 
 interface FileImageProps {
   filePath: string;
-  handleShareFile: () => void;
+  handleShareFile: (itemType: FileType) => void;
 }
 
 const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
 
-  const handleSaveImage = () => {
+  const handleSaveImage = async () => {
     saveMedia(filePath, t);
+    await customAnalyticsEvent(ANALYTICS_EVENTS.SAVE_ITEM, {
+      item_type: FileType.IMAGE,
+    });
   };
 
   useEffect(() => {
@@ -35,7 +41,7 @@ const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
             icon={
               <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
             }
-            onPress={handleShareFile}
+            onPress={() => handleShareFile(FileType.IMAGE)}
           ></Button>
         </View>
       ),

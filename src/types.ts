@@ -47,6 +47,14 @@ export enum ItemType {
   H5P = 'h5p',
 }
 
+export enum FileType {
+  IMAGE = 'image',
+  VIDEO = 'video',
+  AUDIO = 'audio',
+  PDF = 'pdf',
+  UNSUPPORTED = 'unsupported',
+}
+
 export interface Item<T extends UnknownExtra = UnknownExtra, S = ItemSettings> {
   id: string;
   name: string;

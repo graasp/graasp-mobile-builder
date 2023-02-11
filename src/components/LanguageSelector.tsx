@@ -4,9 +4,10 @@ import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 import { useMutation } from 'react-query';
 
-import { LANGUAGES } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, LANGUAGES } from '../config/constants/constants';
 import { buildEditMember } from '../mutations/utils';
 import { Member } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getLangExtra } from '../utils/functions/itemExtra';
 import { getUserToken } from '../utils/functions/token';
 
@@ -35,7 +36,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
     ...buildEditMember(userToken, refresh),
   });
 
-  const acceptChangeLanguage = () => {
+  const acceptChangeLanguage = async () => {
     editMemberMutation.mutate({
       id: currentMember.id,
       extra: {
@@ -43,6 +44,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
       },
     });
     setChangeLanguageModalVisible({ toggle: false });
+    await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_LANGUAGE);
   };
 
   const cancelChangeLanguage = () => {

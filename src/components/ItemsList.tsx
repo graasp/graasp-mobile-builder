@@ -8,9 +8,15 @@ import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SHARE_HOST, SHARE_OPTIONS } from '../config/constants/constants';
+import {
+  ANALYTICS_EVENTS,
+  SHARE_HOST,
+  SHARE_OPTIONS,
+  VIEWS,
+} from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import AddItem from './AddItem';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
@@ -101,6 +107,10 @@ const ItemsList: FC<ItemsListProps> = ({
         } else {
           setShareModalVisible({ toggle: false, itemId: null });
         }
+        await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_GRAASP_LINK, {
+          method:
+            linkType === SHARE_OPTIONS.COMPOSE ? VIEWS.COMPOSE : VIEWS.PERFORM,
+        });
       } else if (result.action === Share.dismissedAction) {
         //setModalVisible({ toggle: false, itemId: null });
       }

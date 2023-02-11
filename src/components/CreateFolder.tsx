@@ -5,8 +5,10 @@ import { View, StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useMutation } from 'react-query';
 
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { buildCreateItem } from '../mutations/utils';
 import { ItemType, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 interface CreateFolderProps {
@@ -33,7 +35,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     ...buildCreateItem(userToken, refresh, parentId),
   });
 
-  const mutateItem = () => {
+  const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     createItemMutation.mutate({
       name: itemNameSingleSpaces,
@@ -41,6 +43,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     });
     setCreateItemModalVisible({ toggle: false });
     bottomSheetAddItemModalRef.current?.close();
+    await customAnalyticsEvent(ANALYTICS_EVENTS.CREATE_FOLDER);
   };
 
   return (

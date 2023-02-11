@@ -8,8 +8,10 @@ import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { UUID } from '../types';
+import { FileType, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
 
 interface FileVideoProps {
@@ -32,6 +34,9 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
       const localPath = await downloadFileFromS3Url(filePath, itemId, mimetype);
       setIsDownloading(false);
       saveMedia(localPath, t);
+      await customAnalyticsEvent(ANALYTICS_EVENTS.SAVE_ITEM, {
+        item_type: FileType.VIDEO,
+      });
     }
   };
 
@@ -41,6 +46,9 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
       const localPath = await downloadFileFromS3Url(filePath, itemId, mimetype);
       setIsDownloading(false);
       Sharing.shareAsync(localPath);
+      await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
+        item_type: FileType.VIDEO,
+      });
     }
   };
 

@@ -198,6 +198,11 @@ export const SHARE_HOST = {
   PERFORM: 'https://player.graasp.org',
 };
 
+export const VIEWS = {
+  COMPOSE: 'graasp_builder',
+  PERFORM: 'graasp_player',
+};
+
 export const MEDIA_LIBRARY_PERMISSION_STATUS = {
   GRANTED: 'granted',
   DENIED: 'denied',
@@ -216,3 +221,17 @@ export enum TEXT_ALIGNMENT {
   RIGHT = 'right',
   JUSTIFY = 'justify',
 }
+
+// Custom analytics events. Other events such as "login" are predefined events and are implemented using a predefined method.
+export const ANALYTICS_EVENTS = {
+  LOG_OUT: 'log_out',
+  CREATE_FOLDER: 'create_folder',
+  EDIT_ITEM: 'edit_item',
+  DELETE_ITEM: 'delete_item',
+  UPLOAD_ITEM: 'upload_item',
+  SAVE_ITEM: 'save_item',
+  SHARE_ITEM: 'share_item',
+  SHARE_GRAASP_LINK: 'share_graasp_item_link',
+  CHANGE_LANGUAGE: 'change_language',
+  CHANGE_AVATAR: 'change_avatar',
+};
