@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { View, StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useMutation } from 'react-query';
+import analytics from '@react-native-firebase/analytics';
 
 import { buildCreateItem } from '../mutations/utils';
 import { ItemType, UUID } from '../types';
@@ -33,6 +34,10 @@ const CreateFolder: FC<CreateFolderProps> = ({
     ...buildCreateItem(userToken, refresh, parentId),
   });
 
+  const logAnalytic = async () => {
+    await analytics().logEvent("create_folder");
+  }
+
   const mutateItem = () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     createItemMutation.mutate({
@@ -41,6 +46,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     });
     setCreateItemModalVisible({ toggle: false });
     bottomSheetAddItemModalRef.current?.close();
+    logAnalytic();
   };
 
   return (

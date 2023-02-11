@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import React, { createContext, useReducer } from 'react';
+import analytics from '@react-native-firebase/analytics';
 
 import { axiosAuthInstance } from '../config/axios';
 import {
@@ -95,6 +96,7 @@ const AuthProvider = (props: any) => {
           const token = response.data?.authToken;
           const refreshToken = response.data?.refreshToken;
           dispatch({ type: AuthActionKind.SIGN_IN, token });
+          await analytics().logEvent("sign_in");
           await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
           await SecureStore.setItemAsync(
             SECURE_STORE_VALUES.REFRESH_TOKEN,
