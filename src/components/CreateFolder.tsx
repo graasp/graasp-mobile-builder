@@ -33,12 +33,8 @@ const CreateFolder: FC<CreateFolderProps> = ({
   const createItemMutation = useMutation({
     ...buildCreateItem(userToken, refresh, parentId),
   });
-
-  const logAnalytic = async () => {
-    await analytics().logEvent("create_folder");
-  }
-
-  const mutateItem = () => {
+  
+  const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     createItemMutation.mutate({
       name: itemNameSingleSpaces,
@@ -46,7 +42,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     });
     setCreateItemModalVisible({ toggle: false });
     bottomSheetAddItemModalRef.current?.close();
-    logAnalytic();
+    await analytics().logEvent("create_folder");
   };
 
   return (
