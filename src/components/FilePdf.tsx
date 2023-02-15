@@ -75,7 +75,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       scalesPageToFit={false}
       startInLoadingState={true}
       overScrollMode="never"
-      cacheMode="LOAD_CACHE_ELSE_NETWORK"
+      cacheMode="LOAD_DEFAULT"
       cacheEnabled={false}
       style={{
         width: dimensions.width - insets.left,
