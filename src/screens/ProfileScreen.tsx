@@ -28,10 +28,14 @@ import { buildUploadAvatarImageRoute } from '../api/routes';
 import ActivityIndicator from '../components/ActivityIndicator';
 import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
-import { STATUS_CODES_OK } from '../config/constants/constants';
+import {
+  ANALYTICS_EVENTS,
+  STATUS_CODES_OK,
+} from '../config/constants/constants';
 import { useCurrentMember } from '../hooks/member';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { formatDate } from '../utils/functions/date';
 import { getUserToken } from '../utils/functions/token';
 
@@ -137,7 +141,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     try {
       if (!file.assets || file.assets.length === 0) {
         throw new Error('Upload file error');
-      };
+      }
       setIsUpdating(true);
       const uploadResponse = await FileSystem.uploadAsync(
         buildUploadAvatarImageRoute(currentMember.id),
@@ -160,6 +164,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       });
       downloadAvatar();
       bottomSheetChangeAvatarModalRef.current?.close();
+      await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_AVATAR);
     } catch {
       setIsUpdating(false);
       Toast.show({
@@ -228,7 +233,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           width: '100%',
           height: '100%',
           paddingHorizontal: 20,
-          paddingTop: 20
+          paddingTop: 20,
         }}
       >
         {isUpdating && (

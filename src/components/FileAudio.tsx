@@ -7,10 +7,11 @@ import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { FileType } from '../types';
 
 interface FileAudioProps {
   filePath: string;
-  handleShareFile: () => void;
+  handleShareFile: (fileType: FileType) => void;
 }
 
 const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
@@ -39,7 +40,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={handleShareFile}
+          onPress={() => handleShareFile(FileType.AUDIO)}
         ></Button>
       ),
     });

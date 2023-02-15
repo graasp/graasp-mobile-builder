@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -76,6 +77,7 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
     setName('');
     setEmail('');
     navigation.navigate('EmailSent', {});
+    await analytics().logSignUp({ method: LOGIN_TYPE.EMAIL_LINK });
   };
 
   return (

@@ -4,8 +4,10 @@ import { View, StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useMutation } from 'react-query';
 
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { buildEditItem } from '../mutations/utils';
 import { Item, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 interface EditItemProps {
@@ -33,10 +35,13 @@ const EditItem: FC<EditItemProps> = ({
     ...buildEditItem(userToken, refresh),
   });
 
-  const mutateItem = () => {
+  const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     editItemMutation.mutate({ id: itemId, name: itemNameSingleSpaces });
     setEditItemModalVisible({ toggle: false, itemId: null });
+    await customAnalyticsEvent(ANALYTICS_EVENTS.EDIT_ITEM, {
+      itemType: item.type,
+    });
   };
 
   return (

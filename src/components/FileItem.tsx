@@ -2,8 +2,9 @@ import * as Sharing from 'expo-sharing';
 import React, { FC, useEffect, useState } from 'react';
 
 import * as Api from '../api';
-import { MIME_TYPES } from '../config/constants/constants';
-import { Item, S3FileItemExtra } from '../types';
+import { ANALYTICS_EVENTS, MIME_TYPES } from '../config/constants/constants';
+import { FileType, Item, S3FileItemExtra } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getS3FileExtra } from '../utils/functions/item';
 import { downloadFileFromS3Url } from '../utils/functions/media';
 import { getUserToken } from '../utils/functions/token';
@@ -73,9 +74,12 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
     return <ActivityIndicator />;
   }
 
-  const handleShareFile = () => {
+  const handleShareFile = async (itemType: FileType) => {
     if (filePath) {
       Sharing.shareAsync(filePath);
+      await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
+        item_type: itemType,
+      });
     }
   };
 
