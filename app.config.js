@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
-  version: '0.1.0',
+  version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -29,7 +29,7 @@ module.exports = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
-    buildNumber: '11',
+    buildNumber: '1',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
   },
   android: {
