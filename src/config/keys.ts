@@ -3,6 +3,7 @@ import { ROOT_ID } from './constants/constants';
 
 export const ITEMS_KEY = 'items';
 export const MEMBERS_KEY = 'members';
+export const ITEM_MEMBERSHIP_KEY = 'item-membership';
 export const OWN_ITEMS_KEY = [ITEMS_KEY, 'own'];
 export const buildItemKey = (id: UUID) => [ITEMS_KEY, id];
 export const buildItemChildrenKey = (id: UUID) => [ITEMS_KEY, id, 'children'];
@@ -11,6 +12,7 @@ export const CURRENT_MEMBER_KEY = 'currentMember';
 export const buildItemParentsKey = (id: UUID) => [ITEMS_KEY, id, 'parents'];
 export const buildMemberIdKey = (id: UUID) => [MEMBERS_KEY, id];
 export const buildCurrentMemberIdKey = () => [MEMBERS_KEY, CURRENT_MEMBER_KEY];
+export const buildItemMembershipsKey = (id: UUID) => [ITEM_MEMBERSHIP_KEY, id];
 export const buildItemLoginKey = (id: UUID) => [ITEMS_KEY, id, 'login'];
 
 export const getKeyForParentId = (parentId: UUID) =>

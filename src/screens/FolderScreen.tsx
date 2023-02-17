@@ -7,8 +7,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
 import PlayerView from '../components/PlayerView';
+import { addItemPermissions } from '../config/constants/constants';
 import { useView } from '../context/ViewContext';
-import { useChildren } from '../hooks';
+import { useChildren, useItemMemberships } from '../hooks';
+import { useCurrentMember } from '../hooks/member';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
@@ -26,17 +28,39 @@ type FolderScreenRouteProp = CommonStackFolderProps['route'];
 const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   const route = useRoute<FolderScreenRouteProp>();
   const { itemId, headerTitle } = route.params;
-
+  const {
+    data: itemMemberships,
+    isLoading: isLoadingItemMemberships,
+    isError: isErrorItemMemberships,
+  } = useItemMemberships(itemId);
   const { data: children, isLoading, isError, refetch } = useChildren(itemId);
+  const {
+    data: currentMember,
+    isLoading: isLoadingCurrentMember,
+    isError: isErrorCurrentMember,
+  } = useCurrentMember();
   useFocusQuery(refetch);
   const { isPlayerView } = useView();
 
-  if (isLoading) {
+  if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
     return <ActivityIndicator />;
   }
 
-  if (isError || !children) {
+  if (isError || isErrorItemMemberships || isErrorCurrentMember || !children) {
     return null;
+  }
+
+  let displayAddItem = false;
+
+  if (itemMemberships) {
+    itemMemberships[0].map((itemMembership) => {
+      if (
+        itemMembership.memberId === currentMember?.id &&
+        addItemPermissions.includes(itemMembership.permission)
+      ) {
+        displayAddItem = true;
+      }
+    });
   }
 
   return (
@@ -49,6 +73,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
           items={[...children]}
           isLoading={isLoading}
           refresh={refetch}
+          displayAddItem={displayAddItem}
         />
       )}
     </SafeAreaView>

@@ -12,8 +12,9 @@ import {
   buildCurrentMemberIdKey,
   OWN_ITEMS_KEY,
   SHARED_ITEMS_KEY,
+  buildItemMembershipsKey,
 } from '../config/keys';
-import { Item, Member, UUID } from '../types';
+import { Item, ItemMembership, Member, UUID } from '../types';
 
 const itemQueryConfig = {
   staleTime: STALE_TIME_MILLISECONDS, // time until data in cache considered stale if cache not invalidated
@@ -66,6 +67,13 @@ export const buildCurrentMemberKey = (token: string) => ({
   queryKey: buildCurrentMemberIdKey(),
   queryFn: (): Promise<Member> =>
     Api.getCurrentMember({ token }).then((data) => data),
+  ...itemQueryConfig,
+});
+
+export const buildGetItemMembership = (id: UUID, userToken: string) => ({
+  queryKey: buildItemMembershipsKey(id),
+  queryFn: (): Promise<ItemMembership[][]> =>
+    Api.getItemMemberships(id, userToken).then((data) => data),
   ...itemQueryConfig,
 });
 
