@@ -30,7 +30,7 @@ interface ItemsListProps {
   items: ItemType[];
   refresh: () => void;
   isLoading: boolean;
-  isSharedScreen?: boolean;
+  displayAddItem?: boolean;
 }
 
 const ItemsList: FC<ItemsListProps> = ({
@@ -38,7 +38,7 @@ const ItemsList: FC<ItemsListProps> = ({
   items,
   refresh,
   isLoading,
-  isSharedScreen = false,
+  displayAddItem = true,
 }) => {
   const [shareModalVisible, setShareModalVisible] = useState<{
     toggle: boolean;
@@ -327,7 +327,7 @@ const ItemsList: FC<ItemsListProps> = ({
           </View>
         </NativeViewGestureHandler>
       </BottomSheetModal>
-      {!isSharedScreen && <AddItem parentId={parentId} refresh={refresh} />}
+      {displayAddItem && <AddItem parentId={parentId} refresh={refresh} />}
     </>
   );
 };

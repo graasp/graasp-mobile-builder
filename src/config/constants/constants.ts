@@ -235,3 +235,5 @@ export const ANALYTICS_EVENTS = {
   CHANGE_LANGUAGE: 'change_language',
   CHANGE_AVATAR: 'change_avatar',
 };
+
+export const addItemPermissions = ['admin', 'write'];

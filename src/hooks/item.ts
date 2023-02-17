@@ -8,6 +8,7 @@ import { getUserToken } from '../utils/functions/token';
 import {
   buildChildren,
   buildGetItem,
+  buildGetItemMembership,
   buildItemLogin,
   buildOwnItems,
   buildParents,
@@ -95,6 +96,18 @@ export const useItem = (id: UUID | null) => {
     throw new NullArgument();
   }
   return useQuery({ ...buildGetItem(id, userToken), enabled: Boolean(id) });
+};
+
+export const useItemMemberships = (id: UUID | undefined) => {
+  const userToken: any = getUserToken();
+
+  if (!id) {
+    throw new NullArgument();
+  }
+  return useQuery({
+    ...buildGetItemMembership(id, userToken),
+    enabled: Boolean(id),
+  });
 };
 
 export const useItemLogin = (id: UUID | null) => {

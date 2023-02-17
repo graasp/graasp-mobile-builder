@@ -87,6 +87,22 @@ export interface Member<E extends UnknownExtra = UnknownExtra> extends Actor {
   password?: string;
 }
 
+export declare enum PermissionLevel {
+  Read = 'read',
+  Write = 'write',
+  Admin = 'admin',
+}
+
+export interface ItemMembership {
+  id: string;
+  memberId: string;
+  itemPath: string;
+  permission: PermissionLevel;
+  creator: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface S3FileItemExtra extends UnknownExtra {
   s3File: S3FileItemExtraProp;
 }
