@@ -55,6 +55,7 @@
     "You need to allow camera permission to Graasp": "Vous devez autoriser la caméra à Graasp",
     "Go to Settings > Graasp > Activate camera option": "Aller à Réglages > Graasp > Activer l'option caméra",
     "Take photo": "Prendre une photo",
-    "Select image from media gallery": "Sélectionner une image dans la galerie multimédia"
+    "Select image from media gallery": "Sélectionner une image dans la galerie multimédia",
+    "You must log in again": "Vous devez vous reconnecter"
   }
 }

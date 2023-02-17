@@ -1,5 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import { ReactElement, useLayoutEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import Toast from 'react-native-toast-message';
 
 import * as Api from '../api';
 import { axiosContentInstance } from '../config/axios';
@@ -13,6 +15,7 @@ const AxiosInterceptor = ({
   const authContext = useAuth();
   const dispatch = authContext?.dispatch;
   const { signOut, restoreUserRefreshToken } = authContext;
+  const { t } = useTranslation();
 
   if (!dispatch) {
     throw new Error(`Context error`);
@@ -29,7 +32,10 @@ const AxiosInterceptor = ({
           try {
             const refreshToken = await SecureStore.getItemAsync('refreshToken');
             if (!refreshToken) {
-              alert('You must log in again');
+              Toast.show({
+                type: 'info',
+                text1: t('You must log in again')!,
+              });
               signOut();
               return Promise.reject(error);
             }
@@ -43,7 +49,10 @@ const AxiosInterceptor = ({
             restoreUserRefreshToken(newAuthToken, newRefreshToken);
             return axiosContentInstance(originalRequest);
           } catch {
-            alert('You must log in again');
+            Toast.show({
+              type: 'info',
+              text1: t('You must log in again')!,
+            });
             signOut();
             return Promise.reject(error);
           }
