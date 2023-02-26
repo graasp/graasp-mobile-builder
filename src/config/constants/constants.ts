@@ -234,6 +234,7 @@ export const ANALYTICS_EVENTS = {
   SHARE_GRAASP_LINK: 'share_graasp_item_link',
   CHANGE_LANGUAGE: 'change_language',
   CHANGE_AVATAR: 'change_avatar',
+  DELETE_MEMBER: 'delete_member',
 };
 
 export const addItemPermissions = ['admin', 'write'];

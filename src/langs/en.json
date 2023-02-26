@@ -52,10 +52,16 @@
     "You need to allow photos permission to Graasp": "You need to allow photos permission to Graasp",
     "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Go to Settings > Graasp > Photos > Select \"All the photos\"",
     "Folder": "Folder",
+    "Folder name": "Folder name",
+    "Create": "Create",
     "You need to allow camera permission to Graasp": "You need to allow camera permission to Graasp",
     "Go to Settings > Graasp > Activate camera option": "Go to Settings > Graasp > Activate camera option",
     "Take photo": "Take photo",
     "Select image from media gallery": "Select image from media gallery",
-    "You must log in again": "You must log in again"
+    "You must log in again": "You must log in again",
+    " Delete my account": " Delete my account",
+    "Delete permanently": "Delete permanently",
+    "Confirm deletion": "Confirm deletion",
+    "Your account will be deleted permanently": "Your account will be deleted permanently"
   }
 }
