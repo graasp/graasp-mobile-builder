@@ -26,6 +26,7 @@ import Toast from 'react-native-toast-message';
 import * as Api from '../api';
 import { buildUploadAvatarImageRoute } from '../api/routes';
 import ActivityIndicator from '../components/ActivityIndicator';
+import DeleteAccount from '../components/DeleteAccount';
 import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
@@ -54,6 +55,11 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
+    toggle: boolean;
+  }>({
+    toggle: false,
+  });
+  const [deleteMemberModalVisible, setDeleteMemberVisible] = useState<{
     toggle: boolean;
   }>({
     toggle: false,
@@ -99,6 +105,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
   if (isLoading || !currentMember) {
     return <ActivityIndicator />;
+  }
+
+  if (isError) {
+    return null;
   }
 
   const pickImage = async () => {
@@ -188,6 +198,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     setChangeLanguageModalVisible({ toggle: true });
   };
 
+  const handleDeleteMember = () => {
+    setDeleteMemberVisible({ toggle: true });
+  };
+
   let AvatarComponent = null;
   if (!isUpdating) {
     if (localPath) {
@@ -225,6 +239,16 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           currentMember={currentMember}
           setChangeLanguageModalVisible={setChangeLanguageModalVisible}
           refresh={refetch}
+        />
+      </Overlay>
+      <Overlay
+        overlayStyle={styles.modalEditLanguage}
+        isVisible={deleteMemberModalVisible.toggle}
+        onBackdropPress={() => setDeleteMemberVisible({ toggle: false })}
+      >
+        <DeleteAccount
+          currentMember={currentMember}
+          setDeleteAccountVisible={setDeleteMemberVisible}
         />
       </Overlay>
       <ScrollView
@@ -269,6 +293,13 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
           icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}
           onPress={handleChangeLanguage}
+        ></Button>
+
+        <Button
+          title={t(' Delete my account')!}
+          buttonStyle={{ backgroundColor: '#cc3333', marginTop: 20 }}
+          icon={<MaterialIcons name={'delete'} color="#ffffff" size={25} />}
+          onPress={handleDeleteMember}
         ></Button>
       </ScrollView>
 

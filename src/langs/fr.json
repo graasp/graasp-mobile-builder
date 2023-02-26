@@ -52,10 +52,16 @@
     "You need to allow photos permission to Graasp": "Vous devez autoriser les photos à Graasp",
     "Go to Settings > Graasp > Photos > Select \"All the photos\"": "Allez dans Paramètres > Graasp > Photos > Sélectionnez \"Toutes les photos\"",
     "Folder": "Dossier",
+    "Folder name": "Nom de dossier",
+    "Create": "Créer",
     "You need to allow camera permission to Graasp": "Vous devez autoriser la caméra à Graasp",
     "Go to Settings > Graasp > Activate camera option": "Aller à Réglages > Graasp > Activer l'option caméra",
     "Take photo": "Prendre une photo",
     "Select image from media gallery": "Sélectionner une image dans la galerie multimédia",
-    "You must log in again": "Vous devez vous reconnecter"
+    "You must log in again": "Vous devez vous reconnecter",
+    " Delete my account": " Supprimer mon compte",
+    "Delete permanently": "Supprimer définitivement",
+    "Confirm deletion": "Confirmer la suppression",
+    "Your account will be deleted permanently": "Votre compte va être supprimé définitivement"
   }
 }

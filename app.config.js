@@ -32,8 +32,10 @@ module.exports = {
     buildNumber: '1',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
     infoPlist: {
-      NSCameraUsageDescription: 'Allow access to the camera to take and upload photos from it.',
-      NSPhotoLibraryUsageDescription: 'Allow access to photos to upload photos from your library.',
+      NSCameraUsageDescription:
+        'Allow access to the camera to take and upload photos from it.',
+      NSPhotoLibraryUsageDescription:
+        'Allow access to photos to upload photos from your library.',
     },
   },
   android: {

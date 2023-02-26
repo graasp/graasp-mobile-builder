@@ -6,8 +6,14 @@ import {
   buildGetMember,
   GET_CURRENT_MEMBER_ROUTE,
   buildEditMemberRoute,
+  buildDeleteMemberRoute,
 } from './routes';
-import { DEFAULT_GET, buildGetItemLoginRoute, DEFAULT_PATCH } from './utils';
+import {
+  DEFAULT_GET,
+  buildGetItemLoginRoute,
+  DEFAULT_PATCH,
+  DEFAULT_DELETE,
+} from './utils';
 
 export const getMemberBy = async ({ email }: { email: string }) => {
   const res = await axiosContentInstance.get(
@@ -47,6 +53,16 @@ export const editMember = async (newMember: any, userToken: string) => {
     newMember,
     {
       ...DEFAULT_PATCH(userToken),
+    },
+  );
+  return res.data;
+};
+
+export const deleteMember = async (memberId: UUID, userToken: string) => {
+  const res = await axiosContentInstance.delete(
+    `${API_HOST}/${buildDeleteMemberRoute(memberId)}`,
+    {
+      ...DEFAULT_DELETE(userToken),
     },
   );
   return res.data;

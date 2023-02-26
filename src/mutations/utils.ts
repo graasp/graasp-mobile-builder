@@ -45,3 +45,9 @@ export const buildEditMember = (userToken: any, refresh: () => void) => ({
     refresh();
   },
 });
+
+export const buildDeleteMember = (userToken: any) => ({
+  mutationFn: async (memberId: UUID) => {
+    return Api.deleteMember(memberId, userToken).then((data) => data);
+  },
+});
