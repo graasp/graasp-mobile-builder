@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
-  version: '1.1.0',
+  version: '1.1.1',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -33,9 +33,9 @@ module.exports = {
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
     infoPlist: {
       NSCameraUsageDescription:
-        'Allow access to the camera to take and upload photos from it.',
+        'Allow access to the camera to take and upload photos to Graasp. These photos can also be used to update your profile picture.',
       NSPhotoLibraryUsageDescription:
-        'Allow access to photos to upload photos from your library.',
+        'Allow access to photos in order to upload photos from your library to Graasp. These photos can be then used within your account on Graasp.',
     },
   },
   android: {
