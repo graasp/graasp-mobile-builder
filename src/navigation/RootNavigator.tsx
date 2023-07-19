@@ -10,7 +10,7 @@ import CommonStackNavigator, {
 import DrawerNavigator, { DrawerParamList } from './DrawerNavigator';
 
 export type RootStackParamList = {
-  SignIn: { signUp: boolean, t?: string | undefined };
+  SignIn: { signUp: boolean; t?: string | undefined };
   Drawer: NavigatorScreenParams<DrawerParamList>;
   CommonStack: NavigatorScreenParams<CommonStackParamList>;
 };

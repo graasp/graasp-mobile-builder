@@ -44,5 +44,7 @@ export const buildGraaspAssetsPdfViewerRoute = (filePath: string) =>
   `https://assets.graasp.org/pdf-viewer/web/viewer.html?file=${encodeURIComponent(
     filePath,
   )}`;
-  export const buildGraaspAuthLoginRoute = (challenge: string) => `${AUTH_HOST}?m=${challenge}`;
-  export const buildGraaspAuthSignUpRoute = (challenge: string) => `${AUTH_HOST}/signup?m=${challenge}`;
+export const buildGraaspAuthLoginRoute = (challenge: string) =>
+  `${AUTH_HOST}?m=${challenge}`;
+export const buildGraaspAuthSignUpRoute = (challenge: string) =>
+  `${AUTH_HOST}/signup?m=${challenge}`;
