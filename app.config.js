@@ -31,6 +31,7 @@ module.exports = {
     bundleIdentifier: 'org.graasp.mobile',
     buildNumber: '1',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
+    associatedDomains: ["applinks:auth.graasp.org"],
     infoPlist: {
       NSCameraUsageDescription:
         'Allow access to the camera to take and upload photos to Graasp. These photos can also be used to update your profile picture.',
@@ -45,6 +46,20 @@ module.exports = {
     },
     package: 'org.graasp.mobile',
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
+    intentFilters: [
+      {
+        action: 'VIEW',
+        autoVerify: true,
+        data: [
+          {
+            scheme: "https",
+            host: "*.auth.graasp.org",
+            pathPrefix: "/auth"
+          }
+        ],
+        category: ["BROWSABLE", "DEFAULT"]
+      }
+    ]
   },
   web: {
     favicon: './assets/images/favicon.png',
