@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
 import { useAuth } from '../context/authContext';
-import EmailSentScreen from '../screens/EmailSentScreen';
 import SignInScreen from '../screens/SignInScreen';
 import CommonStackNavigator, {
   CommonStackParamList,
@@ -11,9 +10,8 @@ import CommonStackNavigator, {
 import DrawerNavigator, { DrawerParamList } from './DrawerNavigator';
 
 export type RootStackParamList = {
-  SignIn: { signUp: boolean };
+  SignIn: { signUp: boolean, t?: string | undefined };
   Drawer: NavigatorScreenParams<DrawerParamList>;
-  EmailSent: { t?: string | undefined };
   CommonStack: NavigatorScreenParams<CommonStackParamList>;
 };
 
@@ -34,7 +32,6 @@ const RootNavigator = () => {
             component={SignInScreen}
             initialParams={{ signUp: false }}
           />
-          <RootStack.Screen name="EmailSent" component={EmailSentScreen} />
         </>
       ) : (
         <RootStack.Screen name="Drawer" component={DrawerNavigator} />

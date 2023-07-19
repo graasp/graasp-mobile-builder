@@ -1,19 +1,17 @@
-import analytics from '@react-native-firebase/analytics';
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Input, Text } from 'react-native-elements';
+import React, { FC, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import GraaspLogo from '../components/common/GraaspLogo';
-import { axiosAuthInstance } from '../config/axios';
-import { API_HOST, LOGIN_TYPE } from '../config/constants/constants';
+import { LOGIN_TYPE } from '../config/constants/constants';
 import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
-import { validateEmail } from '../utils/functions/helper';
 import { useAsync } from '../utils/hooks/useAsync';
+import * as WebBrowser from 'expo-web-browser';
+import { buildGraaspAuthLoginRoute, buildGraaspAuthSignUpRoute } from '../api/routes';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -21,68 +19,37 @@ type SignInProps = StackScreenProps<
   'RootStackNavigator'
 >;
 
-const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
-  const [email, setEmail] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [loginType, setLoginType] = useState<LOGIN_TYPE>(LOGIN_TYPE.EMAIL_LINK);
-  const { t } = useTranslation();
+const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const isSignUp = Boolean(params?.signUp);
-  const { run, isLoading } = useAsync(null);
+  const { isLoading } = useAsync(null);
   const authContext = useAuth();
   const signInWithToken = authContext?.signIn;
+  const token = params?.t;
 
-  const signIn = async (email: string) => {
-    const challenge = await generateNonce();
-    if (loginType === LOGIN_TYPE.EMAIL_LINK) {
-      run(
-        axiosAuthInstance.post(`${API_HOST}/m/login`, {
-          email,
-          challenge,
-        }),
-      );
-      setEmail('');
-      navigation.navigate('EmailSent', {});
-    } else if (loginType === LOGIN_TYPE.EMAIL_PASSWORD) {
-      run(
-        axiosAuthInstance
-          .post(`${API_HOST}/m/login-password`, {
-            email,
-            challenge,
-            password,
-          })
-          .then((res) => {
-            if (res.data.t) {
-              signInWithToken(res.data.t, LOGIN_TYPE.EMAIL_PASSWORD);
-            }
-          })
-          .catch((error) => {
-            console.log('Error', error.message);
-          }),
-      );
-      setEmail('');
-      setPassword('');
+  useEffect(() => {
+    if (token) {
+      WebBrowser.dismissBrowser();
+      signInWithToken(token, LOGIN_TYPE.EMAIL_LINK);
     }
+  }, [token]);
+
+  const _handlePressLoginButtonAsync = async () => {
+    const challenge = await generateNonce();
+    const authUrl = buildGraaspAuthLoginRoute(challenge);
+    console.log(authUrl)
+    await WebBrowser.openBrowserAsync(authUrl);
   };
 
-  const signUp = async ({ email, name }: { email: string; name: string }) => {
+  const _handlePressSignUpButtonAsync = async () => {
     const challenge = await generateNonce();
-    run(
-      axiosAuthInstance.post(`${API_HOST}/m/register`, {
-        name,
-        email,
-        challenge,
-      }),
-    );
-    setName('');
-    setEmail('');
-    navigation.navigate('EmailSent', {});
-    await analytics().logSignUp({ method: LOGIN_TYPE.EMAIL_LINK });
+    const authUrl = buildGraaspAuthSignUpRoute(challenge);
+    console.log(authUrl)
+    await WebBrowser.openBrowserAsync(authUrl);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.logoContainer}>
         <View style={styles.logo}>
           <GraaspLogo />
         </View>
@@ -94,128 +61,26 @@ const SignInScreen: FC<SignInProps> = ({ navigation, route: { params } }) => {
           Graasp
         </Text>
       </View>
-      <ScrollView>
-        {isSignUp && (
-          <Input
-            label={t('Name')}
-            placeholder={t('name')!}
-            inputStyle={styles.textInput}
-            onChangeText={(value) => setName(value)}
-            value={name}
-            underlineColorAndroid={'#fff'}
-            labelStyle={{
-              color: '#fff',
-              fontWeight: '700',
-            }}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#cccccc"
-            autoCompleteType={undefined}
-          />
-        )}
-        <Input
-          label={t('Email address')}
-          textContentType="username"
-          autoComplete="email"
-          placeholder="email@example.com"
-          inputStyle={styles.textInput}
-          onChangeText={(value) => setEmail(value.toLowerCase())}
-          value={email}
-          underlineColorAndroid={'#fff'}
-          labelStyle={{
-            color: '#fff',
-            fontWeight: '700',
-          }}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor="#cccccc"
-          autoCompleteType={undefined}
-        />
-        {!isSignUp && loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
-          <Input
-            label={t('Password')}
-            textContentType="password"
-            autoComplete="password"
-            secureTextEntry={true}
-            inputStyle={styles.textInput}
-            onChangeText={(value) => setPassword(value)}
-            value={password}
-            underlineColorAndroid={'#fff'}
-            labelStyle={{
-              color: '#fff',
-              fontWeight: '700',
-            }}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="#cccccc"
-            autoCompleteType={undefined}
-          />
-        )}
-        {isSignUp ? (
-          <Button
-            buttonStyle={{ backgroundColor: '#fff' }}
+
+      <View style={styles.buttons}>
+      <Button
+            buttonStyle={{ backgroundColor: '#fff', width: '100%', marginBottom: 25, borderWidth: 3, borderColor: '#fff' }}
             titleStyle={{ color: '#5050d2', fontWeight: '700' }}
-            title="Sign Up"
-            disabled={!validateEmail(email) || isLoading}
-            onPress={() => {
-              signUp({ email, name });
-            }}
+            title="Login" 
+            disabled={isLoading}
+            onPress={_handlePressLoginButtonAsync}
           />
-        ) : (
-          <Button
-            buttonStyle={{ backgroundColor: '#fff' }}
-            titleStyle={{ color: '#5050d2', fontWeight: '700' }}
-            title="Login"
-            disabled={!validateEmail(email) || isLoading}
-            onPress={() => {
-              signIn(email);
-            }}
+          {!isSignUp && (
+                <Button
+            buttonStyle={{ backgroundColor: '#5050d2', width: '100%', borderWidth: 3, borderColor: '#fff' }}
+            titleStyle={{ color: '#fff', fontWeight: '700' }}
+            title="Sign up" 
+            disabled={isLoading}
+            onPress={_handlePressSignUpButtonAsync}
           />
-        )}
-        {!isSignUp && (
-          <>
-            {loginType === LOGIN_TYPE.EMAIL_PASSWORD && (
-              <Text
-                style={{
-                  color: '#fff',
-                  alignSelf: 'center',
-                  paddingEnd: 8,
-                  paddingTop: 30,
-                }}
-                onPress={() => setLoginType(LOGIN_TYPE.EMAIL_LINK)}
-              >
-                {t('Use email magic link login')} {'->'}
-              </Text>
-            )}
-            {loginType === LOGIN_TYPE.EMAIL_LINK && (
-              <Text
-                style={{
-                  color: '#fff',
-                  alignSelf: 'center',
-                  paddingEnd: 8,
-                  paddingTop: 30,
-                }}
-                onPress={() => setLoginType(LOGIN_TYPE.EMAIL_PASSWORD)}
-              >
-                {t('Use password login')} {'->'}
-              </Text>
-            )}
-          </>
-        )}
-        {!isSignUp && (
-          <Text
-            style={{
-              color: '#fff',
-              alignSelf: 'center',
-              paddingEnd: 8,
-              paddingTop: 20,
-            }}
-            onPress={() => navigation.push('SignIn', { signUp: true })}
-          >
-            {t("Don't have an account yet? Sign up now")} {'->'}
-          </Text>
-        )}
-      </ScrollView>
+          )}
+        </View>
+
     </SafeAreaView>
   );
 };
@@ -226,6 +91,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#5050d2',
     justifyContent: 'space-between',
     padding: 30,
+  },
+  logoContainer: {
+    flex: 1,
+    backgroundColor: '#5050d2',
+    justifyContent: 'center',
+    padding: 30,
+  },
+  buttons: {
+    padding: 20
   },
   logo: {
     alignSelf: 'center',

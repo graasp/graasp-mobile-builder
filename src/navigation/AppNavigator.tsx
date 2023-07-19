@@ -14,7 +14,7 @@ import RootNavigator, { RootStackParamList } from './RootNavigator';
 const AppNavigator = () => {
   const config = {
     screens: {
-      EmailSent: 'auth',
+      SignIn: 'auth',
     },
   };
 

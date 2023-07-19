@@ -33,7 +33,7 @@ const AxiosInterceptor = ({
             const refreshToken = await SecureStore.getItemAsync('refreshToken');
             if (!refreshToken) {
               Toast.show({
-                type: 'info',
+                type: 'error',
                 text1: t('You must log in again')!,
               });
               signOut();
@@ -50,7 +50,7 @@ const AxiosInterceptor = ({
             return axiosContentInstance(originalRequest);
           } catch {
             Toast.show({
-              type: 'info',
+              type: 'error',
               text1: t('You must log in again')!,
             });
             signOut();

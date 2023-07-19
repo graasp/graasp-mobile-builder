@@ -6663,14 +6663,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-web-browser@npm:~12.0.0":
-  version: 12.0.0
-  resolution: "expo-web-browser@npm:12.0.0"
+"expo-web-browser@npm:^12.3.2":
+  version: 12.3.2
+  resolution: "expo-web-browser@npm:12.3.2"
   dependencies:
     compare-urls: ^2.0.0
+    url: ^0.11.0
   peerDependencies:
     expo: "*"
-  checksum: af13169ea8f5de5ab92e3022757cedaa1b9c0392efc28e449a0e3faa43f01f5dd6efd1a543e18ff5e8f7068b2da1156884e0401bb910c95205a89cc365201d85
+  checksum: 2ebf97510b33ca1fa4fc5062dc5ac927b36a6111a51168d732cf5790802d93fda159daf90fdc6fa6fadd9c3367c3e33e39ce9fa9a04421ea774d3f9aec901f4a
   languageName: node
   linkType: hard
 
@@ -7416,7 +7417,7 @@ __metadata:
     expo-splash-screen: ~0.17.5
     expo-status-bar: ~1.4.2
     expo-system-ui: ~2.0.1
-    expo-web-browser: ~12.0.0
+    expo-web-browser: ^12.3.2
     i18next: ^22.4.1
     jest: ^26.6.3
     jest-expo: ^47.0.0
@@ -11364,6 +11365,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"punycode@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "punycode@npm:1.4.1"
+  checksum: fa6e698cb53db45e4628559e557ddaf554103d2a96a1d62892c8f4032cd3bc8871796cae9eabc1bc700e2b6677611521ce5bb1d9a27700086039965d0cf34518
+  languageName: node
+  linkType: hard
+
 "punycode@npm:^2.1.0, punycode@npm:^2.1.1":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
@@ -11384,6 +11392,15 @@ __metadata:
   version: 6.7.0
   resolution: "qs@npm:6.7.0"
   checksum: dfd5f6adef50e36e908cfa70a6233871b5afe66fbaca37ecc1da352ba29eb2151a3797991948f158bb37fccde51bd57845cb619a8035287bfc24e4591172c347
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.11.0":
+  version: 6.11.2
+  resolution: "qs@npm:6.11.2"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
   languageName: node
   linkType: hard
 
@@ -13890,6 +13907,16 @@ __metadata:
     querystringify: ^2.1.1
     requires-port: ^1.0.0
   checksum: fbdba6b1d83336aca2216bbdc38ba658d9cfb8fc7f665eb8b17852de638ff7d1a162c198a8e4ed66001ddbf6c9888d41e4798912c62b4fd777a31657989f7bdf
+  languageName: node
+  linkType: hard
+
+"url@npm:^0.11.0":
+  version: 0.11.1
+  resolution: "url@npm:0.11.1"
+  dependencies:
+    punycode: ^1.4.1
+    qs: ^6.11.0
+  checksum: a7de4b37bbcbe60ef199acda4ce437ef843c0ef3a4b34ec3e3d97e0446a5f50dc7bfeafbe33ad118cf4e5aa04805e1328f0d0126e254f2b77bb8498fa395c596
   languageName: node
   linkType: hard
 
