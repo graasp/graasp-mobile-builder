@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import React, { FC, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -31,7 +31,9 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
 
   useEffect(() => {
     if (token) {
-      WebBrowser.dismissBrowser();
+      if (Platform.OS === 'ios') {
+        WebBrowser.dismissBrowser();
+      }
       signInWithToken(token, LOGIN_TYPE.EMAIL_LINK);
     }
   }, [token]);
