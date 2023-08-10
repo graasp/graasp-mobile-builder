@@ -1,7 +1,8 @@
 import { StackScreenProps } from '@react-navigation/stack';
+import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import React, { FC, useEffect } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -10,8 +11,6 @@ import {
   buildGraaspAuthSignUpRoute,
 } from '../api/routes';
 import GraaspLogo from '../components/common/GraaspLogo';
-import { LOGIN_TYPE } from '../config/constants/constants';
-import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { useAsync } from '../utils/hooks/useAsync';
@@ -25,23 +24,11 @@ type SignInProps = StackScreenProps<
 const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const isSignUp = Boolean(params?.signUp);
   const { isLoading } = useAsync(null);
-  const authContext = useAuth();
-  const signInWithToken = authContext?.signIn;
-  const token = params?.t;
-
-  useEffect(() => {
-    if (token) {
-      if (Platform.OS === 'ios') {
-        WebBrowser.dismissBrowser();
-      }
-      signInWithToken(token, LOGIN_TYPE.EMAIL_LINK);
-    }
-  }, [token]);
 
   const _handlePressLoginButtonAsync = async () => {
     const challenge = await generateNonce();
     const authUrl = buildGraaspAuthLoginRoute(challenge);
-    await WebBrowser.openBrowserAsync(authUrl);
+    Linking.openURL(authUrl);
   };
 
   const _handlePressSignUpButtonAsync = async () => {
@@ -75,7 +62,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             borderColor: '#fff',
           }}
           titleStyle={{ color: '#5050d2', fontWeight: '700' }}
-          title="Login"
+          title="Log in"
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
         />

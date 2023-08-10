@@ -238,3 +238,10 @@ export const ANALYTICS_EVENTS = {
 };
 
 export const addItemPermissions = ['admin', 'write'];
+
+export const AUTH_PATH = 'auth';
+
+export const PLATFORM_OS = {
+  IOS: 'ios',
+  ANDROID: 'android',
+};

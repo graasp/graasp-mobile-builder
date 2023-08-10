@@ -1,7 +1,7 @@
 module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
-  version: '1.1.2',
+  version: '1.1.3',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -31,7 +31,7 @@ module.exports = {
     bundleIdentifier: 'org.graasp.mobile',
     buildNumber: '1',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
-    associatedDomains: ['applinks:auth.graasp.org'],
+    associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
       NSCameraUsageDescription:
         'Allow access to the camera to take and upload photos to Graasp. These photos can also be used to update your profile picture.',
@@ -40,6 +40,7 @@ module.exports = {
     },
   },
   android: {
+    versionCode: '1',
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
@@ -53,7 +54,7 @@ module.exports = {
         data: [
           {
             scheme: 'https',
-            host: '*.auth.graasp.org',
+            host: 'mobile.graasp.org',
             pathPrefix: '/auth',
           },
         ],
