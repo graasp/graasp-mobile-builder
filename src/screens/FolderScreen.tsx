@@ -13,6 +13,7 @@ import { useChildren, useItemMemberships } from '../hooks';
 import { useCurrentMember } from '../hooks/member';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { ItemMembership } from '../types';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
 type CommonStackFolderProps = CompositeScreenProps<
@@ -52,10 +53,10 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
 
   let displayAddItem = false;
 
-  if (itemMemberships) {
-    itemMemberships[0].map((itemMembership) => {
+  if (itemMemberships?.data[itemId]) {
+    itemMemberships.data[itemId].map((itemMembership: ItemMembership) => {
       if (
-        itemMembership.memberId === currentMember?.id &&
+        itemMembership.member.id === currentMember?.id &&
         addItemPermissions.includes(itemMembership.permission)
       ) {
         displayAddItem = true;

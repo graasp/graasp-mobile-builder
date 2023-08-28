@@ -42,11 +42,11 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
         mimetype &&
         MIME_TYPES.PDF.concat(MIME_TYPES.VIDEO).includes(mimetype)
       ) {
-        setFilePath(itemFile.url);
+        setFilePath(itemFile);
         setIsDownloading(false);
         return;
       }
-      downloadFile(itemFile.url);
+      downloadFile(itemFile);
     } catch {
       throw new Error();
     }

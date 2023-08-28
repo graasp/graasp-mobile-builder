@@ -12,11 +12,11 @@ export const buildGetChildrenRoute = (id: UUID) =>
 export const buildGetItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
 export const buildCreateItemRoute = (parentId?: UUID) =>
   parentId ? `${ITEMS_ROUTE}?parentId=${parentId}` : `${ITEMS_ROUTE}`;
-export const buildEditItemRoute = (id: UUID) => `${ITEMS_ROUTE}/${id}`;
+export const buildEditItemRoute = (id: UUID) => `${ITEMS_ROUTE}?id=${id}`;
 export const buildGetItemFileUrlRoute = (id: UUID) =>
   `${ITEMS_ROUTE}/${id}/download?replyUrl=true`;
 export const buildGetMemberAvatarRoute = (id: UUID) =>
-  `${MEMBERS_ROUTE}/avatars/${id}/download?replyUrl=true&size=medium`;
+  `${MEMBERS_ROUTE}/${id}/avatar/medium?replyUrl=true`;
 
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>
@@ -32,8 +32,8 @@ export const buildUploadFilesRoute = (parentId?: UUID) =>
   parentId
     ? `${API_HOST}/${ITEMS_ROUTE}/upload?id=${parentId}`
     : `${API_HOST}/${ITEMS_ROUTE}/upload`;
-export const buildUploadAvatarImageRoute = (id: UUID) =>
-  `${API_HOST}/${MEMBERS_ROUTE}/avatars/upload?id=${id}`;
+export const buildUploadAvatarImageRoute = () =>
+  `${API_HOST}/${MEMBERS_ROUTE}/avatar`;
 export const GET_CURRENT_MEMBER_ROUTE = `${MEMBERS_ROUTE}/current`;
 export const buildSignInPath = (to: any) => {
   const queryString = qs.stringify({ to }, { addQueryPrefix: true });

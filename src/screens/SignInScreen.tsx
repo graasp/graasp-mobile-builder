@@ -37,7 +37,6 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
         parsedDeepLink?.path === AUTH_PATH &&
         parsedDeepLink?.queryParams?.t
       ) {
-        console.log(parsedDeepLink);
         if (Platform.OS === PLATFORM_OS.IOS) {
           WebBrowser.dismissBrowser();
         }
