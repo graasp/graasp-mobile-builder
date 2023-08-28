@@ -13,6 +13,12 @@ import { AxiosInterceptor } from '../context/axiosInterceptor';
 import RootNavigator, { RootStackParamList } from './RootNavigator';
 
 const AppNavigator = () => {
+  const config = {
+    screens: {
+      SignIn: 'auth',
+    },
+  };
+  
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
       'graasp-mobile-builder://',
@@ -21,7 +27,9 @@ const AppNavigator = () => {
       'https://mobile.graasp.org',
       'https://*.graasp.org',
     ],
+    config,
   };
+
   return (
     <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
       <AuthProvider>

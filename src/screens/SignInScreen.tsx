@@ -1,7 +1,7 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,6 +14,10 @@ import GraaspLogo from '../components/common/GraaspLogo';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { useAsync } from '../utils/hooks/useAsync';
+import { useAuth } from '../context/authContext';
+import { Platform } from 'react-native';
+
+import { AUTH_PATH, PLATFORM_OS } from '../config/constants/constants';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -23,7 +27,23 @@ type SignInProps = StackScreenProps<
 
 const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const isSignUp = Boolean(params?.signUp);
+  const authContext = useAuth();
+  const signInWithToken = authContext?.signIn;
+  const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
+
+  useEffect(() => {
+    if (deepLink) {
+      const parsedDeepLink = Linking.parse(deepLink);
+      if (parsedDeepLink?.path === AUTH_PATH && parsedDeepLink?.queryParams?.t) {
+        console.log(parsedDeepLink)
+        if (Platform.OS === PLATFORM_OS.IOS) {
+          WebBrowser.dismissBrowser();
+        }
+        signInWithToken(parsedDeepLink.queryParams.t);
+      }
+    }
+  }, [deepLink]);
 
   const _handlePressLoginButtonAsync = async () => {
     const challenge = await generateNonce();
