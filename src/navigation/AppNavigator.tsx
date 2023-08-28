@@ -14,7 +14,7 @@ import RootNavigator, { RootStackParamList } from './RootNavigator';
 const AppNavigator = () => {
   const config = {
     screens: {
-      EmailSent: 'auth',
+      SignIn: 'auth',
     },
   };
 
@@ -23,9 +23,12 @@ const AppNavigator = () => {
       'graasp-mobile-builder://',
       'https://builder.graasp.org',
       'https://player.graasp.org',
+      'https://mobile.graasp.org',
+      'https://*.graasp.org',
     ],
     config,
   };
+
   return (
     <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
       <AuthProvider>

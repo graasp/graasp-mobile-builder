@@ -74,6 +74,20 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 
+  useEffect(() => {
+    if (currentMember) {
+      downloadAvatar();
+    }
+  }, [currentMember]);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleChangeAvatarSheetChanges', index);
+  }, []);
+
+  const handleOpenBottomSheetChangeAvatarModal = useCallback(() => {
+    bottomSheetChangeAvatarModalRef.current?.present();
+  }, []);
+
   const downloadAvatar = async () => {
     try {
       if (currentMember) {
@@ -96,12 +110,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       throw new Error();
     }
   };
-
-  useEffect(() => {
-    if (currentMember) {
-      downloadAvatar();
-    }
-  }, [currentMember]);
 
   if (isLoading || !currentMember) {
     return <ActivityIndicator />;
@@ -185,14 +193,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
     }
   };
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleChangeAvatarSheetChanges', index);
-  }, []);
-
-  const handleOpenBottomSheetChangeAvatarModal = useCallback(() => {
-    bottomSheetChangeAvatarModalRef.current?.present();
-  }, []);
 
   const handleChangeLanguage = () => {
     setChangeLanguageModalVisible({ toggle: true });

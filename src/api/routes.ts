@@ -1,6 +1,6 @@
 import qs from 'qs';
 
-import { API_HOST } from '../config/constants/constants';
+import { API_HOST, AUTH_HOST } from '../config/constants/constants';
 import { UUID } from '../types';
 
 export const ITEMS_ROUTE = 'items';
@@ -44,3 +44,7 @@ export const buildGraaspAssetsPdfViewerRoute = (filePath: string) =>
   `https://assets.graasp.org/pdf-viewer/web/viewer.html?file=${encodeURIComponent(
     filePath,
   )}`;
+export const buildGraaspAuthLoginRoute = (challenge: string) =>
+  `${AUTH_HOST}?m=${challenge}`;
+export const buildGraaspAuthSignUpRoute = (challenge: string) =>
+  `${AUTH_HOST}/signup?m=${challenge}`;

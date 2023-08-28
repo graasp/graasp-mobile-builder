@@ -1,8 +1,8 @@
 import env from '../../env.json';
 
-const { API_HOST, S3_FILES_HOST } = env;
+const { API_HOST, AUTH_HOST, S3_FILES_HOST } = env;
 
-export { API_HOST, S3_FILES_HOST };
+export { API_HOST, AUTH_HOST, S3_FILES_HOST };
 
 export const APP_NAME = 'Graasp';
 
@@ -238,3 +238,10 @@ export const ANALYTICS_EVENTS = {
 };
 
 export const addItemPermissions = ['admin', 'write'];
+
+export const AUTH_PATH = 'auth';
+
+export const PLATFORM_OS = {
+  IOS: 'ios',
+  ANDROID: 'android',
+};

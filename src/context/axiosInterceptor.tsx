@@ -28,12 +28,16 @@ const AxiosInterceptor = ({
       },
       async function (error) {
         const originalRequest = error.config;
-        if (error?.response?.status === 401 && !originalRequest?.sent) {
+        if (
+          error?.response?.status === 401 &&
+          !originalRequest?.sent &&
+          !authContext.state.isSignout
+        ) {
           try {
             const refreshToken = await SecureStore.getItemAsync('refreshToken');
             if (!refreshToken) {
               Toast.show({
-                type: 'info',
+                type: 'error',
                 text1: t('You must log in again')!,
               });
               signOut();
@@ -50,7 +54,7 @@ const AxiosInterceptor = ({
             return axiosContentInstance(originalRequest);
           } catch {
             Toast.show({
-              type: 'info',
+              type: 'error',
               text1: t('You must log in again')!,
             });
             signOut();
