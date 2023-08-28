@@ -2,7 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import React, { FC, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,13 +11,11 @@ import {
   buildGraaspAuthSignUpRoute,
 } from '../api/routes';
 import GraaspLogo from '../components/common/GraaspLogo';
+import { AUTH_PATH, PLATFORM_OS } from '../config/constants/constants';
+import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { useAsync } from '../utils/hooks/useAsync';
-import { useAuth } from '../context/authContext';
-import { Platform } from 'react-native';
-
-import { AUTH_PATH, PLATFORM_OS } from '../config/constants/constants';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -35,8 +33,11 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   useEffect(() => {
     if (deepLink) {
       const parsedDeepLink = Linking.parse(deepLink);
-      if (parsedDeepLink?.path === AUTH_PATH && parsedDeepLink?.queryParams?.t) {
-        console.log(parsedDeepLink)
+      if (
+        parsedDeepLink?.path === AUTH_PATH &&
+        parsedDeepLink?.queryParams?.t
+      ) {
+        console.log(parsedDeepLink);
         if (Platform.OS === PLATFORM_OS.IOS) {
           WebBrowser.dismissBrowser();
         }

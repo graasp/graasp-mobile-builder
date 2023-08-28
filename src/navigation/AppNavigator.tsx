@@ -17,7 +17,7 @@ const AppNavigator = () => {
       SignIn: 'auth',
     },
   };
-  
+
   const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [
       'graasp-mobile-builder://',
@@ -34,14 +34,14 @@ const AppNavigator = () => {
       <AuthProvider>
         <AxiosInterceptor>
           <CurrentMemberProvider>
-              <ViewProvider>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                  <BottomSheetModalProvider>
-                    <RootNavigator />
-                    <Toast />
-                  </BottomSheetModalProvider>
-                </GestureHandlerRootView>
-              </ViewProvider>
+            <ViewProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                  <RootNavigator />
+                  <Toast />
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </ViewProvider>
           </CurrentMemberProvider>
         </AxiosInterceptor>
       </AuthProvider>

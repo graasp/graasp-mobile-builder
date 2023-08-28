@@ -28,7 +28,11 @@ const AxiosInterceptor = ({
       },
       async function (error) {
         const originalRequest = error.config;
-        if (error?.response?.status === 401 && !originalRequest?.sent && !authContext.state.isSignout) {
+        if (
+          error?.response?.status === 401 &&
+          !originalRequest?.sent &&
+          !authContext.state.isSignout
+        ) {
           try {
             const refreshToken = await SecureStore.getItemAsync('refreshToken');
             if (!refreshToken) {
