@@ -1,13 +1,11 @@
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import PlayerView from '../components/PlayerView';
-import { useView } from '../context/ViewContext';
 import { useOwnItems } from '../hooks';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { StackParamList } from '../navigation/StackNavigator';
@@ -23,7 +21,6 @@ export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
 const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
   const { data: ownItems, isLoading, isError, refetch } = useOwnItems();
-  const { isPlayerView } = useView();
   useFocusQuery(refetch);
 
   if (isLoading) {
@@ -36,15 +33,11 @@ const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
-      {isPlayerView ? (
-        <PlayerView children={ownItems} />
-      ) : (
-        <ItemsList
-          items={[...ownItems]}
-          isLoading={isLoading}
-          refresh={refetch}
-        />
-      )}
+      <ItemsList
+        items={[...ownItems]}
+        isLoading={isLoading}
+        refresh={refetch}
+      />
     </SafeAreaView>
   );
 };

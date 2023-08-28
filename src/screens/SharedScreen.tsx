@@ -1,13 +1,11 @@
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import PlayerView from '../components/PlayerView';
-import { useView } from '../context/ViewContext';
 import { useSharedItems } from '../hooks';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { SharedStackParamList } from '../navigation/SharedStackNavigator';
@@ -24,7 +22,6 @@ type SharedStackSharedProps = CompositeScreenProps<
 
 const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
   const { data: sharedItems, isLoading, isError, refetch } = useSharedItems();
-  const { isPlayerView } = useView();
   useFocusQuery(refetch);
 
   if (isLoading) {
@@ -37,16 +34,12 @@ const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
-      {isPlayerView ? (
-        <PlayerView children={sharedItems} />
-      ) : (
-        <ItemsList
-          items={[...sharedItems]}
-          isLoading={isLoading}
-          refresh={refetch}
-          displayAddItem={false}
-        />
-      )}
+      <ItemsList
+        items={[...sharedItems]}
+        isLoading={isLoading}
+        refresh={refetch}
+        displayAddItem={false}
+      />
     </SafeAreaView>
   );
 };

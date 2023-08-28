@@ -6,7 +6,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 
 import { CurrentMemberProvider } from '../context/CurrentMemberContext';
-import { ViewProvider } from '../context/ViewContext';
 import { AuthProvider } from '../context/authContext';
 import { AxiosInterceptor } from '../context/axiosInterceptor';
 import RootNavigator, { RootStackParamList } from './RootNavigator';
@@ -34,14 +33,12 @@ const AppNavigator = () => {
       <AuthProvider>
         <AxiosInterceptor>
           <CurrentMemberProvider>
-            <ViewProvider>
-              <GestureHandlerRootView style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                  <RootNavigator />
-                  <Toast />
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </ViewProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <BottomSheetModalProvider>
+                <RootNavigator />
+                <Toast />
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
           </CurrentMemberProvider>
         </AxiosInterceptor>
       </AuthProvider>

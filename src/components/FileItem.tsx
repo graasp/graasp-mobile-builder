@@ -10,21 +10,16 @@ import { downloadFileFromS3Url } from '../utils/functions/media';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
 import FileAudio from './FileAudio';
-import FileAudioPlayer from './FileAudioPlayer';
 import FileImage from './FileImage';
-import FileImagePlayer from './FileImagePlayer';
 import FilePdf from './FilePdf';
-import FilePdfPlayer from './FilePdfPlayer';
 import FileUnsupported from './FileUnsupported';
 import FileVideo from './FileVideo';
-import FileVideoPlayer from './FileVideoPlayer';
 
 interface FileItemProps {
   item: Item;
-  isPlayerView?: boolean;
 }
 
-const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
+const FileItem: FC<FileItemProps> = ({ item }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(true);
   const [filePath, setFilePath] = useState<string | undefined>(undefined);
 
@@ -85,33 +80,25 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
 
   if (mimetype && filePath) {
     if (MIME_TYPES.IMAGE.includes(mimetype)) {
-      return isPlayerView ? (
-        <FileImagePlayer filePath={filePath} />
-      ) : (
+      return (
         <FileImage filePath={filePath} handleShareFile={handleShareFile} />
       );
     } else if (MIME_TYPES.AUDIO.includes(mimetype)) {
-      return isPlayerView ? (
-        <FileAudioPlayer filePath={filePath} />
-      ) : (
+      return (
         <FileAudio filePath={filePath} handleShareFile={handleShareFile} />
       );
     } else if (MIME_TYPES.VIDEO.includes(mimetype)) {
-      return isPlayerView ? (
-        <FileVideoPlayer filePath={filePath} />
-      ) : (
+      return (
         <FileVideo filePath={filePath} itemId={item.id} mimetype={mimetype} />
       );
     } else if (MIME_TYPES.PDF.includes(mimetype)) {
-      return isPlayerView ? (
-        <FilePdfPlayer filePath={filePath} />
-      ) : (
+      return (
         <FilePdf filePath={filePath} itemId={item.id} mimetype={mimetype} />
       );
     }
   }
   if (filePath) {
-    return isPlayerView ? null : (
+    return (
       <FileUnsupported filePath={filePath} handleShareFile={handleShareFile} />
     );
   }
