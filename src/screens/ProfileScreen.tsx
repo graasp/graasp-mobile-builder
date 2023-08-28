@@ -99,7 +99,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
 
         const downloadResumable = FileSystem.createDownloadResumable(
-          avatar.url,
+          avatar,
           localPath,
         );
         await downloadResumable.downloadAsync();
@@ -162,7 +162,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       }
       setIsUpdating(true);
       const uploadResponse = await FileSystem.uploadAsync(
-        buildUploadAvatarImageRoute(currentMember.id),
+        buildUploadAvatarImageRoute(),
         file.assets[0].uri,
         {
           httpMethod: 'POST',

@@ -51,7 +51,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
     data: creatorData,
     isLoading: isLoadingName,
     refetch: refetchMember,
-  } = useMember(item.creator, { enabled: Boolean(item) });
+  } = useMember(item.creator.id, { enabled: Boolean(item) });
   useFocusQuery(refetchMember);
 
   const { createdAt, creator, description, extra, id, name, type, updatedAt } =

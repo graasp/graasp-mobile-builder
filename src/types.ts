@@ -63,7 +63,7 @@ export interface Item<T extends UnknownExtra = UnknownExtra, S = ItemSettings> {
   path: string;
   extra: T;
   settings: S;
-  creator: string;
+  creator: Member;
   createdAt: string;
   updatedAt: string;
 }
@@ -94,13 +94,19 @@ export declare enum PermissionLevel {
 }
 
 export interface ItemMembership {
-  id: string;
-  memberId: string;
-  itemPath: string;
+  id: UUID;
+  member: Member;
+  item: Item;
   permission: PermissionLevel;
-  creator: string;
+  creator?: Member | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ItemMemberships {
+  data: {
+    [key: string]: ItemMembership[];
+  };
 }
 
 export interface S3FileItemExtra extends UnknownExtra {
