@@ -6,9 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import PlayerView from '../components/PlayerView';
 import { addItemPermissions } from '../config/constants/constants';
-import { useView } from '../context/ViewContext';
 import { useChildren, useItemMemberships } from '../hooks';
 import { useCurrentMember } from '../hooks/member';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
@@ -41,7 +39,6 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
     isError: isErrorCurrentMember,
   } = useCurrentMember();
   useFocusQuery(refetch);
-  const { isPlayerView } = useView();
 
   if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
     return <ActivityIndicator />;
@@ -66,17 +63,13 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
-      {isPlayerView ? (
-        <PlayerView children={children} />
-      ) : (
-        <ItemsList
-          parentId={itemId}
-          items={[...children]}
-          isLoading={isLoading}
-          refresh={refetch}
-          displayAddItem={displayAddItem}
-        />
-      )}
+      <ItemsList
+        parentId={itemId}
+        items={[...children]}
+        isLoading={isLoading}
+        refresh={refetch}
+        displayAddItem={displayAddItem}
+      />
     </SafeAreaView>
   );
 };

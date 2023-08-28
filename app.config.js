@@ -29,7 +29,7 @@ module.exports = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
-    buildNumber: '1',
+    buildNumber: '2',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
@@ -40,7 +40,7 @@ module.exports = {
     },
   },
   android: {
-    versionCode: '1',
+    versionCode: '2',
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
