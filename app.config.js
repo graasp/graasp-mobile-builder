@@ -1,6 +1,7 @@
 module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
+  owner: 'graasp',
   version: '1.1.3',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
