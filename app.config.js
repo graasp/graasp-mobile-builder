@@ -12,6 +12,7 @@ module.exports = {
     resizeMode: 'contain',
     backgroundColor: '#5050d2',
   },
+  jsEngine: 'jsc',
   plugins: [
     '@react-native-firebase/app',
     [

@@ -7347,17 +7347,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-random@npm:~13.2.0":
-  version: 13.2.0
-  resolution: "expo-random@npm:13.2.0"
-  dependencies:
-    base64-js: ^1.3.0
-  peerDependencies:
-    expo: "*"
-  checksum: 80701c9aff3c0dd4f09c2d73687fd79b4b4811c221ddaa6554c3695b01b77191450e12a8ccdfc8a8a17b9eb801a543d849a1daec07b4f6146890cf45bd511c1b
-  languageName: node
-  linkType: hard
-
 "expo-secure-store@npm:~12.3.1":
   version: 12.3.1
   resolution: "expo-secure-store@npm:12.3.1"
@@ -8116,7 +8105,6 @@ __metadata:
     expo-image-picker: ~14.3.2
     expo-linking: ~5.0.2
     expo-media-library: ~15.4.1
-    expo-random: ~13.2.0
     expo-secure-store: ~12.3.1
     expo-sharing: ~11.5.0
     expo-splash-screen: ~0.20.5
