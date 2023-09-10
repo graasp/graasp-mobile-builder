@@ -11,11 +11,17 @@ import {
   buildGraaspAuthSignUpRoute,
 } from '../api/routes';
 import GraaspLogo from '../components/common/GraaspLogo';
-import { AUTH_PATH, PLATFORM_OS } from '../config/constants/constants';
+import {
+  AUTH_PATH,
+  PLATFORM_OS,
+  WEB_BROWSER_REDIRECT_RESULT_TYPE,
+} from '../config/constants/constants';
 import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { useAsync } from '../utils/hooks/useAsync';
+import { WebBrowserRedirectResult } from 'expo-web-browser';
+import Toast from 'react-native-toast-message';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -31,6 +37,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const { isLoading } = useAsync(null);
 
   useEffect(() => {
+    // Catch email-link login redirection
     if (deepLink) {
       const parsedDeepLink = Linking.parse(deepLink);
       if (
@@ -38,7 +45,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
         parsedDeepLink?.queryParams?.t
       ) {
         if (Platform.OS === PLATFORM_OS.IOS) {
-          WebBrowser.dismissBrowser();
+          WebBrowser.dismissAuthSession();
         }
         signInWithToken(parsedDeepLink.queryParams.t);
       }
@@ -46,15 +53,36 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   }, [deepLink]);
 
   const _handlePressLoginButtonAsync = async () => {
-    const challenge = await generateNonce();
-    const authUrl = buildGraaspAuthLoginRoute(challenge);
-    Linking.openURL(authUrl);
+    try {
+      const challenge = await generateNonce();
+      const loginResponse = await WebBrowser.openAuthSessionAsync(
+        buildGraaspAuthLoginRoute(challenge),
+      );
+      // Catch email-password login redirection
+      if (
+        loginResponse.type === WEB_BROWSER_REDIRECT_RESULT_TYPE &&
+        loginResponse.url
+      ) {
+        const parsedDeepLink = Linking.parse(loginResponse.url);
+        signInWithToken(parsedDeepLink?.queryParams?.t);
+      } else {
+        if (Platform.OS === PLATFORM_OS.IOS) {
+          WebBrowser.dismissAuthSession();
+        }
+      }
+    } catch {
+      throw new Error('Log in error');
+    }
   };
 
   const _handlePressSignUpButtonAsync = async () => {
-    const challenge = await generateNonce();
-    const authUrl = buildGraaspAuthSignUpRoute(challenge);
-    await WebBrowser.openBrowserAsync(authUrl);
+    try {
+      const challenge = await generateNonce();
+      const authUrl = buildGraaspAuthSignUpRoute(challenge);
+      await WebBrowser.openAuthSessionAsync(authUrl);
+    } catch {
+      throw new Error('Sign in error');
+    }
   };
 
   return (
