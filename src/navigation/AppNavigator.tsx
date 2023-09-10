@@ -18,13 +18,7 @@ const AppNavigator = () => {
   };
 
   const linking: LinkingOptions<RootStackParamList> = {
-    prefixes: [
-      'graasp-mobile-builder://',
-      'https://builder.graasp.org',
-      'https://player.graasp.org',
-      'https://mobile.graasp.org',
-      'https://*.graasp.org',
-    ],
+    prefixes: ['https://mobile.graasp.org'],
     config,
   };
 

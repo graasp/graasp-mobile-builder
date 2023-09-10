@@ -245,3 +245,5 @@ export const PLATFORM_OS = {
   IOS: 'ios',
   ANDROID: 'android',
 };
+
+export const WEB_BROWSER_REDIRECT_RESULT_TYPE = 'success';
