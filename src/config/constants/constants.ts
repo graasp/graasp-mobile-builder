@@ -247,3 +247,14 @@ export const PLATFORM_OS = {
 };
 
 export const WEB_BROWSER_REDIRECT_RESULT_TYPE = 'success';
+
+export const LOGIN_URI = {
+  DEEP_LINK: {
+    SCHEME: 'graasp-mobile-builder',
+    HOSTNAME: 'auth',
+  },
+  APP_SCHEME: {
+    HOSTNAME: 'mobile.graasp.builder',
+    PATH: 'auth',
+  },
+};

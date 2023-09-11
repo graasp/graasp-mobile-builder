@@ -1,4 +1,10 @@
-import { MIME_TYPES_EXTENSIONS } from '../../config/constants/constants';
+import * as Linking from 'expo-linking';
+import Toast from 'react-native-toast-message';
+
+import {
+  LOGIN_URI,
+  MIME_TYPES_EXTENSIONS,
+} from '../../config/constants/constants';
 
 function getFileExtension(fileName: string) {
   const re = /(?:\.([^.]+))?$/;
@@ -18,4 +24,23 @@ function getFileExtensionFromMimeType(mimetype: string) {
   return undefined;
 }
 
-export { getFileExtension, getFileExtensionFromMimeType };
+function checkLoginUri(parsedUrl: Linking.ParsedURL) {
+  const { scheme, path, hostname, queryParams } = parsedUrl;
+  if (
+    queryParams?.t &&
+    ((scheme === LOGIN_URI.DEEP_LINK.SCHEME &&
+      hostname === LOGIN_URI.DEEP_LINK.HOSTNAME) ||
+      (hostname === LOGIN_URI.APP_SCHEME.HOSTNAME &&
+        path === LOGIN_URI.APP_SCHEME.PATH))
+  ) {
+    return true;
+  } else {
+    Toast.show({
+      type: 'error',
+      text1: 'Error logging in',
+    });
+    return false;
+  }
+}
+
+export { getFileExtension, getFileExtensionFromMimeType, checkLoginUri };
