@@ -250,11 +250,11 @@ export const WEB_BROWSER_REDIRECT_RESULT_TYPE = 'success';
 
 export const LOGIN_URI = {
   DEEP_LINK: {
-    SCHEME: 'graasp-mobile-builder',
-    HOSTNAME: 'auth',
+    HOSTNAME: 'mobile.graasp.org',
+    PATH: 'auth',
   },
   APP_SCHEME: {
-    HOSTNAME: 'mobile.graasp.builder',
-    PATH: 'auth',
+    SCHEME: 'graasp-mobile-builder',
+    HOSTNAME: 'auth',
   },
 };
