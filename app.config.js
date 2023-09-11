@@ -2,7 +2,7 @@ module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
   owner: 'graasp',
-  version: '1.1.3',
+  version: '1.1.4',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -31,7 +31,7 @@ module.exports = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
-    buildNumber: '4',
+    buildNumber: '1',
     googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
@@ -42,7 +42,7 @@ module.exports = {
     },
   },
   android: {
-    versionCode: 14,
+    versionCode: 16,
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',

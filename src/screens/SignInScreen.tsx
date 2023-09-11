@@ -12,7 +12,6 @@ import {
 } from '../api/routes';
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
-  AUTH_PATH,
   PLATFORM_OS,
   WEB_BROWSER_REDIRECT_RESULT_TYPE,
 } from '../config/constants/constants';
@@ -20,8 +19,7 @@ import { useAuth } from '../context/authContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { useAsync } from '../utils/hooks/useAsync';
-import { WebBrowserRedirectResult } from 'expo-web-browser';
-import Toast from 'react-native-toast-message';
+import { checkLoginUri } from '../utils/functions/helper';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,
@@ -37,17 +35,14 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const { isLoading } = useAsync(null);
 
   useEffect(() => {
-    // Catch email-link login redirection
+    // Catch email-link on iOS/Android and email-password on Android login redirection
     if (deepLink) {
       const parsedDeepLink = Linking.parse(deepLink);
-      if (
-        parsedDeepLink?.path === AUTH_PATH &&
-        parsedDeepLink?.queryParams?.t
-      ) {
+      if (checkLoginUri(parsedDeepLink)) {
         if (Platform.OS === PLATFORM_OS.IOS) {
           WebBrowser.dismissAuthSession();
         }
-        signInWithToken(parsedDeepLink.queryParams.t);
+        signInWithToken(parsedDeepLink.queryParams?.t);
       }
     }
   }, [deepLink]);
@@ -58,7 +53,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
       const loginResponse = await WebBrowser.openAuthSessionAsync(
         buildGraaspAuthLoginRoute(challenge),
       );
-      // Catch email-password login redirection
+      // Catch email-password on iOS login redirection
       if (
         loginResponse.type === WEB_BROWSER_REDIRECT_RESULT_TYPE &&
         loginResponse.url
