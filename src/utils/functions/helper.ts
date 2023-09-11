@@ -28,10 +28,10 @@ function checkLoginUri(parsedUrl: Linking.ParsedURL) {
   const { scheme, path, hostname, queryParams } = parsedUrl;
   if (
     queryParams?.t &&
-    ((scheme === LOGIN_URI.DEEP_LINK.SCHEME &&
-      hostname === LOGIN_URI.DEEP_LINK.HOSTNAME) ||
-      (hostname === LOGIN_URI.APP_SCHEME.HOSTNAME &&
-        path === LOGIN_URI.APP_SCHEME.PATH))
+    ((scheme === LOGIN_URI.APP_SCHEME.SCHEME &&
+      hostname === LOGIN_URI.APP_SCHEME.HOSTNAME) ||
+      (hostname === LOGIN_URI.DEEP_LINK.HOSTNAME &&
+        path === LOGIN_URI.DEEP_LINK.PATH))
   ) {
     return true;
   } else {
