@@ -1,0 +1,33 @@
+name: Build and lint
+
+on: [push]
+
+jobs:
+  build-node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+
+      - name: Eslint
+        run: yarn lint
+
+      - name: Code Formatting
+        run: yarn prettier:check
+
+      - name: Typescript Build
+        run: yarn build:ts
+
+      - name: Test
+        run: yarn test
+        env:
+          CI: true
