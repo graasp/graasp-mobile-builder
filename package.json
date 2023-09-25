@@ -4,13 +4,15 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "eslint .",
+    "build:ts": "tsc --noEmit",
     "prettier:check": "prettier --check {src,test}/**/*.{js,ts,tsx}",
-    "prettier:write": "prettier --write {src,test}/**/*.{js,ts,tsx}"
+    "prettier:write": "prettier --write {src,test}/**/*.{js,ts,tsx}",
+    "check": "yarn prettier:check && yarn lint && yarn build:ts"
   },
   "jest": {
     "preset": "jest-expo"
@@ -23,8 +25,8 @@
     "@babel/plugin-transform-template-literals": "^7.22.5",
     "@expo/vector-icons": "^13.0.0",
     "@gorhom/bottom-sheet": "^4.4.5",
-    "@graasp/query-client": "github:graasp/graasp-query-client#433-remove-immutable",
-    "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend",
+    "@graasp/query-client": "2.0.1",
+    "@graasp/sdk": "2.0.0",
     "@react-native-firebase/analytics": "^18.3.1",
     "@react-native-firebase/app": "^18.3.1",
     "@react-navigation/bottom-tabs": "^6.0.5",
@@ -39,7 +41,7 @@
     "expo-build-properties": "~0.8.3",
     "expo-constants": "~14.4.2",
     "expo-crypto": "~12.4.1",
-    "expo-dev-client": "~2.4.8",
+    "expo-dev-client": "~2.4.10",
     "expo-document-picker": "~11.5.4",
     "expo-font": "~11.4.0",
     "expo-image-picker": "~14.3.2",
@@ -73,20 +75,17 @@
     "@babel/core": "^7.19.3",
     "@trivago/prettier-plugin-sort-imports": "4.2.0",
     "@types/react": "~18.2.14",
-    "@typescript-eslint/eslint-plugin": "^5.42.1",
-    "@typescript-eslint/parser": "^5.42.1",
-    "eslint": "^8.27.0",
-    "eslint-config-universe": "^11.1.1",
-    "eslint-plugin-import": "^2.26.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-config-universe": "^12.0.0",
+    "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "jest": "^29.2.1",
     "jest-expo": "^49.0.0",
     "prettier": "3.0.3",
     "react-test-renderer": "18.0.0",
     "typescript": "^5.1.3"
-  },
-  "resolutions": {
-    "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend"
   },
   "private": true
 }

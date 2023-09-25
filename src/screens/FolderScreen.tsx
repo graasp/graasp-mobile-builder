@@ -27,7 +27,7 @@ type FolderScreenRouteProp = CommonStackFolderProps['route'];
 
 const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   const route = useRoute<FolderScreenRouteProp>();
-  const { itemId, headerTitle } = route.params;
+  const { itemId } = route.params;
   const { hooks } = useQueryClient();
   const {
     data: itemMemberships,

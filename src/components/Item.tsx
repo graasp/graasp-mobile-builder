@@ -19,7 +19,7 @@ const Item: FC<ItemProps> = ({
   item: { id, name, type, extra },
   openOptions,
 }) => {
-  const { navigate, push } = useNavigation<HomeStackPropsNavigationProp>();
+  const { push } = useNavigation<HomeStackPropsNavigationProp>();
   async function handleItemPress() {
     switch (type) {
       case ItemType.FOLDER:

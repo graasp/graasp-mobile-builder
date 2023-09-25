@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
 
 import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -66,7 +66,6 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
 };
 
 const DrawerNavigator = () => {
-  const dimensions = useWindowDimensions();
   const { t } = useTranslation();
 
   return (

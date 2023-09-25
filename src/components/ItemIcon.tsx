@@ -7,15 +7,13 @@ import {
   DiscriminatedItem,
   EmbeddedLinkItemExtra,
   ItemType,
+  MimeTypes,
   S3FileItemExtra,
   getEmbeddedLinkExtra,
   getS3FileExtra,
 } from '@graasp/sdk';
 
-import {
-  ITEMS_TABLE_ROW_ICON_COLOR,
-  MIME_TYPES,
-} from '../config/constants/constants';
+import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
 
 interface ItemIconProps {
   name: string;
@@ -59,19 +57,19 @@ const ItemIcon: FC<ItemIconProps> = ({
       break;
     case ItemType.LOCAL_FILE:
     case ItemType.S3_FILE: {
-      if (MIME_TYPES.IMAGE.includes(mimetype)) {
+      if (MimeTypes.isImage(mimetype)) {
         Icon = icons.IMAGE;
         break;
       }
-      if (MIME_TYPES.VIDEO.includes(mimetype)) {
+      if (MimeTypes.isVideo(mimetype)) {
         Icon = icons.MOVIE;
         break;
       }
-      if (MIME_TYPES.AUDIO.includes(mimetype)) {
+      if (MimeTypes.isAudio(mimetype)) {
         Icon = icons.MUSIC_NOTE;
         break;
       }
-      if (MIME_TYPES.PDF.includes(mimetype)) {
+      if (MimeTypes.isPdf(mimetype)) {
         Icon = icons.PICTURE_AS_PDF;
         break;
       }

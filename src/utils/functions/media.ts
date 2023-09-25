@@ -30,7 +30,7 @@ export const saveMedia = async (uri: string, t: any) => {
         [{ text: 'OK' }],
       );
     }
-  } catch (error) {
+  } catch {
     Toast.show({
       type: 'error',
       text1: t('Error')!,

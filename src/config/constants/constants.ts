@@ -1,10 +1,15 @@
-import { PermissionLevel } from '@graasp/sdk';
-
 import env from '../../env.json';
 
-const { API_HOST, AUTH_HOST } = env;
+const {
+  API_HOST: DEFAULT_API_HOST,
+  AUTH_HOST: DEFAULT_AUTH_HOST,
+  S3_FILES_HOST,
+} = env;
 
-export { API_HOST, AUTH_HOST };
+const API_HOST = process.env.EXPO_PUBLIC_API_HOST || DEFAULT_API_HOST;
+const AUTH_HOST = process.env.EXPO_PUBLIC_AUTH_HOST || DEFAULT_AUTH_HOST;
+console.log(API_HOST, AUTH_HOST);
+export { API_HOST, AUTH_HOST, S3_FILES_HOST };
 
 export const APP_NAME = 'Graasp';
 
