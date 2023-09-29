@@ -96,9 +96,9 @@ const ItemsList: FC<ItemsListProps> = ({
       }
       const result = await Share.share({
         message: `Check out this on Graasp: ${
-          linkType === SHARE_OPTIONS.COMPOSE
-            ? `${SHARE_HOST.COMPOSE}/${itemId}`
-            : `${SHARE_HOST.PERFORM}/${itemId}`
+          linkType === SHARE_OPTIONS.BUILDER
+            ? `${SHARE_HOST.BUILDER}/${itemId}`
+            : `${SHARE_HOST.PLAYER}/${itemId}`
         }`,
       });
       if (result.action === Share.sharedAction) {
@@ -109,7 +109,7 @@ const ItemsList: FC<ItemsListProps> = ({
         }
         await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_GRAASP_LINK, {
           method:
-            linkType === SHARE_OPTIONS.COMPOSE ? VIEWS.COMPOSE : VIEWS.PERFORM,
+            linkType === SHARE_OPTIONS.BUILDER ? VIEWS.BUILDER : VIEWS.PLAYER,
         });
       } else if (result.action === Share.dismissedAction) {
         //setModalVisible({ toggle: false, itemId: null });
@@ -149,21 +149,21 @@ const ItemsList: FC<ItemsListProps> = ({
         }
       >
         <Button
-          title="Perform"
+          title="Player"
           raised={true}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           containerStyle={{ marginBottom: 20 }}
           onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PERFORM);
+            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PLAYER);
           }}
         />
         <Divider />
         <Button
-          title="Compose"
+          title="Builder"
           raised={true}
           buttonStyle={{ backgroundColor: '#5050d2' }}
           onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.COMPOSE);
+            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.BUILDER);
           }}
         />
       </Overlay>
