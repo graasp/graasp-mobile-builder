@@ -137,8 +137,8 @@ export const REDIRECT_URL_LOCAL_STORAGE_KEY = 'redirectUrl';
 
 export const USER_ITEM_ORDER = 'user_order';
 
-export const COMPOSE_VIEW_SELECTION = 'composeViewSelection';
-export const PERFORM_VIEW_SELECTION = 'performViewSelection';
+export const BUILDER_VIEW_SELECTION = 'builderViewSelection';
+export const PLAYER_VIEW_SELECTION = 'playerViewSelection';
 
 export const ITEM_TYPES_WITH_CAPTIONS = [
   ITEM_TYPES.S3_FILE,
@@ -189,18 +189,18 @@ export enum AuthActionKind {
 }
 
 export const SHARE_OPTIONS = {
-  COMPOSE: 1,
-  PERFORM: 2,
+  BUILDER: 1,
+  PLAYER: 2,
 };
 
 export const SHARE_HOST = {
-  COMPOSE: 'https://builder.graasp.org/items',
-  PERFORM: 'https://player.graasp.org',
+  BUILDER: 'https://builder.graasp.org/items',
+  PLAYER: 'https://player.graasp.org',
 };
 
 export const VIEWS = {
-  COMPOSE: 'graasp_builder',
-  PERFORM: 'graasp_player',
+  BUILDER: 'graasp_builder',
+  PLAYER: 'graasp_player',
 };
 
 export const MEDIA_LIBRARY_PERMISSION_STATUS = {
