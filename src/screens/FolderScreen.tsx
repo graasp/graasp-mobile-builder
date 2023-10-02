@@ -6,13 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import { addItemPermissions } from '../config/constants/constants';
 import { useChildren, useItemMemberships } from '../hooks';
 import { useCurrentMember } from '../hooks/member';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
-import { ItemMembership } from '../types';
 import { useFocusQuery } from '../utils/functions/useQuery';
+import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 
 type CommonStackFolderProps = CompositeScreenProps<
   StackScreenProps<
@@ -48,18 +47,11 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
     return null;
   }
 
-  let displayAddItem = false;
-
-  if (itemMemberships?.data[itemId]) {
-    itemMemberships.data[itemId].map((itemMembership: ItemMembership) => {
-      if (
-        itemMembership.member.id === currentMember?.id &&
-        addItemPermissions.includes(itemMembership.permission)
-      ) {
-        displayAddItem = true;
-      }
-    });
-  }
+  const displayAddItem = checkWriteOrAdminItemMembership(
+    itemId,
+    currentMember?.id,
+    itemMemberships,
+  );
 
   return (
     <SafeAreaView style={styles.container} edges={['left']}>

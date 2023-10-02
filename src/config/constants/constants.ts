@@ -237,7 +237,7 @@ export const ANALYTICS_EVENTS = {
   DELETE_MEMBER: 'delete_member',
 };
 
-export const addItemPermissions = ['admin', 'write'];
+export const writeOrAdminPermission = ['admin', 'write'];
 
 export const AUTH_PATH = 'auth';
 

@@ -1,29 +1,19 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { StyleSheet, FlatList, Share, View, Text } from 'react-native';
-import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
+import { StyleSheet, FlatList, View } from 'react-native';
+import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import {
-  ANALYTICS_EVENTS,
-  SHARE_HOST,
-  SHARE_OPTIONS,
-  VIEWS,
-} from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
-import { customAnalyticsEvent } from '../utils/functions/analytics';
 import AddItem from './AddItem';
-import DeleteItem from './DeleteItem';
-import EditItem from './EditItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
+import ItemListOptions from './ItemListOptions';
 
 interface ItemsListProps {
   parentId?: UUID;
@@ -40,33 +30,11 @@ const ItemsList: FC<ItemsListProps> = ({
   isLoading,
   displayAddItem = true,
 }) => {
-  const [shareModalVisible, setShareModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
-  const [editItemModalVisible, setEditItemModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
-  const [deleteItemModalVisible, setDeleteItemModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
   const navigation = useNavigation<HomeStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<ItemType | null>(null);
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
 
   const handlePresentModalPress = useCallback(
     ({ id }: { id: UUID }) => {
@@ -89,121 +57,8 @@ const ItemsList: FC<ItemsListProps> = ({
     return <Item item={item} openOptions={handlePresentModalPress} />;
   };
 
-  const onShare = async (itemId: UUID | null, linkType: any) => {
-    try {
-      if (itemId === null) {
-        throw new Error('No itemId');
-      }
-      const result = await Share.share({
-        message: `Check out this on Graasp: ${
-          linkType === SHARE_OPTIONS.BUILDER
-            ? `${SHARE_HOST.BUILDER}/${itemId}`
-            : `${SHARE_HOST.PLAYER}/${itemId}`
-        }`,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          setShareModalVisible({ toggle: false, itemId: null });
-        } else {
-          setShareModalVisible({ toggle: false, itemId: null });
-        }
-        await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_GRAASP_LINK, {
-          method:
-            linkType === SHARE_OPTIONS.BUILDER ? VIEWS.BUILDER : VIEWS.PLAYER,
-        });
-      } else if (result.action === Share.dismissedAction) {
-        //setModalVisible({ toggle: false, itemId: null });
-      }
-    } catch (error: any) {
-      alert(error.message);
-    }
-  };
-
-  const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
-    bottomSheetModalRef.current?.close();
-    navigation.push('CommonStack', {
-      screen: 'CommonStackDetail',
-      params: { itemId },
-    });
-  };
-
-  const handleEditItemPress = ({ itemId }: { itemId: UUID }) => {
-    setEditItemModalVisible({ toggle: true, itemId });
-  };
-
-  const handleDeleteItemPress = ({ itemId }: { itemId: UUID }) => {
-    setDeleteItemModalVisible({ toggle: true, itemId });
-  };
-
-  const handleSharePress = ({ itemId }: { itemId: UUID }) => {
-    setShareModalVisible({ toggle: true, itemId });
-  };
-
   return (
     <>
-      <Overlay
-        overlayStyle={styles.modalView}
-        isVisible={shareModalVisible.toggle && shareModalVisible.itemId != null}
-        onBackdropPress={() =>
-          setShareModalVisible({ toggle: false, itemId: null })
-        }
-      >
-        <Button
-          title="Player"
-          raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
-          containerStyle={{ marginBottom: 20 }}
-          onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PLAYER);
-          }}
-        />
-        <Divider />
-        <Button
-          title="Builder"
-          raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
-          onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.BUILDER);
-          }}
-        />
-      </Overlay>
-      <Overlay
-        overlayStyle={styles.modalEditItemView}
-        isVisible={
-          editItemModalVisible.toggle && editItemModalVisible.itemId != null
-        }
-        onBackdropPress={() =>
-          setEditItemModalVisible({ toggle: false, itemId: null })
-        }
-      >
-        {editItemModalVisible.itemId && itemSelected && (
-          <EditItem
-            itemId={editItemModalVisible.itemId}
-            item={itemSelected}
-            setEditItemModalVisible={setEditItemModalVisible}
-            refresh={refresh}
-          />
-        )}
-      </Overlay>
-      <Overlay
-        overlayStyle={styles.modalEditItemView}
-        isVisible={
-          deleteItemModalVisible.toggle && deleteItemModalVisible.itemId != null
-        }
-        onBackdropPress={() =>
-          setDeleteItemModalVisible({ toggle: false, itemId: null })
-        }
-      >
-        {deleteItemModalVisible.itemId && itemSelected && (
-          <DeleteItem
-            itemId={deleteItemModalVisible.itemId}
-            item={itemSelected}
-            setDeleteItemModalVisible={setDeleteItemModalVisible}
-            bottomSheetModalRef={bottomSheetModalRef}
-            refresh={refresh}
-          />
-        )}
-      </Overlay>
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -264,64 +119,12 @@ const ItemsList: FC<ItemsListProps> = ({
             )}
             {itemSelected && (
               <BottomSheetScrollView contentContainerStyle={null}>
-                <ListItem
-                  onPress={() =>
-                    handleDetailsPress({ itemId: itemSelected.id })
-                  }
-                  style={{ paddingLeft: insets.left }}
-                  hasTVPreferredFocus={undefined}
-                  tvParallaxProperties={undefined}
-                >
-                  <MaterialIcons name="info" size={24} color="grey" />
-                  <ListItem.Content style={{ flexDirection: 'row' }}>
-                    <ListItem.Title style={{ flex: 2 }}>
-                      {t('Details')}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-                <ListItem
-                  onPress={() =>
-                    handleEditItemPress({ itemId: itemSelected.id })
-                  }
-                  style={{ paddingLeft: insets.left }}
-                  hasTVPreferredFocus={undefined}
-                  tvParallaxProperties={undefined}
-                >
-                  <MaterialIcons name="edit" size={24} color="grey" />
-                  <ListItem.Content style={{ flexDirection: 'row' }}>
-                    <ListItem.Title style={{ flex: 2 }}>
-                      {t('Edit')}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-                <ListItem
-                  onPress={() =>
-                    handleDeleteItemPress({ itemId: itemSelected.id })
-                  }
-                  style={{ paddingLeft: insets.left }}
-                  hasTVPreferredFocus={undefined}
-                  tvParallaxProperties={undefined}
-                >
-                  <MaterialIcons name="delete" size={24} color="grey" />
-                  <ListItem.Content style={{ flexDirection: 'row' }}>
-                    <ListItem.Title style={{ flex: 2 }}>
-                      {t('Delete')}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-                <ListItem
-                  onPress={() => handleSharePress({ itemId: itemSelected.id })}
-                  style={{ paddingLeft: insets.left }}
-                  hasTVPreferredFocus={undefined}
-                  tvParallaxProperties={undefined}
-                >
-                  <MaterialIcons name="share" size={24} color="grey" />
-                  <ListItem.Content style={{ flexDirection: 'row' }}>
-                    <ListItem.Title style={{ flex: 2 }}>
-                      {t('Share')}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
+                <ItemListOptions
+                  itemSelected={itemSelected}
+                  bottomSheetModalRef={bottomSheetModalRef}
+                  navigation={navigation}
+                  refresh={refresh}
+                />
               </BottomSheetScrollView>
             )}
           </View>
@@ -340,39 +143,6 @@ const styles = StyleSheet.create({
   sectionHeaderContainer: {
     backgroundColor: 'white',
     padding: 6,
-  },
-  modalView: {
-    justifyContent: 'center',
-    margin: 0,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 50,
-    alignItems: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  modalEditItemView: {
-    justifyContent: 'center',
-    margin: 0,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 50,
-    alignItems: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    width: '85%',
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   modalText: {
     marginBottom: 15,
