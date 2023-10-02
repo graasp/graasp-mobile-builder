@@ -66,7 +66,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
         }
       }
     } catch {
-      throw new Error('Log in error');
+      throw new Error('Sign in error');
     }
   };
 
@@ -105,7 +105,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             borderColor: '#fff',
           }}
           titleStyle={{ color: '#5050d2', fontWeight: '700' }}
-          title="Log in"
+          title="Sign in"
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
         />

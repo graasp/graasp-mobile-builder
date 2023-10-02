@@ -38,7 +38,7 @@ const AxiosInterceptor = ({
             if (!refreshToken) {
               Toast.show({
                 type: 'error',
-                text1: t('You must log in again')!,
+                text1: t('You must sign in again')!,
               });
               signOut();
               return Promise.reject(error);
@@ -55,7 +55,7 @@ const AxiosInterceptor = ({
           } catch {
             Toast.show({
               type: 'error',
-              text1: t('You must log in again')!,
+              text1: t('You must sign in again')!,
             });
             signOut();
             return Promise.reject(error);
