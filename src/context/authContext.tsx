@@ -115,7 +115,7 @@ const AuthProvider = (props: any) => {
             type: 'error',
             text1: 'Error logging in',
           });
-          throw new Error('Log in auth error');
+          throw new Error('Sign in auth error');
         }
       },
       signOut: async () => {
