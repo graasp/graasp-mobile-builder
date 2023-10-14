@@ -39,26 +39,24 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   } = useItem(itemId);
   useFocusQuery(refetchItem);
 
-  if (isLoadingItem || !item?.name) {
-    return <ActivityIndicator />;
-  }
-
-  if (isErrorItem || !item) {
-    return null;
-  }
-
   const {
     data: creatorData,
     isLoading: isLoadingName,
+    isError: isErrorMember,
     refetch: refetchMember,
-  } = useMember(item.creator.id, { enabled: Boolean(item) });
+  } = useMember(item?.creator.id, { enabled: Boolean(item) });
   useFocusQuery(refetchMember);
 
-  const { createdAt, creator, description, extra, id, name, type, updatedAt } =
-    item;
-  if (isLoadingName || !creatorData?.name) {
+  if (isLoadingItem || isLoadingName) {
     return <ActivityIndicator />;
   }
+
+  if (isErrorItem || !item?.name || isErrorMember) {
+    return null;
+  }
+
+  const { createdAt, extra, name, type, updatedAt } = item;
+
   let typeContent = null;
   let sizeContent = null;
 
@@ -99,8 +97,12 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
             <Text style={styles.value}>{humanFileSize(sizeContent, true)}</Text>
           </>
         )}
-        <Text style={styles.header}>{t('Creator')}</Text>
-        <Text style={styles.value}>{creatorData.name}</Text>
+        {creatorData.name && (
+          <>
+            <Text style={styles.header}>{t('Creator')}</Text>
+            <Text style={styles.value}>{creatorData.name}</Text>
+          </>
+        )}
         <Text style={styles.header}>{t('Creation')}</Text>
         <Text style={styles.value}>{formatDate(createdAt)}</Text>
         <Text style={styles.header}>{t('Last update')}</Text>

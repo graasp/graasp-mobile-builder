@@ -21,7 +21,7 @@ export const buildGetMemberAvatarRoute = (id: UUID) =>
 export const MEMBERS_ROUTE = `members`;
 export const buildGetMemberBy = (email: string) =>
   `${MEMBERS_ROUTE}?email=${email}`;
-export const buildGetMember = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
+export const buildGetMember = (id?: UUID) => `${MEMBERS_ROUTE}/${id}`;
 export const buildEditMemberRoute = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
 export const buildDeleteMemberRoute = (id: UUID) => `${MEMBERS_ROUTE}/${id}`;
 

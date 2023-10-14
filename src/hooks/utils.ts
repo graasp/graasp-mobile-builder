@@ -56,7 +56,7 @@ export const buildSharedItems = (userToken: string) => ({
   ...itemQueryConfig,
 });
 
-export const buildMemberKey = (id: UUID, token: string, enabled: boolean) => ({
+export const buildMemberKey = (token: string, enabled: boolean, id?: UUID) => ({
   queryKey: buildMemberIdKey(id),
   queryFn: () => Api.getMember({ id, token }).then((data) => data),
   enabled: enabled && Boolean(id),

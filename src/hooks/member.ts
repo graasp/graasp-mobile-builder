@@ -5,13 +5,13 @@ import { getUserToken } from '../utils/functions/token';
 import { buildCurrentMemberKey, buildMemberKey } from './utils';
 
 export const useMember = (
-  id: UUID,
+  id?: UUID,
   { enabled = true }: { enabled?: boolean } = {},
 ) => {
   const userToken: any = getUserToken();
 
   return useQuery({
-    ...buildMemberKey(id, userToken, enabled),
+    ...buildMemberKey(userToken, enabled, id),
     retry: false,
   });
 };

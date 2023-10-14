@@ -23,7 +23,13 @@ export const getMemberBy = async ({ email }: { email: string }) => {
   return res.data;
 };
 
-export const getMember = async ({ id, token }: { id: UUID; token: string }) => {
+export const getMember = async ({
+  id,
+  token,
+}: {
+  id?: UUID;
+  token: string;
+}) => {
   const res = await axiosContentInstance.get(
     `${API_HOST}/${buildGetMember(id)}`,
     { ...DEFAULT_GET(token) },
