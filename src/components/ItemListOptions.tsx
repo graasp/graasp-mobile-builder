@@ -201,8 +201,6 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       <ListItem
         onPress={() => handleDetailsPress({ itemId: itemSelected.id })}
         style={{ paddingLeft: insets.left }}
-        hasTVPreferredFocus={undefined}
-        tvParallaxProperties={undefined}
       >
         <MaterialIcons name="info" size={24} color="grey" />
         <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -214,8 +212,6 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <ListItem
             onPress={() => handleEditItemPress({ itemId: itemSelected.id })}
             style={{ paddingLeft: insets.left }}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
           >
             <MaterialIcons name="edit" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -225,8 +221,6 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <ListItem
             onPress={() => handleDeleteItemPress({ itemId: itemSelected.id })}
             style={{ paddingLeft: insets.left }}
-            hasTVPreferredFocus={undefined}
-            tvParallaxProperties={undefined}
           >
             <MaterialIcons name="delete" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -238,8 +232,6 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       <ListItem
         onPress={() => handleSharePress({ itemId: itemSelected.id })}
         style={{ paddingLeft: insets.left }}
-        hasTVPreferredFocus={undefined}
-        tvParallaxProperties={undefined}
       >
         <MaterialIcons name="share" size={24} color="grey" />
         <ListItem.Content style={{ flexDirection: 'row' }}>

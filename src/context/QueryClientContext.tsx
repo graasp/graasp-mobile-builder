@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AppState } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
@@ -37,7 +36,6 @@ export const QueryClientProvider = ({ children }: any) => {
     QueryClientProvider: QCProvider,
     hooks,
     mutations,
-    focusManager,
   } = configureQueryClient({
     API_HOST,
     notifier: (e) => {

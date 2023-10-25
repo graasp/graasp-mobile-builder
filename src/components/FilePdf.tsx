@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button } from 'react-native-elements';
-import Pdf from 'react-native-pdf';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import WebView from 'react-native-webview';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Sharing from 'expo-sharing';
@@ -30,8 +30,6 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  console.log('filePath', filePath);
-  console.log('pdf url', buildGraaspAssetsPdfViewerRoute(filePath));
 
   const handleShareFileFromS3Url = async () => {
     if (filePath) {
@@ -107,11 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  pdf: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
   },
 });
 

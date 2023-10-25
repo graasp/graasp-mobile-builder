@@ -343,8 +343,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               <ListItem
                 onPress={() => takePhoto()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="camera-alt" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -356,8 +354,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               <ListItem
                 onPress={() => pickImage()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="image" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>

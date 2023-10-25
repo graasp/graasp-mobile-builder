@@ -7,12 +7,9 @@ import { ItemType, UUID } from '@graasp/sdk';
 
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 interface CreateFolderProps {
   setCreateItemModalVisible: React.Dispatch<
@@ -34,7 +31,6 @@ const CreateFolder: FC<CreateFolderProps> = ({
   const [itemName, setItemName] = useState<string | undefined>('');
   const { t } = useTranslation();
   const { mutations } = useQueryClient();
-  const userToken: any = getUserToken();
   const { mutate: postItem } = mutations.usePostItem();
 
   const mutateItem = async () => {
@@ -68,7 +64,6 @@ const CreateFolder: FC<CreateFolderProps> = ({
         autoCapitalize="none"
         autoCorrect={false}
         placeholderTextColor="#cccccc"
-        autoCompleteType={undefined}
       />
       <View style={styles.acceptSaveItem}>
         <Button

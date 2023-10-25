@@ -7,8 +7,6 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';

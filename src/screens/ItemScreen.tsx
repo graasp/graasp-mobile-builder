@@ -44,7 +44,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
   }
 
   const renderContent = () => {
-    const { name, type, extra, id } = item;
+    const { type, extra } = item;
 
     switch (type) {
       case ItemType.DOCUMENT: {

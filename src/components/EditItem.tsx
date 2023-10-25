@@ -56,7 +56,6 @@ const EditItem: FC<EditItemProps> = ({
         autoCapitalize="none"
         autoCorrect={false}
         placeholderTextColor="#cccccc"
-        autoCompleteType={undefined}
       />
       <View style={styles.acceptSaveItem}>
         <Button

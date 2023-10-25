@@ -171,8 +171,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddFolderPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="folder" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -184,8 +182,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddImageOrVideoPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="image" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -197,8 +193,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddDocumentPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons
                   name="insert-drive-file"
