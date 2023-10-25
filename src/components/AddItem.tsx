@@ -65,15 +65,17 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   };
 
   const pickDocument = async () => {
-    const file = await DocumentPicker.getDocumentAsync();
-
-    if (!file.canceled) {
-      console.log(file);
-      uploadFile(file.uri);
-      bottomSheetAddItemModalRef.current?.close();
-      await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
-        source: 'file_manager',
-        type: file.mimeType,
+    const result = await DocumentPicker.getDocumentAsync();
+    console.log(result);
+    if (!result.canceled) {
+      result.assets.forEach(async (file) => {
+        console.log(file);
+        uploadFile(file.uri);
+        bottomSheetAddItemModalRef.current?.close();
+        await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
+          source: 'file_manager',
+          type: file.mimeType,
+        });
       });
     }
   };

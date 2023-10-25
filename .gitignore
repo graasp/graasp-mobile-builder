@@ -36,3 +36,4 @@ build-*.tar.gz
 
 # platform specific
 ios
+android
