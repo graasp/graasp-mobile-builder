@@ -1,21 +1,7 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import * as FileSystem from 'expo-file-system';
-import * as ImagePicker from 'expo-image-picker';
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
-import { Text, Avatar, Button, Overlay, ListItem } from 'react-native-elements';
+import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import {
   SafeAreaView,
@@ -23,7 +9,14 @@ import {
 } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import * as Api from '../api';
+import { MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
+
 import { buildUploadAvatarImageRoute } from '../api/routes';
 import ActivityIndicator from '../components/ActivityIndicator';
 import DeleteAccount from '../components/DeleteAccount';
@@ -33,7 +26,7 @@ import {
   ANALYTICS_EVENTS,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
-import { useCurrentMember } from '../hooks/member';
+import { useQueryClient } from '../context/QueryClientContext';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -54,6 +47,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { hooks } = useQueryClient();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -65,18 +59,19 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     toggle: false,
   });
   const {
-    data: currentMember,
+    data: currentMember1,
     isLoading,
     isError,
     refetch,
-  } = useCurrentMember();
+  } = hooks.useCurrentMember();
+  const currentMember = currentMember1?.toJS() as any;
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   useEffect(() => {
     if (currentMember) {
-      downloadAvatar();
+      // downloadAvatar();
     }
   }, [currentMember]);
 
@@ -88,28 +83,28 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     bottomSheetChangeAvatarModalRef.current?.present();
   }, []);
 
-  const downloadAvatar = async () => {
-    try {
-      if (currentMember) {
-        const avatar = await Api.getMemberAvatarUrl(
-          currentMember.id,
-          userToken,
-        ).then((data) => data);
+  // const downloadAvatar = async () => {
+  //   try {
+  //     if (currentMember) {
+  //       const avatar = await Api.getMemberAvatarUrl(
+  //         currentMember.id,
+  //         userToken,
+  //       ).then((data) => data);
 
-        const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
+  //       const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
 
-        const downloadResumable = FileSystem.createDownloadResumable(
-          avatar,
-          localPath,
-        );
-        await downloadResumable.downloadAsync();
-        setLocalPath(localPath);
-        setIsUpdating(false);
-      }
-    } catch {
-      throw new Error();
-    }
-  };
+  //       const downloadResumable = FileSystem.createDownloadResumable(
+  //         avatar,
+  //         localPath,
+  //       );
+  //       await downloadResumable.downloadAsync();
+  //       setLocalPath(localPath);
+  //       setIsUpdating(false);
+  //     }
+  //   } catch {
+  //     throw new Error();
+  //   }
+  // };
 
   if (isLoading || !currentMember) {
     return <ActivityIndicator />;
@@ -180,7 +175,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         text1: t('Success')!,
         text2: t('Avatar updated correctly')!,
       });
-      downloadAvatar();
+      // downloadAvatar();
       bottomSheetChangeAvatarModalRef.current?.close();
       await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_AVATAR);
     } catch {

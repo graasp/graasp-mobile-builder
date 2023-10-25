@@ -1,5 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
+
+import { useFocusEffect } from '@react-navigation/native';
 
 function useFocusQuery(refetch: any) {
   useFocusEffect(

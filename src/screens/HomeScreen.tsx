@@ -1,12 +1,13 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import { useOwnItems } from '../hooks';
+import { useQueryClient } from '../context/QueryClientContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { StackParamList } from '../navigation/StackNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
@@ -20,7 +21,9 @@ export type HomeStackPropsNavigationProp = HomeStackProps['navigation'];
 export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
 const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
-  const { data: ownItems, isLoading, isError, refetch } = useOwnItems();
+  const { hooks } = useQueryClient();
+  const { data: ownItems1, isLoading, isError, refetch } = hooks.useOwnItems();
+  const ownItems = ownItems1?.toJS() as any;
   useFocusQuery(refetch);
 
   if (isLoading) {

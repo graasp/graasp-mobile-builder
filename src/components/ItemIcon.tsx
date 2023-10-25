@@ -1,10 +1,11 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import React, { FC } from 'react';
 import { Image } from 'react-native';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
 import {
-  ITEM_TYPES,
   ITEMS_TABLE_ROW_ICON_COLOR,
+  ITEM_TYPES,
   MIME_TYPES,
 } from '../config/constants/constants';
 import { ItemType, UnknownExtra } from '../types';

@@ -1,10 +1,11 @@
+import React, { FC, useEffect } from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { StackScreenProps } from '@react-navigation/stack';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import React, { FC, useEffect } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
-import { Button, Text } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
   buildGraaspAuthLoginRoute,
@@ -15,11 +16,11 @@ import {
   PLATFORM_OS,
   WEB_BROWSER_REDIRECT_RESULT_TYPE,
 } from '../config/constants/constants';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../context/AuthContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
-import { useAsync } from '../utils/hooks/useAsync';
 import { checkLoginUri } from '../utils/functions/helper';
+import { useAsync } from '../utils/hooks/useAsync';
 
 type SignInProps = StackScreenProps<
   RootStackParamList,

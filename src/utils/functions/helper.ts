@@ -1,5 +1,6 @@
-import * as Linking from 'expo-linking';
 import Toast from 'react-native-toast-message';
+
+import * as Linking from 'expo-linking';
 
 import {
   LOGIN_URI,

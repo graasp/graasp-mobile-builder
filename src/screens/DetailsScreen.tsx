@@ -1,16 +1,16 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
 import { ITEM_TYPES } from '../config/constants/constants';
-import { useItem } from '../hooks';
-import { useMember } from '../hooks/member';
+import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { formatDate } from '../utils/functions/date';
@@ -30,13 +30,14 @@ type CommonStackDetailProps = CompositeScreenProps<
 const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   const { itemId } = route.params;
   const { t } = useTranslation();
-
+  const { hooks } = useQueryClient();
   const {
-    data: item,
+    data: item1,
     isLoading: isLoadingItem,
     isError: isErrorItem,
     refetch: refetchItem,
-  } = useItem(itemId);
+  } = hooks.useItem(itemId);
+  const item = item1?.toJS() as any;
   useFocusQuery(refetchItem);
 
   if (isLoadingItem || !item?.name) {
@@ -48,10 +49,11 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   }
 
   const {
-    data: creatorData,
+    data: creatorData1,
     isLoading: isLoadingName,
     refetch: refetchMember,
-  } = useMember(item.creator.id, { enabled: Boolean(item) });
+  } = hooks.useMember(item.creator.id); //, { enabled: Boolean(item) }
+  const creatorData = creatorData1?.toJS();
   useFocusQuery(refetchMember);
 
   const { createdAt, creator, description, extra, id, name, type, updatedAt } =

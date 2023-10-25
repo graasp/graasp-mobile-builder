@@ -1,10 +1,11 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { Audio } from 'expo-av';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Audio } from 'expo-av';
 
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { FileType } from '../types';

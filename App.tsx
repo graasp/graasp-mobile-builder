@@ -1,40 +1,29 @@
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { LogBox, AppState } from 'react-native';
+import { LogBox } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClientProvider, focusManager } from 'react-query';
 
 import i18nConfig from './src/config/i18n';
-import queryClient from './src/config/queryClient';
+import { QueryClientProvider } from './src/context/QueryClientContext';
+import { AuthProvider } from './src/context/AuthContext';
 import AppNavigator from './src/navigation/AppNavigator';
-
-focusManager.setEventListener(() => {
-  const handleAppStateChange = (appState: any) => {
-    console.log('AppState: ', appState);
-    focusManager.setFocused(appState === 'active');
-  };
-
-  const appState = AppState.addEventListener('change', handleAppStateChange);
-
-  return () => {
-    appState.remove();
-  };
-});
 
 LogBox.ignoreAllLogs();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <AuthProvider>
       <I18nextProvider i18n={i18nConfig}>
-        <SafeAreaProvider>
-          <RootSiblingParent>
-            <AppNavigator />
-          </RootSiblingParent>
-        </SafeAreaProvider>
+        <QueryClientProvider>
+          <SafeAreaProvider>
+            <RootSiblingParent>
+              <AppNavigator />
+            </RootSiblingParent>
+          </SafeAreaProvider>
+        </QueryClientProvider>
       </I18nextProvider>
-    </QueryClientProvider>
+    </AuthProvider>
   );
 }
 

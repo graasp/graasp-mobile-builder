@@ -1,11 +1,12 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import * as Sharing from 'expo-sharing';
 import React, { FC, useEffect, useState } from 'react';
-import { useWindowDimensions, View, StyleSheet } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import * as Sharing from 'expo-sharing';
 
 import { buildGraaspAssetsPdfViewerRoute } from '../api/routes';
 import { ANALYTICS_EVENTS } from '../config/constants/constants';

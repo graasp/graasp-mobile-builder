@@ -1,5 +1,6 @@
+import { FC, useEffect, useState } from 'react';
+
 import * as Sharing from 'expo-sharing';
-import React, { FC, useEffect, useState } from 'react';
 
 import * as Api from '../api';
 import { ANALYTICS_EVENTS, MIME_TYPES } from '../config/constants/constants';

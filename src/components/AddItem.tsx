@@ -1,16 +1,17 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import * as DocumentPicker from 'expo-document-picker';
-import {} from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
-import * as ImagePicker from 'expo-image-picker';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, StyleSheet, Alert, View } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import * as DocumentPicker from 'expo-document-picker';
+import 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
 
 import { buildUploadFilesRoute } from '../api/routes';
 import {

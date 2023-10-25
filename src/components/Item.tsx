@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 
+import { useNavigation } from '@react-navigation/native';
+
 import {
-  ITEM_TYPES,
   ITEMS_TABLE_ROW_ICON_COLOR,
+  ITEM_TYPES,
 } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';

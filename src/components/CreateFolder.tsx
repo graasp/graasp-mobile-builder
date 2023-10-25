@@ -1,12 +1,12 @@
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { useMutation } from 'react-query';
+
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { buildCreateItem } from '../mutations/utils';
+import { useQueryClient } from '../context/QueryClientContext';
 import { ItemType, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
@@ -30,15 +30,15 @@ const CreateFolder: FC<CreateFolderProps> = ({
 }) => {
   const [itemName, setItemName] = useState<string | undefined>('');
   const { t } = useTranslation();
+  const { mutations } = useQueryClient();
   const userToken: any = getUserToken();
-  const createItemMutation = useMutation({
-    ...buildCreateItem(userToken, refresh, parentId),
-  });
+  const createItemMutation = mutations.usePostItem();
 
   const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     createItemMutation.mutate({
       name: itemNameSingleSpaces,
+      parentId,
       type: ItemType.FOLDER,
     });
     setCreateItemModalVisible({ toggle: false });

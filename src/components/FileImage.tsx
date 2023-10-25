@@ -1,9 +1,10 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';

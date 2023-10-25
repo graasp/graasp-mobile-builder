@@ -1,15 +1,16 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
+
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import Document from '../components/Document';
 import FileItem from '../components/FileItem';
 import { ITEM_TYPES } from '../config/constants/constants';
-import { useItem } from '../hooks';
+import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
@@ -28,7 +29,9 @@ export type ItemScreenNavigationProp = CommonStackItemProps['navigation'];
 const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
   const dimensions = useWindowDimensions();
   const { itemId } = route.params;
-  const { data: item, isLoading, isError, refetch } = useItem(itemId);
+  const { hooks } = useQueryClient();
+  const { data: item1, isLoading, isError, refetch } = hooks.useItem(itemId);
+  const item = item1?.toJS() as any;
   useFocusQuery(refetch);
   const insets = useSafeAreaInsets();
 

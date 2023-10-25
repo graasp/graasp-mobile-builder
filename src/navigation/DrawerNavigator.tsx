@@ -1,18 +1,19 @@
-import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import { NavigatorScreenParams } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
 
-import { useAuth } from '../context/authContext';
+import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+  createDrawerNavigator,
+} from '@react-navigation/drawer';
+import { NavigatorScreenParams } from '@react-navigation/native';
+import * as Linking from 'expo-linking';
+
+import { useAuth } from '../context/AuthContext';
 import HomeDrawerStackNavigator, {
   HomeDrawerParamList,
 } from './HomeDrawerStackNavigator';

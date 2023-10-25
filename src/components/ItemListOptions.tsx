@@ -1,23 +1,24 @@
 import React, { FC, useState } from 'react';
-import { StyleSheet, Share } from 'react-native';
-import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useTranslation } from 'react-i18next';
-import { Item as ItemType, UUID } from '../types';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Share, StyleSheet } from 'react-native';
+import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { MaterialIcons } from '@expo/vector-icons';
+
 import {
   ANALYTICS_EVENTS,
   SHARE_HOST,
   SHARE_OPTIONS,
   VIEWS,
 } from '../config/constants/constants';
+import { useQueryClient } from '../context/QueryClientContext';
+import { Item as ItemType, UUID } from '../types';
+import { customAnalyticsEvent } from '../utils/functions/analytics';
+import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
+import ActivityIndicator from './ActivityIndicator';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
-import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { useItemMemberships } from '../hooks';
-import ActivityIndicator from './ActivityIndicator';
-import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
-import { useCurrentMember } from '../hooks/member';
 
 interface ItemListOptionsProps {
   itemSelected: ItemType;
@@ -32,18 +33,20 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
   navigation,
   refresh,
 }) => {
+  const { hooks } = useQueryClient();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const {
-    data: itemMemberships,
+    data,
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
-  } = useItemMemberships(itemSelected.id);
+  } = hooks.useItemMemberships(itemSelected.id);
+  const itemMemberships = data?.toJS() as any;
   const {
     data: currentMember,
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
-  } = useCurrentMember();
+  } = hooks.useCurrentMember();
   const [shareModalVisible, setShareModalVisible] = useState<{
     toggle: boolean;
     itemId: UUID | null;

@@ -1,19 +1,20 @@
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
 import { Item as ItemType, UUID } from '../types';
 import AddItem from './AddItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
+import ItemListOptions from './ItemListOptions';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
-import ItemListOptions from './ItemListOptions';
 
 interface ItemsListProps {
   parentId?: UUID;

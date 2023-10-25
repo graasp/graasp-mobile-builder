@@ -26,3 +26,9 @@ yarn-error.log
 
 # macOS
 .DS_Store
+
+# local build
+build-*.tar.gz
+*.app
+
+.env.*

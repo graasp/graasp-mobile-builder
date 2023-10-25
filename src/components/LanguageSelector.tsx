@@ -2,14 +2,12 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
-import { useMutation } from 'react-query';
 
 import { ANALYTICS_EVENTS, LANGUAGES } from '../config/constants/constants';
-import { buildEditMember } from '../mutations/utils';
+import { useQueryClient } from '../context/QueryClientContext';
 import { Member } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getLangExtra } from '../utils/functions/itemExtra';
-import { getUserToken } from '../utils/functions/token';
 
 interface LanguageSelectorProps {
   currentMember: Member;
@@ -24,17 +22,14 @@ interface LanguageSelectorProps {
 const LanguageSelector: FC<LanguageSelectorProps> = ({
   currentMember,
   setChangeLanguageModalVisible,
-  refresh,
 }) => {
   const { t } = useTranslation();
   const lang = getLangExtra(currentMember.extra);
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
     lang || LANGUAGES.EN,
   );
-  const userToken: any = getUserToken();
-  const editMemberMutation = useMutation({
-    ...buildEditMember(userToken, refresh),
-  });
+  const { mutations } = useQueryClient();
+  const editMemberMutation = mutations.useEditMember();
 
   const acceptChangeLanguage = async () => {
     editMemberMutation.mutate({
