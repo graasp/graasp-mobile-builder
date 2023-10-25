@@ -9746,7 +9746,7 @@ __metadata:
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-i18next: "npm:^12.1.1"
-    react-native: "npm:0.72.5"
+    react-native: "npm:0.72.6"
     react-native-blob-util: "npm:^0.19.1"
     react-native-elements: "npm:^3.4.2"
     react-native-gesture-handler: "npm:~2.12.0"
@@ -14219,9 +14219,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native@npm:0.72.5":
-  version: 0.72.5
-  resolution: "react-native@npm:0.72.5"
+"react-native@npm:0.72.6":
+  version: 0.72.6
+  resolution: "react-native@npm:0.72.6"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.2.1"
     "@react-native-community/cli": "npm:11.3.7"
@@ -14263,7 +14263,7 @@ __metadata:
     react: 18.2.0
   bin:
     react-native: cli.js
-  checksum: b5f3f0c39acc437d174fd52f54dbcac6d91cfc639f41be65a159f919f36692c0448bcb3223df977bef6836c2bbb79c98365cf3bc05ea95536c4820b4d09f21ae
+  checksum: cf858b932d7af62d79adc573658bd51a752b92d4fa660eab079eac1fb88e60c560b647389732d8de537e52c75008437419adc9b9fc6705682445268ce966f19f
   languageName: node
   linkType: hard
 

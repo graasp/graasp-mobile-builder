@@ -10,6 +10,8 @@
     "test": "jest --watchAll",
     "lint": "eslint .",
     "build:ts": "tsc --noEmit",
+    "build:ios": "npx eas-cli build -e development-simulator --platform ios --local",
+    "build:android": "npx eas-cli build -e development-simulator --platform android --local",
     "prettier:check": "prettier --check {src,test}/**/*.{js,ts,tsx}",
     "prettier:write": "prettier --write {src,test}/**/*.{js,ts,tsx}",
     "check": "yarn prettier:check && yarn lint && yarn build:ts"
@@ -57,7 +59,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^12.1.1",
-    "react-native": "0.72.5",
+    "react-native": "0.72.6",
     "react-native-blob-util": "^0.19.1",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.12.0",
