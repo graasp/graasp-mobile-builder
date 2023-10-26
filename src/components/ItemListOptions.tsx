@@ -41,7 +41,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
   } = hooks.useItemMemberships(itemSelected.id);
-  const itemMemberships = data?.toJS() as any;
+  const itemMemberships = data as any;
   const {
     data: currentMember,
     isLoading: isLoadingCurrentMember,

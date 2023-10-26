@@ -7,8 +7,8 @@ export const checkWriteOrAdminItemMembership = (
   itemMemberships?: ItemMemberships,
 ) => {
   let hasWriteOrAdminMembership = false;
-  if (currentMemberId && itemMemberships && itemMemberships?.data[itemId]) {
-    itemMemberships.data[itemId].map((itemMembership: ItemMembership) => {
+  if (currentMemberId && itemMemberships && itemMemberships?.data?.[itemId]) {
+    itemMemberships.data?.[itemId]?.map((itemMembership: ItemMembership) => {
       if (
         itemMembership.member.id === currentMemberId &&
         writeOrAdminPermission.includes(itemMembership.permission)

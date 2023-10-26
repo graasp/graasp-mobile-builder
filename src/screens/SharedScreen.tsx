@@ -29,7 +29,7 @@ const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
     isError,
     refetch,
   } = hooks.useSharedItems();
-  const sharedItems = sharedItems1?.toJS();
+  const sharedItems = sharedItems1;
   useFocusQuery(refetch);
 
   if (isLoading) {

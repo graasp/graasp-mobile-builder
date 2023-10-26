@@ -32,20 +32,20 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
   } = hooks.useItemMemberships(itemId) as any;
-  const itemMemberships = data1?.toJS();
+  const itemMemberships = data1;
   const {
     data: children1,
     isLoading,
     isError,
     refetch,
   } = hooks.useChildren(itemId);
-  const children = children1?.toJS() as any;
+  const children = children1 as any;
   const {
     data: currentMember1,
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
-  const currentMember = currentMember1?.toJS();
+  const currentMember = currentMember1;
   useFocusQuery(refetch);
 
   if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {

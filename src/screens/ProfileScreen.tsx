@@ -64,7 +64,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isError,
     refetch,
   } = hooks.useCurrentMember();
-  const currentMember = currentMember1?.toJS() as any;
+  const currentMember = currentMember1 as any;
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);

@@ -37,7 +37,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
     isError: isErrorItem,
     refetch: refetchItem,
   } = hooks.useItem(itemId);
-  const item = item1?.toJS() as any;
+  const item = item1 as any;
   useFocusQuery(refetchItem);
 
   if (isLoadingItem || !item?.name) {
@@ -53,7 +53,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
     isLoading: isLoadingName,
     refetch: refetchMember,
   } = hooks.useMember(item.creator.id); //, { enabled: Boolean(item) }
-  const creatorData = creatorData1?.toJS();
+  const creatorData = creatorData1;
   useFocusQuery(refetchMember);
 
   const { createdAt, creator, description, extra, id, name, type, updatedAt } =

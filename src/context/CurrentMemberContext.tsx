@@ -16,7 +16,7 @@ CurrentMemberContext.displayName = 'CurrentMemberContext';
 const CurrentMemberProvider = (props: any) => {
   const { hooks } = useQueryClient();
   const { data: currentMember1, isLoading, isError } = hooks.useCurrentMember();
-  const currentMember = currentMember1?.toJS() as any;
+  const currentMember = currentMember1 as any;
   let lang: string = LANGUAGES.EN;
   if (currentMember) {
     lang = getLangExtra(currentMember?.extra) || LANGUAGES.EN;

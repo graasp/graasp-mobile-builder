@@ -1,8 +1,8 @@
 import env from '../../env.json';
 
-const { API_HOST, AUTH_HOST, S3_FILES_HOST } = env;
+const { API_HOST, AUTH_HOST,  } = env;
 
-export { API_HOST, AUTH_HOST, S3_FILES_HOST };
+export { API_HOST, AUTH_HOST,  };
 
 export const APP_NAME = 'Graasp';
 
