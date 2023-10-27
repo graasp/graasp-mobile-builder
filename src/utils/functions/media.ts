@@ -4,8 +4,9 @@ import Toast from 'react-native-toast-message';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 
+import { UUID } from '@graasp/sdk';
+
 import { MEDIA_LIBRARY_PERMISSION_STATUS } from '../../config/constants/constants';
-import { UUID } from '../../types';
 import { getFileExtensionFromMimeType } from './helper';
 
 export const saveMedia = async (uri: string, t: any) => {

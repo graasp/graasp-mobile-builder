@@ -1,19 +1,17 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 
+import { DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
+
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  ITEMS_TABLE_ROW_ICON_COLOR,
-  ITEM_TYPES,
-} from '../config/constants/constants';
+import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
 import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
-import { Item as ItemType, UUID } from '../types';
 import ItemIcon from './ItemIcon';
 
 interface ItemProps {
-  item: ItemType;
+  item: DiscriminatedItem;
   openOptions?: ({ id }: { id: UUID }) => void;
 }
 
@@ -24,16 +22,16 @@ const Item: FC<ItemProps> = ({
   const { navigate, push } = useNavigation<HomeStackPropsNavigationProp>();
   async function handleItemPress() {
     switch (type) {
-      case ITEM_TYPES.FOLDER:
+      case ItemType.FOLDER:
         push('CommonStack', {
           screen: 'CommonStackFolder',
           params: { itemId: id, headerTitle: name },
         });
         break;
-      case ITEM_TYPES.LINK:
-      case ITEM_TYPES.APP:
-      case ITEM_TYPES.DOCUMENT:
-      case ITEM_TYPES.S3_FILE:
+      case ItemType.LINK:
+      case ItemType.APP:
+      case ItemType.DOCUMENT:
+      case ItemType.S3_FILE:
         push('CommonStack', {
           screen: 'CommonStackItem',
           params: { itemId: id, headerTitle: name },

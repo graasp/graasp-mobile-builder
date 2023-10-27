@@ -2,11 +2,10 @@ import { createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 
-import { configureQueryClient } from '@graasp/query-client';
-
 import * as SecureStore from 'expo-secure-store';
 
-import * as Api from '../api';
+import { configureQueryClient } from '@graasp/query-client';
+
 // import {  AppState } from 'react-native';
 import { API_HOST } from '../config/constants/constants';
 import { useAuth } from './AuthContext';
@@ -28,7 +27,8 @@ export const QueryClientContext = createContext<{
 export const QueryClientProvider = ({ children }: any) => {
   const authContext = useAuth();
   const dispatch = authContext?.dispatch;
-  const { signOut, restoreUserRefreshToken } = authContext;
+  const { signOut, restoreUserRefreshToken, getAuthTokenByRefreshToken } =
+    authContext;
   const { t } = useTranslation();
 
   if (!dispatch) {
@@ -82,7 +82,8 @@ export const QueryClientProvider = ({ children }: any) => {
                 signOut();
                 return Promise.reject(error);
               }
-              const data = await Api.getAuthTokenByRefreshToken(refreshToken);
+
+              const data = await getAuthTokenByRefreshToken(refreshToken);
               const newAuthToken = data.authToken;
               const newRefreshToken = data.refreshToken;
               originalRequest.headers = {

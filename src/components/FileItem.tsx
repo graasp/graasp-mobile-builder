@@ -2,13 +2,17 @@ import { FC, useEffect, useState } from 'react';
 
 import * as Sharing from 'expo-sharing';
 
-import * as Api from '../api';
+import {
+  DiscriminatedItem,
+  S3FileItemExtra,
+  getS3FileExtra,
+} from '@graasp/sdk';
+
 import { ANALYTICS_EVENTS, MIME_TYPES } from '../config/constants/constants';
-import { FileType, Item, S3FileItemExtra } from '../types';
+import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getS3FileExtra } from '../utils/functions/item';
+// import { getS3FileExtra } from '../utils/functions/item';
 import { downloadFileFromS3Url } from '../utils/functions/media';
-import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
 import FileAudio from './FileAudio';
 import FileImage from './FileImage';
@@ -17,23 +21,22 @@ import FileUnsupported from './FileUnsupported';
 import FileVideo from './FileVideo';
 
 interface FileItemProps {
-  item: Item;
+  item: DiscriminatedItem;
 }
 
 const FileItem: FC<FileItemProps> = ({ item }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(true);
   const [filePath, setFilePath] = useState<string | undefined>(undefined);
-
-  const userToken: any = getUserToken();
+  const { hooks } = useQueryClient();
 
   const extra = getS3FileExtra(item.extra as S3FileItemExtra);
   const { mimetype } = extra ?? {};
 
-  const getFileUrl = async () => {
+  const { data } = hooks.useFileContentUrl(item.id);
+
+  const getFileUrl = async (url: string) => {
     try {
-      const itemFile = await Api.getItemFileUrl(item.id, userToken).then(
-        (data) => data,
-      );
+      const itemFile = url;
       if (
         mimetype &&
         MIME_TYPES.PDF.concat(MIME_TYPES.VIDEO).includes(mimetype)
@@ -47,6 +50,12 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
       throw new Error();
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      getFileUrl(data);
+    }
+  }, []);
 
   const downloadFile = async (remoteUrl: string) => {
     try {
@@ -62,19 +71,15 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
     }
   };
 
-  useEffect(() => {
-    getFileUrl();
-  }, []);
-
   if (isDownloading) {
     return <ActivityIndicator />;
   }
 
-  const handleShareFile = async (itemType: FileType) => {
+  const handleShareFile = (mimetype: string) => async () => {
     if (filePath) {
       Sharing.shareAsync(filePath);
       await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
-        item_type: itemType,
+        item_type: mimetype,
       });
     }
   };
@@ -82,11 +87,18 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
   if (mimetype && filePath) {
     if (MIME_TYPES.IMAGE.includes(mimetype)) {
       return (
-        <FileImage filePath={filePath} handleShareFile={handleShareFile} />
+        <FileImage
+          filePath={filePath}
+          handleShareFile={handleShareFile(mimetype)}
+          mimetype={mimetype}
+        />
       );
     } else if (MIME_TYPES.AUDIO.includes(mimetype)) {
       return (
-        <FileAudio filePath={filePath} handleShareFile={handleShareFile} />
+        <FileAudio
+          filePath={filePath}
+          handleShareFile={handleShareFile(mimetype)}
+        />
       );
     } else if (MIME_TYPES.VIDEO.includes(mimetype)) {
       return (
@@ -100,7 +112,10 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
   }
   if (filePath) {
     return (
-      <FileUnsupported filePath={filePath} handleShareFile={handleShareFile} />
+      <FileUnsupported
+        filePath={filePath}
+        handleShareFile={handleShareFile(mimetype)}
+      />
     );
   }
   return null;

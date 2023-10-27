@@ -1,17 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import * as Sharing from 'expo-sharing';
 
-import { buildGraaspAssetsPdfViewerRoute } from '../api/routes';
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { UUID, buildPdfViewerLink } from '@graasp/sdk';
+
+import { useNavigation } from '@react-navigation/native';
+
+import {
+  ANALYTICS_EVENTS,
+  GRAASP_ASSETS_URL,
+} from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { FileType, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';
 
@@ -34,7 +38,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       setIsDownloading(false);
       Sharing.shareAsync(localPath);
       await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
-        item_type: FileType.PDF,
+        item_type: mimetype,
       });
     }
   };
@@ -72,7 +76,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
 
   return (
     <WebView
-      source={{ uri: buildGraaspAssetsPdfViewerRoute(filePath) }}
+      source={{ uri: buildPdfViewerLink(GRAASP_ASSETS_URL) + filePath }}
       scalesPageToFit={false}
       startInLoadingState={true}
       overScrollMode="never"

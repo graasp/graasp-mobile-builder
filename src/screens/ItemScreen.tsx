@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
+
+import { ItemType } from '@graasp/sdk';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -9,7 +11,6 @@ import { StackScreenProps } from '@react-navigation/stack';
 import ActivityIndicator from '../components/ActivityIndicator';
 import Document from '../components/Document';
 import FileItem from '../components/FileItem';
-import { ITEM_TYPES } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
@@ -47,11 +48,11 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
     const { name, type, extra, id } = item;
 
     switch (type) {
-      case ITEM_TYPES.DOCUMENT: {
+      case ItemType.DOCUMENT: {
         const content = extra.document?.content;
         return <Document content={content} />;
       }
-      case ITEM_TYPES.APP: {
+      case ItemType.APP: {
         const url = extra.app?.url;
         console.log('The url :    ', url);
         return (
@@ -71,7 +72,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
           />
         );
       }
-      case ITEM_TYPES.LINK: {
+      case ItemType.LINK: {
         const uri = extra.embeddedLink?.url;
         return (
           <WebView
@@ -88,7 +89,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
           />
         );
       }
-      case ITEM_TYPES.S3_FILE: {
+      case ItemType.S3_FILE: {
         return <FileItem item={item} />;
       }
     }

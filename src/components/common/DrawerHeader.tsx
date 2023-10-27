@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
+
 import { useNavigation } from '@react-navigation/native';
 
 import { headerTextStyles } from '../../config/constants/navigation';

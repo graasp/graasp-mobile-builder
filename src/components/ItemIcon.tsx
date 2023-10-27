@@ -1,27 +1,31 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Image } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
 import {
-  ITEMS_TABLE_ROW_ICON_COLOR,
-  ITEM_TYPES,
-  MIME_TYPES,
-} from '../config/constants/constants';
-import { ItemType, UnknownExtra } from '../types';
-import {
+  DiscriminatedItem,
+  EmbeddedLinkItemExtra,
+  ItemType,
+  S3FileItemExtra,
   getEmbeddedLinkExtra,
   getS3FileExtra,
-} from '../utils/functions/itemExtra';
+} from '@graasp/sdk';
+
+import {
+  ITEMS_TABLE_ROW_ICON_COLOR,
+  MIME_TYPES,
+} from '../config/constants/constants';
 
 interface ItemIconProps {
   name: string;
-  type: ItemType;
-  extra: UnknownExtra;
+  type: DiscriminatedItem['type'];
+  extra: DiscriminatedItem['extra'];
   size?: number;
   style?: any;
 }
 
+// TODO: use graasp-ui
 const ItemIcon: FC<ItemIconProps> = ({
   name,
   type,
@@ -29,8 +33,8 @@ const ItemIcon: FC<ItemIconProps> = ({
   size = 20,
   style,
 }) => {
-  const mimetype = getS3FileExtra(extra)?.mimetype;
-  const icon = getEmbeddedLinkExtra(extra)?.icons?.[0];
+  const mimetype = getS3FileExtra(extra as S3FileItemExtra)?.mimetype;
+  const icon = getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)?.icons?.[0];
 
   if (icon) {
     return <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />;
@@ -50,11 +54,11 @@ const ItemIcon: FC<ItemIconProps> = ({
 
   let Icon = icons.INSERT_DRIVE_FILE;
   switch (type) {
-    case ITEM_TYPES.FOLDER:
+    case ItemType.FOLDER:
       Icon = icons.FOLDER;
       break;
-    case ITEM_TYPES.FILE:
-    case ITEM_TYPES.S3_FILE: {
+    case ItemType.LOCAL_FILE:
+    case ItemType.S3_FILE: {
       if (MIME_TYPES.IMAGE.includes(mimetype)) {
         Icon = icons.IMAGE;
         break;
@@ -74,15 +78,15 @@ const ItemIcon: FC<ItemIconProps> = ({
       Icon = icons.INSERT_DRIVE_FILE;
       break;
     }
-    case ITEM_TYPES.LINK: {
+    case ItemType.LINK: {
       Icon = icons.INSERT_LINK;
       break;
     }
-    case ITEM_TYPES.APP: {
+    case ItemType.APP: {
       Icon = icons.APPS;
       break;
     }
-    case ITEM_TYPES.DOCUMENT: {
+    case ItemType.DOCUMENT: {
       Icon = icons.DESCRIPTION;
       break;
     }

@@ -1,10 +1,12 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Share, StyleSheet } from 'react-native';
 import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
+
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import {
   ANALYTICS_EVENTS,
@@ -13,7 +15,6 @@ import {
   VIEWS,
 } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { Item as ItemType, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import ActivityIndicator from './ActivityIndicator';
@@ -21,7 +22,7 @@ import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 
 interface ItemListOptionsProps {
-  itemSelected: ItemType;
+  itemSelected: DiscriminatedItem;
   bottomSheetModalRef: any;
   navigation: any;
   refresh: () => void;
@@ -37,11 +38,10 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const {
-    data,
+    data: itemMemberships,
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
   } = hooks.useItemMemberships(itemSelected.id);
-  const itemMemberships = data as any;
   const {
     data: currentMember,
     isLoading: isLoadingCurrentMember,
@@ -126,7 +126,6 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       alert(error.message);
     }
   };
-
   const displayEditOrDeleteItem = checkWriteOrAdminItemMembership(
     itemSelected.id,
     currentMember?.id,

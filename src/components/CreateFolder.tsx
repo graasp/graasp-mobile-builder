@@ -3,11 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
+import { ItemType, UUID } from '@graasp/sdk';
+
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { ItemType, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
@@ -32,18 +33,22 @@ const CreateFolder: FC<CreateFolderProps> = ({
   const { t } = useTranslation();
   const { mutations } = useQueryClient();
   const userToken: any = getUserToken();
-  const createItemMutation = mutations.usePostItem();
+  const { mutate: postItem } = mutations.usePostItem();
 
   const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
-    createItemMutation.mutate({
-      name: itemNameSingleSpaces,
-      parentId,
-      type: ItemType.FOLDER,
-    });
-    setCreateItemModalVisible({ toggle: false });
-    bottomSheetAddItemModalRef.current?.close();
-    await customAnalyticsEvent(ANALYTICS_EVENTS.CREATE_FOLDER);
+    if (!itemNameSingleSpaces) {
+      console.error(`name ${itemNameSingleSpaces} is empty`);
+    } else {
+      postItem({
+        name: itemNameSingleSpaces,
+        parentId,
+        type: ItemType.FOLDER,
+      });
+      setCreateItemModalVisible({ toggle: false });
+      bottomSheetAddItemModalRef.current?.close();
+      await customAnalyticsEvent(ANALYTICS_EVENTS.CREATE_FOLDER);
+    }
   };
 
   return (

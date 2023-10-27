@@ -4,6 +4,8 @@ import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
 
 import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
+
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -11,7 +13,6 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import { NavigatorScreenParams } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
 
 import { useAuth } from '../context/AuthContext';
 import HomeDrawerStackNavigator, {

@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 
-import { ANALYTICS_EVENTS, LANGUAGES } from '../config/constants/constants';
+import { CompleteMember, DEFAULT_LANG } from '@graasp/sdk';
+
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { langs } from '../config/i18n';
 import { useQueryClient } from '../context/QueryClientContext';
-import { Member } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getLangExtra } from '../utils/functions/itemExtra';
 
 interface LanguageSelectorProps {
-  currentMember: Member;
+  currentMember: CompleteMember;
   setChangeLanguageModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -24,9 +25,9 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
   setChangeLanguageModalVisible,
 }) => {
   const { t } = useTranslation();
-  const lang = getLangExtra(currentMember.extra);
+  const lang = currentMember.extra?.lang;
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    lang || LANGUAGES.EN,
+    lang || DEFAULT_LANG,
   );
   const { mutations } = useQueryClient();
   const editMemberMutation = mutations.useEditMember();
@@ -49,26 +50,18 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
   return (
     <>
       <Text style={styles.title}>{`Change member language`}</Text>
-      <CheckBox
-        center
-        title="English"
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        checkedColor="#5050d2"
-        containerStyle={styles.checkBoxContainer}
-        checked={Boolean(selectedLanguage === LANGUAGES.EN)}
-        onPress={() => setSelectedLanguage(LANGUAGES.EN)}
-      />
-      <CheckBox
-        center
-        title="Français"
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        checkedColor="#5050d2"
-        containerStyle={styles.checkBoxContainer}
-        checked={Boolean(selectedLanguage === LANGUAGES.FR)}
-        onPress={() => setSelectedLanguage(LANGUAGES.FR)}
-      />
+      {Object.entries(langs).map(([key, value]) => (
+        <CheckBox
+          center
+          title={value}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          checkedColor="#5050d2"
+          containerStyle={styles.checkBoxContainer}
+          checked={Boolean(selectedLanguage === key)}
+          onPress={() => setSelectedLanguage(key)}
+        />
+      ))}
       <View style={styles.acceptChangeLanguageButton}>
         <Button
           title={t('Save')!}

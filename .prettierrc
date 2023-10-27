@@ -5,6 +5,7 @@
   "singleQuote": true,
   "importOrder": [
     "^react",
+    "^@?expo",
     "^@?mui",
     "^@?graasp",
     "<THIRD_PARTY_MODULES>",

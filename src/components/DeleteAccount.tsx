@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import { Member } from '@graasp/sdk';
+
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import { Member } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface DeleteAccountProps {

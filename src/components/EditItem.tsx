@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
+
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { Item, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 interface EditItemProps {
   itemId: UUID;
-  item: Item;
+  item: DiscriminatedItem;
   setEditItemModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -29,7 +29,6 @@ const EditItem: FC<EditItemProps> = ({
 }) => {
   const [itemName, setItemName] = useState<string | undefined>(item.name);
   const { t } = useTranslation();
-  const userToken: any = getUserToken();
   const { mutations } = useQueryClient();
   const editItemMutation = mutations.useEditItem();
 

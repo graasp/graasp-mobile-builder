@@ -21,6 +21,10 @@ interface AuthContextInterface {
   ) => object;
   state: AuthState;
   dispatch: React.Dispatch<AuthAction>;
+  getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
+    authToken: string;
+    refreshToken: string;
+  }>;
 }
 
 const AuthContext = createContext<AuthContextInterface | null>(null);
@@ -137,6 +141,18 @@ const AuthProvider = (props: any) => {
           newRefreshToken,
         );
       },
+      getAuthTokenByRefreshToken: async (refreshToken: string) => {
+        const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {
+          withCredentials: true,
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: refreshToken ? `Bearer ${refreshToken}` : undefined,
+          },
+        });
+        return res.data;
+      },
+
       state,
       dispatch,
     }),

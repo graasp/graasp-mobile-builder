@@ -1,13 +1,4 @@
-import { useCallback } from 'react';
-
-import { ITEM_TYPES } from '../../config/constants/constants';
-import {
-  Item,
-  ItemType,
-  S3FileItemExtra,
-  S3FileItemExtraProp,
-  UUID,
-} from '../../types';
+import { UUID } from '@graasp/sdk';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id: UUID) => id.replace(/\-/g, '_');
@@ -43,7 +34,3 @@ export const isChild = (id: UUID) => {
 
 export const getChildren = (items: any[], id: UUID) =>
   items.filter(isChild(id));
-
-export const getS3FileExtra = (
-  extra?: S3FileItemExtra,
-): S3FileItemExtraProp | undefined => extra?.[ItemType.S3_FILE];

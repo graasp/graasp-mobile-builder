@@ -27,11 +27,12 @@ i18n.use(initReactI18next).init({
   },
 });
 
-const langs = {
+export const langs = {
+  ar: 'العربية',
   // bg: "български",
   // ca: "Català",
   // cs: "čeština",
-  // de: "Deutsch",
+  de: 'Deutsch',
   // el: "Ελληνικά",
   en: 'English',
   // es: "Español",
@@ -39,7 +40,7 @@ const langs = {
   // fi: "Suomi",
   fr: 'Français',
   // hu: "Magyar",
-  // it: "Italiano",
+  it: 'Italiano',
   // ja: '日本語',
   // ka: "ქართული",
   // lt: "lietuvių kalba",
@@ -58,7 +59,5 @@ const langs = {
   // zh: "简体中文",
   // zh_tw: "繁體中文",
 };
-
-export { langs };
 
 export default i18n;

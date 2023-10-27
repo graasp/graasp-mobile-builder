@@ -3,16 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
+
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { Item, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface DeleteItemProps {
   itemId: UUID;
-  item: Item;
+  item: DiscriminatedItem;
   setDeleteItemModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;

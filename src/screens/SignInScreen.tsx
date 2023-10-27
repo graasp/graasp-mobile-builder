@@ -3,18 +3,19 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { StackScreenProps } from '@react-navigation/stack';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 
-import {
-  buildGraaspAuthLoginRoute,
-  buildGraaspAuthSignUpRoute,
-} from '../api/routes';
+import { buildSignInPath } from '@graasp/sdk';
+
+import { StackScreenProps } from '@react-navigation/stack';
+
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
+  GRAASP_AUTH_HOST,
   PLATFORM_OS,
   WEB_BROWSER_REDIRECT_RESULT_TYPE,
+  buildSignUpPath,
 } from '../config/constants/constants';
 import { useAuth } from '../context/AuthContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
@@ -51,8 +52,9 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const _handlePressLoginButtonAsync = async () => {
     try {
       const challenge = await generateNonce();
+      const SIGN_IN_PATH = buildSignInPath({ host: GRAASP_AUTH_HOST });
       const loginResponse = await WebBrowser.openAuthSessionAsync(
-        buildGraaspAuthLoginRoute(challenge),
+        `${SIGN_IN_PATH}?m=${challenge}`,
       );
       // Catch email-password on iOS login redirection
       if (
@@ -74,7 +76,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const _handlePressSignUpButtonAsync = async () => {
     try {
       const challenge = await generateNonce();
-      const authUrl = buildGraaspAuthSignUpRoute(challenge);
+      const authUrl = buildSignUpPath({ host: GRAASP_AUTH_HOST }, challenge);
       await WebBrowser.openAuthSessionAsync(authUrl);
     } catch {
       throw new Error('Sign in error');

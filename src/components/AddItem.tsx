@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
@@ -7,18 +7,21 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import * as DocumentPicker from 'expo-document-picker';
 import 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as ImagePicker from 'expo-image-picker';
 
-import { buildUploadFilesRoute } from '../api/routes';
+import { API_ROUTES } from '@graasp/query-client';
+import { UUID } from '@graasp/sdk';
+
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+
 import {
   ANALYTICS_EVENTS,
+  API_HOST,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
-import { UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
@@ -76,9 +79,10 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
   const uploadFile = async (fileUri: string) => {
     try {
+      console.log(API_ROUTES.buildUploadFilesRoute(parentId));
       setIsUploading(true);
       const uploadResponse = await FileSystem.uploadAsync(
-        buildUploadFilesRoute(parentId),
+        `${API_HOST}/${API_ROUTES.buildUploadFilesRoute(parentId)}`,
         fileUri,
         {
           httpMethod: 'POST',
@@ -88,6 +92,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
           },
         },
       );
+      console.log(uploadResponse);
       if (!STATUS_CODES_OK.includes(uploadResponse.status)) {
         throw new Error('Upload file error');
       }
