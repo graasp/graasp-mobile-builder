@@ -1,12 +1,11 @@
-import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { LogBox } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import i18nConfig from './src/config/i18n';
-import { QueryClientProvider } from './src/context/QueryClientContext';
 import { AuthProvider } from './src/context/AuthContext';
+import { QueryClientProvider } from './src/context/QueryClientContext';
 import AppNavigator from './src/navigation/AppNavigator';
 
 LogBox.ignoreAllLogs();

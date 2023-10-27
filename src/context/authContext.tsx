@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { useEffect,useContext, useMemo, createContext, useReducer } from 'react';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
@@ -74,7 +74,7 @@ const AuthProvider = (props: any) => {
     initialCounterState,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken;
 
@@ -91,7 +91,7 @@ const AuthProvider = (props: any) => {
     bootstrapAsync();
   }, []);
 
-  const authContext: AuthContextInterface = React.useMemo(
+  const authContext: AuthContextInterface = useMemo(
     () => ({
       signIn: async (data) => {
         try {
@@ -163,7 +163,7 @@ const AuthProvider = (props: any) => {
 };
 
 const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (context === undefined || context === null) {
     throw new Error(`useAuth must be used within a AuthProvider`);
   }

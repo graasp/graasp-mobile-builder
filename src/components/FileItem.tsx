@@ -11,7 +11,6 @@ import {
 import { ANALYTICS_EVENTS, MIME_TYPES } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-// import { getS3FileExtra } from '../utils/functions/item';
 import { downloadFileFromS3Url } from '../utils/functions/media';
 import ActivityIndicator from './ActivityIndicator';
 import FileAudio from './FileAudio';
@@ -55,7 +54,7 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
     if (data) {
       getFileUrl(data);
     }
-  }, []);
+  }, [data]);
 
   const downloadFile = async (remoteUrl: string) => {
     try {
