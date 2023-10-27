@@ -25,9 +25,8 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
   setChangeLanguageModalVisible,
 }) => {
   const { t } = useTranslation();
-  const lang = currentMember.extra?.lang;
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    lang || DEFAULT_LANG,
+    currentMember.extra?.lang || DEFAULT_LANG,
   );
   const { mutations } = useQueryClient();
   const editMemberMutation = mutations.useEditMember();
@@ -49,7 +48,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
 
   return (
     <>
-      <Text style={styles.title}>{`Change member language`}</Text>
+      <Text style={styles.title}>{t('Change language')}</Text>
       {Object.entries(langs).map(([key, value]) => (
         <CheckBox
           center

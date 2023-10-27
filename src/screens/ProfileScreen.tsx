@@ -291,7 +291,12 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           title={t('Change avatar')!}
           buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
           icon={
-            <MaterialIcons name={'account-circle'} color="#ffffff" size={25} />
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'account-circle'}
+              color="#ffffff"
+              size={25}
+            />
           }
           onPress={handleOpenBottomSheetChangeAvatarModal}
         ></Button>
@@ -299,14 +304,28 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         <Button
           title={t('Change language')!}
           buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
-          icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'language'}
+              color="#ffffff"
+              size={25}
+            />
+          }
           onPress={handleChangeLanguage}
         ></Button>
 
         <Button
           title={t('Delete my account')!}
           buttonStyle={{ backgroundColor: '#cc3333', marginTop: 20 }}
-          icon={<MaterialIcons name={'delete'} color="#ffffff" size={25} />}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'delete'}
+              color="#ffffff"
+              size={25}
+            />
+          }
           onPress={handleDeleteMember}
         ></Button>
       </ScrollView>

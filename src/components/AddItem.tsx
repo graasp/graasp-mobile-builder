@@ -79,7 +79,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
 
   const uploadFile = async (fileUri: string) => {
     try {
-      console.log(API_ROUTES.buildUploadFilesRoute(parentId));
       setIsUploading(true);
       const uploadResponse = await FileSystem.uploadAsync(
         `${API_HOST}/${API_ROUTES.buildUploadFilesRoute(parentId)}`,
@@ -92,7 +91,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
           },
         },
       );
-      console.log(uploadResponse);
       if (!STATUS_CODES_OK.includes(uploadResponse.status)) {
         throw new Error('Upload file error');
       }
