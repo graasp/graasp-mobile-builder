@@ -35,6 +35,24 @@ Firstly, you have to decide the correct version of the app to publish. In the `a
 - **iOS -> Build number:** It is the version number associated with the version. For example, Version: 1.1.2 Build number: 3. It is mandatory to be superior to the latest published one within a version. If you change to a superior version number, the build number should start from 1 again.
 - **Android -> Version Code:** It is mandatory to be superior to the latest published one and it is not associated with the version number. For example, if the previous version was: Version 1.1.2 Version Code 45, and you want to increment the version because of a small change, it should be Version 1.1.3 Version Code 46. You cannot start the version code to 1 if you change the version number.
 
-Notice that versions for internal testing published on App/Play Stores also count as versions, so normally it is better to increment the Build Number / Version Code when testing and increment the Version field when publishing on production.
 
-Secondly, you need to run the command `eas build --profile production` inside the project terminal and select the operating systems you want to build. 
+## Testing
+
+### Local E2E Testing with Detox
+### Configure the testing suite and environment
+Detox framework needs to access native code to perform the tests, so it is necessary to build the iOS and Android bundles locally and use a config plugin to inject the native code from our Expo-managed workflow. Follow these phases to set up the Detox local environment:
+- Run `npx expo prebuild` to generate an `ios` and `android` folders that contain native projects. On iOS, it is necessary first to have Cocoapods installed on your macOS computer:
+  - Check you have the latest version of Ruby. The best way to install the latest version is through Homebrew `brew install cocoapods`. Remember to restart the Terminal or the computer to save the changes.
+  - Install Cocoapods by running `sudo gem install` cocoapods and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
+- Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
+  - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.sim.debug` to build the iOS debug version and `detox build --configuration android.emu.debug` to build the Android debug one.
+  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.sim.debug` to run the iOS debug tests and `detox test --configuration android.emu.debug` to run the Android debug ones. You should open the corresponding simulator before running the commands.
+    
+    Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `Pixel_3a_API_33_x86_64` simulators.
+
+Guides to set up local testing:
+- https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project
+- https://github.com/expo/config-plugins/tree/main/packages/detox
+- https://wix.github.io/Detox/docs/19.x/introduction/getting-started
+
+
