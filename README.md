@@ -10,6 +10,13 @@ If you want to add a new package to the project, use the command `yarn expo inst
 
 Run `yarn start --dev-client` to start a development client into a simulator. See Test the app in a simulator section to know how to install and run the app in a simulator.
 
+### Local environment variables
+Create a file called `.env.development` with the following content:
+```
+GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+GOOGLE_SERVICES_JSON=./google-services.json
+```
+Then include the `GoogleService-Info.plist` and `google-services.json` files in the root of your project.
 
 ## Test the app in a simulator
 
@@ -45,14 +52,14 @@ Detox framework needs to access native code to perform the tests, so it is neces
   - Check you have the latest version of Ruby. The best way to install the latest version is through Homebrew `brew install cocoapods`. Remember to restart the Terminal or the computer to save the changes.
   - Install Cocoapods by running `sudo gem install` cocoapods and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
 - Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
-  - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.sim.debug` to build the iOS debug version and `detox build --configuration android.emu.debug` to build the Android debug one.
-  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.sim.debug` to run the iOS debug tests and `detox test --configuration android.emu.debug` to run the Android debug ones. You should open the corresponding simulator before running the commands.
+  - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.sim.debug` to build the iOS debug version and `detox build --configuration android.emu.debug` to build the Android debug one. You must add the local environment variables before the build.
+  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.sim.debug` to run the iOS debug tests and `detox test --configuration android.emu.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `yarn start --dev-client` before running the commands.
     
     Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `Pixel_3a_API_33_x86_64` simulators.
 
-Guides to set up local testing:
-- https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project
-- https://github.com/expo/config-plugins/tree/main/packages/detox
-- https://wix.github.io/Detox/docs/19.x/introduction/getting-started
+Complete documentation to set up local testing:
+- [https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project](https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project)
+- [https://github.com/expo/config-plugins/tree/main/packages/detox](https://github.com/expo/config-plugins/tree/main/packages/detox)
+- [https://wix.github.io/Detox/docs/19.x/introduction/getting-started](https://wix.github.io/Detox/docs/introduction/getting-started)https://wix.github.io/Detox/docs/introduction/getting-started
 
 
