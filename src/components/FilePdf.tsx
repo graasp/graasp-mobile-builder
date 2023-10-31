@@ -73,10 +73,12 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       ),
     });
   }, [isDownloading]);
-
   return (
     <WebView
-      source={{ uri: buildPdfViewerLink(GRAASP_ASSETS_URL) + filePath }}
+      source={{
+        uri:
+          buildPdfViewerLink(GRAASP_ASSETS_URL) + encodeURIComponent(filePath),
+      }}
       scalesPageToFit={false}
       startInLoadingState={true}
       overScrollMode="never"

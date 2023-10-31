@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { CompleteMember } from '@graasp/sdk';
 
 import { CompositeScreenProps, useRoute } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -28,24 +30,21 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   const { itemId, headerTitle } = route.params;
   const { hooks } = useQueryClient();
   const {
-    data: data1,
+    data: itemMemberships,
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
-  } = hooks.useItemMemberships(itemId) as any;
-  const itemMemberships = data1;
+  } = hooks.useItemMemberships(itemId);
   const {
-    data: children1,
+    data: children,
     isLoading,
     isError,
     refetch,
   } = hooks.useChildren(itemId);
-  const children = children1 as any;
   const {
-    data: currentMember1,
+    data: currentMember,
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
-  const currentMember = currentMember1;
   useFocusQuery(refetch);
 
   if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
@@ -58,7 +57,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
 
   const displayAddItem = checkWriteOrAdminItemMembership(
     itemId,
-    currentMember?.id,
+    (currentMember as CompleteMember)?.id,
     itemMemberships,
   );
 

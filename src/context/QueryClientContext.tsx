@@ -106,13 +106,6 @@ export const QueryClientProvider = ({ children }: any) => {
       );
     },
     enableWebsocket: false,
-    //   defaultQueryOptions: {
-    //     keepPreviousData: true,
-    //     refetchOnMount: false,
-    //     // avoid refetching when same data are closely fetched
-    //     staleTime: 1000, // ms
-    //     cacheTime: 1000, // ms
-    //   },
   });
 
   //   focusManager.setEventListener(() => {
@@ -130,7 +123,6 @@ export const QueryClientProvider = ({ children }: any) => {
 
   const value = {
     queryClient,
-    // useQueryClient,
     hooks,
     mutations,
   };

@@ -141,9 +141,11 @@ export const LOGIN_URI = {
   },
 };
 
-// TODO!!!!!!!!!
-export const GRAASP_ASSETS_URL = 'graasp-assets';
+// TODO: move to env config with other env variables
+export const GRAASP_ASSETS_URL = 'assets.graasp.org';
 export const GRAASP_AUTH_HOST = 'http://auth.graasp.org';
+
+// todo: move to sdk
 export const buildSignUpPath = (
   { host }: { host: string },
   challenge?: string,

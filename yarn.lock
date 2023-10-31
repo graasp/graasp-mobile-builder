@@ -2911,7 +2911,7 @@ __metadata:
 
 "@graasp/query-client@github:graasp/graasp-query-client#433-remove-immutable":
   version: 1.11.1
-  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=04dedd8b6b85f83be6773e5e6d23d4be3165e196"
+  resolution: "@graasp/query-client@https://github.com/graasp/graasp-query-client.git#commit=8b6e951946ffe41cab87392c152d1e64d4e8a4d7"
   dependencies:
     "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend"
     "@graasp/translations": 1.19.4
@@ -2923,13 +2923,13 @@ __metadata:
     uuid: 9.0.1
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
-  checksum: 4ec4c10e0d0c4100c49648838ea67994d9855d64fcc4681d2f8f344295646b218d20664132d09e9f57255d5a21eb46f5babde196b0d17b875fcc391f1458b369
+  checksum: 5d96cf4a923ed2a38431dac8771478ebf9121524ade1224489336750ee91318d2af1b0c389ab9a02ee9947a4aeecb5b325fa1f712345ae48905e3b03fb79d5af
   languageName: node
   linkType: hard
 
-"@graasp/sdk@npm:1.10.1":
+"@graasp/sdk@github:graasp/graasp-sdk#remove-frontend":
   version: 1.10.1
-  resolution: "@graasp/sdk@npm:1.10.1"
+  resolution: "@graasp/sdk@https://github.com/graasp/graasp-sdk.git#commit=5cdd516a88ec43370c377a45ebb67dc7558c2409"
   dependencies:
     "@aws-sdk/client-s3": 3.427.0
     "@fastify/secure-session": 6.1.0
@@ -2940,7 +2940,7 @@ __metadata:
     js-cookie: 3.0.5
     uuid: 9.0.1
     validator: 13.11.0
-  checksum: 6e4fa76eee59dd51c726182a2fe03e52627ec87098e4d335abe11f47c819ca3ad4f7f43667ede63c16e4ac83e3e716de46e6579881edcf4428039d92e29dea10
+  checksum: de64aa4c07799efccf8e199913c428bf9c1a5932d4b0899bb1f8c788add04aa821f7b815d2461ee49ecd864d75cbbc245631f36db270fe2c8d5d9badb39d9c8c
   languageName: node
   linkType: hard
 
@@ -8914,7 +8914,7 @@ __metadata:
     "@expo/vector-icons": ^13.0.0
     "@gorhom/bottom-sheet": ^4.4.5
     "@graasp/query-client": "github:graasp/graasp-query-client#433-remove-immutable"
-    "@graasp/sdk": 1.10.1
+    "@graasp/sdk": "github:graasp/graasp-sdk#remove-frontend"
     "@react-native-firebase/analytics": ^18.3.1
     "@react-native-firebase/app": ^18.3.1
     "@react-navigation/bottom-tabs": ^6.0.5

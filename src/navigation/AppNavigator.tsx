@@ -22,7 +22,6 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
-      {/* <AxiosInterceptor> */}
       <CurrentMemberProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
@@ -31,7 +30,6 @@ const AppNavigator = () => {
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </CurrentMemberProvider>
-      {/* </AxiosInterceptor> */}
     </NavigationContainer>
   );
 };

@@ -1,17 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 
-import { CompleteMember, DEFAULT_LANG } from '@graasp/sdk';
-
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { langs } from '../config/i18n';
-import { useQueryClient } from '../context/QueryClientContext';
+import { CurrentMemberContext } from '../context/CurrentMemberContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface LanguageSelectorProps {
-  currentMember: CompleteMember;
   setChangeLanguageModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -21,23 +18,14 @@ interface LanguageSelectorProps {
 }
 
 const LanguageSelector: FC<LanguageSelectorProps> = ({
-  currentMember,
   setChangeLanguageModalVisible,
 }) => {
   const { t } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    currentMember.extra?.lang || DEFAULT_LANG,
-  );
-  const { mutations } = useQueryClient();
-  const editMemberMutation = mutations.useEditMember();
+  const { lang, changeLang } = useContext(CurrentMemberContext);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(lang);
 
   const acceptChangeLanguage = async () => {
-    editMemberMutation.mutate({
-      id: currentMember.id,
-      extra: {
-        lang: `${selectedLanguage}`,
-      },
-    });
+    await changeLang(selectedLanguage);
     setChangeLanguageModalVisible({ toggle: false });
     await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_LANGUAGE);
   };

@@ -27,6 +27,7 @@ import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
+  API_HOST,
   DEFAULT_LOCALE,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
@@ -75,12 +76,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   });
 
   useEffect(() => {
-    if (currentMember) {
-      if (avatarUrl) {
-        downloadAvatar(avatarUrl);
-      }
+    if (currentMember && avatarUrl) {
+      downloadAvatar(avatarUrl);
     }
-  }, [currentMember]);
+  }, [currentMember, avatarUrl]);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleChangeAvatarSheetChanges', index);
@@ -93,12 +92,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const downloadAvatar = async (url: string) => {
     try {
       if (currentMember && 'id' in currentMember) {
-        const avatar = url;
-
         const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
 
         const downloadResumable = FileSystem.createDownloadResumable(
-          avatar,
+          url,
           localPath,
         );
         await downloadResumable.downloadAsync();
@@ -166,7 +163,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       }
       setIsUpdating(true);
       const uploadResponse = await FileSystem.uploadAsync(
-        API_ROUTES.buildUploadAvatarRoute(),
+        `${API_HOST}/${API_ROUTES.buildUploadAvatarRoute()}`,
         file.assets[0].uri,
         {
           httpMethod: 'POST',
@@ -242,7 +239,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         onBackdropPress={() => setChangeLanguageModalVisible({ toggle: false })}
       >
         <LanguageSelector
-          currentMember={currentMember}
           setChangeLanguageModalVisible={setChangeLanguageModalVisible}
           refresh={refetch}
         />

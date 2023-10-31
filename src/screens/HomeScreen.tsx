@@ -22,8 +22,7 @@ export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
 const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
   const { hooks } = useQueryClient();
-  const { data: ownItems1, isLoading, isError, refetch } = hooks.useOwnItems();
-  const ownItems = ownItems1 as any;
+  const { data: ownItems, isLoading, isError, refetch } = hooks.useOwnItems();
   useFocusQuery(refetch);
 
   if (isLoading) {

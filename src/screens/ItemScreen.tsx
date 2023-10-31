@@ -31,8 +31,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
   const dimensions = useWindowDimensions();
   const { itemId } = route.params;
   const { hooks } = useQueryClient();
-  const { data: item1, isLoading, isError, refetch } = hooks.useItem(itemId);
-  const item = item1 as any;
+  const { data: item, isLoading, isError, refetch } = hooks.useItem(itemId);
   useFocusQuery(refetch);
   const insets = useSafeAreaInsets();
 

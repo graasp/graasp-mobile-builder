@@ -24,12 +24,11 @@ type SharedStackSharedProps = CompositeScreenProps<
 const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
   const { hooks } = useQueryClient();
   const {
-    data: sharedItems1,
+    data: sharedItems,
     isLoading,
     isError,
     refetch,
   } = hooks.useSharedItems();
-  const sharedItems = sharedItems1;
   useFocusQuery(refetch);
 
   if (isLoading) {

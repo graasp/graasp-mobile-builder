@@ -53,11 +53,10 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   }
 
   const {
-    data: creatorData1,
+    data: creatorData,
     isLoading: isLoadingName,
     refetch: refetchMember,
   } = hooks.useMember(item?.creator?.id);
-  const creatorData = creatorData1;
   useFocusQuery(refetchMember);
 
   const { createdAt, extra, name, type, updatedAt } = item;

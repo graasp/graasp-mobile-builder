@@ -31,44 +31,30 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
   const extra = getS3FileExtra(item.extra as S3FileItemExtra);
   const { mimetype } = extra ?? {};
 
-  const { data } = hooks.useFileContentUrl(item.id);
-
-  const getFileUrl = async (url: string) => {
-    try {
-      const itemFile = url;
-      if (
-        mimetype &&
-        MIME_TYPES.PDF.concat(MIME_TYPES.VIDEO).includes(mimetype)
-      ) {
-        setFilePath(itemFile);
-        setIsDownloading(false);
-        return;
-      }
-      downloadFile(itemFile);
-    } catch {
-      throw new Error();
-    }
-  };
+  const { data: url } = hooks.useFileContentUrl(item.id);
 
   useEffect(() => {
-    if (data) {
-      getFileUrl(data);
+    if (url) {
+      try {
+        if (
+          mimetype &&
+          MIME_TYPES.PDF.concat(MIME_TYPES.VIDEO).includes(mimetype)
+        ) {
+          setFilePath(url);
+          setIsDownloading(false);
+        } else {
+          // download file
+          downloadFileFromS3Url(url, item.id, mimetype).then((localPath) => {
+            setFilePath(localPath);
+            setIsDownloading(false);
+          });
+        }
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
     }
-  }, [data]);
-
-  const downloadFile = async (remoteUrl: string) => {
-    try {
-      const filePath = await downloadFileFromS3Url(
-        remoteUrl,
-        item.id,
-        mimetype,
-      );
-      setFilePath(filePath);
-      setIsDownloading(false);
-    } catch {
-      throw new Error();
-    }
-  };
+  }, [url]);
 
   if (isDownloading) {
     return <ActivityIndicator />;

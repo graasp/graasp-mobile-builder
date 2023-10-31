@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import { DEFAULT_LANG } from '@graasp/sdk';
 
@@ -6,29 +6,54 @@ import i18n from '../config/i18n';
 import { useQueryClient } from './QueryClientContext';
 
 interface CurrentMemberContextInterface {
-  lang?: string;
+  lang: string;
+  changeLang: (newLang: string) => Promise<void>;
 }
 
-const CurrentMemberContext =
-  createContext<CurrentMemberContextInterface | null>(null);
+export const CurrentMemberContext =
+  createContext<CurrentMemberContextInterface>({
+    lang: DEFAULT_LANG,
+    changeLang: async () => {},
+  });
 CurrentMemberContext.displayName = 'CurrentMemberContext';
 
 const CurrentMemberProvider = (props: any) => {
   const { hooks } = useQueryClient();
-  const { data: currentMember1, isLoading, isError } = hooks.useCurrentMember();
-  const currentMember = currentMember1 as any;
-  let lang: string = DEFAULT_LANG;
-  if (currentMember) {
-    lang = currentMember?.extra?.lang || DEFAULT_LANG;
-  }
+  const { data: currentMember } = hooks.useCurrentMember();
+  const [lang, setLang] = useState<string>(DEFAULT_LANG);
+  const { mutations } = useQueryClient();
+  const editMemberMutation = mutations.useEditMember();
 
   useEffect(() => {
-    if (lang !== i18n.language) {
-      i18n.changeLanguage(lang);
+    if (
+      currentMember &&
+      'extra' in currentMember &&
+      currentMember.extra?.lang &&
+      currentMember.extra?.lang !== lang
+    ) {
+      changeLang(currentMember.extra.lang);
     }
-  }, [lang]);
+  }, [currentMember]);
 
-  const currentMemberContext: CurrentMemberContextInterface = { lang };
+  const changeLang = async (newLang: string) => {
+    if (!currentMember || !('id' in currentMember)) {
+      console.error('current member is not logged in');
+    } else {
+      setLang(newLang);
+      i18n.changeLanguage(newLang);
+      editMemberMutation.mutate({
+        id: currentMember.id,
+        extra: {
+          lang: newLang,
+        },
+      });
+    }
+  };
+
+  const currentMemberContext: CurrentMemberContextInterface = {
+    lang,
+    changeLang,
+  };
 
   return (
     <CurrentMemberContext.Provider value={currentMemberContext} {...props} />

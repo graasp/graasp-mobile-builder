@@ -52,7 +52,6 @@ export const downloadFileFromS3Url = async (
       localPath = `${FileSystem.documentDirectory}${itemId}${
         extension ? '.' : ''
       }${extension ? extension : ''}`;
-      console.log(localPath);
     } else {
       localPath = `${FileSystem.documentDirectory}/${itemId}`;
     }
