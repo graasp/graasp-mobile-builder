@@ -1,16 +1,14 @@
 import { createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AppState } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
 
 import { configureQueryClient } from '@graasp/query-client';
 
-// import {  AppState } from 'react-native';
 import { API_HOST } from '../config/constants/constants';
 import { useAuth } from './AuthContext';
-
-// import { focusManager } from 'react-query';
 
 export const QueryClientContext = createContext<{
   queryClient: any;
@@ -43,6 +41,7 @@ export const QueryClientProvider = ({ children }: any) => {
     hooks,
     // ReactQueryDevtools,
     mutations,
+    focusManager,
   } = configureQueryClient({
     API_HOST,
     notifier: (e) => {
@@ -108,18 +107,18 @@ export const QueryClientProvider = ({ children }: any) => {
     enableWebsocket: false,
   });
 
-  //   focusManager.setEventListener(() => {
-  //     const handleAppStateChange = (appState: any) => {
-  //       console.log('AppState: ', appState);
-  //       focusManager.setFocused(appState === 'active');
-  //     };
+  focusManager.setEventListener(() => {
+    const handleAppStateChange = (appState: any) => {
+      console.log('AppState: ', appState);
+      focusManager.setFocused(appState === 'active');
+    };
 
-  //     const appState = AppState.addEventListener('change', handleAppStateChange);
+    const appState = AppState.addEventListener('change', handleAppStateChange);
 
-  //     return () => {
-  //       appState.remove();
-  //     };
-  //   });
+    return () => {
+      appState.remove();
+    };
+  });
 
   const value = {
     queryClient,
