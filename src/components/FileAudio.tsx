@@ -1,17 +1,18 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { Audio } from 'expo-av';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
+import { MaterialIcons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
+
+import { useNavigation } from '@react-navigation/native';
+
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { FileType } from '../types';
 
 interface FileAudioProps {
   filePath: string;
-  handleShareFile: (fileType: FileType) => void;
+  handleShareFile: () => Promise<void>;
 }
 
 const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
@@ -40,7 +41,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
         <Button
           buttonStyle={{ backgroundColor: '#5050d2' }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={() => handleShareFile(FileType.AUDIO)}
+          onPress={() => handleShareFile()}
         ></Button>
       ),
     });

@@ -1,21 +1,7 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import * as FileSystem from 'expo-file-system';
-import * as ImagePicker from 'expo-image-picker';
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
-import { Text, Avatar, Button, Overlay, ListItem } from 'react-native-elements';
+import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import {
   SafeAreaView,
@@ -23,21 +9,32 @@ import {
 } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import * as Api from '../api';
-import { buildUploadAvatarImageRoute } from '../api/routes';
+import { MaterialIcons } from '@expo/vector-icons';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
+
+import { API_ROUTES } from '@graasp/query-client';
+import { formatDate } from '@graasp/sdk';
+
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import DeleteAccount from '../components/DeleteAccount';
 import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
+  API_HOST,
+  DEFAULT_LOCALE,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
-import { useCurrentMember } from '../hooks/member';
+import { useQueryClient } from '../context/QueryClientContext';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { formatDate } from '../utils/functions/date';
 import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
@@ -54,6 +51,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { hooks } = useQueryClient();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -69,16 +67,19 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isLoading,
     isError,
     refetch,
-  } = useCurrentMember();
+  } = hooks.useCurrentMember();
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const { data: avatarUrl } = hooks.useAvatarUrl({
+    id: currentMember ? currentMember.id : undefined,
+  });
 
   useEffect(() => {
-    if (currentMember) {
-      downloadAvatar();
+    if (currentMember && avatarUrl) {
+      downloadAvatar(avatarUrl);
     }
-  }, [currentMember]);
+  }, [currentMember, avatarUrl]);
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleChangeAvatarSheetChanges', index);
@@ -88,18 +89,13 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     bottomSheetChangeAvatarModalRef.current?.present();
   }, []);
 
-  const downloadAvatar = async () => {
+  const downloadAvatar = async (url: string) => {
     try {
       if (currentMember) {
-        const avatar = await Api.getMemberAvatarUrl(
-          currentMember.id,
-          userToken,
-        ).then((data) => data);
-
         const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
 
         const downloadResumable = FileSystem.createDownloadResumable(
-          avatar,
+          url,
           localPath,
         );
         await downloadResumable.downloadAsync();
@@ -162,7 +158,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       }
       setIsUpdating(true);
       const uploadResponse = await FileSystem.uploadAsync(
-        buildUploadAvatarImageRoute(),
+        `${API_HOST}/${API_ROUTES.buildUploadAvatarRoute()}`,
         file.assets[0].uri,
         {
           httpMethod: 'POST',
@@ -180,7 +176,9 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         text1: t('Success')!,
         text2: t('Avatar updated correctly')!,
       });
-      downloadAvatar();
+      if (avatarUrl) {
+        downloadAvatar(avatarUrl);
+      }
       bottomSheetChangeAvatarModalRef.current?.close();
       await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_AVATAR);
     } catch {
@@ -236,7 +234,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         onBackdropPress={() => setChangeLanguageModalVisible({ toggle: false })}
       >
         <LanguageSelector
-          currentMember={currentMember}
           setChangeLanguageModalVisible={setChangeLanguageModalVisible}
           refresh={refetch}
         />
@@ -277,28 +274,49 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         <Text style={styles.header}>{t('Email')}</Text>
         <Text style={styles.value}>{currentMember.email}</Text>
         <Text style={styles.header}>{t('Member Since')}</Text>
-        <Text style={styles.value}>{formatDate(currentMember.createdAt)}</Text>
+        <Text style={styles.value}>
+          {formatDate(currentMember.createdAt, { locale: DEFAULT_LOCALE })}
+        </Text>
 
         <Button
-          title={t(' Change avatar')!}
+          title={t('Change avatar')!}
           buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
           icon={
-            <MaterialIcons name={'account-circle'} color="#ffffff" size={25} />
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'account-circle'}
+              color="#ffffff"
+              size={25}
+            />
           }
           onPress={handleOpenBottomSheetChangeAvatarModal}
         ></Button>
 
         <Button
-          title={t(' Change language')!}
+          title={t('Change language')!}
           buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
-          icon={<MaterialIcons name={'language'} color="#ffffff" size={25} />}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'language'}
+              color="#ffffff"
+              size={25}
+            />
+          }
           onPress={handleChangeLanguage}
         ></Button>
 
         <Button
-          title={t(' Delete my account')!}
+          title={t('Delete my account')!}
           buttonStyle={{ backgroundColor: '#cc3333', marginTop: 20 }}
-          icon={<MaterialIcons name={'delete'} color="#ffffff" size={25} />}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'delete'}
+              color="#ffffff"
+              size={25}
+            />
+          }
           onPress={handleDeleteMember}
         ></Button>
       </ScrollView>

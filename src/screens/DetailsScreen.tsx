@@ -1,21 +1,26 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import {
+  ItemType,
+  formatDate,
+  getFileExtra,
+  getS3FileExtra,
+} from '@graasp/sdk';
+
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
-import { ITEM_TYPES } from '../config/constants/constants';
-import { useItem } from '../hooks';
-import { useMember } from '../hooks/member';
+import { DEFAULT_LOCALE } from '../config/constants/constants';
+import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
-import { formatDate } from '../utils/functions/date';
 import { humanFileSize } from '../utils/functions/fileSize';
-import { getFileExtra, getS3FileExtra } from '../utils/functions/itemExtra';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
 type CommonStackDetailProps = CompositeScreenProps<
@@ -30,13 +35,13 @@ type CommonStackDetailProps = CompositeScreenProps<
 const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   const { itemId } = route.params;
   const { t } = useTranslation();
-
+  const { hooks } = useQueryClient();
   const {
     data: item,
     isLoading: isLoadingItem,
     isError: isErrorItem,
     refetch: refetchItem,
-  } = useItem(itemId);
+  } = hooks.useItem(itemId);
   useFocusQuery(refetchItem);
 
   if (isLoadingItem || !item?.name) {
@@ -51,21 +56,20 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
     data: creatorData,
     isLoading: isLoadingName,
     refetch: refetchMember,
-  } = useMember(item.creator.id, { enabled: Boolean(item) });
+  } = hooks.useMember(item?.creator?.id);
   useFocusQuery(refetchMember);
 
-  const { createdAt, creator, description, extra, id, name, type, updatedAt } =
-    item;
+  const { createdAt, extra, name, type, updatedAt } = item;
   if (isLoadingName || !creatorData?.name) {
     return <ActivityIndicator />;
   }
   let typeContent = null;
   let sizeContent = null;
 
-  if (type === ITEM_TYPES.S3_FILE) {
+  if (type === ItemType.S3_FILE) {
     const extraContent = getS3FileExtra(extra);
     ({ mimetype: typeContent, size: sizeContent } = extraContent);
-  } else if (type === ITEM_TYPES.FILE) {
+  } else if (type === ItemType.LOCAL_FILE) {
     const extraContent = getFileExtra(extra);
     ({ mimetype: typeContent, size: sizeContent } = extraContent);
   } else {
@@ -102,9 +106,13 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
         <Text style={styles.header}>{t('Creator')}</Text>
         <Text style={styles.value}>{creatorData.name}</Text>
         <Text style={styles.header}>{t('Creation')}</Text>
-        <Text style={styles.value}>{formatDate(createdAt)}</Text>
+        <Text style={styles.value}>
+          {formatDate(createdAt, { locale: DEFAULT_LOCALE })}
+        </Text>
         <Text style={styles.header}>{t('Last update')}</Text>
-        <Text style={styles.value}>{formatDate(updatedAt)}</Text>
+        <Text style={styles.value}>
+          {formatDate(updatedAt, { locale: DEFAULT_LOCALE })}
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );

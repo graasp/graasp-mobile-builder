@@ -1,19 +1,19 @@
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
-import { useMutation } from 'react-query';
+
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
+
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { buildDeleteItem } from '../mutations/utils';
-import { Item, UUID } from '../types';
+import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 interface DeleteItemProps {
   itemId: UUID;
-  item: Item;
+  item: DiscriminatedItem;
   setDeleteItemModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -32,13 +32,11 @@ const DeleteItem: FC<DeleteItemProps> = ({
   refresh,
 }) => {
   const { t } = useTranslation();
-  const userToken: any = getUserToken();
-  const deleteItemMutation = useMutation({
-    ...buildDeleteItem(userToken, refresh),
-  });
+  const { mutations } = useQueryClient();
+  const deleteItemMutation = mutations.useRecycleItems();
 
   const deleteItem = async () => {
-    deleteItemMutation.mutate(itemId);
+    deleteItemMutation.mutate([itemId]);
     setDeleteItemModalVisible({ toggle: false, itemId: null });
     bottomSheetModalRef.current?.close();
     await customAnalyticsEvent(ANALYTICS_EVENTS.DELETE_ITEM, {

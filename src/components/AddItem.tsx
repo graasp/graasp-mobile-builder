@@ -1,23 +1,27 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import * as DocumentPicker from 'expo-document-picker';
-import {} from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
-import * as ImagePicker from 'expo-image-picker';
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TouchableOpacity, StyleSheet, Alert, View } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
-import { buildUploadFilesRoute } from '../api/routes';
+import { MaterialIcons } from '@expo/vector-icons';
+import * as DocumentPicker from 'expo-document-picker';
+import 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import * as ImagePicker from 'expo-image-picker';
+
+import { API_ROUTES } from '@graasp/query-client';
+import { UUID } from '@graasp/sdk';
+
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+
 import {
   ANALYTICS_EVENTS,
+  API_HOST,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
-import { UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
@@ -77,7 +81,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
     try {
       setIsUploading(true);
       const uploadResponse = await FileSystem.uploadAsync(
-        buildUploadFilesRoute(parentId),
+        `${API_HOST}/${API_ROUTES.buildUploadFilesRoute(parentId)}`,
         fileUri,
         {
           httpMethod: 'POST',

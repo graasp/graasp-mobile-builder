@@ -1,33 +1,59 @@
-import React, { createContext, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-import { LANGUAGES } from '../config/constants/constants';
+import { DEFAULT_LANG } from '@graasp/sdk';
+
 import i18n from '../config/i18n';
-import { useCurrentMember } from '../hooks/member';
-import { getLangExtra } from '../utils/functions/itemExtra';
+import { useQueryClient } from './QueryClientContext';
 
 interface CurrentMemberContextInterface {
-  lang?: string;
+  lang: string;
+  changeLang: (newLang: string) => Promise<void>;
 }
 
-const CurrentMemberContext =
-  createContext<CurrentMemberContextInterface | null>(null);
+export const CurrentMemberContext =
+  createContext<CurrentMemberContextInterface>({
+    lang: DEFAULT_LANG,
+    changeLang: async () => {},
+  });
 CurrentMemberContext.displayName = 'CurrentMemberContext';
 
 const CurrentMemberProvider = (props: any) => {
-  const { data: currentMember, isLoading, isError } = useCurrentMember();
-
-  let lang: string = LANGUAGES.EN;
-  if (currentMember) {
-    lang = getLangExtra(currentMember?.extra) || LANGUAGES.EN;
-  }
+  const { hooks } = useQueryClient();
+  const { data: currentMember } = hooks.useCurrentMember();
+  const [lang, setLang] = useState<string>(DEFAULT_LANG);
+  const { mutations } = useQueryClient();
+  const editMemberMutation = mutations.useEditMember();
 
   useEffect(() => {
-    if (lang !== i18n.language) {
-      i18n.changeLanguage(lang);
+    if (
+      currentMember &&
+      'extra' in currentMember &&
+      currentMember.extra?.lang &&
+      currentMember.extra?.lang !== lang
+    ) {
+      changeLang(currentMember.extra.lang);
     }
-  }, [lang]);
+  }, [currentMember]);
 
-  const currentMemberContext: CurrentMemberContextInterface = { lang };
+  const changeLang = async (newLang: string) => {
+    if (!currentMember) {
+      console.error('current member is not logged in');
+    } else {
+      setLang(newLang);
+      i18n.changeLanguage(newLang);
+      editMemberMutation.mutate({
+        id: currentMember.id,
+        extra: {
+          lang: newLang,
+        },
+      });
+    }
+  };
+
+  const currentMemberContext: CurrentMemberContextInterface = {
+    lang,
+    changeLang,
+  };
 
   return (
     <CurrentMemberContext.Provider value={currentMemberContext} {...props} />

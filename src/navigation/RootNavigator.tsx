@@ -1,8 +1,9 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
-import { useAuth } from '../context/authContext';
+import { NavigatorScreenParams } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { useAuth } from '../context/AuthContext';
 import SignInScreen from '../screens/SignInScreen';
 import CommonStackNavigator, {
   CommonStackParamList,

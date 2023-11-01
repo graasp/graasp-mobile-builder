@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
 import TabNavigator, { TabParamList } from './TabNavigator';

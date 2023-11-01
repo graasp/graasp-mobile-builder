@@ -1,17 +1,19 @@
-import { CompositeScreenProps, useRoute } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { CompleteMember } from '@graasp/sdk';
+
+import { CompositeScreenProps, useRoute } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
-import { useChildren, useItemMemberships } from '../hooks';
-import { useCurrentMember } from '../hooks/member';
+import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
-import { useFocusQuery } from '../utils/functions/useQuery';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
+import { useFocusQuery } from '../utils/functions/useQuery';
 
 type CommonStackFolderProps = CompositeScreenProps<
   StackScreenProps<
@@ -26,17 +28,23 @@ type FolderScreenRouteProp = CommonStackFolderProps['route'];
 const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   const route = useRoute<FolderScreenRouteProp>();
   const { itemId, headerTitle } = route.params;
+  const { hooks } = useQueryClient();
   const {
     data: itemMemberships,
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
-  } = useItemMemberships(itemId);
-  const { data: children, isLoading, isError, refetch } = useChildren(itemId);
+  } = hooks.useItemMemberships(itemId);
+  const {
+    data: children,
+    isLoading,
+    isError,
+    refetch,
+  } = hooks.useChildren(itemId);
   const {
     data: currentMember,
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
-  } = useCurrentMember();
+  } = hooks.useCurrentMember();
   useFocusQuery(refetch);
 
   if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
@@ -49,7 +57,7 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
 
   const displayAddItem = checkWriteOrAdminItemMembership(
     itemId,
-    currentMember?.id,
+    (currentMember as CompleteMember)?.id,
     itemMemberships,
   );
 

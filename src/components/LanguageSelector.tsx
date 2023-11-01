@@ -1,18 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
-import { useMutation } from 'react-query';
 
-import { ANALYTICS_EVENTS, LANGUAGES } from '../config/constants/constants';
-import { buildEditMember } from '../mutations/utils';
-import { Member } from '../types';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { langs } from '../config/i18n';
+import { CurrentMemberContext } from '../context/CurrentMemberContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getLangExtra } from '../utils/functions/itemExtra';
-import { getUserToken } from '../utils/functions/token';
 
 interface LanguageSelectorProps {
-  currentMember: Member;
   setChangeLanguageModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -22,27 +18,14 @@ interface LanguageSelectorProps {
 }
 
 const LanguageSelector: FC<LanguageSelectorProps> = ({
-  currentMember,
   setChangeLanguageModalVisible,
-  refresh,
 }) => {
   const { t } = useTranslation();
-  const lang = getLangExtra(currentMember.extra);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>(
-    lang || LANGUAGES.EN,
-  );
-  const userToken: any = getUserToken();
-  const editMemberMutation = useMutation({
-    ...buildEditMember(userToken, refresh),
-  });
+  const { lang, changeLang } = useContext(CurrentMemberContext);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(lang);
 
   const acceptChangeLanguage = async () => {
-    editMemberMutation.mutate({
-      id: currentMember.id,
-      extra: {
-        lang: `${selectedLanguage}`,
-      },
-    });
+    await changeLang(selectedLanguage);
     setChangeLanguageModalVisible({ toggle: false });
     await customAnalyticsEvent(ANALYTICS_EVENTS.CHANGE_LANGUAGE);
   };
@@ -53,27 +36,19 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
 
   return (
     <>
-      <Text style={styles.title}>{`Change member language`}</Text>
-      <CheckBox
-        center
-        title="English"
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        checkedColor="#5050d2"
-        containerStyle={styles.checkBoxContainer}
-        checked={Boolean(selectedLanguage === LANGUAGES.EN)}
-        onPress={() => setSelectedLanguage(LANGUAGES.EN)}
-      />
-      <CheckBox
-        center
-        title="Français"
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        checkedColor="#5050d2"
-        containerStyle={styles.checkBoxContainer}
-        checked={Boolean(selectedLanguage === LANGUAGES.FR)}
-        onPress={() => setSelectedLanguage(LANGUAGES.FR)}
-      />
+      <Text style={styles.title}>{t('Change language')}</Text>
+      {Object.entries(langs).map(([key, value]) => (
+        <CheckBox
+          center
+          title={value}
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          checkedColor="#5050d2"
+          containerStyle={styles.checkBoxContainer}
+          checked={Boolean(selectedLanguage === key)}
+          onPress={() => setSelectedLanguage(key)}
+        />
+      ))}
       <View style={styles.acceptChangeLanguageButton}>
         <Button
           title={t('Save')!}

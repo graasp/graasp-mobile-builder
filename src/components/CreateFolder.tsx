@@ -1,13 +1,14 @@
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { useMutation } from 'react-query';
+
+import { ItemType, UUID } from '@graasp/sdk';
+
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { buildCreateItem } from '../mutations/utils';
-import { ItemType, UUID } from '../types';
+import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
@@ -30,20 +31,24 @@ const CreateFolder: FC<CreateFolderProps> = ({
 }) => {
   const [itemName, setItemName] = useState<string | undefined>('');
   const { t } = useTranslation();
+  const { mutations } = useQueryClient();
   const userToken: any = getUserToken();
-  const createItemMutation = useMutation({
-    ...buildCreateItem(userToken, refresh, parentId),
-  });
+  const { mutate: postItem } = mutations.usePostItem();
 
   const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
-    createItemMutation.mutate({
-      name: itemNameSingleSpaces,
-      type: ItemType.FOLDER,
-    });
-    setCreateItemModalVisible({ toggle: false });
-    bottomSheetAddItemModalRef.current?.close();
-    await customAnalyticsEvent(ANALYTICS_EVENTS.CREATE_FOLDER);
+    if (!itemNameSingleSpaces) {
+      console.error(`name ${itemNameSingleSpaces} is empty`);
+    } else {
+      postItem({
+        name: itemNameSingleSpaces,
+        parentId,
+        type: ItemType.FOLDER,
+      });
+      setCreateItemModalVisible({ toggle: false });
+      bottomSheetAddItemModalRef.current?.close();
+      await customAnalyticsEvent(ANALYTICS_EVENTS.CREATE_FOLDER);
+    }
   };
 
   return (

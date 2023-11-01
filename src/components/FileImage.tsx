@@ -1,29 +1,35 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
+
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { useNavigation } from '@react-navigation/native';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { FileType } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { saveMedia } from '../utils/functions/media';
 
 interface FileImageProps {
   filePath: string;
-  handleShareFile: (itemType: FileType) => void;
+  handleShareFile: () => Promise<void>;
+  mimetype: string;
 }
 
-const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
+const FileImage: FC<FileImageProps> = ({
+  filePath,
+  handleShareFile,
+  mimetype,
+}) => {
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
 
   const handleSaveImage = async () => {
     saveMedia(filePath, t);
     await customAnalyticsEvent(ANALYTICS_EVENTS.SAVE_ITEM, {
-      item_type: FileType.IMAGE,
+      item_type: mimetype,
     });
   };
 
@@ -41,7 +47,7 @@ const FileImage: FC<FileImageProps> = ({ filePath, handleShareFile }) => {
             icon={
               <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
             }
-            onPress={() => handleShareFile(FileType.IMAGE)}
+            onPress={() => handleShareFile()}
           ></Button>
         </View>
       ),

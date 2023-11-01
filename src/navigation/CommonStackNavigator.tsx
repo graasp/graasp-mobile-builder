@@ -1,13 +1,15 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
 import { Button } from 'react-native-elements';
+
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { UUID } from '@graasp/sdk';
+
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';
 import ItemScreen from '../screens/ItemScreen';
-import { UUID } from '../types';
 
 export type CommonStackParamList = {
   CommonStackFolder: { headerTitle: string; itemId: UUID };

@@ -1,18 +1,17 @@
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { useMutation } from 'react-query';
+
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { buildEditItem } from '../mutations/utils';
-import { Item, UUID } from '../types';
+import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 interface EditItemProps {
   itemId: UUID;
-  item: Item;
+  item: DiscriminatedItem;
   setEditItemModalVisible: React.Dispatch<
     React.SetStateAction<{
       toggle: boolean;
@@ -30,10 +29,8 @@ const EditItem: FC<EditItemProps> = ({
 }) => {
   const [itemName, setItemName] = useState<string | undefined>(item.name);
   const { t } = useTranslation();
-  const userToken: any = getUserToken();
-  const editItemMutation = useMutation({
-    ...buildEditItem(userToken, refresh),
-  });
+  const { mutations } = useQueryClient();
+  const editItemMutation = mutations.useEditItem();
 
   const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');

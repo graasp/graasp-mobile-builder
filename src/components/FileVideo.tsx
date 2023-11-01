@@ -1,16 +1,19 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { Video, ResizeMode } from 'expo-av';
-import * as Sharing from 'expo-sharing';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { MaterialIcons } from '@expo/vector-icons';
+import { ResizeMode, Video } from 'expo-av';
+import * as Sharing from 'expo-sharing';
+
+import { UUID } from '@graasp/sdk';
+
+import { useNavigation } from '@react-navigation/native';
+
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
-import { FileType, UUID } from '../types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
 
@@ -23,7 +26,7 @@ interface FileVideoProps {
 const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const navigation = useNavigation<ItemScreenNavigationProp>();
-  const video = React.useRef(null);
+  const video = useRef(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -35,7 +38,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
       setIsDownloading(false);
       saveMedia(localPath, t);
       await customAnalyticsEvent(ANALYTICS_EVENTS.SAVE_ITEM, {
-        item_type: FileType.VIDEO,
+        item_type: mimetype,
       });
     }
   };
@@ -47,7 +50,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
       setIsDownloading(false);
       Sharing.shareAsync(localPath);
       await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_ITEM, {
-        item_type: FileType.VIDEO,
+        item_type: mimetype,
       });
     }
   };

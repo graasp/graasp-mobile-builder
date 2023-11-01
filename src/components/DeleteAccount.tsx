@@ -1,15 +1,14 @@
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { useMutation } from 'react-query';
+
+import { Member } from '@graasp/sdk';
 
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { useAuth } from '../context/authContext';
-import { buildDeleteMember } from '../mutations/utils';
-import { Member } from '../types';
+import { useAuth } from '../context/AuthContext';
+import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 interface DeleteAccountProps {
   currentMember: Member;
@@ -25,17 +24,15 @@ const DeleteAccount: FC<DeleteAccountProps> = ({
   setDeleteAccountVisible,
 }) => {
   const { t } = useTranslation();
-  const userToken: any = getUserToken();
+  const { mutations } = useQueryClient();
   const authContext = useAuth();
   const { signOut } = authContext;
-  const deleteMemberMutation = useMutation({
-    ...buildDeleteMember(userToken),
-  });
+  const deleteMemberMutation = mutations.useDeleteMember();
 
   const deleteItem = async () => {
     setDeleteAccountVisible({ toggle: false });
     signOut();
-    deleteMemberMutation.mutate(currentMember.id);
+    deleteMemberMutation.mutate({ id: currentMember.id });
     await customAnalyticsEvent(ANALYTICS_EVENTS.DELETE_MEMBER);
   };
 
