@@ -36,7 +36,7 @@ const CurrentMemberProvider = (props: any) => {
   }, [currentMember]);
 
   const changeLang = async (newLang: string) => {
-    if (!currentMember || !('id' in currentMember)) {
+    if (!currentMember) {
       console.error('current member is not logged in');
     } else {
       setLang(newLang);

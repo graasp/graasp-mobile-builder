@@ -72,7 +72,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
-    id: currentMember && 'id' in currentMember ? currentMember?.id : undefined,
+    id: currentMember ? currentMember.id : undefined,
   });
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
   const downloadAvatar = async (url: string) => {
     try {
-      if (currentMember && 'id' in currentMember) {
+      if (currentMember) {
         const localPath = `${FileSystem.documentDirectory}/${currentMember.id}`;
 
         const downloadResumable = FileSystem.createDownloadResumable(
@@ -111,7 +111,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     return <ActivityIndicator />;
   }
 
-  if (!currentMember || !('id' in currentMember)) {
+  if (!currentMember) {
     // TODO !!!!!!! return an empty screen?
     return null;
   }

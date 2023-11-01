@@ -14,10 +14,8 @@ export const QueryClientContext = createContext<{
   queryClient: any;
   hooks: ReturnType<typeof configureQueryClient>['hooks'];
   mutations: ReturnType<typeof configureQueryClient>['mutations'];
-  // useQueryClient:any,
 }>({
   queryClient: {},
-  //   useQueryClient: () => {},
   hooks: {} as unknown as any,
   mutations: {} as unknown as any,
 });
@@ -36,10 +34,8 @@ export const QueryClientProvider = ({ children }: any) => {
   // Create a client
   const {
     queryClient,
-    // useQueryClient,
     QueryClientProvider: QCProvider,
     hooks,
-    // ReactQueryDevtools,
     mutations,
     focusManager,
   } = configureQueryClient({
@@ -128,12 +124,7 @@ export const QueryClientProvider = ({ children }: any) => {
 
   return (
     <QueryClientContext.Provider value={value}>
-      <QCProvider client={queryClient}>
-        <>
-          {children}
-          {/* <ReactQueryDevtools /> */}
-        </>
-      </QCProvider>
+      <QCProvider client={queryClient}>{children}</QCProvider>
     </QueryClientContext.Provider>
   );
 };
