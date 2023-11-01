@@ -103,19 +103,6 @@ export const QueryClientProvider = ({ children }: any) => {
     enableWebsocket: false,
   });
 
-  focusManager.setEventListener(() => {
-    const handleAppStateChange = (appState: any) => {
-      console.log('AppState: ', appState);
-      focusManager.setFocused(appState === 'active');
-    };
-
-    const appState = AppState.addEventListener('change', handleAppStateChange);
-
-    return () => {
-      appState.remove();
-    };
-  });
-
   const value = {
     queryClient,
     hooks,

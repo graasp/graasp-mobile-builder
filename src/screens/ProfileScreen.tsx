@@ -111,11 +111,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     return <ActivityIndicator />;
   }
 
-  if (!currentMember) {
-    // TODO !!!!!!! return an empty screen?
-    return null;
-  }
-
   if (isError) {
     return null;
   }
