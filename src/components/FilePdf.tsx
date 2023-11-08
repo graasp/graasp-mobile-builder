@@ -11,10 +11,8 @@ import { UUID, buildPdfViewerLink } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  ANALYTICS_EVENTS,
-  GRAASP_ASSETS_URL,
-} from '../config/constants/constants';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { GRAASP_ASSETS_URL } from '../config/env';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';

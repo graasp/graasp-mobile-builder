@@ -4,16 +4,18 @@ import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
 
-import { configureQueryClient } from '@graasp/query-client';
+import { QueryClientConfig, configureQueryClient } from '@graasp/query-client';
 
-import { API_HOST } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { useAuth } from './AuthContext';
 
 export const QueryClientContext = createContext<{
+  queryConfig: ReturnType<typeof configureQueryClient>['queryConfig'];
   queryClient: any;
   hooks: ReturnType<typeof configureQueryClient>['hooks'];
   mutations: ReturnType<typeof configureQueryClient>['mutations'];
 }>({
+  queryConfig: {} as QueryClientConfig,
   queryClient: {},
   hooks: {} as unknown as any,
   mutations: {} as unknown as any,
@@ -32,6 +34,7 @@ export const QueryClientProvider = ({ children }: any) => {
 
   // Create a client
   const {
+    queryConfig,
     queryClient,
     QueryClientProvider: QCProvider,
     hooks,
@@ -102,6 +105,7 @@ export const QueryClientProvider = ({ children }: any) => {
   });
 
   const value = {
+    queryConfig,
     queryClient,
     hooks,
     mutations,

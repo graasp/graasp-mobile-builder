@@ -19,9 +19,9 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';

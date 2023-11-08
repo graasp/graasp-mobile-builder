@@ -12,10 +12,10 @@ import * as SecureStore from 'expo-secure-store';
 import { axiosAuthInstance } from '../config/axios';
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   AuthActionKind,
   SECURE_STORE_VALUES,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {

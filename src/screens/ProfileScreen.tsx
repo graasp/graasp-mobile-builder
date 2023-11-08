@@ -27,10 +27,10 @@ import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   DEFAULT_LOCALE,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { useQueryClient } from '../context/QueryClientContext';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';

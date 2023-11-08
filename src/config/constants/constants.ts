@@ -1,16 +1,3 @@
-import env from '../../env.json';
-
-const {
-  API_HOST: DEFAULT_API_HOST,
-  AUTH_HOST: DEFAULT_AUTH_HOST,
-  S3_FILES_HOST,
-} = env;
-
-const API_HOST = process.env.EXPO_PUBLIC_API_HOST || DEFAULT_API_HOST;
-const AUTH_HOST = process.env.EXPO_PUBLIC_AUTH_HOST || DEFAULT_AUTH_HOST;
-console.log(API_HOST, AUTH_HOST);
-export { API_HOST, AUTH_HOST, S3_FILES_HOST };
-
 export const APP_NAME = 'Graasp';
 
 export const DEFAULT_IMAGE_SRC =
@@ -145,10 +132,6 @@ export const LOGIN_URI = {
     HOSTNAME: 'auth',
   },
 };
-
-// TODO: move to env config with other env variables
-export const GRAASP_ASSETS_URL = 'assets.graasp.org';
-export const GRAASP_AUTH_HOST = 'http://auth.graasp.org';
 
 // todo: move to sdk
 export const buildSignUpPath = (
