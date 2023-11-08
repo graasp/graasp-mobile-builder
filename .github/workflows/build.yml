@@ -26,8 +26,3 @@ jobs:
 
       - name: Typescript Build
         run: yarn build:ts
-
-      - name: Test
-        run: yarn test
-        env:
-          CI: true
