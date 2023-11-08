@@ -2,6 +2,8 @@ import { I18nextProvider } from 'react-i18next';
 import { LogBox } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+// polyfill the URL and URLParams apis
+import 'react-native-url-polyfill/auto';
 
 import i18nConfig from './src/config/i18n';
 import { AuthProvider } from './src/context/AuthContext';
