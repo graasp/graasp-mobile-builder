@@ -42,6 +42,7 @@ export const QueryClientProvider = ({ children }: any) => {
   } = configureQueryClient({
     API_HOST,
     notifier: (e) => {
+      // todo: use toaster
       console.log(e);
     },
     onConfigAxios: (axios) => {

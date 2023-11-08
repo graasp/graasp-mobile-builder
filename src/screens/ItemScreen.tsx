@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, View } from 'react-native';
 
 import { ItemType } from '@graasp/sdk';
 

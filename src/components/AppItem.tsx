@@ -59,7 +59,6 @@ const AppItem = ({ item }: { item: AppItemType }) => {
         console.log('raw message:', event.nativeEvent.data);
         try {
           const data = JSON.parse(event.nativeEvent.data);
-          console.log('parsed message:', data);
           switch (data.type) {
             case POST_MESSAGE_KEYS.GET_CONTEXT: {
               ref.current?.injectJavaScript(`(function() {
