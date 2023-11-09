@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
+import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {
@@ -16,7 +17,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
-import { DEFAULT_LOCALE } from '../config/constants/constants';
+import { DEFAULT_LOCALE, TEXT_ALIGNMENT } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
@@ -31,6 +32,13 @@ type CommonStackDetailProps = CompositeScreenProps<
   >,
   StackScreenProps<RootStackParamList>
 >;
+
+const classesStyles = {
+  'ql-align-right': { textAlign: TEXT_ALIGNMENT.RIGHT },
+  'ql-align-center': { textAlign: TEXT_ALIGNMENT.CENTER },
+  'ql-align-left': { textAlign: TEXT_ALIGNMENT.LEFT },
+  'ql-align-justify': { textAlign: TEXT_ALIGNMENT.JUSTIFY },
+};
 
 const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   const { itemId } = route.params;
@@ -59,7 +67,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   } = hooks.useMember(item?.creator?.id);
   useFocusQuery(refetchMember);
 
-  const { createdAt, extra, name, type, updatedAt } = item;
+  const { createdAt, extra, name, type, updatedAt, description } = item;
   if (isLoadingName || !creatorData?.name) {
     return <ActivityIndicator />;
   }
@@ -95,6 +103,12 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
         <Text h4 style={styles.value}>
           {name}
         </Text>
+        {description ? (
+          <RenderHtml
+            classesStyles={classesStyles}
+            source={{ html: description }}
+          />
+        ) : null}
         <Text style={styles.header}>{t('Type')}</Text>
         <Text style={styles.value}>{typeContent}</Text>
         {sizeContent != null && (
@@ -105,7 +119,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
         )}
         <Text style={styles.header}>{t('Creator')}</Text>
         <Text style={styles.value}>{creatorData.name}</Text>
-        <Text style={styles.header}>{t('Creation')}</Text>
+        <Text style={styles.header}>{t('Creation Date')}</Text>
         <Text style={styles.value}>
           {formatDate(createdAt, { locale: DEFAULT_LOCALE })}
         </Text>

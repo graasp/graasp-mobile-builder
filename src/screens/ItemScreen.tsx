@@ -1,16 +1,16 @@
 import { FC } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import WebView from 'react-native-webview';
+import { StyleSheet, View } from 'react-native';
 
-import { ItemType } from '@graasp/sdk';
+import { Context, ItemType } from '@graasp/sdk';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
+import AppItem from '../components/AppItem';
 import Document from '../components/Document';
 import FileItem from '../components/FileItem';
+import LinkItem from '../components/LinkItem';
 import { useQueryClient } from '../context/QueryClientContext';
 import { CommonStackParamList } from '../navigation/CommonStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
@@ -28,12 +28,10 @@ type CommonStackItemProps = CompositeScreenProps<
 export type ItemScreenNavigationProp = CommonStackItemProps['navigation'];
 
 const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
-  const dimensions = useWindowDimensions();
   const { itemId } = route.params;
   const { hooks } = useQueryClient();
   const { data: item, isLoading, isError, refetch } = hooks.useItem(itemId);
   useFocusQuery(refetch);
-  const insets = useSafeAreaInsets();
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -44,49 +42,16 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
   }
 
   const renderContent = () => {
-    const { name, type, extra, id } = item;
-
-    switch (type) {
+    switch (item.type) {
       case ItemType.DOCUMENT: {
-        const content = extra.document?.content;
+        const content = item.extra.document.content;
         return <Document content={content} />;
       }
       case ItemType.APP: {
-        const url = extra.app?.url;
-        console.log('The url :    ', url);
-        return (
-          <WebView
-            source={{ uri: url }}
-            scalesPageToFit={false}
-            startInLoadingState={true}
-            overScrollMode="never"
-            cacheMode="LOAD_CACHE_ELSE_NETWORK"
-            cacheEnabled={true}
-            style={{
-              width: dimensions.width - insets.left,
-              height: '100%',
-              marginLeft: insets.left,
-              marginBottom: insets.bottom,
-            }}
-          />
-        );
+        return <AppItem item={item} context={Context.Builder} />;
       }
       case ItemType.LINK: {
-        const uri = extra.embeddedLink?.url;
-        return (
-          <WebView
-            source={{ uri }}
-            scalesPageToFit={false}
-            startInLoadingState={true}
-            overScrollMode="never"
-            cacheEnabled={true}
-            style={{
-              width: dimensions.width - insets.left,
-              height: '100%',
-              marginLeft: insets.left,
-            }}
-          />
-        );
+        return <LinkItem item={item} />;
       }
       case ItemType.S3_FILE: {
         return <FileItem item={item} />;

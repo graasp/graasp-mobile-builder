@@ -1,12 +1,13 @@
 {
-    "extends": ["universe", "prettier"],
-    "plugins": ["import", "jsx-a11y", "react"],
-    "env": {
-        "node": true,
-        "es2022": true
-    },
-    "rules": {
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "off"
-    }
+  "extends": ["universe", "prettier"],
+  "plugins": ["import", "jsx-a11y", "react"],
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "rules": {
+    "import/order": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "warn"
+  }
 }

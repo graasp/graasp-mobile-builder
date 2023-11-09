@@ -27,10 +27,10 @@ import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   DEFAULT_LOCALE,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { useQueryClient } from '../context/QueryClientContext';
 import { DrawerParamList } from '../navigation/DrawerNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
@@ -343,8 +343,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               <ListItem
                 onPress={() => takePhoto()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="camera-alt" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -356,8 +354,6 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               <ListItem
                 onPress={() => pickImage()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="image" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>

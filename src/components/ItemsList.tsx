@@ -96,11 +96,7 @@ const ItemsList: FC<ItemsListProps> = ({
           <View style={{ flex: 1 }}>
             {itemSelected && Boolean(itemSelected?.name) && (
               <>
-                <ListItem
-                  style={{ paddingLeft: insets.left }}
-                  hasTVPreferredFocus={undefined}
-                  tvParallaxProperties={undefined}
-                >
+                <ListItem style={{ paddingLeft: insets.left }}>
                   <ItemIcon
                     type={itemSelected.type}
                     extra={itemSelected.extra}

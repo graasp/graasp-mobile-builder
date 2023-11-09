@@ -19,7 +19,7 @@ const Item: FC<ItemProps> = ({
   item: { id, name, type, extra },
   openOptions,
 }) => {
-  const { navigate, push } = useNavigation<HomeStackPropsNavigationProp>();
+  const { push } = useNavigation<HomeStackPropsNavigationProp>();
   async function handleItemPress() {
     switch (type) {
       case ItemType.FOLDER:
@@ -42,10 +42,7 @@ const Item: FC<ItemProps> = ({
 
   function renderListItem() {
     return (
-      <ListItem
-        hasTVPreferredFocus={undefined}
-        tvParallaxProperties={undefined}
-      >
+      <ListItem>
         <ItemIcon type={type} extra={extra} name={name} />
         <ListItem.Content style={{ flexDirection: 'row' }}>
           <ListItem.Title style={{ flex: 2 }}>{name}</ListItem.Title>
@@ -67,7 +64,6 @@ const Item: FC<ItemProps> = ({
           color={ITEMS_TABLE_ROW_ICON_COLOR}
           onPress={() => openOptions({ id })}
           containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
-          tvParallaxProperties={undefined}
         />
       )}
     </View>

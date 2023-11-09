@@ -1,4 +1,10 @@
-import { useEffect,useContext, useMemo, createContext, useReducer } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
@@ -6,10 +12,10 @@ import * as SecureStore from 'expo-secure-store';
 import { axiosAuthInstance } from '../config/axios';
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   AuthActionKind,
   SECURE_STORE_VALUES,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {
@@ -82,7 +88,7 @@ const AuthProvider = (props: any) => {
         userToken = await SecureStore.getItemAsync(
           SECURE_STORE_VALUES.AUTH_TOKEN,
         );
-      } catch (e) {
+      } catch {
         userToken = null;
       }
       dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: userToken });

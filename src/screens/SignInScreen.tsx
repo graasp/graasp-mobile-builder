@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,11 +12,11 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
-  GRAASP_AUTH_HOST,
   PLATFORM_OS,
   WEB_BROWSER_REDIRECT_RESULT_TYPE,
   buildSignUpPath,
 } from '../config/constants/constants';
+import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { RootStackParamList } from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
@@ -78,7 +78,8 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
       const challenge = await generateNonce();
       const authUrl = buildSignUpPath({ host: GRAASP_AUTH_HOST }, challenge);
       await WebBrowser.openAuthSessionAsync(authUrl);
-    } catch {
+    } catch (err) {
+      console.error(err);
       throw new Error('Sign in error');
     }
   };

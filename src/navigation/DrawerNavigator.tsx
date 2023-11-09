@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
+import Toast from 'react-native-toast-message';
 
 import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
@@ -52,7 +53,15 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
         icon={({ color, size, focused }) => (
           <Feather name="external-link" size={size} color={color} />
         )}
-        onPress={() => Linking.openURL('https://graasp.eu/')}
+        onPress={() =>
+          Linking.openURL('mailto:contact@graasp.org').catch(() => {
+            Toast.show({
+              text1: 'Sorry, we could not open your mail app',
+              text2: 'Send an email to contact@graasp.org',
+              type: 'error',
+            });
+          })
+        }
       />
       <DrawerItem
         label={t('Log Out')!}
@@ -66,7 +75,6 @@ const CustomDrawerContent: FC<CustomDrawerContentProps> = (props: any) => {
 };
 
 const DrawerNavigator = () => {
-  const dimensions = useWindowDimensions();
   const { t } = useTranslation();
 
   return (

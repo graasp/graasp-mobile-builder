@@ -7,6 +7,6 @@ export const customAnalyticsEvent = async (
   try {
     await analytics().logEvent(event, payload);
   } catch (error) {
-    throw new Error('Analytics error');
+    throw new Error(`Analytics error\n${error}`);
   }
 };

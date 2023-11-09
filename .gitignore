@@ -31,4 +31,9 @@ yarn-error.log
 build-*.tar.gz
 *.app
 
-.env.*
+# config
+.env*
+
+# platform specific
+ios
+android

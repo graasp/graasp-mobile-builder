@@ -30,7 +30,7 @@ export const saveMedia = async (uri: string, t: any) => {
         [{ text: 'OK' }],
       );
     }
-  } catch (error) {
+  } catch {
     Toast.show({
       type: 'error',
       text1: t('Error')!,
@@ -66,7 +66,8 @@ export const downloadFileFromS3Url = async (
       await downloadResumable.downloadAsync();
     }
     return localPath;
-  } catch {
+  } catch (err) {
+    console.log(err);
     throw new Error();
   }
 };

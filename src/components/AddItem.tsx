@@ -19,9 +19,9 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
   ANALYTICS_EVENTS,
-  API_HOST,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
+import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
@@ -65,14 +65,15 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   };
 
   const pickDocument = async () => {
-    const file = await DocumentPicker.getDocumentAsync();
-
-    if (file.type !== 'cancel') {
-      uploadFile(file.uri);
-      bottomSheetAddItemModalRef.current?.close();
-      await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
-        source: 'file_manager',
-        type: file.mimeType,
+    const result = await DocumentPicker.getDocumentAsync();
+    if (!result.canceled) {
+      result.assets.forEach(async (file) => {
+        uploadFile(file.uri);
+        bottomSheetAddItemModalRef.current?.close();
+        await customAnalyticsEvent(ANALYTICS_EVENTS.UPLOAD_ITEM, {
+          source: 'file_manager',
+          type: file.mimeType,
+        });
       });
     }
   };
@@ -168,8 +169,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddFolderPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="folder" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -181,8 +180,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddImageOrVideoPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons name="image" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -194,8 +191,6 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddDocumentPress()}
                 style={{ paddingLeft: insets.left }}
-                hasTVPreferredFocus={undefined}
-                tvParallaxProperties={undefined}
               >
                 <MaterialIcons
                   name="insert-drive-file"

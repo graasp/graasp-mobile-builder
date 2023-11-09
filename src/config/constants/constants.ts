@@ -1,11 +1,3 @@
-import { PermissionLevel } from '@graasp/sdk';
-
-import env from '../../env.json';
-
-const { API_HOST, AUTH_HOST } = env;
-
-export { API_HOST, AUTH_HOST };
-
 export const APP_NAME = 'Graasp';
 
 export const DEFAULT_IMAGE_SRC =
@@ -140,10 +132,6 @@ export const LOGIN_URI = {
     HOSTNAME: 'auth',
   },
 };
-
-// TODO: move to env config with other env variables
-export const GRAASP_ASSETS_URL = 'assets.graasp.org';
-export const GRAASP_AUTH_HOST = 'http://auth.graasp.org';
 
 // todo: move to sdk
 export const buildSignUpPath = (
