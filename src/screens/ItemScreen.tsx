@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ItemType } from '@graasp/sdk';
+import { Context, ItemType } from '@graasp/sdk';
 
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -48,7 +48,7 @@ const ItemScreen: FC<CommonStackItemProps> = ({ route }) => {
         return <Document content={content} />;
       }
       case ItemType.APP: {
-        return <AppItem item={item} />;
+        return <AppItem item={item} context={Context.Builder} />;
       }
       case ItemType.LINK: {
         return <LinkItem item={item} />;

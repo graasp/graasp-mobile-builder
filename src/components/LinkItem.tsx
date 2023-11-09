@@ -40,7 +40,8 @@ const LinkItem = ({ item }: { item: EmbeddedLinkItemType }) => {
       style={{
         width: dimensions.width - insets.left,
         height: '100%',
-        // marginLeft: insets.left,
+        marginLeft: insets.left,
+        marginRight: insets.right,
       }}
     />
   );

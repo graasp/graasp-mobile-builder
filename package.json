@@ -92,5 +92,8 @@
     "react-test-renderer": "18.2.0",
     "typescript": "^5.2.2"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
 }

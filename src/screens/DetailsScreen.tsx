@@ -119,7 +119,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
         )}
         <Text style={styles.header}>{t('Creator')}</Text>
         <Text style={styles.value}>{creatorData.name}</Text>
-        <Text style={styles.header}>{t('Creation')}</Text>
+        <Text style={styles.header}>{t('Creation Date')}</Text>
         <Text style={styles.value}>
           {formatDate(createdAt, { locale: DEFAULT_LOCALE })}
         </Text>

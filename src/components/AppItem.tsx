@@ -18,18 +18,34 @@ const buildPostMessageKeys = (itemId: AppItemType['id']) => ({
   POST_AUTO_RESIZE: `POST_AUTO_RESIZE_${itemId}`,
 });
 
-const AppItem = ({ item }: { item: AppItemType }) => {
+type AppItemProps = {
+  item: AppItemType;
+  context: `${Context}`;
+};
+
+const AppItem = ({ item, context }: AppItemProps) => {
+  // dimensions
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
+
+  // use the queryConfig and the hooks from the queryClient
   const { queryConfig, hooks } = useQueryClient();
   const { data: currentMember } = hooks.useCurrentMember();
   const { data: itemMemberships } = hooks.useItemMemberships(item.id);
+
+  // use a ref on the webview to inject javascript and access other methods
   const ref = useRef<WebView | null>(null);
+
+  // extract app url from the item extra and append the item id to the url
   const url = new URL(item.extra.app.url);
   const query = new URLSearchParams(url.search);
   query.set('itemId', item.id);
   url.search = query.toString();
+
+  // build the post message keys to respond to events sent by the app
   const POST_MESSAGE_KEYS = buildPostMessageKeys(item.id);
+
+  // get highest permission for the member on the item
   const permission = PermissionLevelCompare.getHighest(
     itemMemberships?.map((im) => im.permission),
   );
@@ -69,7 +85,7 @@ const AppItem = ({ item }: { item: AppItemType }) => {
                   memberId: "${currentMember?.id}",
                   itemId: "${item.id}",
                   mobile: true,
-                  context: "${Context.Builder}",
+                  context: "${context}",
                   permission: "${permission}",
                 },
               }), "${url.origin}");
@@ -93,12 +109,13 @@ const AppItem = ({ item }: { item: AppItemType }) => {
               break;
             }
             default:
-            // console.error(
-            //   `Type ${data.type} is not recognized (${data}) ${POST_MESSAGE_KEYS.GET_AUTH_TOKEN}`,
-            // );
+              console.error(`Type ${data.type} is not recognized (${data})`);
           }
-        } catch {
-          // console.error('could not parse data');
+        } catch (err) {
+          // ignore the SyntaxError from json parsing as these are log messages from the app
+          if (!(err instanceof SyntaxError)) {
+            console.error(`Error in AppItem onMessage: ${err}`);
+          }
         }
       }}
     />

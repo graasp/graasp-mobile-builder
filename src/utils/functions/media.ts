@@ -66,7 +66,8 @@ export const downloadFileFromS3Url = async (
       await downloadResumable.downloadAsync();
     }
     return localPath;
-  } catch {
+  } catch (err) {
+    console.log(err);
     throw new Error();
   }
 };
