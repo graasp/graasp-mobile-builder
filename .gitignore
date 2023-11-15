@@ -29,6 +29,7 @@ yarn-error.log
 
 # local build
 build-*.tar.gz
+build-*.apk
 *.app
 
 # config

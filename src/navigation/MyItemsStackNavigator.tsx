@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import DrawerHeader from '../components/common/DrawerHeader';
+import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import MyItemsScreen from '../screens/MyItemsScreen';
 
@@ -22,7 +22,7 @@ const MyItemsStackNavigator = () => {
         component={MyItemsScreen}
         options={{
           title: '',
-          headerLeft: () => <DrawerHeader title="My Items" />,
+          headerLeft: () => <Header title="My Items" />,
           headerLeftContainerStyle: { paddingLeft: 10 },
         }}
       />

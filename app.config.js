@@ -20,19 +20,20 @@ module.exports = {
       {
         ios: {
           useFrameworks: 'static',
+          deploymentTarget: '14.0',
         },
       },
     ],
     [
-      'react-native-vision-camera',
+      'expo-camera',
       {
-        cameraPermissionText: '$(PRODUCT_NAME) needs access to your Camera.',
-
-        // optionally, if you want to record audio:
-        enableMicrophonePermission: true,
-        enableCodeScanner: true,
-        microphonePermissionText:
-          '$(PRODUCT_NAME) needs access to your Microphone.',
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access your camera.',
+      },
+    ],
+    [
+      'expo-barcode-scanner',
+      {
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access camera.',
       },
     ],
   ],

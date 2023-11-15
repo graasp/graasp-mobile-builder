@@ -34,3 +34,10 @@ export const isChild = (id: UUID) => {
 
 export const getChildren = (items: any[], id: UUID) =>
   items.filter(isChild(id));
+
+// TODO
+export const getIdFromUrl = (url: string) => {
+  if (url.includes('graasp.org')) {
+    return '553d9d89-523e-4cb3-a16d-0b3498465568';
+  }
+};

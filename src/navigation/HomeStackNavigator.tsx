@@ -5,7 +5,7 @@ import {
 
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
-import HomeScreen, { HomeStackProps } from '../screens/HomeScreen';
+import HomeScreen, { HomeStackProps } from '../screens/home/HomeScreen';
 
 export type HomeStackParamList = {
   HomeStack: HomeStackProps;

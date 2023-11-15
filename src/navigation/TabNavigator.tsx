@@ -8,7 +8,9 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
-import MyItemsStackNavigator from './MyItemsStackNavigator';
+import MyItemsStackNavigator, {
+  MyItemsStackParamList,
+} from './MyItemsStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SharedStackNavigator, {
   SharedStackParamList,
@@ -16,7 +18,7 @@ import SharedStackNavigator, {
 
 export type TabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
-  MyItemsTab: NavigatorScreenParams<StackParamList>;
+  MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
   SharedTab: NavigatorScreenParams<SharedStackParamList>;
   SignInTab: any;
 };
