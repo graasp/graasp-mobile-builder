@@ -10,7 +10,7 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
-import { HomeStackNavigationProp } from '../navigation/HomeStackNavigator';
+import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
 import AddItem from './AddItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
@@ -33,7 +33,7 @@ const ItemsList: FC<ItemsListProps> = ({
   isLoading,
   displayAddItem = true,
 }) => {
-  const navigation = useNavigation<HomeStackNavigationProp>();
+  const navigation = useNavigation<MyItemsStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(

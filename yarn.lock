@@ -3221,7 +3221,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/metro-config@npm:~0.10.0":
+"@expo/metro-config@npm:^0.10.7, @expo/metro-config@npm:~0.10.0":
   version: 0.10.7
   resolution: "@expo/metro-config@npm:0.10.7"
   dependencies:
@@ -6268,7 +6268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"base-64@npm:0.1.0":
+"base-64@npm:0.1.0, base-64@npm:^0.1.0":
   version: 0.1.0
   resolution: "base-64@npm:0.1.0"
   checksum: 5a42938f82372ab5392cbacc85a5a78115cbbd9dbef9f7540fa47d78763a3a8bd7d598475f0d92341f66285afd377509851a9bb5c67bbecb89686e9255d5b3eb
@@ -9606,6 +9606,7 @@ __metadata:
     "@babel/plugin-transform-arrow-functions": ^7.22.5
     "@babel/plugin-transform-shorthand-properties": ^7.22.5
     "@babel/plugin-transform-template-literals": ^7.22.5
+    "@expo/metro-config": ^0.10.7
     "@expo/vector-icons": ^13.0.0
     "@gorhom/bottom-sheet": ^4.5.1
     "@graasp/query-client": 2.0.1
@@ -9655,6 +9656,7 @@ __metadata:
     react-native: 0.72.6
     react-native-blob-util: ^0.19.2
     react-native-elements: ^3.4.3
+    react-native-fs: ^2.20.0
     react-native-gesture-handler: ~2.12.0
     react-native-pdf: ^6.7.1
     react-native-reanimated: ~3.3.0
@@ -9665,6 +9667,7 @@ __metadata:
     react-native-svg: 13.9.0
     react-native-toast-message: ^2.1.7
     react-native-url-polyfill: ^2.0.0
+    react-native-vision-camera: ^3.6.4
     react-native-web: ~0.19.9
     react-native-webview: 13.2.2
     react-query: ^3.39.3
@@ -13949,6 +13952,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-fs@npm:^2.20.0":
+  version: 2.20.0
+  resolution: "react-native-fs@npm:2.20.0"
+  dependencies:
+    base-64: ^0.1.0
+    utf8: ^3.0.0
+  peerDependencies:
+    react-native: "*"
+    react-native-windows: "*"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 0be9bb9a5c13b501d0a3006efc3aa5c0b5b211456ee04718297f4e522532f3527f1daa220bd67d3b82d819ed8fdab8f64b7d6e0d7b768c1fd1d8ec9122d94316
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:~2.12.0":
   version: 2.12.1
   resolution: "react-native-gesture-handler@npm:2.12.1"
@@ -14102,6 +14121,20 @@ __metadata:
   peerDependencies:
     react-native: "*"
   checksum: 1a2e1030a62fd093764b5330ce0ff34d72246e581dd2892cddc347d8621931aeb2c9ea3e054960484a1259230e8461e569e1890f1ff452d3c5c0adef70190fc3
+  languageName: node
+  linkType: hard
+
+"react-native-vision-camera@npm:^3.6.4":
+  version: 3.6.4
+  resolution: "react-native-vision-camera@npm:3.6.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-worklets-core: "*"
+  peerDependenciesMeta:
+    react-native-worklets-core:
+      optional: true
+  checksum: 0fca170e29ca60cf226f91a3d615ab65dd1d3925776807f41498622cb146dd08a29e6fcae624e33dbe5e9bf3e71146461589b3f0b9f48993021dd4d8df39a44c
   languageName: node
   linkType: hard
 
@@ -16372,6 +16405,13 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
+  languageName: node
+  linkType: hard
+
+"utf8@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "utf8@npm:3.0.0"
+  checksum: cb89a69ad9ab393e3eae9b25305b3ff08bebca9adc839191a34f90777eb2942f86a96369d2839925fea58f8f722f7e27031d697f10f5f39690f8c5047303e62d
   languageName: node
   linkType: hard
 

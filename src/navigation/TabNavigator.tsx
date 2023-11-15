@@ -8,6 +8,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
+import MyItemsStackNavigator from './MyItemsStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SharedStackNavigator, {
   SharedStackParamList,
@@ -15,6 +16,7 @@ import SharedStackNavigator, {
 
 export type TabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
+  MyItemsTab: NavigatorScreenParams<StackParamList>;
   SharedTab: NavigatorScreenParams<SharedStackParamList>;
   SignInTab: any;
 };
@@ -44,6 +46,17 @@ const TabNavigator = () => {
       />
       {currentMember ? (
         <>
+          <Tab.Screen
+            name="MyItemsTab"
+            component={MyItemsStackNavigator}
+            options={{
+              tabBarLabel: t('My Items')!,
+              tabBarIcon: ({ color, size }) => (
+                <MaterialIcons name="folder" size={size} color={color} />
+              ),
+              tabBarActiveTintColor: PRIMARY_COLOR,
+            }}
+          />
           <Tab.Screen
             name="SharedTab"
             component={SharedStackNavigator}
