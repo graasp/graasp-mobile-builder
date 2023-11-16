@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { headerTextStyles } from '../../config/constants/navigation';
 

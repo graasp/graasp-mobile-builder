@@ -7,7 +7,7 @@ import { DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
-import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
+import { CommonStackNavigationProp } from '../navigation/CommonStackNavigator';
 import ItemIcon from './ItemIcon';
 
 interface ItemProps {
@@ -19,22 +19,22 @@ const Item: FC<ItemProps> = ({
   item: { id, name, type, extra },
   openOptions,
 }) => {
-  const { push } = useNavigation<HomeStackPropsNavigationProp>();
+  const { push } = useNavigation<CommonStackNavigationProp>();
   async function handleItemPress() {
     switch (type) {
       case ItemType.FOLDER:
-        push('CommonStack', {
-          screen: 'CommonStackFolder',
-          params: { itemId: id, headerTitle: name },
+        push('CommonStackFolder', {
+          itemId: id,
+          headerTitle: name,
         });
         break;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.DOCUMENT:
       case ItemType.S3_FILE:
-        push('CommonStack', {
-          screen: 'CommonStackItem',
-          params: { itemId: id, headerTitle: name },
+        push('CommonStackItem', {
+          itemId: id,
+          headerTitle: name,
         });
         break;
     }

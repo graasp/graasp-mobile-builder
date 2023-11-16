@@ -4,7 +4,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -17,12 +20,14 @@ export type CommonStackParamList = {
   CommonStackDetail: { itemId: UUID };
 };
 
+export type CommonStackNavigationProp =
+  StackNavigationProp<CommonStackParamList>;
 const CommonStack = createStackNavigator<CommonStackParamList>();
 
 const CommonStackNavigator = () => {
   return (
     <CommonStack.Navigator
-      id="CommonStackNavigator"
+      id="CommonStack"
       initialRouteName="CommonStackFolder"
       screenOptions={defaultScreenOptions}
     >

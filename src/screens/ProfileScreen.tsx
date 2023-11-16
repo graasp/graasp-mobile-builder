@@ -54,7 +54,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { hooks } = useQueryClient();
+  const { hooks, queryClient } = useQueryClient();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -323,7 +323,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
             />
           }
           onPress={async () => {
-            await authContext.signOut;
+            await authContext.signOut();
+            queryClient.resetQueries();
             navigate('SignIn');
           }}
         ></Button>

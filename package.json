@@ -7,7 +7,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "build:ts": "tsc --noEmit",
     "build:ios": "env-cmd -f .env.local npx eas-cli build -e development-simulator --platform ios --local",
     "build:android": "env-cmd -f .env.local npx eas-cli build -e development-simulator --platform android --local",

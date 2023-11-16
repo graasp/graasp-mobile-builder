@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
+import { QueryClient } from 'react-query';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -11,12 +12,12 @@ import { useAuth } from './AuthContext';
 
 export const QueryClientContext = createContext<{
   queryConfig: ReturnType<typeof configureQueryClient>['queryConfig'];
-  queryClient: any;
+  queryClient: QueryClient;
   hooks: ReturnType<typeof configureQueryClient>['hooks'];
   mutations: ReturnType<typeof configureQueryClient>['mutations'];
 }>({
   queryConfig: {} as QueryClientConfig,
-  queryClient: {},
+  queryClient: {} as QueryClient,
   hooks: {} as unknown as any,
   mutations: {} as unknown as any,
 });
