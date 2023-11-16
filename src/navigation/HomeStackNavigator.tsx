@@ -1,19 +1,19 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import DrawerHeader from '../components/common/DrawerHeader';
+import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen, { HomeStackProps } from '../screens/HomeScreen';
 
-export type StackParamList = {
-  HomeStack: undefined;
+export type HomeStackParamList = {
+  HomeStack: HomeStackProps;
 };
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createStackNavigator<HomeStackParamList>();
 
-const StackNavigator = () => {
+const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
-      id="StackNavigator"
+      id="HomeStackNavigator"
       initialRouteName="HomeStack"
       screenOptions={defaultScreenOptions}
     >
@@ -22,7 +22,7 @@ const StackNavigator = () => {
         component={HomeScreen}
         options={{
           title: '',
-          headerLeft: () => <DrawerHeader title="Home" />,
+          headerLeft: () => <Header title="Home" />,
           headerLeftContainerStyle: { paddingLeft: 10 },
           headerBackTitleVisible: false,
         }}
@@ -31,4 +31,4 @@ const StackNavigator = () => {
   );
 };
 
-export default StackNavigator;
+export default HomeStackNavigator;

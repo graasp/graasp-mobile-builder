@@ -17,8 +17,7 @@ import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { CompositeScreenProps } from '@react-navigation/native';
+import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -31,19 +30,20 @@ import {
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
+import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import { DrawerParamList } from '../navigation/DrawerNavigator';
+import { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
 import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import { RootStackParamList } from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<
-    ProfileStackParamList,
-    'ProfileStackProfile',
-    'ProfileStackNavigator'
-  >,
-  DrawerScreenProps<DrawerParamList>
+  StackScreenProps<RootStackParamList>,
+  CompositeScreenProps<
+    StackScreenProps<MainStackNavigatorParamList>,
+    StackScreenProps<ProfileStackParamList>
+  >
 >;
 
 const ProfileScreen: FC<ProfileStackProfileProps> = () => {
@@ -68,6 +68,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isError,
     refetch,
   } = hooks.useCurrentMember();
+  const authContext = useAuth();
+  const { navigate } = useNavigation();
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
@@ -304,6 +306,23 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
             />
           }
           onPress={handleChangeLanguage}
+        ></Button>
+
+        <Button
+          title={t('Log Out')!}
+          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'language'}
+              color="#ffffff"
+              size={25}
+            />
+          }
+          onPress={async () => {
+            await authContext.signOut;
+            navigate('SignIn');
+          }}
         ></Button>
 
         <Button

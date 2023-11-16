@@ -4,22 +4,22 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import TabNavigator, { TabParamList } from './TabNavigator';
 
-export type HomeDrawerParamList = {
-  StackHomeStack: NavigatorScreenParams<TabParamList>;
+export type MainStackNavigatorParamList = {
+  MainStack: NavigatorScreenParams<TabParamList>;
 };
 
-const HomeDrawerStack = createStackNavigator<HomeDrawerParamList>();
+const MainStack = createStackNavigator<MainStackNavigatorParamList>();
 
-const HomeDrawerStackNavigator = () => {
+const MainStackNavigator = () => {
   const screenOptions = { headerShown: false, ...defaultScreenOptions };
   return (
-    <HomeDrawerStack.Navigator
-      id="HomeDrawerStackNavigator"
-      initialRouteName="StackHomeStack"
+    <MainStack.Navigator
+      id="MainStackNavigator"
+      initialRouteName="MainStack"
       screenOptions={screenOptions}
     >
-      <HomeDrawerStack.Screen
-        name="StackHomeStack"
+      <MainStack.Screen
+        name="MainStack"
         component={TabNavigator}
         options={({ route: { params } }) => ({
           title: 'Home',
@@ -27,8 +27,8 @@ const HomeDrawerStackNavigator = () => {
           headerBackTitleVisible: false,
         })}
       />
-    </HomeDrawerStack.Navigator>
+    </MainStack.Navigator>
   );
 };
 
-export default HomeDrawerStackNavigator;
+export default MainStackNavigator;

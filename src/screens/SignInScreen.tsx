@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 
 import { buildSignInPath } from '@graasp/sdk';
 
+import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import GraaspLogo from '../components/common/GraaspLogo';
@@ -18,12 +19,16 @@ import {
 } from '../config/constants/constants';
 import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { useQueryClient } from '../context/QueryClientContext';
+import {
+  RootNavigationProp,
+  RootStackParamList,
+} from '../navigation/RootNavigator';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { checkLoginUri } from '../utils/functions/helper';
 import { useAsync } from '../utils/hooks/useAsync';
 
-type SignInProps = StackScreenProps<
+export type SignInProps = StackScreenProps<
   RootStackParamList,
   'SignIn',
   'RootStackNavigator'
@@ -35,6 +40,18 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const signInWithToken = authContext?.signIn;
   const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
+  const { state } = useAuth();
+  const { navigate } = useNavigation<RootNavigationProp>();
+
+  const { hooks } = useQueryClient();
+  const { data: currentMember } = hooks.useCurrentMember();
+
+  // redirect to main if member is signed in
+  useEffect(() => {
+    if (currentMember || state.userToken) {
+      navigate('Main');
+    }
+  }, [currentMember, state.userToken]);
 
   useEffect(() => {
     // Catch email-link on iOS/Android and email-password on Android login redirection
@@ -62,7 +79,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
         loginResponse.url
       ) {
         const parsedDeepLink = Linking.parse(loginResponse.url);
-        signInWithToken(parsedDeepLink?.queryParams?.t);
+        await signInWithToken(parsedDeepLink?.queryParams?.t);
       } else {
         if (Platform.OS === PLATFORM_OS.IOS) {
           WebBrowser.dismissAuthSession();
@@ -127,6 +144,22 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             onPress={_handlePressSignUpButtonAsync}
           />
         )}
+
+        <Button
+          buttonStyle={{
+            backgroundColor: '#5050d2',
+            width: '100%',
+            borderWidth: 3,
+            borderColor: '#5050d2',
+            marginTop: 16,
+          }}
+          titleStyle={{ color: '#fff', fontWeight: '700' }}
+          title="Later"
+          disabled={isLoading}
+          onPress={() => {
+            navigate('Main');
+          }}
+        />
       </View>
     </SafeAreaView>
   );

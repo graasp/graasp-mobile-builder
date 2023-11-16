@@ -1,40 +1,39 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackScreenProps,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
-import { useAuth } from '../context/AuthContext';
 import SignInScreen from '../screens/SignInScreen';
 import CommonStackNavigator, {
   CommonStackParamList,
 } from './CommonStackNavigator';
-import DrawerNavigator, { DrawerParamList } from './DrawerNavigator';
+import MainStackNavigator, {
+  MainStackNavigatorParamList,
+} from './MainStackNavigator';
 
 export type RootStackParamList = {
   SignIn: { signUp: boolean; t?: string | undefined };
-  Drawer: NavigatorScreenParams<DrawerParamList>;
+  Main: NavigatorScreenParams<MainStackNavigatorParamList>;
   CommonStack: NavigatorScreenParams<CommonStackParamList>;
 };
+
+type CommonStackProps = StackScreenProps<RootStackParamList>;
+export type RootNavigationProp = CommonStackProps['navigation'];
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
-  const authContext = useAuth();
-  const state = authContext?.state;
-
   const screenOptions = { headerShown: false };
 
   return (
-    <RootStack.Navigator id="RootStackNavigator" screenOptions={screenOptions}>
-      {state.userToken == null ? (
-        <>
-          <RootStack.Screen
-            name="SignIn"
-            component={SignInScreen}
-            initialParams={{ signUp: false }}
-          />
-        </>
-      ) : (
-        <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-      )}
+    <RootStack.Navigator id="RootNavigator" screenOptions={screenOptions}>
+      <RootStack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        initialParams={{ signUp: false }}
+      />
+      <RootStack.Screen name="Main" component={MainStackNavigator} />
       <RootStack.Screen name="CommonStack" component={CommonStackNavigator} />
     </RootStack.Navigator>
   );

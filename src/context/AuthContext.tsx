@@ -19,8 +19,8 @@ import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {
-  signIn: (data: any) => object;
-  signOut: () => object;
+  signIn: (data: any) => Promise<void>;
+  signOut: () => Promise<void>;
   restoreUserRefreshToken: (
     newAuthToken: string,
     newRefreshToken: string,

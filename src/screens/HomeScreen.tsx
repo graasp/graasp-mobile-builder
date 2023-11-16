@@ -1,5 +1,7 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -7,36 +9,50 @@ import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
+import GraaspLogo from '../components/common/GraaspLogo';
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import { HomeStackParamList } from '../navigation/HomeStackNavigator';
+import { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
-import { StackParamList } from '../navigation/StackNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
-type HomeStackProps = CompositeScreenProps<
-  StackScreenProps<StackParamList, 'HomeStack', 'StackNavigator'>,
-  StackScreenProps<RootStackParamList>
+export type HomeStackProps = CompositeScreenProps<
+  StackScreenProps<RootStackParamList>,
+  CompositeScreenProps<
+    StackScreenProps<MainStackNavigatorParamList>,
+    StackScreenProps<HomeStackParamList>
+  >
 >;
 
 export type HomeStackPropsNavigationProp = HomeStackProps['navigation'];
 export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
-const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
+const HomeScreen: FC<HomeStackProps> = () => {
   const { hooks } = useQueryClient();
-  const { data: ownItems, isLoading, isError, refetch } = hooks.useOwnItems();
+  const { data: ownItems, isLoading, refetch } = hooks.useOwnItems();
+  const { data: currentMember } = hooks.useCurrentMember();
   useFocusQuery(refetch);
+  const { t } = useTranslation();
 
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
-  if (isError || !ownItems) {
-    return null;
+  if (!currentMember) {
+    return (
+      <SafeAreaView style={styles.emptyContainer} edges={['left']}>
+        <GraaspLogo color={PRIMARY_COLOR} />
+        <Text h2>{t('Welcome!')}</Text>
+        <Text>{t('You are not signed in.')}</Text>
+      </SafeAreaView>
+    );
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['left']}>
+    <SafeAreaView style={styles.container}>
       <ItemsList
-        items={[...ownItems]}
+        items={[...(ownItems ?? [])]}
         isLoading={isLoading}
         refresh={refetch}
       />
@@ -49,6 +65,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
+  },
+  emptyContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   },
 });
 
