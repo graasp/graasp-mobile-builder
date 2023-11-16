@@ -8,6 +8,7 @@ import { Audio } from 'expo-av';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 
 interface FileAudioProps {
@@ -39,7 +40,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
           onPress={() => handleShareFile()}
         ></Button>
@@ -52,7 +53,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
       <Button
         title={t('Play audio')!}
         raised={true}
-        buttonStyle={{ backgroundColor: '#5050d2' }}
+        buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
         onPress={playSound}
         icon={
           <MaterialIcons

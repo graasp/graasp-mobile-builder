@@ -19,6 +19,7 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
   ANALYTICS_EVENTS,
+  PRIMARY_COLOR,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 20,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 30,
     elevation: 8,
   },

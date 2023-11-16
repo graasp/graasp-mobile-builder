@@ -58,7 +58,7 @@ const CommonStackNavigator = () => {
           headerRight: () => (
             <Button
               disabled
-              disabledStyle={{ backgroundColor: '#5050d2' }}
+              disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
               icon={
                 <MaterialIcons
                   name={'ios-share'}

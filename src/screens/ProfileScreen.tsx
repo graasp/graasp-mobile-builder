@@ -27,6 +27,7 @@ import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
   DEFAULT_LOCALE,
+  PRIMARY_COLOR,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
@@ -285,7 +286,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
         <Button
           title={t('Change avatar')!}
-          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
@@ -299,7 +300,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
         <Button
           title={t('Change language')!}
-          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
@@ -313,7 +314,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
 
         <Button
           title={t('Log Out')!}
-          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
@@ -416,10 +417,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   avatarContainer: {
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     alignSelf: 'center',
     borderWidth: 2,
-    borderColor: '#5050d2',
+    borderColor: PRIMARY_COLOR,
   },
   modalEditLanguage: {
     justifyContent: 'center',

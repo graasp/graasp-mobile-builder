@@ -14,6 +14,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
   PLATFORM_OS,
+  PRIMARY_COLOR,
   WEB_BROWSER_REDIRECT_RESULT_TYPE,
   buildSignUpPath,
 } from '../config/constants/constants';
@@ -125,7 +126,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             borderWidth: 3,
             borderColor: '#fff',
           }}
-          titleStyle={{ color: '#5050d2', fontWeight: '700' }}
+          titleStyle={{ color: PRIMARY_COLOR, fontWeight: '700' }}
           title="Sign in"
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
@@ -133,7 +134,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
         {!isSignUp && (
           <Button
             buttonStyle={{
-              backgroundColor: '#5050d2',
+              backgroundColor: PRIMARY_COLOR,
               width: '100%',
               borderWidth: 3,
               borderColor: '#fff',
@@ -147,10 +148,10 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
 
         <Button
           buttonStyle={{
-            backgroundColor: '#5050d2',
+            backgroundColor: PRIMARY_COLOR,
             width: '100%',
             borderWidth: 3,
-            borderColor: '#5050d2',
+            borderColor: PRIMARY_COLOR,
             marginTop: 16,
           }}
           titleStyle={{ color: '#fff', fontWeight: '700' }}
@@ -168,13 +169,13 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     justifyContent: 'space-between',
     padding: 30,
   },
   logoContainer: {
     flex: 1,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     justifyContent: 'center',
     padding: 30,
   },

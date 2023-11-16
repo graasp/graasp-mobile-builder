@@ -1,3 +1,5 @@
+import { PRIMARY_COLOR } from './constants';
+
 enum fontWeights {
   NORMAL = 'normal',
   BOLD = 'bold',
@@ -10,7 +12,7 @@ enum titleAligns {
 
 const defaultScreenOptions = {
   headerStyle: {
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
   },
   headerTintColor: '#fff',
   headerTitleStyle: {

@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 
 interface FileImageProps {
@@ -21,7 +22,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
           onPress={() => handleShareFile()}
         ></Button>
@@ -33,7 +34,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
     <Button
       title={t('Save file')!}
       raised={true}
-      buttonStyle={{ backgroundColor: '#5050d2' }}
+      buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
       onPress={() => handleShareFile()}
       icon={
         <MaterialIcons

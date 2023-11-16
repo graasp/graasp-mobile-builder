@@ -1,5 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { ActivityIndicator as ActInd, StyleSheet, View } from 'react-native';
+
+import { PRIMARY_COLOR } from '../config/constants/constants';
 
 interface ActivityIndicatorProps {
   color?: string;
@@ -7,7 +9,7 @@ interface ActivityIndicatorProps {
 }
 
 const ActivityIndicator: FC<ActivityIndicatorProps> = ({
-  color = '#5050d2',
+  color = PRIMARY_COLOR,
   size = 'large',
 }) => {
   return (

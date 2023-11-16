@@ -5,7 +5,8 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
-import { useAuth } from '../context/AuthContext';
+import { PRIMARY_COLOR } from '../config/constants/constants';
+import { useQueryClient } from '../context/QueryClientContext';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SharedStackNavigator, {
@@ -20,8 +21,9 @@ export type TabParamList = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const TabNavigator = () => {
-  const { state } = useAuth();
   const { t } = useTranslation();
+  const { hooks } = useQueryClient();
+  const { data: currentMember } = hooks.useCurrentMember();
 
   return (
     <Tab.Navigator
@@ -37,10 +39,10 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
-          tabBarActiveTintColor: '#5050d2',
+          tabBarActiveTintColor: PRIMARY_COLOR,
         })}
       />
-      {state.userToken ? (
+      {currentMember ? (
         <>
           <Tab.Screen
             name="SharedTab"
@@ -50,7 +52,7 @@ const TabNavigator = () => {
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="folder-shared" size={size} color={color} />
               ),
-              tabBarActiveTintColor: '#5050d2',
+              tabBarActiveTintColor: PRIMARY_COLOR,
             }}
           />
           <Tab.Screen
@@ -65,7 +67,7 @@ const TabNavigator = () => {
                   color={color}
                 />
               ),
-              tabBarActiveTintColor: '#5050d2',
+              tabBarActiveTintColor: PRIMARY_COLOR,
             }}
           />
         </>
@@ -90,7 +92,7 @@ const TabNavigator = () => {
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="login" size={size} color={color} />
             ),
-            tabBarActiveTintColor: '#5050d2',
+            tabBarActiveTintColor: PRIMARY_COLOR,
           }}
         />
       )}

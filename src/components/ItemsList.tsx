@@ -9,6 +9,7 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { HomeStackNavigationProp } from '../navigation/HomeStackNavigator';
 import AddItem from './AddItem';
 import Item from './Item';
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 20,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 30,
     elevation: 8,
   },
