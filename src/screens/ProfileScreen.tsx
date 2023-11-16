@@ -32,17 +32,20 @@ import {
 import { API_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
-import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import type { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
+import type { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import type {
+  RootNavigationProp,
+  RootStackParamList,
+} from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<RootStackParamList>,
+  StackScreenProps<ProfileStackParamList>,
   CompositeScreenProps<
     StackScreenProps<MainStackNavigatorParamList>,
-    StackScreenProps<ProfileStackParamList>
+    StackScreenProps<RootStackParamList>
   >
 >;
 
@@ -69,7 +72,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     refetch,
   } = hooks.useCurrentMember();
   const authContext = useAuth();
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<RootNavigationProp>();
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);

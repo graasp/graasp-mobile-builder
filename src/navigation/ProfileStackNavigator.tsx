@@ -20,7 +20,7 @@ const ProfileStackNavigator = () => {
       <ProfileStack.Screen
         name="ProfileStackProfile"
         component={ProfileScreen}
-        options={({ navigation }) => ({
+        options={() => ({
           title: '',
           headerLeft: () => <Header title="Profile" />,
           headerLeftContainerStyle: { paddingLeft: 10 },

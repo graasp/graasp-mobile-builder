@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { useAuth } from '../context/AuthContext';
-import SignInScreen from '../screens/SignInScreen';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
 import ProfileStackNavigator from './ProfileStackNavigator';
 import SharedStackNavigator, {
@@ -76,7 +75,7 @@ const TabNavigator = () => {
           navigationKey="SignIn"
           // component is not used as we navigate to higher stack for signin
           // it avoids showing tabs in the signin screen
-          component={SignInScreen}
+          component={ProfileStackNavigator}
           listeners={({ navigation, route }) => ({
             tabPress: (e) => {
               // Prevent default action

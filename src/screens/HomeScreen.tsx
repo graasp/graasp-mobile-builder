@@ -12,13 +12,12 @@ import ItemsList from '../components/ItemsList';
 import GraaspLogo from '../components/common/GraaspLogo';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { HomeStackParamList } from '../navigation/HomeStackNavigator';
-import { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import type { HomeStackParamList } from '../navigation/HomeStackNavigator';
+import type { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
 export type HomeStackProps = CompositeScreenProps<
-  StackScreenProps<RootStackParamList>,
+  StackScreenProps<HomeStackParamList>,
   CompositeScreenProps<
     StackScreenProps<MainStackNavigatorParamList>,
     StackScreenProps<HomeStackParamList>

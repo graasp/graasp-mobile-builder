@@ -1,25 +1,17 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import {
-  StackScreenProps,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { NavigationProp } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import SignInScreen from '../screens/SignInScreen';
-import CommonStackNavigator, {
-  CommonStackParamList,
-} from './CommonStackNavigator';
-import MainStackNavigator, {
-  MainStackNavigatorParamList,
-} from './MainStackNavigator';
+import CommonStackNavigator from './CommonStackNavigator';
+import MainStackNavigator from './MainStackNavigator';
 
 export type RootStackParamList = {
-  SignIn: { signUp: boolean; t?: string | undefined };
-  Main: NavigatorScreenParams<MainStackNavigatorParamList>;
-  CommonStack: NavigatorScreenParams<CommonStackParamList>;
+  SignIn: any;
+  Main: undefined;
+  CommonStack: undefined;
 };
 
-type CommonStackProps = StackScreenProps<RootStackParamList>;
-export type RootNavigationProp = CommonStackProps['navigation'];
+export type RootNavigationProp = NavigationProp<RootStackParamList>;
 
 const RootStack = createStackNavigator<RootStackParamList>();
 

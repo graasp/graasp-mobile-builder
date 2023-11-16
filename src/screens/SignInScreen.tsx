@@ -20,7 +20,7 @@ import {
 import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import {
+import type {
   RootNavigationProp,
   RootStackParamList,
 } from '../navigation/RootNavigator';
