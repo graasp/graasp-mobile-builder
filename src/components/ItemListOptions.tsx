@@ -19,6 +19,7 @@ import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import ActivityIndicator from './ActivityIndicator';
+import BookmarkListItem from './BookmarkListItem';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 
@@ -239,6 +240,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <ListItem.Title style={{ flex: 2 }}>{t('Share')}</ListItem.Title>
         </ListItem.Content>
       </ListItem>
+      <BookmarkListItem item={itemSelected} />
     </>
   );
 };

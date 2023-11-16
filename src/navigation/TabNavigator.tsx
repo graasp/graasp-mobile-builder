@@ -7,6 +7,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import BookmarksStackNavigator from './BookmarksNavigator';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
 import MyItemsStackNavigator, {
   MyItemsStackParamList,
@@ -22,6 +23,7 @@ export type TabParamList = {
   SharedTab: NavigatorScreenParams<SharedStackParamList>;
   SignInTab: any;
   ProfileTab: any;
+  BookmarksTab: any;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -43,6 +45,17 @@ const TabNavigator = () => {
           tabBarLabel: t('Home'),
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
+          ),
+          tabBarActiveTintColor: PRIMARY_COLOR,
+        })}
+      />
+      <Tab.Screen
+        name="BookmarksTab"
+        component={BookmarksStackNavigator}
+        options={({ route }) => ({
+          tabBarLabel: t('Bookmarks'),
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="bookmarks" size={size} color={color} />
           ),
           tabBarActiveTintColor: PRIMARY_COLOR,
         })}

@@ -53,6 +53,8 @@ module.exports = {
       NSPhotoLibraryUsageDescription:
         'Allow access to photos in order to upload photos from your library to Graasp. These photos can be then used within your account on Graasp.',
     },
+
+    usesNonExemptEncryption: false,
   },
   android: {
     versionCode: 17,
