@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { langs } from '../config/i18n';
 import { CurrentMemberContext } from '../context/CurrentMemberContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';

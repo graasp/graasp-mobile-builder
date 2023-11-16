@@ -9,6 +9,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';

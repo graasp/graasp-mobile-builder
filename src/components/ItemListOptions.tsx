@@ -10,6 +10,7 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import {
   ANALYTICS_EVENTS,
+  PRIMARY_COLOR,
   SHARE_HOST,
   SHARE_OPTIONS,
   VIEWS,
