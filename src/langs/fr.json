@@ -63,6 +63,8 @@
     "Delete permanently": "Supprimer définitivement",
     "Confirm deletion": "Confirmer la suppression",
     "Your account will be deleted permanently": "Votre compte va être supprimé définitivement",
-    "Sign In": "Se Connecter"
+    "Sign In": "Se Connecter",
+    "Scan QR Code": "Scanner un code QR",
+    "or enter short URL below": "ou entrer un lien ci-dessous"
   }
 }

@@ -5,24 +5,20 @@ import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Camera, CameraType } from 'expo-camera';
+import { Camera } from 'expo-camera';
 
 import { useIsFocused } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../../config/constants/constants';
-import { defaultScreenOptions } from '../../config/constants/navigation';
 import { MainStackNavigationProp } from '../../navigation/MainStackNavigator';
 
 const ScanQrCodeButton = () => {
   const { t } = useTranslation();
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
 
-  const [type, setType] = useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [permission] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(false);
-  const [scanned, setScanned] = useState(false);
-  const { navigate } = useNavigation<MainStackNavigationProp>();
+  const { navigate, goBack } = useNavigation<MainStackNavigationProp>();
 
   useEffect(() => {
     (async () => {
@@ -30,22 +26,25 @@ const ScanQrCodeButton = () => {
       setHasPermission(status === 'granted');
     })();
   }, []);
-  //   if (!permission) ...
 
-  //   if (!permission.granted) ...
-
-  // 2. Only activate Camera when the app is focused and this screen is currently opened
+  // only activate Camera when the app is focused and this screen is currently opened
   const isFocused = useIsFocused();
-  // const isForeground = useIsForeground();
+
+  useEffect(() => {
+    if (!isFocused) {
+      goBack();
+    }
+  }, [isFocused]);
+
+  if (!permission || !permission.granted || !hasPermission) {
+    return null;
+  }
 
   const onPress = () => {
     console.log('open camera');
-    setIsCameraOpen(true);
-    setScanned(true);
 
     navigate('QrCamera');
   };
-  const screenOptions = { headerShown: false, ...defaultScreenOptions };
 
   return (
     <Button
@@ -58,7 +57,7 @@ const ScanQrCodeButton = () => {
           size={25}
         />
       }
-      title="Scan QR Code"
+      title={t('Scan QR Code')}
       onPress={onPress}
     />
   );

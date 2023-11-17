@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
-import { Button, Image, Input, Text } from 'react-native-elements';
+import { StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -25,7 +25,7 @@ export type HomeStackProps = CompositeScreenProps<
 // export type HomeStackPropsNavigationProp = NavigationProp<HomeStackProps>;
 export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
-const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
+const HomeScreen: FC<HomeStackProps> = () => {
   const { t } = useTranslation();
 
   return (
@@ -33,7 +33,7 @@ const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
       <GraaspLogo color={PRIMARY_COLOR} height={200} width={200} />
       <ScanQrCodeButton />
 
-      <Text>or enter short URL below</Text>
+      <Text>{t('or enter short URL below')}</Text>
       <ShortUrlInput />
     </SafeAreaView>
   );

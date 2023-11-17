@@ -63,6 +63,8 @@
     "Delete permanently": "Delete permanently",
     "Confirm deletion": "Confirm deletion",
     "Your account will be deleted permanently": "Your account will be deleted permanently",
-    "Sign In": "Sign In"
+    "Sign In": "Sign In",
+    "Scan QR Code": "Scan QR Code",
+    "or enter short URL below": "or enter short URL below"
   }
 }

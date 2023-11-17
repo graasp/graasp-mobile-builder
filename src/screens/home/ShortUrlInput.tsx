@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 import { PRIMARY_COLOR } from '../../config/constants/constants';
@@ -25,12 +24,8 @@ function ShortUrlInput() {
       >
         <Input
           onChangeText={(value) => setUrl(value)}
-          // label={t('url')}
-          //   inputStyle={{ borderColor: PRIMARY_COLOR }}
           style={{}}
           placeholder={t('url')!}
-          // onChangeText={(value) => setItemName(value)}
-          // value={itemName}
           underlineColorAndroid={'black'}
           labelStyle={{
             color: 'black',

@@ -1,6 +1,5 @@
 import { StyleSheet, View } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
@@ -12,8 +11,6 @@ type StackItemProps = StackScreenProps<MainStackNavigatorParamList>;
 export type CameraViewNavigationProp = StackItemProps['navigation'];
 
 export const QrCameraScreen = () => {
-  const { navigate } = useNavigation();
-
   const onBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
     if (type === 'qr') {
       // todo: host manager
