@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
 import { MainStackNavigationProp } from '../../navigation/MainStackNavigator';
 
-const ScanQrCodeButton = () => {
+const ScanQrCodeButton = (): JSX.Element | null => {
   const { t } = useTranslation();
 
   const [permission] = Camera.useCameraPermissions();

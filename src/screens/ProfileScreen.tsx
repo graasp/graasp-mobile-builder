@@ -141,7 +141,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     if (permissionResult.granted === false) {
       Alert.alert(
         t('You need to allow camera permission to Graasp'),
-        t('Go to Settings > Graasp > Activate camera option')!,
+        t('Go to Settings > Graasp > Activate camera option'),
         [{ text: 'OK' }],
       );
       return;
@@ -179,8 +179,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       }
       Toast.show({
         type: 'success',
-        text1: t('Success')!,
-        text2: t('Avatar updated correctly')!,
+        text1: t('Success'),
+        text2: t('Avatar updated correctly'),
       });
       if (avatarUrl) {
         downloadAvatar(avatarUrl);
@@ -191,10 +191,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       setIsUpdating(false);
       Toast.show({
         type: 'error',
-        text1: t('Error')!,
-        text2: t('There was an error updating the avatar')!,
+        text1: t('Error'),
+        text2: t('There was an error updating the avatar'),
       });
-      Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
+      Alert.alert(t('Upload error'), t('Please try again'), [{ text: 'OK' }]);
     }
   };
 
@@ -285,7 +285,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         </Text>
 
         <Button
-          title={t('Change avatar')!}
+          title={t('Change avatar')}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
@@ -299,7 +299,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title={t('Change language')!}
+          title={t('Change language')}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
@@ -313,7 +313,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title={t('Log Out')!}
+          title={t('Log Out')}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
@@ -331,7 +331,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title={t('Delete my account')!}
+          title={t('Delete my account')}
           buttonStyle={{ backgroundColor: '#cc3333', marginTop: 20 }}
           icon={
             <MaterialIcons

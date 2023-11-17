@@ -51,14 +51,14 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
       ))}
       <View style={styles.acceptChangeLanguageButton}>
         <Button
-          title={t('Save')!}
+          title={t('Save')}
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={acceptChangeLanguage}
         />
       </View>
       <Button
-        title={t('Cancel')!}
+        title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelChangeLanguage}

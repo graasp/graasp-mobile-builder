@@ -45,7 +45,7 @@ const EditItem: FC<EditItemProps> = ({
     <>
       <Input
         label={t('Item name')}
-        placeholder={t('Item name')!}
+        placeholder={t('Item name')}
         onChangeText={(value) => setItemName(value)}
         value={itemName}
         underlineColorAndroid={'black'}
@@ -59,7 +59,7 @@ const EditItem: FC<EditItemProps> = ({
       />
       <View style={styles.acceptSaveItem}>
         <Button
-          title={t('Save')!}
+          title={t('Save')}
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}

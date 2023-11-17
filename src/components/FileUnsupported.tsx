@@ -32,7 +32,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
 
   return (
     <Button
-      title={t('Save file')!}
+      title={t('Save file')}
       raised={true}
       buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
       onPress={() => handleShareFile()}

@@ -75,7 +75,7 @@ export const QueryClientProvider = ({ children }: any) => {
               if (!refreshToken) {
                 Toast.show({
                   type: 'error',
-                  text1: t('You must sign in again')!,
+                  text1: t('You must sign in again'),
                 });
                 signOut();
                 return Promise.reject(error);
@@ -93,7 +93,7 @@ export const QueryClientProvider = ({ children }: any) => {
             } catch {
               Toast.show({
                 type: 'error',
-                text1: t('You must sign in again')!,
+                text1: t('You must sign in again'),
               });
               signOut();
               return Promise.reject(error);

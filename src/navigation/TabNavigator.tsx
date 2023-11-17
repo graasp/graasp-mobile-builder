@@ -39,7 +39,7 @@ const TabNavigator = () => {
         name="HomeTab"
         component={HomeStackNavigator}
         options={({ route }) => ({
-          tabBarLabel: t('Home')!,
+          tabBarLabel: t('Home'),
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
@@ -52,7 +52,7 @@ const TabNavigator = () => {
             name="MyItemsTab"
             component={MyItemsStackNavigator}
             options={{
-              tabBarLabel: t('My Items')!,
+              tabBarLabel: t('My Items'),
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="folder" size={size} color={color} />
               ),
@@ -63,7 +63,7 @@ const TabNavigator = () => {
             name="SharedTab"
             component={SharedStackNavigator}
             options={{
-              tabBarLabel: t('Shared Items')!,
+              tabBarLabel: t('Shared Items'),
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="folder-shared" size={size} color={color} />
               ),
@@ -74,7 +74,7 @@ const TabNavigator = () => {
             name="SignInTab"
             component={ProfileStackNavigator}
             options={{
-              tabBarLabel: t('Profile')!,
+              tabBarLabel: t('Profile'),
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons
                   name="account-circle"
@@ -103,7 +103,7 @@ const TabNavigator = () => {
             },
           })}
           options={{
-            tabBarLabel: t('Sign In')!,
+            tabBarLabel: t('Sign In'),
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="login" size={size} color={color} />
             ),

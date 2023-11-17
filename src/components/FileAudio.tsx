@@ -51,7 +51,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
   return (
     <View style={styles.container}>
       <Button
-        title={t('Play audio')!}
+        title={t('Play audio')}
         raised={true}
         buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
         onPress={playSound}

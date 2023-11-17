@@ -53,7 +53,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     <>
       <Input
         label={t('Folder name')}
-        placeholder={t('Folder name')!}
+        placeholder={t('Folder name')}
         onChangeText={(value) => setItemName(value)}
         value={itemName}
         underlineColorAndroid={'black'}
@@ -67,7 +67,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
       />
       <View style={styles.acceptSaveItem}>
         <Button
-          title={t('Create')!}
+          title={t('Create')}
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}

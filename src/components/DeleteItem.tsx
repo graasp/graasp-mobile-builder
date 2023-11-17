@@ -29,7 +29,6 @@ const DeleteItem: FC<DeleteItemProps> = ({
   item,
   setDeleteItemModalVisible,
   bottomSheetModalRef,
-  refresh,
 }) => {
   const { t } = useTranslation();
   const { mutations } = useQueryClient();
@@ -53,14 +52,14 @@ const DeleteItem: FC<DeleteItemProps> = ({
       <Text style={styles.value}>{`${t('Delete')} ${item.name}?`}</Text>
       <View style={styles.deleteItem}>
         <Button
-          title={t('Delete item')!}
+          title={t('Delete item')}
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={deleteItem}
         />
       </View>
       <Button
-        title={t('Cancel')!}
+        title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelDeleteItem}

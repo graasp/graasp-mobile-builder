@@ -19,22 +19,22 @@ export const saveMedia = async (uri: string, t: any) => {
 
       Toast.show({
         type: 'success',
-        text1: t('Success')!,
-        text2: t('Saved correctly in your media gallery')!,
+        text1: t('Success'),
+        text2: t('Saved correctly in your media gallery'),
       });
       console.log('Media successfully saved');
     } else {
       Alert.alert(
         t('You need to allow photos permission to Graasp'),
-        t('Go to Settings > Graasp > Photos > Select "All the photos"')!,
+        t('Go to Settings > Graasp > Photos > Select "All the photos"'),
         [{ text: 'OK' }],
       );
     }
   } catch {
     Toast.show({
       type: 'error',
-      text1: t('Error')!,
-      text2: t('There was an error saving the file')!,
+      text1: t('Error'),
+      text2: t('There was an error saving the file'),
     });
     throw new Error();
   }
