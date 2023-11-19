@@ -12,14 +12,26 @@ Run `yarn start --dev-client` to start a development client into a simulator. Se
 
 ### Local environment variables
 
+#### Development environment
 Create a file called `.env.development` with the following content:
 
 ```
-GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
-GOOGLE_SERVICES_JSON=./google-services.json
+EXPO_PUBLIC_GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+EXPO_PUBLIC_GOOGLE_SERVICES_JSON=./google-services.json
 ```
 
 Then include the `GoogleService-Info.plist` and `google-services.json` files in the root of your project.
+
+#### Test environment
+Create a file called `.env.test` with the following content:
+
+```
+EXPO_PUBLIC_GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+EXPO_PUBLIC_GOOGLE_SERVICES_JSON=./google-services.json
+EXPO_PUBLIC_TEST_REFRESH_TOKEN=
+EXPO_PUBLIC_DETOX_MOCKED=mocked
+EXPO_PUBLIC_AUTH_HOST=https://auth.stage.graasp.org
+EXPO_PUBLIC_API_HOST=https://api.stage.graasp.org
 
 ## Test the app in a simulator
 
@@ -63,7 +75,7 @@ Detox framework needs to access native code to perform the tests, so it is neces
 - Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
 
   - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.debug` to build the iOS debug version and `detox build --configuration android.debug` to build the Android debug one. You must add the local environment variables before the build.
-  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.debug` to run the iOS debug tests and `detox test --configuration android.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `yarn start --dev-client` before running the commands.
+  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.debug` to run the iOS debug tests and `detox test --configuration android.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `NODE_ENV=test yarn start --dev-client` before running the commands.
   - When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
 
     Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `pixel_4` (API 33) simulators.
