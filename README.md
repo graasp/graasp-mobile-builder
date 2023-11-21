@@ -32,6 +32,7 @@ EXPO_PUBLIC_TEST_REFRESH_TOKEN=
 EXPO_PUBLIC_DETOX_MOCKED=mocked
 EXPO_PUBLIC_AUTH_HOST=https://auth.stage.graasp.org
 EXPO_PUBLIC_API_HOST=https://api.stage.graasp.org
+```
 
 ## Test the app in a simulator
 
