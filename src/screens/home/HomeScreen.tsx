@@ -22,7 +22,6 @@ export type HomeStackProps = CompositeScreenProps<
   >
 >;
 
-// export type HomeStackPropsNavigationProp = NavigationProp<HomeStackProps>;
 export type HomeStackPropsRouteProp = HomeStackProps['route'];
 
 const HomeScreen: FC<HomeStackProps> = () => {
