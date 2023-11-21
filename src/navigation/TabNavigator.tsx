@@ -21,6 +21,7 @@ export type TabParamList = {
   MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
   SharedTab: NavigatorScreenParams<SharedStackParamList>;
   SignInTab: any;
+  ProfileTab: any;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -71,7 +72,7 @@ const TabNavigator = () => {
             }}
           />
           <Tab.Screen
-            name="SignInTab"
+            name="ProfileTab"
             component={ProfileStackNavigator}
             options={{
               tabBarLabel: t('Profile'),

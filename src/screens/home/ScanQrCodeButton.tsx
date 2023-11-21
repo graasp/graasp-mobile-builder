@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 
-import { useIsFocused } from '@react-navigation/core';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../../config/constants/constants';
 import { MainStackNavigationProp } from '../../navigation/MainStackNavigator';
@@ -18,48 +17,50 @@ const ScanQrCodeButton = (): JSX.Element | null => {
 
   const [permission] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(false);
-  const { navigate, goBack } = useNavigation<MainStackNavigationProp>();
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
+  const { navigate } = useNavigation<MainStackNavigationProp>();
 
   // only activate Camera when the app is focused and this screen is currently opened
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (!isFocused) {
-      goBack();
-    }
+    (async () => {
+      if (isFocused) {
+        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        setHasPermission(status === 'granted');
+      }
+    })();
   }, [isFocused]);
 
-  if (!permission || !permission.granted || !hasPermission) {
-    return null;
-  }
+  const disabled = !permission || !permission.granted || !hasPermission;
 
   const onPress = () => {
-    console.log('open camera');
-
+    console.debug('open camera');
     navigate('QrCamera');
   };
 
   return (
-    <Button
-      buttonStyle={styles.button}
-      icon={
-        <MaterialIcons
-          style={{ marginRight: 7 }}
-          name={'qr-code'}
-          color="#ffffff"
-          size={25}
-        />
-      }
-      title={t('Scan QR Code')}
-      onPress={onPress}
-    />
+    <>
+      <Button
+        disabled={disabled}
+        buttonStyle={styles.button}
+        icon={
+          <MaterialIcons
+            style={{ marginRight: 7 }}
+            name={'qr-code'}
+            color="#ffffff"
+            size={25}
+          />
+        }
+        title={t('Scan QR Code')}
+        onPress={onPress}
+      />
+      {disabled && (
+        <Text>
+          You need to grant permission to the camera to use the QR scanner
+          feature
+        </Text>
+      )}
+    </>
   );
 };
 

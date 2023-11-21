@@ -6,7 +6,7 @@ import CommonStackNavigator from './CommonStackNavigator';
 import MainStackNavigator from './MainStackNavigator';
 
 export type RootStackParamList = {
-  SignIn: { signUp: boolean };
+  SignIn?: { signUp?: boolean };
   Main: undefined;
   CommonStack: undefined;
 };

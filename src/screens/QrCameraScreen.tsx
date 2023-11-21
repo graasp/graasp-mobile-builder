@@ -1,16 +1,40 @@
+import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { BarCodeScanner } from 'expo-barcode-scanner';
+
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { GraaspBarCodeScanner } from '../mocks/camera';
-import { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
+import {
+  MainStackNavigationProp,
+  MainStackNavigatorParamList,
+} from '../navigation/MainStackNavigator';
 
 type StackItemProps = StackScreenProps<MainStackNavigatorParamList>;
 
 export type CameraViewNavigationProp = StackItemProps['navigation'];
 
 export const QrCameraScreen = () => {
+  const { goBack } = useNavigation<MainStackNavigationProp>();
+
+  // only activate Camera when the app is focused and this screen is currently opened
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    (async () => {
+      // double check on the permission, go back if does not have permission
+      if (isFocused) {
+        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        if (status !== 'granted') {
+          goBack();
+        }
+      }
+    })();
+  }, [isFocused]);
+
   const onBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
     if (type === 'qr') {
       // todo: host manager
