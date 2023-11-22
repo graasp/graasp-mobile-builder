@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { langs } from '../config/i18n';
 import { CurrentMemberContext } from '../context/CurrentMemberContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -51,14 +51,14 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
       ))}
       <View style={styles.acceptChangeLanguageButton}>
         <Button
-          title={t('Save')!}
+          title={t('Save')}
           raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={acceptChangeLanguage}
         />
       </View>
       <Button
-        title={t('Cancel')!}
+        title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelChangeLanguage}

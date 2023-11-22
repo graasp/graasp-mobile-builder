@@ -41,6 +41,17 @@ Once the app is installed in a simulator, you need to launch a development serve
 
 Notice that major changes in the app need to build a new entire binary file. For example, this includes changes made to the `app.config.js` file.
 
+### Extra configuration for Android local build on Mac
+
+- Install Android Studio
+- Run `brew install openjdk@11`
+- Run `export ANDROID_HOME=/Users/<username>/Library/Android/sdk/`
+- Add the following line in your `.env.local` file.
+
+```
+    ANDROID_SDK_ROOT=/Users/<username>/Library/Android/sdk
+```
+
 ## Export and publish the app
 
 Firstly, you have to decide the correct version of the app to publish. In the `app.config.js` file:

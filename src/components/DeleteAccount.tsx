@@ -44,14 +44,14 @@ const DeleteAccount: FC<DeleteAccountProps> = ({
       )}`}</Text>
       <View style={styles.deleteAccount}>
         <Button
-          title={t('Delete permanently')!}
+          title={t('Delete permanently')}
           raised={true}
           buttonStyle={{ backgroundColor: '#cc3333' }}
           onPress={deleteItem}
         />
       </View>
       <Button
-        title={t('Cancel')!}
+        title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={() => setDeleteAccountVisible({ toggle: false })}

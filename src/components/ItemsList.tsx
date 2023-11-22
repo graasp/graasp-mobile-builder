@@ -9,7 +9,8 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
-import { HomeStackPropsNavigationProp } from '../screens/HomeScreen';
+import { PRIMARY_COLOR } from '../config/constants/constants';
+import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
 import AddItem from './AddItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
@@ -32,7 +33,7 @@ const ItemsList: FC<ItemsListProps> = ({
   isLoading,
   displayAddItem = true,
 }) => {
-  const navigation = useNavigation<HomeStackPropsNavigationProp>();
+  const navigation = useNavigation<MyItemsStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 20,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 30,
     elevation: 8,
   },

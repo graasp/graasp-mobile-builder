@@ -34,7 +34,6 @@ export const MIME_TYPES_EXTENSIONS = {
     ...MIME_TYPES.PDF_EXTENSIONS,
   ],
 };
-export const DRAWER_WIDTH = 300;
 export const DEFAULT_LOCALE = 'en-US';
 
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
@@ -144,3 +143,6 @@ export const buildSignUpPath = (
   }
   return url.toString();
 };
+
+// todo: use graasp ui?
+export const PRIMARY_COLOR = '#5050d2';

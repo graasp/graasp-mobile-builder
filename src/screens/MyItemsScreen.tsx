@@ -8,19 +8,19 @@ import { StackScreenProps } from '@react-navigation/stack';
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
 import { useQueryClient } from '../context/QueryClientContext';
+import { MyItemsStackParamList } from '../navigation/MyItemsStackNavigator';
 import { RootStackParamList } from '../navigation/RootNavigator';
-import { StackParamList } from '../navigation/StackNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
-type HomeStackProps = CompositeScreenProps<
-  StackScreenProps<StackParamList, 'HomeStack', 'StackNavigator'>,
+type MyItemsStackProps = CompositeScreenProps<
+  StackScreenProps<MyItemsStackParamList, 'MyItemsStack', 'StackNavigator'>,
   StackScreenProps<RootStackParamList>
 >;
 
-export type HomeStackPropsNavigationProp = HomeStackProps['navigation'];
-export type HomeStackPropsRouteProp = HomeStackProps['route'];
+export type MyItemsStackPropsNavigationProp = MyItemsStackProps['navigation'];
+export type MyItemsStackPropsRouteProp = MyItemsStackProps['route'];
 
-const HomeScreen: FC<HomeStackProps> = ({ navigation }) => {
+const MyItemsScreen: FC<MyItemsStackProps> = ({ navigation }) => {
   const { hooks } = useQueryClient();
   const { data: ownItems, isLoading, isError, refetch } = hooks.useOwnItems();
   useFocusQuery(refetch);
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default MyItemsScreen;

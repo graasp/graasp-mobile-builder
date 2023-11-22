@@ -20,7 +20,20 @@ module.exports = {
       {
         ios: {
           useFrameworks: 'static',
+          deploymentTarget: '14.0',
         },
+      },
+    ],
+    [
+      'expo-camera',
+      {
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+      },
+    ],
+    [
+      'expo-barcode-scanner',
+      {
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
       },
     ],
   ],

@@ -11,6 +11,8 @@ import { EmbeddedLinkItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
+
 const LinkItem = ({ item }: { item: EmbeddedLinkItemType }) => {
   const ref = useRef<WebView | null>(null);
   const dimensions = useWindowDimensions();
@@ -22,7 +24,7 @@ const LinkItem = ({ item }: { item: EmbeddedLinkItemType }) => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<Ionicons name={'open-outline'} color="#ffffff" size={25} />}
           onPress={() => Linking.openURL(uri)}
         ></Button>

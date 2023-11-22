@@ -5,7 +5,7 @@ import { Button, Input } from 'react-native-elements';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
@@ -45,7 +45,7 @@ const EditItem: FC<EditItemProps> = ({
     <>
       <Input
         label={t('Item name')}
-        placeholder={t('Item name')!}
+        placeholder={t('Item name')}
         onChangeText={(value) => setItemName(value)}
         value={itemName}
         underlineColorAndroid={'black'}
@@ -59,9 +59,9 @@ const EditItem: FC<EditItemProps> = ({
       />
       <View style={styles.acceptSaveItem}>
         <Button
-          title={t('Save')!}
+          title={t('Save')}
           raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}
         />
       </View>

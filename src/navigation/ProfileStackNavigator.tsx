@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import DrawerHeader from '../components/common/DrawerHeader';
+import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import ProfileScreen from '../screens/ProfileScreen';
 
@@ -20,9 +20,9 @@ const ProfileStackNavigator = () => {
       <ProfileStack.Screen
         name="ProfileStackProfile"
         component={ProfileScreen}
-        options={({ navigation }) => ({
+        options={() => ({
           title: '',
-          headerLeft: () => <DrawerHeader title="Profile" />,
+          headerLeft: () => <Header title="Profile" />,
           headerLeftContainerStyle: { paddingLeft: 10 },
         })}
       />

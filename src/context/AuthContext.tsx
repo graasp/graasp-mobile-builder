@@ -19,8 +19,8 @@ import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {
-  signIn: (data: any) => object;
-  signOut: () => object;
+  signIn: (data: any) => Promise<void>;
+  signOut: () => Promise<void>;
   restoreUserRefreshToken: (
     newAuthToken: string,
     newRefreshToken: string,
@@ -131,6 +131,7 @@ const AuthProvider = (props: any) => {
       },
       signOut: async () => {
         // TODO: add alert indicating automatic log out because refresh token has expired
+        await axiosAuthInstance.get(`${API_HOST}/logout`);
         dispatch({ type: AuthActionKind.SIGN_OUT, token: null });
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);

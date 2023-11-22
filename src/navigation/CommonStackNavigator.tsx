@@ -4,8 +4,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
+import { PRIMARY_COLOR } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';
@@ -17,12 +21,14 @@ export type CommonStackParamList = {
   CommonStackDetail: { itemId: UUID };
 };
 
+export type CommonStackNavigationProp =
+  StackNavigationProp<CommonStackParamList>;
 const CommonStack = createStackNavigator<CommonStackParamList>();
 
 const CommonStackNavigator = () => {
   return (
     <CommonStack.Navigator
-      id="CommonStackNavigator"
+      id="CommonStack"
       initialRouteName="CommonStackFolder"
       screenOptions={defaultScreenOptions}
     >
@@ -53,7 +59,7 @@ const CommonStackNavigator = () => {
           headerRight: () => (
             <Button
               disabled
-              disabledStyle={{ backgroundColor: '#5050d2' }}
+              disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
               icon={
                 <MaterialIcons
                   name={'ios-share'}

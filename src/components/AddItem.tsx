@@ -19,6 +19,7 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
   ANALYTICS_EVENTS,
+  PRIMARY_COLOR,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
@@ -99,17 +100,17 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
       setIsUploading(false);
       Toast.show({
         type: 'success',
-        text1: t('Success')!,
-        text2: t('File uploaded correctly')!,
+        text1: t('Success'),
+        text2: t('File uploaded correctly'),
       });
     } catch {
       setIsUploading(false);
       Toast.show({
         type: 'error',
-        text1: t('Error')!,
-        text2: t('There was an error uploading the file')!,
+        text1: t('Error'),
+        text2: t('There was an error uploading the file'),
       });
-      Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
+      Alert.alert(t('Upload error'), t('Please try again'), [{ text: 'OK' }]);
     }
   };
 
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 20,
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 30,
     elevation: 8,
   },

@@ -7,7 +7,7 @@ import { ItemType, UUID } from '@graasp/sdk';
 
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
@@ -53,7 +53,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
     <>
       <Input
         label={t('Folder name')}
-        placeholder={t('Folder name')!}
+        placeholder={t('Folder name')}
         onChangeText={(value) => setItemName(value)}
         value={itemName}
         underlineColorAndroid={'black'}
@@ -67,9 +67,9 @@ const CreateFolder: FC<CreateFolderProps> = ({
       />
       <View style={styles.acceptSaveItem}>
         <Button
-          title={t('Create')!}
+          title={t('Create')}
           raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}
         />
       </View>

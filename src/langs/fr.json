@@ -62,6 +62,12 @@
     "Delete my account": "Supprimer mon compte",
     "Delete permanently": "Supprimer définitivement",
     "Confirm deletion": "Confirmer la suppression",
-    "Your account will be deleted permanently": "Votre compte va être supprimé définitivement"
+    "Your account will be deleted permanently": "Votre compte va être supprimé définitivement",
+    "Sign In": "Se Connecter",
+    "Scan QR Code": "Scanner un code QR",
+    "or enter short URL below": "ou entrer un lien ci-dessous",
+    "My Items": "Mes Éléments",
+    "link": "lien",
+    "You need to grant permission to the camera to use the QR scanner feature": "L'accès à la caméra doit être autorisé pour utiliser la fonction du scan QR"
   }
 }

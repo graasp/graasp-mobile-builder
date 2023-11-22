@@ -12,7 +12,7 @@ import { UUID } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { ANALYTICS_EVENTS } from '../config/constants/constants';
+import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
@@ -63,8 +63,8 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
             <View style={styles.headerButtonsDownloadingState}>
               <Button
                 disabled
-                disabledStyle={{ backgroundColor: '#5050d2' }}
-                buttonStyle={{ backgroundColor: '#5050d2' }}
+                disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
+                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
                 icon={
                   <MaterialIcons
                     name={'cloud-download'}
@@ -77,14 +77,14 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
           ) : (
             <View style={styles.headerButtons}>
               <Button
-                buttonStyle={{ backgroundColor: '#5050d2' }}
+                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
                 icon={
                   <MaterialIcons name={'save-alt'} color="#ffffff" size={25} />
                 }
                 onPress={handleSaveFileFromS3Url}
               ></Button>
               <Button
-                buttonStyle={{ backgroundColor: '#5050d2' }}
+                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
                 icon={
                   <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
                 }

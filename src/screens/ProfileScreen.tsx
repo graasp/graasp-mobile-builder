@@ -17,8 +17,7 @@ import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { CompositeScreenProps } from '@react-navigation/native';
+import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -28,22 +27,27 @@ import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
   DEFAULT_LOCALE,
+  PRIMARY_COLOR,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
+import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import { DrawerParamList } from '../navigation/DrawerNavigator';
-import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import type { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
+import type { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import type {
+  RootNavigationProp,
+  RootStackParamList,
+} from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<
-    ProfileStackParamList,
-    'ProfileStackProfile',
-    'ProfileStackNavigator'
-  >,
-  DrawerScreenProps<DrawerParamList>
+  StackScreenProps<ProfileStackParamList>,
+  CompositeScreenProps<
+    StackScreenProps<MainStackNavigatorParamList>,
+    StackScreenProps<RootStackParamList>
+  >
 >;
 
 const ProfileScreen: FC<ProfileStackProfileProps> = () => {
@@ -51,7 +55,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { hooks } = useQueryClient();
+  const { hooks, queryClient } = useQueryClient();
   const [changeLanguageModalVisible, setChangeLanguageModalVisible] = useState<{
     toggle: boolean;
   }>({
@@ -68,6 +72,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isError,
     refetch,
   } = hooks.useCurrentMember();
+  const authContext = useAuth();
+  const { navigate } = useNavigation<RootNavigationProp>();
   const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
@@ -135,7 +141,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     if (permissionResult.granted === false) {
       Alert.alert(
         t('You need to allow camera permission to Graasp'),
-        t('Go to Settings > Graasp > Activate camera option')!,
+        t('Go to Settings > Graasp > Activate camera option'),
         [{ text: 'OK' }],
       );
       return;
@@ -173,8 +179,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       }
       Toast.show({
         type: 'success',
-        text1: t('Success')!,
-        text2: t('Avatar updated correctly')!,
+        text1: t('Success'),
+        text2: t('Avatar updated correctly'),
       });
       if (avatarUrl) {
         downloadAvatar(avatarUrl);
@@ -185,10 +191,10 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
       setIsUpdating(false);
       Toast.show({
         type: 'error',
-        text1: t('Error')!,
-        text2: t('There was an error updating the avatar')!,
+        text1: t('Error'),
+        text2: t('There was an error updating the avatar'),
       });
-      Alert.alert(t('Upload error'), t('Please try again')!, [{ text: 'OK' }]);
+      Alert.alert(t('Upload error'), t('Please try again'), [{ text: 'OK' }]);
     }
   };
 
@@ -279,8 +285,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         </Text>
 
         <Button
-          title={t('Change avatar')!}
-          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          title={t('Change avatar')}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
@@ -293,8 +299,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title={t('Change language')!}
-          buttonStyle={{ backgroundColor: '#5050d2', marginTop: 20 }}
+          title={t('Change language')}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
@@ -307,7 +313,25 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
         ></Button>
 
         <Button
-          title={t('Delete my account')!}
+          title={t('Log Out')}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR, marginTop: 20 }}
+          icon={
+            <MaterialIcons
+              style={{ marginRight: 7 }}
+              name={'language'}
+              color="#ffffff"
+              size={25}
+            />
+          }
+          onPress={async () => {
+            await authContext.signOut();
+            queryClient.resetQueries();
+            navigate('SignIn');
+          }}
+        ></Button>
+
+        <Button
+          title={t('Delete my account')}
           buttonStyle={{ backgroundColor: '#cc3333', marginTop: 20 }}
           icon={
             <MaterialIcons
@@ -393,10 +417,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   avatarContainer: {
-    backgroundColor: '#5050d2',
+    backgroundColor: PRIMARY_COLOR,
     alignSelf: 'center',
     borderWidth: 2,
-    borderColor: '#5050d2',
+    borderColor: PRIMARY_COLOR,
   },
   modalEditLanguage: {
     justifyContent: 'center',

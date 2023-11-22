@@ -10,6 +10,7 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import {
   ANALYTICS_EVENTS,
+  PRIMARY_COLOR,
   SHARE_HOST,
   SHARE_OPTIONS,
   VIEWS,
@@ -144,7 +145,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         <Button
           title="Player"
           raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           containerStyle={{ marginBottom: 20 }}
           onPress={async () => {
             await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PLAYER);
@@ -154,7 +155,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         <Button
           title="Builder"
           raised={true}
-          buttonStyle={{ backgroundColor: '#5050d2' }}
+          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={async () => {
             await onShare(shareModalVisible.itemId, SHARE_OPTIONS.BUILDER);
           }}

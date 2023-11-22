@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import DrawerHeader from '../components/common/DrawerHeader';
+import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import SharedScreen from '../screens/SharedScreen';
 
@@ -22,7 +22,7 @@ const SharedStackNavigator = () => {
         component={SharedScreen}
         options={{
           title: '',
-          headerLeft: () => <DrawerHeader title="Shared Items" />,
+          headerLeft: () => <Header title="Shared Items" />,
           headerLeftContainerStyle: { paddingLeft: 10 },
         }}
       />
