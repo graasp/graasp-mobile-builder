@@ -25,7 +25,7 @@ function ShortUrlInput() {
         <Input
           onChangeText={(value) => setUrl(value)}
           style={{}}
-          placeholder={t('url')}
+          placeholder={t('link')}
           underlineColorAndroid={'black'}
           labelStyle={{
             color: 'black',

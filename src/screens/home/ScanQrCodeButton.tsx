@@ -55,9 +55,10 @@ const ScanQrCodeButton = (): JSX.Element | null => {
         onPress={onPress}
       />
       {disabled && (
-        <Text>
-          You need to grant permission to the camera to use the QR scanner
-          feature
+        <Text style={styles.permissionInfo}>
+          {t(
+            'You need to grant permission to the camera to use the QR scanner feature',
+          )}
         </Text>
       )}
     </>
@@ -88,6 +89,9 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 9999,
     top: 0,
+  },
+  permissionInfo: {
+    paddingBottom: 10,
   },
 });
 
