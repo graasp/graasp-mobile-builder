@@ -27,13 +27,13 @@ module.exports = {
     [
       'expo-camera',
       {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access your camera.',
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
       },
     ],
     [
       'expo-barcode-scanner',
       {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access camera.',
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
       },
     ],
   ],
