@@ -8,7 +8,7 @@ You would need to install EAS CLI to manage the development and build of the pro
 
 If you want to add a new package to the project, use the command `yarn expo install <package>`. This would determine the best version of the package compatible with the current version of Expo in the project and the rest of the dependencies. Not necessarily it would install the latest version of the package.
 
-Run `yarn start --dev-client` to start a development client into a simulator. See Test the app in a simulator section to know how to install and run the app in a simulator.
+Run `yarn start` to start a development client into a simulator. See Test the app in a simulator section to know how to install and run the app in a simulator.
 
 ### Local environment variables
 
@@ -16,7 +16,7 @@ Run `yarn start --dev-client` to start a development client into a simulator. Se
 Create a file called `.env.development` with the following content:
 
 ```
-EXPO_PUBLIC_GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST=./GoogleService-Info.plist
 EXPO_PUBLIC_GOOGLE_SERVICES_JSON=./google-services.json
 ```
 
@@ -26,10 +26,10 @@ Then include the `GoogleService-Info.plist` and `google-services.json` files in 
 Create a file called `.env.test` with the following content:
 
 ```
-EXPO_PUBLIC_GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST=./GoogleService-Info.plist
 EXPO_PUBLIC_GOOGLE_SERVICES_JSON=./google-services.json
 EXPO_PUBLIC_TEST_REFRESH_TOKEN=
-EXPO_PUBLIC_DETOX_MOCKED=mocked
+EXPO_PUBLIC_DETOX_MOCKED=true
 EXPO_PUBLIC_AUTH_HOST=https://auth.stage.graasp.org
 EXPO_PUBLIC_API_HOST=https://api.stage.graasp.org
 ```
@@ -50,7 +50,7 @@ Secondly, you need to generate a binary file of the app to install in the previo
 
 Then you can drag and drop the file directly to a launched simulator.
 
-Once the app is installed in a simulator, you need to launch a development server from your project to update the changes you made in the app automatically. Run the command `yarn start --dev-client` and select option i to open the iOS simulator and the Android simulator. You must have the simulator opened and launched before starting the development server. The app should be automatically launched in the simulator. If you make a change and save the file inside your project, the simulator app should be reloaded automatically.
+Once the app is installed in a simulator, you need to launch a development server from your project to update the changes you made in the app automatically. Run the command `yarn start` and select option i to open the iOS simulator and the Android simulator. You must have the simulator opened and launched before starting the development server. The app should be automatically launched in the simulator. If you make a change and save the file inside your project, the simulator app should be reloaded automatically.
 
 Notice that major changes in the app need to build a new entire binary file. For example, this includes changes made to the `app.config.js` file.
 
@@ -76,7 +76,7 @@ Detox framework needs to access native code to perform the tests, so it is neces
 - Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
 
   - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.debug` to build the iOS debug version and `detox build --configuration android.debug` to build the Android debug one. You must add the local environment variables before the build.
-  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.debug` to run the iOS debug tests and `detox test --configuration android.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `NODE_ENV=test yarn start --dev-client` before running the commands.
+  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.debug` to run the iOS debug tests and `detox test --configuration android.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `yarn start:test` before running the commands.
   - When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
 
     Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `pixel_4` (API 33) simulators.
