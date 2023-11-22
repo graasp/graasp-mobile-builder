@@ -39,20 +39,11 @@ const BookmarksScreen: FC<BookmarksStackProps> = () => {
   const { data: localBookmarkedItems } = hooks.useItems(localBookmarkedItemIds);
 
   const updateLocalBookmarks = async () => {
-    // await AsyncStorage.setItem(
-    //   buildBookmarkKey('c32eadcb-da5d-4b77-861b-ec035c4fbe13'),
-    //   'true',
-    // );
-
     const ids = await getLocalBookmarkedItemIds();
     if (ids !== localBookmarkedItemIds) {
       setLocalBookmarkedItemIds(ids);
     }
   };
-
-  //   useEffect(() => {
-  //     updateLocalBookmarks();
-  //   }, []);
 
   // get local bookmarked item ids
   useEffect(() => {
@@ -74,7 +65,7 @@ const BookmarksScreen: FC<BookmarksStackProps> = () => {
         <View style={styles.list}>
           <View
             style={{
-              marginTop: insets.top,
+              marginTop: insets.top / 2,
               ...styles.iconAndTitle,
             }}
           >
@@ -105,7 +96,7 @@ const BookmarksScreen: FC<BookmarksStackProps> = () => {
         <View style={styles.list}>
           <View
             style={{
-              marginTop: insets.top,
+              marginTop: insets.top / 2,
               ...styles.iconAndTitle,
             }}
           >

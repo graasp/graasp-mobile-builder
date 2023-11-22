@@ -7,12 +7,16 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import BookmarksStackNavigator from './BookmarksNavigator';
+import BookmarksStackNavigator, {
+  BookmarksStackParamList,
+} from './BookmarksNavigator';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
 import MyItemsStackNavigator, {
   MyItemsStackParamList,
 } from './MyItemsStackNavigator';
-import ProfileStackNavigator from './ProfileStackNavigator';
+import ProfileStackNavigator, {
+  ProfileStackParamList,
+} from './ProfileStackNavigator';
 import SharedStackNavigator, {
   SharedStackParamList,
 } from './SharedStackNavigator';
@@ -21,9 +25,9 @@ export type TabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
   MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
   SharedTab: NavigatorScreenParams<SharedStackParamList>;
-  SignInTab: any;
-  ProfileTab: any;
-  BookmarksTab: any;
+  SignInTab: undefined;
+  ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
+  BookmarksTab: NavigatorScreenParams<BookmarksStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
