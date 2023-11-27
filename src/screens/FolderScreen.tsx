@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -25,10 +25,15 @@ type CommonStackFolderProps = CompositeScreenProps<
 >;
 type FolderScreenRouteProp = CommonStackFolderProps['route'];
 
-const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
+const FolderScreen: FC<any> = ({ navigation }) => {
   const route = useRoute<FolderScreenRouteProp>();
-  const { itemId } = route.params;
+  const { itemId, headerTitle } = route.params;
   const { hooks } = useQueryClient();
+  const {
+    data: item,
+    isLoading: isLoadingItem,
+    isError: isErrorItem,
+  } = hooks.useItem(itemId);
   const {
     data: itemMemberships,
     isLoading: isLoadingItemMemberships,
@@ -47,11 +52,30 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   } = hooks.useCurrentMember();
   useFocusQuery(refetch);
 
-  if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
+  useEffect(() => {
+    if (!headerTitle) {
+      navigation.setOptions({
+        title: item?.name,
+      });
+    }
+  }, [navigation, headerTitle]);
+
+  if (
+    isLoadingItem ||
+    isLoading ||
+    isLoadingItemMemberships ||
+    isLoadingCurrentMember
+  ) {
     return <ActivityIndicator />;
   }
 
-  if (isError || isErrorItemMemberships || isErrorCurrentMember || !children) {
+  if (
+    isErrorItem ||
+    isError ||
+    isErrorItemMemberships ||
+    isErrorCurrentMember ||
+    !children
+  ) {
     return null;
   }
 

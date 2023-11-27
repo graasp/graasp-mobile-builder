@@ -7,14 +7,20 @@ import { UUID } from '@graasp/sdk';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { PRIMARY_COLOR } from '../config/constants/constants';
+import { PLAYER_COLOR, PRIMARY_COLOR } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
 import FolderScreen from '../screens/FolderScreen';
 import ItemScreen from '../screens/ItemScreen';
+import PlayerFolderScreen from '../screens/PlayerFolderScreen';
 
 export type CommonStackParamList = {
-  CommonStackFolder: { headerTitle: string; itemId: UUID };
+  CommonStackFolder: { headerTitle?: string; itemId: UUID };
+  CommonStackPlayerFolder: {
+    headerTitle?: string;
+    itemId: UUID;
+    builderItemId?: UUID;
+  };
   CommonStackItem: { headerTitle: string; itemId: UUID };
   CommonStackDetail: { itemId: UUID };
 };
@@ -33,6 +39,9 @@ const CommonStackNavigator = () => {
       <CommonStack.Screen
         name="CommonStackFolder"
         component={FolderScreen}
+        getId={({ params }) => {
+          return params?.itemId;
+        }}
         options={({
           route: {
             params: { headerTitle },
@@ -41,6 +50,25 @@ const CommonStackNavigator = () => {
           title: headerTitle,
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
+        })}
+      />
+      <CommonStack.Screen
+        name="CommonStackPlayerFolder"
+        component={PlayerFolderScreen}
+        getId={({ params }) => {
+          return params?.itemId;
+        }}
+        options={({
+          route: {
+            params: { headerTitle },
+          },
+        }) => ({
+          title: headerTitle,
+          headerTitleAlign: 'center',
+          headerBackTitleVisible: false,
+          headerStyle: {
+            backgroundColor: PLAYER_COLOR,
+          },
         })}
       />
       <CommonStack.Screen

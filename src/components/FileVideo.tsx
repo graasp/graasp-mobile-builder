@@ -1,6 +1,11 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -26,14 +31,21 @@ interface FileVideoProps {
   filePath: string;
   itemId: UUID;
   mimetype: string;
+  isPlayerView: boolean;
 }
 
-const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
+const FileVideo: FC<FileVideoProps> = ({
+  filePath,
+  itemId,
+  mimetype,
+  isPlayerView,
+}) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const video = useRef(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const height = Dimensions.get('window').height * 0.8;
   const { t } = useTranslation();
 
   const handleSaveFileFromS3Url = async () => {
@@ -61,48 +73,56 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View>
-          {isDownloading ? (
-            <View style={styles.headerButtonsDownloadingState}>
-              <Button
-                disabled
-                disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
-                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                icon={
-                  <MaterialIcons
-                    name={'cloud-download'}
-                    color="#ffffff"
-                    size={25}
-                  />
-                }
-              ></Button>
-            </View>
-          ) : (
-            <View style={styles.headerButtons}>
-              <Button
-                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                icon={
-                  <MaterialIcons name={'save-alt'} color="#ffffff" size={25} />
-                }
-                onPress={handleSaveFileFromS3Url}
-                testID={VIDEO_SAVE}
-              ></Button>
-              <Button
-                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                icon={
-                  <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-                }
-                onPress={handleShareFileFromS3Url}
-                testID={VIDEO_SHARE}
-              ></Button>
-            </View>
-          )}
-        </View>
-      ),
-    });
-  }, [isDownloading]);
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <View>
+            {isDownloading ? (
+              <View style={styles.headerButtonsDownloadingState}>
+                <Button
+                  disabled
+                  disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
+                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+                  icon={
+                    <MaterialIcons
+                      name={'cloud-download'}
+                      color="#ffffff"
+                      size={25}
+                    />
+                  }
+                ></Button>
+              </View>
+            ) : (
+              <View style={styles.headerButtons}>
+                <Button
+                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+                  icon={
+                    <MaterialIcons
+                      name={'save-alt'}
+                      color="#ffffff"
+                      size={25}
+                    />
+                  }
+                  onPress={handleSaveFileFromS3Url}
+                ></Button>
+                <Button
+                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+                  icon={
+                    <MaterialIcons
+                      name={'ios-share'}
+                      color="#ffffff"
+                      size={25}
+                    />
+                  }
+                  onPress={handleShareFileFromS3Url}
+                ></Button>
+              </View>
+            )}
+          </View>
+        ),
+      });
+    }
+  }, [isDownloading, isPlayerView]);
 
   return (
     <View style={styles.container}>
@@ -114,7 +134,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
         style={{
           alignSelf: 'center',
           width: dimensions.width - insets.left,
-          height: '100%',
+          height: isPlayerView ? height : '100%',
         }}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}

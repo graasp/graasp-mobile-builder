@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -7,7 +6,7 @@ const EmptyList = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{t('No items found.')}</Text>
+      <Text style={styles.text}>{t('No items found.')}</Text>
     </View>
   );
 };
@@ -15,9 +14,11 @@ const EmptyList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    textAlign: 'center',
   },
 });
 
