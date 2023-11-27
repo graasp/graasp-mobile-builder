@@ -41,3 +41,16 @@ export const getIdFromUrl = (url: string) => {
     return '553d9d89-523e-4cb3-a16d-0b3498465568';
   }
 };
+
+/* eslint-disable no-unused-expressions */
+export const divideContentAndFolderItems = (children: any[]) => {
+  const folders = [];
+  const content = [];
+  for (const item of children) {
+    item.type === 'folder' ? folders.push(item) : content.push(item);
+  }
+  return {
+    folders,
+    content,
+  };
+};

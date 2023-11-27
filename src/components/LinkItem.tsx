@@ -13,7 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 
-const LinkItem = ({ item }: { item: EmbeddedLinkItemType }) => {
+const LinkItem = ({
+  item,
+  isPlayerView = false,
+}: {
+  item: EmbeddedLinkItemType;
+  isPlayerView?: boolean;
+}) => {
   const ref = useRef<WebView | null>(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -21,16 +27,18 @@ const LinkItem = ({ item }: { item: EmbeddedLinkItemType }) => {
   const uri = item.extra.embeddedLink?.url;
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-          icon={<Ionicons name={'open-outline'} color="#ffffff" size={25} />}
-          onPress={() => Linking.openURL(uri)}
-        ></Button>
-      ),
-    });
-  }, []);
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <Button
+            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+            icon={<Ionicons name={'open-outline'} color="#ffffff" size={25} />}
+            onPress={() => Linking.openURL(uri)}
+          ></Button>
+        ),
+      });
+    }
+  }, [isPlayerView]);
   return (
     <WebView
       ref={(r) => (ref.current = r)}

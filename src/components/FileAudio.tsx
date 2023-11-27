@@ -14,9 +14,14 @@ import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 interface FileAudioProps {
   filePath: string;
   handleShareFile: () => Promise<void>;
+  isPlayerView: boolean;
 }
 
-const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
+const FileAudio: FC<FileAudioProps> = ({
+  filePath,
+  handleShareFile,
+  isPlayerView,
+}) => {
   const [sound, setSound] = useState<any>();
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
@@ -37,16 +42,20 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
   }, [sound]);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-          icon={<MaterialIcons name={'ios-share'} color="#ffffff" size={25} />}
-          onPress={() => handleShareFile()}
-        ></Button>
-      ),
-    });
-  }, []);
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <Button
+            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+            icon={
+              <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
+            }
+            onPress={() => handleShareFile()}
+          ></Button>
+        ),
+      });
+    }
+  }, [isPlayerView]);
 
   return (
     <View style={styles.container}>
@@ -70,7 +79,7 @@ const FileAudio: FC<FileAudioProps> = ({ filePath, handleShareFile }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
   },
 });

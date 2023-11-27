@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, StyleSheet, View } from 'react-native';
+import { DimensionValue, Image, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,15 +21,56 @@ interface FileImageProps {
   filePath: string;
   handleShareFile: () => Promise<void>;
   mimetype: string;
+  isPlayerView: boolean;
 }
 
 const FileImage: FC<FileImageProps> = ({
   filePath,
   handleShareFile,
   mimetype,
+  isPlayerView,
 }) => {
+  const [imageSize, setImageSize] = useState<{
+    width: DimensionValue;
+    height: DimensionValue;
+  }>({ width: '100%', height: '100%' });
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    Image.getSize(
+      filePath,
+      (width, height) => {
+        setImageSize({ width, height });
+      },
+      (error) => console.error(error),
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            <Button
+              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+              icon={
+                <MaterialIcons name={'save-alt'} color="#ffffff" size={25} />
+              }
+              onPress={handleSaveImage}
+            ></Button>
+            <Button
+              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+              icon={
+                <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
+              }
+              onPress={() => handleShareFile()}
+            ></Button>
+          </View>
+        ),
+      });
+    }
+  }, [isPlayerView]);
 
   const handleSaveImage = async () => {
     saveMedia(filePath, t);
@@ -38,49 +79,27 @@ const FileImage: FC<FileImageProps> = ({
     });
   };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View style={styles.headerButtons}>
-          <Button
-            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-            icon={<MaterialIcons name={'save-alt'} color="#ffffff" size={25} />}
-            onPress={handleSaveImage}
-            testID={IMAGE_SAVE}
-          ></Button>
-          <Button
-            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-            icon={
-              <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-            }
-            onPress={() => handleShareFile()}
-            testID={IMAGE_SHARE}
-          ></Button>
-        </View>
-      ),
-    });
-  }, []);
-
   return (
-    <Image
-      resizeMode="contain"
-      style={styles.image}
-      source={{
-        uri: filePath,
-      }}
-      testID={IMAGE_ITEM}
-    />
+    <View style={styles.imageContainer}>
+      <Image
+        resizeMode="contain"
+        style={{ height: imageSize.height, width: imageSize.width }}
+        source={{
+          uri: filePath,
+        }}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: '100%',
-  },
   headerButtons: {
     flexDirection: 'row',
     width: 82,
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 

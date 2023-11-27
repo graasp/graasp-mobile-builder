@@ -21,9 +21,10 @@ import FileVideo from './FileVideo';
 
 interface FileItemProps {
   item: DiscriminatedItem;
+  isPlayerView?: boolean;
 }
 
-const FileItem: FC<FileItemProps> = ({ item }) => {
+const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(true);
   const [filePath, setFilePath] = useState<string | undefined>(undefined);
   const { hooks } = useQueryClient();
@@ -76,6 +77,7 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
           filePath={filePath}
           handleShareFile={handleShareFile(mimetype)}
           mimetype={mimetype}
+          isPlayerView={isPlayerView}
         />
       );
     } else if (MIME_TYPES.AUDIO.includes(mimetype)) {
@@ -83,15 +85,26 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
         <FileAudio
           filePath={filePath}
           handleShareFile={handleShareFile(mimetype)}
+          isPlayerView={isPlayerView}
         />
       );
     } else if (MIME_TYPES.VIDEO.includes(mimetype)) {
       return (
-        <FileVideo filePath={filePath} itemId={item.id} mimetype={mimetype} />
+        <FileVideo
+          filePath={filePath}
+          itemId={item.id}
+          mimetype={mimetype}
+          isPlayerView={isPlayerView}
+        />
       );
     } else if (MIME_TYPES.PDF.includes(mimetype)) {
       return (
-        <FilePdf filePath={filePath} itemId={item.id} mimetype={mimetype} />
+        <FilePdf
+          filePath={filePath}
+          itemId={item.id}
+          mimetype={mimetype}
+          isPlayerView={isPlayerView}
+        />
       );
     }
   }
@@ -100,6 +113,7 @@ const FileItem: FC<FileItemProps> = ({ item }) => {
       <FileUnsupported
         filePath={filePath}
         handleShareFile={handleShareFile(mimetype)}
+        isPlayerView={isPlayerView}
       />
     );
   }

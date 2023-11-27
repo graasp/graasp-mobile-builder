@@ -1,5 +1,10 @@
 import { FC, useEffect, useState } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -22,13 +27,20 @@ interface FilePdfProps {
   filePath: string;
   itemId: UUID;
   mimetype: string;
+  isPlayerView: boolean;
 }
 
-const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
+const FilePdf: FC<FilePdfProps> = ({
+  filePath,
+  itemId,
+  mimetype,
+  isPlayerView,
+}) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const navigation = useNavigation<ItemScreenNavigationProp>();
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const height = Dimensions.get('window').height * 0.8;
 
   const handleShareFileFromS3Url = async () => {
     if (filePath) {
@@ -43,36 +55,38 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
   };
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View style={styles.headerButtons}>
-          {isDownloading ? (
-            <Button
-              disabled
-              disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
-              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <MaterialIcons
-                  name={'cloud-download'}
-                  color="#ffffff"
-                  size={25}
-                />
-              }
-            ></Button>
-          ) : (
-            <Button
-              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-              }
-              onPress={handleShareFileFromS3Url}
-              testID={PDF_SHARE}
-            ></Button>
-          )}
-        </View>
-      ),
-    });
-  }, [isDownloading]);
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            {isDownloading ? (
+              <Button
+                disabled
+                disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
+                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+                icon={
+                  <MaterialIcons
+                    name={'cloud-download'}
+                    color="#ffffff"
+                    size={25}
+                  />
+                }
+              ></Button>
+            ) : (
+              <Button
+                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+                icon={
+                  <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
+                }
+                onPress={handleShareFileFromS3Url}
+              ></Button>
+            )}
+          </View>
+        ),
+      });
+    }
+  }, [isDownloading, isPlayerView]);
+  
   return (
     <WebView
       source={{
@@ -86,7 +100,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
       cacheEnabled={false}
       style={{
         width: dimensions.width - insets.left,
-        height: '100%',
+        height,
         marginLeft: insets.left,
         marginBottom: insets.bottom,
       }}
