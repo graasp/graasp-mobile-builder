@@ -4069,6 +4069,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-async-storage/async-storage@npm:^1.19.6":
+  version: 1.19.6
+  resolution: "@react-native-async-storage/async-storage@npm:1.19.6"
+  dependencies:
+    merge-options: ^3.0.4
+  peerDependencies:
+    react-native: ^0.0.0-0 || >=0.60 <1.0
+  checksum: ecddc192a03854a0cca046379e971958300cad05d1558331d8dadeb56518feff34ab47aca666b5045946ec5c42efd21b774286d121e4034043cdba814dfb2a96
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:11.3.7":
   version: 11.3.7
   resolution: "@react-native-community/cli-clean@npm:11.3.7"
@@ -8715,12 +8726,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-secure-store@npm:~12.3.1":
-  version: 12.3.1
-  resolution: "expo-secure-store@npm:12.3.1"
+"expo-secure-store@npm:^12.5.0":
+  version: 12.7.0
+  resolution: "expo-secure-store@npm:12.7.0"
   peerDependencies:
     expo: "*"
-  checksum: b4e0bb14b39d9276483e6d219a445399dbe556921fa71c10dbd7927ae8f3fb8c964fab35c7ba4a9e3acc4e944130d779edaf1337c2b8d74ed25b5621ebbb0cd4
+  checksum: e243d8670c0e42acdb33a632325dff315d5d155a31318d54dedb7921ec5d2d0f0a53939dad2feb8395d0008c33d88fdf68cbd04883df7384a7f9861d49de7ec1
   languageName: node
   linkType: hard
 
@@ -9624,6 +9635,7 @@ __metadata:
     "@gorhom/bottom-sheet": ^4.5.1
     "@graasp/query-client": 2.0.1
     "@graasp/sdk": 2.0.0
+    "@react-native-async-storage/async-storage": ^1.19.6
     "@react-native-firebase/analytics": ^18.6.1
     "@react-native-firebase/app": ^18.6.1
     "@react-navigation/bottom-tabs": ^6.5.11
@@ -9655,7 +9667,7 @@ __metadata:
     expo-image-picker: ~14.5.0
     expo-linking: ~5.0.2
     expo-media-library: ~15.4.1
-    expo-secure-store: ~12.3.1
+    expo-secure-store: ^12.5.0
     expo-sharing: ~11.5.0
     expo-splash-screen: ~0.20.5
     expo-status-bar: ~1.6.0
@@ -10462,6 +10474,13 @@ __metadata:
   version: 1.1.0
   resolution: "is-plain-obj@npm:1.1.0"
   checksum: 0ee04807797aad50859652a7467481816cbb57e5cc97d813a7dcd8915da8195dc68c436010bf39d195226cde6a2d352f4b815f16f26b7bf486a5754290629931
+  languageName: node
+  linkType: hard
+
+"is-plain-obj@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "is-plain-obj@npm:2.1.0"
+  checksum: cec9100678b0a9fe0248a81743041ed990c2d4c99f893d935545cfbc42876cbe86d207f3b895700c690ad2fa520e568c44afc1605044b535a7820c1d40e38daa
   languageName: node
   linkType: hard
 
@@ -12030,6 +12049,15 @@ __metadata:
   version: 0.2.0
   resolution: "memory-cache@npm:0.2.0"
   checksum: 255c87fec360ce06818ca7aeb5850d798e14950a9fcea879d88e1f8d1f4a6cffb8ed16da54aa677f5ec8e47773fbe15775a1cdf837ac190e17e9fb4b71e87bee
+  languageName: node
+  linkType: hard
+
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: ^2.1.0
+  checksum: d86ddb3dd6e85d558dbf25dc944f3527b6bacb944db3fdda6e84a3f59c4e4b85231095f58b835758b9a57708342dee0f8de0dffa352974a48221487fe9f4584f
   languageName: node
   linkType: hard
 
