@@ -5,6 +5,11 @@ import { Button, Input } from 'react-native-elements';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
+import {
+  CANCEL_EDIT_ITEM,
+  CONFIRM_EDIT_ITEM,
+  EDIT_ITEM_NAME_INPUT,
+} from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -56,6 +61,7 @@ const EditItem: FC<EditItemProps> = ({
         autoCapitalize="none"
         autoCorrect={false}
         placeholderTextColor="#cccccc"
+        testID={EDIT_ITEM_NAME_INPUT}
       />
       <View style={styles.acceptSaveItem}>
         <Button
@@ -63,6 +69,7 @@ const EditItem: FC<EditItemProps> = ({
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}
+          testID={CONFIRM_EDIT_ITEM}
         />
       </View>
       <Button
@@ -70,6 +77,7 @@ const EditItem: FC<EditItemProps> = ({
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={() => setEditItemModalVisible({ toggle: false, itemId: null })}
+        testID={CANCEL_EDIT_ITEM}
       />
     </>
   );

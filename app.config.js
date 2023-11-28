@@ -33,7 +33,12 @@ module.exports = {
     [
       'expo-barcode-scanner',
       {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.', },
+      ],[
+      "@config-plugins/detox",
+      {
+        skipProguard: false,
+        subdomains: '*',
       },
     ],
   ],
@@ -45,7 +50,7 @@ module.exports = {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
     buildNumber: '2',
-    googleServicesFile: process.env.GOOGLESERVICE_INFO_PLIST,
+    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
       NSCameraUsageDescription:
@@ -64,7 +69,7 @@ module.exports = {
       backgroundColor: '#ffffff',
     },
     package: 'org.graasp.mobile',
-    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
+    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_JSON,
     intentFilters: [
       {
         action: 'VIEW',

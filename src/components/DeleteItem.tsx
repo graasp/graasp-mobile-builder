@@ -7,6 +7,10 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
+import {
+  CANCEL_DELETE_ITEM,
+  CONFIRM_DELETE_ITEM,
+} from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -56,6 +60,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={deleteItem}
+          testID={CONFIRM_DELETE_ITEM}
         />
       </View>
       <Button
@@ -63,6 +68,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={cancelDeleteItem}
+        testID={CANCEL_DELETE_ITEM}
       />
     </>
   );

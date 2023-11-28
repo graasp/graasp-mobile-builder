@@ -12,6 +12,11 @@ import { UUID } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import {
+  VIDEO_ITEM,
+  VIDEO_SAVE,
+  VIDEO_SHARE,
+} from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -82,6 +87,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
                   <MaterialIcons name={'save-alt'} color="#ffffff" size={25} />
                 }
                 onPress={handleSaveFileFromS3Url}
+                testID={VIDEO_SAVE}
               ></Button>
               <Button
                 buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
@@ -89,6 +95,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
                   <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
                 }
                 onPress={handleShareFileFromS3Url}
+                testID={VIDEO_SHARE}
               ></Button>
             </View>
           )}
@@ -112,6 +119,7 @@ const FileVideo: FC<FileVideoProps> = ({ filePath, itemId, mimetype }) => {
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
         isLooping
+        testID={VIDEO_ITEM}
       />
     </View>
   );

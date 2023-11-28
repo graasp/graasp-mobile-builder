@@ -18,6 +18,12 @@ import { UUID } from '@graasp/sdk';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
+  ADD_DOCUMENTS,
+  ADD_IMAGES_AND_VIDEOS,
+  ADD_ITEMS,
+  CREATE_FOLDER,
+} from '../../e2e/constants/testIds';
+import {
   ANALYTICS_EVENTS,
   PRIMARY_COLOR,
   STATUS_CODES_OK,
@@ -170,6 +176,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddFolderPress()}
                 style={{ paddingLeft: insets.left }}
+                testID={CREATE_FOLDER}
               >
                 <MaterialIcons name="folder" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -181,6 +188,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddImageOrVideoPress()}
                 style={{ paddingLeft: insets.left }}
+                testID={ADD_IMAGES_AND_VIDEOS}
               >
                 <MaterialIcons name="image" size={24} color="grey" />
                 <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -192,6 +200,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
               <ListItem
                 onPress={() => handleAddDocumentPress()}
                 style={{ paddingLeft: insets.left }}
+                testID={ADD_DOCUMENTS}
               >
                 <MaterialIcons
                   name="insert-drive-file"
@@ -217,6 +226,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         <TouchableOpacity
           onPress={handleOpenBottomSheetAddItemModal}
           style={styles.addItemButton}
+          testID={ADD_ITEMS}
         >
           <MaterialIcons name={'add'} color="#ffffff" size={25} />
         </TouchableOpacity>
