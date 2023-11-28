@@ -71,7 +71,7 @@
     "You need to grant permission to the camera to use the QR scanner feature": "L'accès à la caméra doit être autorisé pour utiliser la fonction du scan QR",
     "Bookmarks": "Signets",
     "Local Bookmarks": "Signets Locaux",
-    "No bookmarks were found": "No bookmarks were found",
+    "No bookmarks were found": "Aucun signet n'a été trouvé",
     "Local Bookmarks are not synced with an account.": "Les signets locaux ne sont pas synchronisés avec un compte."
   }
 }
