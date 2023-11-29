@@ -12,7 +12,7 @@ jobs:
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          echo $DATA | base64 --decode > GoogleService-Info.plist
+          echo $DATA | base64 --decode > ./GoogleService-Info.plist
 
       - name: checkout
         uses: actions/checkout@v4
