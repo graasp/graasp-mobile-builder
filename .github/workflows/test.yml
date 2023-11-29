@@ -20,8 +20,8 @@ jobs:
       - name: set up node
         uses: actions/setup-node@v4
 
-      - name: Yarn Install and Cache
-        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+      # - name: Yarn Install and Cache
+      #   uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
 
       - name: Install macOS dependencies
         env:
@@ -51,30 +51,10 @@ jobs:
         with:
           version: 1.14.3
 
-      - name: Check file existence
-        env:
-          FILE: ./ios
-        run: |
-          if [[ -d $FILE ]]; then
-            echo "$FILE exists!"
-          else
-            echo "$FILE does not exist!"
-          fi
-
-      - name: Check file existence
-        env:
-          FILE: ./ios/GraaspBuilder
-        run: |
-          if [[ -d $FILE ]]; then
-            echo "$FILE exists!"
-          else
-            echo "$FILE does not exist!"
-          fi
-
       - name: Prebuild
         env:
           EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ./GoogleService-Info.plist
-        run: yarn prebuild:test:ios
+        run: npx expo prebuild --platform ios
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
