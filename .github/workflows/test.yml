@@ -28,7 +28,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.6'
+          ruby-version: '2.7'
           bundler-cache: true
 
       - name: Cache CocoaPods
@@ -40,7 +40,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
-      - name: Install  Cocoapods
+      - name: Install Cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: 1.14.3
