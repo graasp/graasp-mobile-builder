@@ -33,9 +33,11 @@ module.exports = {
     [
       'expo-barcode-scanner',
       {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.', },
-      ],[
-      "@config-plugins/detox",
+        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+      },
+    ],
+    [
+      '@config-plugins/detox',
       {
         skipProguard: false,
         subdomains: '*',

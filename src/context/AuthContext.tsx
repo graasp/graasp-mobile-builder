@@ -151,7 +151,6 @@ const AuthProvider = (props: any) => {
       getAuthTokenByRefreshToken: async (refreshToken: string) => {
         const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {
           withCredentials: true,
-          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: refreshToken ? `Bearer ${refreshToken}` : undefined,

@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
-import { CommonStackNavigationProp } from '../navigation/CommonStackNavigator';
+import { RootNavigationProp } from '../navigation/RootNavigator';
 import ItemIcon from './ItemIcon';
 
 interface ItemProps {
@@ -22,22 +22,28 @@ const Item: FC<ItemProps> = ({
   openOptions,
   index,
 }) => {
-  const { push } = useNavigation<CommonStackNavigationProp>();
+  const { navigate } = useNavigation<RootNavigationProp>();
   async function handleItemPress() {
     switch (type) {
       case ItemType.FOLDER:
-        push('CommonStackFolder', {
-          itemId: id,
-          headerTitle: name,
+        navigate('CommonStack', {
+          screen: 'CommonStackFolder',
+          params: {
+            itemId: id,
+            headerTitle: name,
+          },
         });
         break;
       case ItemType.LINK:
       case ItemType.APP:
       case ItemType.DOCUMENT:
       case ItemType.S3_FILE:
-        push('CommonStackItem', {
-          itemId: id,
-          headerTitle: name,
+        navigate('CommonStack', {
+          screen: 'CommonStackItem',
+          params: {
+            itemId: id,
+            headerTitle: name,
+          },
         });
         break;
     }

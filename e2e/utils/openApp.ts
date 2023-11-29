@@ -1,5 +1,5 @@
-import { SLEEP_TIME_OPEN_APP } from "../constants/testIds";
-import { getAppId, sleep } from "./utils";
+import { SLEEP_TIME_OPEN_APP } from '../constants/testIds';
+import { getAppId, sleep } from './utils';
 
 const { resolveConfig } = require('detox/internals');
 
@@ -12,6 +12,8 @@ export const openApp = async () => {
   } else {
     return await device.launchApp({
       newInstance: true,
+      // works only on ios?
+      permissions: { camera: 'YES' },
     });
   }
 };
@@ -26,6 +28,8 @@ async function openAppForDebugBuild(platform: string) {
   if (platform === 'ios') {
     await device.launchApp({
       newInstance: true,
+      // works only on ios?
+      permissions: { camera: 'YES' },
     });
     sleep(SLEEP_TIME_OPEN_APP);
     await device.openURL({
@@ -35,6 +39,8 @@ async function openAppForDebugBuild(platform: string) {
     await device.launchApp({
       newInstance: true,
       url: deepLinkUrl,
+      // works only on ios?
+      permissions: { camera: 'YES' },
     });
   }
 
@@ -42,11 +48,12 @@ async function openAppForDebugBuild(platform: string) {
 }
 
 const getDeepLinkUrl = (url: string) =>
-  `exp+graasp-mobile-builder://expo-development-client/?url=${encodeURIComponent(url)}`;
+  `exp+graasp-mobile-builder://expo-development-client/?url=${encodeURIComponent(
+    url,
+  )}`;
 
 const getDevLauncherPackagerUrl = (platform: string) =>
   `http://localhost:8081?platform=${platform}&dev=true&minify=false&disableOnboarding=1`;
 
 const getLatestUpdateUrl = () =>
   `https://u.expo.dev/${getAppId()}?channel-name=test_debug&disableOnboarding=1`;
-  

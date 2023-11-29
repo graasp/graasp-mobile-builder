@@ -5,7 +5,11 @@ import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
-import { HOME_TAB, SHARED_ITEMS_TAB } from '../../e2e/constants/testIds';
+import {
+  HOME_TAB,
+  MY_ITEMS_TAB,
+  SHARED_ITEMS_TAB,
+} from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import BookmarksStackNavigator, {
@@ -64,7 +68,6 @@ const TabNavigator = () => {
             <Entypo name="bookmarks" size={size} color={color} />
           ),
           tabBarActiveTintColor: PRIMARY_COLOR,
-          tabBarTestID: SHARED_ITEMS_TAB,
         })}
       />
       {currentMember ? (
@@ -78,6 +81,7 @@ const TabNavigator = () => {
                 <MaterialIcons name="folder" size={size} color={color} />
               ),
               tabBarActiveTintColor: PRIMARY_COLOR,
+              tabBarTestID: MY_ITEMS_TAB,
             }}
           />
           <Tab.Screen
@@ -89,6 +93,7 @@ const TabNavigator = () => {
                 <MaterialIcons name="folder-shared" size={size} color={color} />
               ),
               tabBarActiveTintColor: PRIMARY_COLOR,
+              tabBarTestID: SHARED_ITEMS_TAB,
             }}
           />
           <Tab.Screen

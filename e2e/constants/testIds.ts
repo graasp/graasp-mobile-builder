@@ -6,6 +6,7 @@ export const FOLDER_NAME_INPUT = 'folder-name-input';
 export const CONFIRM_CREATE_FOLDER = 'confirm-create-folder';
 export const CANCEL_CREATE_FOLDER = 'cancel-create-folder';
 export const HOME_TAB = 'home-tab';
+export const MY_ITEMS_TAB = 'my-items-tab';
 export const SHARED_ITEMS_TAB = 'shared-items-tab';
 export const ITEM_LIST = 'item-list';
 export const ITEM_LIST_OPTIONS = 'item-list-options';
@@ -36,4 +37,3 @@ export const SIGN_UP_BUTTON = 'sign-up';
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;
 export const SLEEP_TIME_OPEN_APP = 3000;
-

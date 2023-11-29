@@ -7,6 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 
 import { QueryClientConfig, configureQueryClient } from '@graasp/query-client';
 
+import { SECURE_STORE_VALUES } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
 import { useAuth } from './AuthContext';
 
@@ -70,8 +71,9 @@ export const QueryClientProvider = ({ children }: any) => {
             !authContext.state.isSignout
           ) {
             try {
-              const refreshToken =
-                await SecureStore.getItemAsync('refreshToken');
+              const refreshToken = await SecureStore.getItemAsync(
+                SECURE_STORE_VALUES.REFRESH_TOKEN,
+              );
               if (!refreshToken) {
                 Toast.show({
                   type: 'error',
@@ -90,7 +92,8 @@ export const QueryClientProvider = ({ children }: any) => {
               };
               restoreUserRefreshToken(newAuthToken, newRefreshToken);
               return axios(originalRequest);
-            } catch {
+            } catch (e) {
+              console.error(e);
               Toast.show({
                 type: 'error',
                 text1: t('You must sign in again'),

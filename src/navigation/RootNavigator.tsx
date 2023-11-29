@@ -2,13 +2,15 @@ import { NavigationProp } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SignInScreen from '../screens/SignInScreen';
-import CommonStackNavigator from './CommonStackNavigator';
+import CommonStackNavigator, {
+  CommonStackNavigationProp,
+} from './CommonStackNavigator';
 import MainStackNavigator from './MainStackNavigator';
 
 export type RootStackParamList = {
   SignIn?: { signUp?: boolean };
   Main: undefined;
-  CommonStack: undefined;
+  CommonStack: CommonStackNavigationProp;
 };
 
 export type RootNavigationProp = NavigationProp<RootStackParamList>;

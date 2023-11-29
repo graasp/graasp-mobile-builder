@@ -68,16 +68,24 @@ Firstly, you have to decide the correct version of the app to publish. In the `a
 
 Detox framework needs to access native code to perform the tests, so it is necessary to build the iOS and Android bundles locally and use a config plugin to inject the native code from our Expo-managed workflow. Follow these phases to set up the Detox local environment:
 
+##### Prerequites
+
 - Run `npx expo prebuild` to generate an `ios` and `android` folders that contain native projects. On iOS, it is necessary first to have Cocoapods installed on your macOS computer:
   - Check you have the latest version of Ruby. The best way to install the latest version is through Homebrew `brew install cocoapods`. Remember to restart the Terminal or the computer to save the changes.
   - Install Cocoapods by running `sudo gem install` cocoapods and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
-- Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
+- The tests uses a refresh token to access a test account. This account should already own the `e2e/fixtures/stage` structure.
 
-  - `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder. Run `detox build --configuration ios.debug` to build the iOS debug version and `detox build --configuration android.debug` to build the Android debug one. You must add the local environment variables before the build.
-  - `detox test --configuration <detox config>` to run the tests over the previously generated build. Run `detox test --configuration ios.debug` to run the iOS debug tests and `detox test --configuration android.debug` to run the Android debug ones. You should open the corresponding simulator and the development server up with `yarn start --dev-client` before running the commands.
-  - When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
+##### Commands
 
-    Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `pixel_4` (API 33) simulators.
+Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
+
+- Add the local environment variables before the build. You can use `.env.test`. `.env.development` takes precedence over `.env.test`!
+- Run `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder.
+- Open the corresponding simulator and run `yarn start:test` to open the development server up.
+- Run `detox test --configuration <detox config>` to run the tests over the previously generated build.
+- When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
+
+Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `pixel_4` (API 33) simulators.
 
 ### EAS E2E Testing with Detox
 

@@ -1,0 +1,13 @@
+{
+  "items": [
+    {
+      "name": "folder with admin permission",
+      "memberships": "admin"
+    },
+    {
+      "name": "folder with write permission",
+      "memberships": "write"
+    },
+    { "name": "folder with read permission", "memberships": "read" }
+  ]
+}
