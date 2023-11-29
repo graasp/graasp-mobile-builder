@@ -14,36 +14,6 @@ jobs:
         run: |
           echo $DATA | base64 --decode > ./GoogleService-Info.plist
 
-      - name: Check file existence
-        env:
-          FILE: ./GoogleService-Info.plist
-        run: |
-          if [[ -f $FILE ]]; then
-            echo "$FILE exists!"
-          else
-            echo "$FILE does not exist!"
-          fi
-
-      - name: Check file existence
-        env:
-          FILE: ./ios
-        run: |
-          if [[ -d $FILE ]]; then
-            echo "$FILE exists!"
-          else
-            echo "$FILE does not exist!"
-          fi
-
-      - name: Check file existence
-        env:
-          FILE: ./ios/GraaspBuilder
-        run: |
-          if [[ -d $FILE ]]; then
-            echo "$FILE exists!"
-          else
-            echo "$FILE does not exist!"
-          fi
-
       - name: checkout
         uses: actions/checkout@v4
 
@@ -80,6 +50,26 @@ jobs:
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: 1.14.3
+
+      - name: Check file existence
+        env:
+          FILE: ./ios
+        run: |
+          if [[ -d $FILE ]]; then
+            echo "$FILE exists!"
+          else
+            echo "$FILE does not exist!"
+          fi
+
+      - name: Check file existence
+        env:
+          FILE: ./ios/GraaspBuilder
+        run: |
+          if [[ -d $FILE ]]; then
+            echo "$FILE exists!"
+          else
+            echo "$FILE does not exist!"
+          fi
 
       - name: Prebuild
         env:
