@@ -46,7 +46,7 @@ jobs:
           version: 1.14.3
 
       - name: Prebuild
-        run: yarn prebuild:test
+        run: yarn prebuild:test:ios
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
