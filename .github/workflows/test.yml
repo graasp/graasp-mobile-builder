@@ -4,7 +4,7 @@ name: Detox tests
 on: [push]
 
 jobs:
-  build-node:
+  detox:
     runs-on: macos-latest
 
     steps:
@@ -28,6 +28,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: '2.6'
           bundler-cache: true
 
       - name: Cache CocoaPods

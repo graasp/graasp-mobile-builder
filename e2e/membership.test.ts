@@ -10,10 +10,13 @@ import {
   ITEM_LIST_OPTIONS_SHARE,
   SHARED_ITEMS_TAB,
 } from './constants/testIds';
+import FIXTURES from './fixtures/stage/structure.json';
 import { openApp } from './utils/openApp';
 
 describe('Check item options with ADMIN membership', () => {
-  const idx = 5;
+  const { idx } = FIXTURES.items.find(
+    ({ name }) => name === 'folder with admin permission',
+  )!;
 
   beforeAll(async () => {
     await openApp();
@@ -45,7 +48,9 @@ describe('Check item options with ADMIN membership', () => {
 });
 
 describe('Check item options with WRITE membership', () => {
-  const idx = 4;
+  const { idx } = FIXTURES.items.find(
+    ({ name }) => name === 'folder with write permission',
+  )!;
   beforeAll(async () => {
     await openApp();
     await element(by.id(SHARED_ITEMS_TAB)).tap();
@@ -76,7 +81,9 @@ describe('Check item options with WRITE membership', () => {
 });
 
 describe('Check item options with READ membership', () => {
-  const idx = 3;
+  const { idx } = FIXTURES.items.find(
+    ({ name }) => name === 'folder with read permission',
+  )!;
   beforeAll(async () => {
     await openApp();
     await element(by.id(SHARED_ITEMS_TAB)).tap();
