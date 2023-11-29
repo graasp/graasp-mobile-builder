@@ -42,7 +42,10 @@ jobs:
 
       - name: Install CocoaPods
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
-        run: cd ios ; pod install ; cd -
+        run: brew install cocoapods
+      - run: sudo gem install
+      - run: sudo gem install cocoapods -n /usr/local/bin
+      - run: pod --version
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
