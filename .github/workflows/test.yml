@@ -8,6 +8,9 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: create Google Services File
+        run: echo ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }} > GoogleService-Info.plist
+
       - name: checkout
         uses: actions/checkout@v4
 
@@ -67,6 +70,7 @@ jobs:
           EXPO_PUBLIC_API_HOST: https://api.stage.graasp.org
           EXPO_PUBLIC_TEST_REFRESH_TOKEN: ${{ secrets.EXPO_PUBLIC_TEST_REFRESH_TOKEN }}
           RN_SRC_EXT: e2e.tsx
+          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ./GoogleService-Info.plist
         run: yarn build:test:ios
 
       - name: Detox test
