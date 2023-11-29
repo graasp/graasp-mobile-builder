@@ -20,8 +20,8 @@ jobs:
       - name: set up node
         uses: actions/setup-node@v4
 
-      # - name: Yarn Install and Cache
-      #   uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
 
       - name: Install macOS dependencies
         env:
@@ -50,6 +50,9 @@ jobs:
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: 1.14.3
+
+      - run: [ -d "ios" ] && echo "Directory ios exists."
+      - run: [ -d "ios/GraaspBuilder" ] && echo "Directory ios/GraaspBuilder exists."
 
       - name: Prebuild
         env:
