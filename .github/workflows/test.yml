@@ -44,7 +44,9 @@ jobs:
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: 1.14.3
-      - run: pod --version
+
+      - name: Prebuild
+        run: yarn prebuild:test
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
