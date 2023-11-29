@@ -36,9 +36,7 @@ build-*.apk
 .env*
 
 # platform specific
-ios/*
-!ios/Podfile.lock
-!ios/Podfile
+ios
 android
 
 # API keys and secrets
