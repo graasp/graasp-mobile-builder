@@ -9,7 +9,10 @@ jobs:
 
     steps:
       - name: create Google Services File
-        run: echo ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }} | base64 --decode > GoogleService-Info.plist
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+        run: |
+          echo $DATA | base64 --decode > GoogleService-Info.plist
 
       - name: checkout
         uses: actions/checkout@v4
