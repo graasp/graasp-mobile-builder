@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -6,7 +7,10 @@ const EmptyList = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{t('No items found.')}</Text>
+      <View style={styles.emptyIcon}>
+        <MaterialIcons name="folder-open" size={50} />
+      </View>
+      <Text style={styles.text}>{t('This folder is empty.')}</Text>
     </View>
   );
 };
@@ -19,6 +23,9 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+  },
+  emptyIcon: {
+    paddingBottom: 20,
   },
 });
 
