@@ -16,7 +16,6 @@ import {
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
 
 interface ItemIconProps {
-  name: string;
   type: DiscriminatedItem['type'];
   extra: DiscriminatedItem['extra'];
   size?: number;
@@ -24,18 +23,14 @@ interface ItemIconProps {
 }
 
 // TODO: use graasp-ui
-const ItemIcon: FC<ItemIconProps> = ({
-  name,
-  type,
-  extra,
-  size = 20,
-  style,
-}) => {
-  const mimetype = getS3FileExtra(extra as S3FileItemExtra)?.mimetype;
-  const icon = getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)?.icons?.[0];
+const ItemIcon: FC<ItemIconProps> = ({ type, extra, size = 20, style }) => {
+  if (type === ItemType.LINK) {
+    const icon = getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)
+      ?.icons?.[0];
 
-  if (icon) {
-    return <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />;
+    if (icon) {
+      return <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />;
+    }
   }
 
   enum icons {
@@ -57,6 +52,7 @@ const ItemIcon: FC<ItemIconProps> = ({
       break;
     case ItemType.LOCAL_FILE:
     case ItemType.S3_FILE: {
+      const mimetype = getS3FileExtra(extra as S3FileItemExtra)?.mimetype;
       if (MimeTypes.isImage(mimetype)) {
         Icon = icons.IMAGE;
         break;

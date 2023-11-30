@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, CheckBox, Text } from 'react-native-elements';
 
+import { langs } from '@graasp/translations';
+
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
-import { langs } from '../config/i18n';
 import { CurrentMemberContext } from '../context/CurrentMemberContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
@@ -39,6 +40,7 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({
       <Text style={styles.title}>{t('Change language')}</Text>
       {Object.entries(langs).map(([key, value]) => (
         <CheckBox
+          key={key}
           center
           title={value}
           checkedIcon="dot-circle-o"

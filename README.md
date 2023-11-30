@@ -15,7 +15,7 @@ Run `yarn start --dev-client` to start a development client into a simulator. Se
 Create a file called `.env.development` with the following content:
 
 ```
-GOOGLESERVICE_INFO_PLIST=./GoogleService-Info.plist
+GOOGLE_SERVICE_INFO_PLIST=./GoogleService-Info.plist
 GOOGLE_SERVICES_JSON=./google-services.json
 ```
 

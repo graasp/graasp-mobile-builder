@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,8 +9,8 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
-import { PRIMARY_COLOR } from '../config/constants/constants';
 import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
+import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
@@ -89,7 +89,7 @@ const ItemsList: FC<ItemsListProps> = ({
       />
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        style={styles.bottomSheetModal}
+        style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -109,7 +109,6 @@ const ItemsList: FC<ItemsListProps> = ({
                   <ItemIcon
                     type={itemSelected.type}
                     extra={itemSelected.extra}
-                    name={itemSelected.name}
                   />
                   <ListItem.Content style={{ flexDirection: 'row' }}>
                     <ListItem.Title style={{ flex: 2 }}>
@@ -143,50 +142,5 @@ const ItemsList: FC<ItemsListProps> = ({
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 6,
-    margin: 6,
-  },
-  sectionHeaderContainer: {
-    backgroundColor: 'white',
-    padding: 6,
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  addItemButton: {
-    position: 'absolute',
-    width: 56,
-    height: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 20,
-    bottom: 20,
-    backgroundColor: PRIMARY_COLOR,
-    borderRadius: 30,
-    elevation: 8,
-  },
-  bottomSheetModal: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    elevation: 24,
-  },
-});
 
 export default ItemsList;

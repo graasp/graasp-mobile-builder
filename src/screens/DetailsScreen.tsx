@@ -52,21 +52,21 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
   } = hooks.useItem(itemId);
   useFocusQuery(refetchItem);
 
-  if (isLoadingItem || !item?.name) {
-    return <ActivityIndicator />;
-  }
-
-  if (isErrorItem || !item) {
-    return null;
-  }
-
   const {
     data: creatorData,
     isLoading: isLoadingName,
     refetch: refetchMember,
+    isError: isErrorMember,
   } = hooks.useMember(item?.creator?.id);
   useFocusQuery(refetchMember);
 
+  if (isLoadingItem || !item?.name) {
+    return <ActivityIndicator />;
+  }
+
+  if (isErrorItem || !item || isErrorMember) {
+    return null;
+  }
   const { createdAt, extra, name, type, updatedAt, description } = item;
   if (isLoadingName || !creatorData?.name) {
     return <ActivityIndicator />;
@@ -93,13 +93,7 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
           paddingHorizontal: 20,
         }}
       >
-        <ItemIcon
-          type={type}
-          extra={extra}
-          name={name}
-          size={100}
-          style={styles.icon}
-        />
+        <ItemIcon type={type} extra={extra} size={100} style={styles.icon} />
         <Text h4 style={styles.value}>
           {name}
         </Text>
@@ -117,8 +111,13 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
             <Text style={styles.value}>{humanFileSize(sizeContent, true)}</Text>
           </>
         )}
-        <Text style={styles.header}>{t('Creator')}</Text>
-        <Text style={styles.value}>{creatorData.name}</Text>
+        <Text style={styles.header}>{t('Creator')}</Text>{' '}
+        {creatorData.name && (
+          <>
+            <Text style={styles.header}>{t('Creator')}</Text>
+            <Text style={styles.value}>{creatorData.name}</Text>
+          </>
+        )}
         <Text style={styles.header}>{t('Creation Date')}</Text>
         <Text style={styles.value}>
           {formatDate(createdAt, { locale: DEFAULT_LOCALE })}
