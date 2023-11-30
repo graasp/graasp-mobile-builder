@@ -59,7 +59,7 @@ jobs:
 
       - name: Prebuild
         env:
-          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ./GoogleService-Info.plist
+          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: /Users/runner/work/graasp-mobile-builder/GoogleService-Info.plist
         run: npx expo prebuild --platform ios
 
       # - name: Detox rebuild framework cache
