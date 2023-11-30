@@ -1,63 +1,18 @@
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
 
-import i18n from 'i18next';
+import buildI18n, { namespaces } from '@graasp/translations';
 
 import en from '../langs/en.json';
 import fr from '../langs/fr.json';
 
-i18n.use(initReactI18next).init({
-  compatibilityJSON: 'v3',
-  resources: {
-    en,
-    fr,
-  },
-  lng: 'en',
-  fallbackLng: 'en',
-  // debug only when not in production
-  debug: process.env.NODE_ENV !== 'production',
-  ns: ['translations'],
-  defaultNS: 'translations',
-  keySeparator: false,
-  interpolation: {
-    escapeValue: false,
-    formatSeparator: ',',
-  },
-  react: {
-    useSuspense: false,
-  },
-});
+const i18n = buildI18n().use(initReactI18next);
 
-export const langs = {
-  ar: 'العربية',
-  // bg: "български",
-  // ca: "Català",
-  // cs: "čeština",
-  de: 'Deutsch',
-  // el: "Ελληνικά",
-  en: 'English',
-  // es: "Español",
-  // et: "Eesti",
-  // fi: "Suomi",
-  fr: 'Français',
-  // hu: "Magyar",
-  it: 'Italiano',
-  // ja: '日本語',
-  // ka: "ქართული",
-  // lt: "lietuvių kalba",
-  // lv: "Latviešu",
-  // nl: "Nederlands",
-  // pt: "Português",
-  // ro: "Română",
-  // ru: "Русский",
-  // sk: "Slovenský",
-  // sl: "Slovenščina",
-  // sr: "српски језик",
-  // sw: 'Kiswahili',
-  // tr: "Türkçe",
-  // uk: "Українська",
-  // vi: "Tiếng Việt",
-  // zh: "简体中文",
-  // zh_tw: "繁體中文",
-};
+const MOBILE_NAMESPACE = 'mobile';
+i18n.addResourceBundle('en', MOBILE_NAMESPACE, en);
+i18n.addResourceBundle('fr', MOBILE_NAMESPACE, fr);
+i18n.setDefaultNamespace(MOBILE_NAMESPACE);
+
+export const useCategoriesTranslation = () =>
+  useTranslation(namespaces.categories);
 
 export default i18n;

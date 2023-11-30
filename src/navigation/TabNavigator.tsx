@@ -12,10 +12,14 @@ import {
 } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import LibraryIcon from '../screens/library/LibraryIcon';
 import BookmarksStackNavigator, {
   BookmarksStackParamList,
 } from './BookmarksNavigator';
 import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
+import LibraryStackNavigator, {
+  LibraryStackParamList,
+} from './LibraryNavigator';
 import MyItemsStackNavigator, {
   MyItemsStackParamList,
 } from './MyItemsStackNavigator';
@@ -33,6 +37,7 @@ export type TabParamList = {
   SignInTab: undefined;
   ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
   BookmarksTab: NavigatorScreenParams<BookmarksStackParamList>;
+  LibraryTab: NavigatorScreenParams<LibraryStackParamList>;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -67,6 +72,18 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => (
             <Entypo name="bookmarks" size={size} color={color} />
           ),
+          tabBarActiveTintColor: PRIMARY_COLOR,
+        })}
+      />
+      <Tab.Screen
+        name="LibraryTab"
+        component={LibraryStackNavigator}
+        options={() => ({
+          tabBarLabel: t('Library'),
+          tabBarIcon: ({ focused }) => (
+            <LibraryIcon primaryColor={focused ? PRIMARY_COLOR : 'grey'} />
+          ),
+
           tabBarActiveTintColor: PRIMARY_COLOR,
         })}
       />

@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
+import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
 import ItemIcon from './ItemIcon';
@@ -89,7 +90,7 @@ const ItemsList: FC<ItemsListProps> = ({
       />
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        style={styles.bottomSheetModal}
+        style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -109,7 +110,6 @@ const ItemsList: FC<ItemsListProps> = ({
                   <ItemIcon
                     type={itemSelected.type}
                     extra={itemSelected.extra}
-                    name={itemSelected.name}
                   />
                   <ListItem.Content style={{ flexDirection: 'row' }}>
                     <ListItem.Title style={{ flex: 2 }}>
@@ -176,16 +176,6 @@ const styles = StyleSheet.create({
     backgroundColor: PRIMARY_COLOR,
     borderRadius: 30,
     elevation: 8,
-  },
-  bottomSheetModal: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    elevation: 24,
   },
 });
 

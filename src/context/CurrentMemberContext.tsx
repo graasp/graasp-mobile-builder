@@ -31,16 +31,20 @@ const CurrentMemberProvider = (props: any) => {
       currentMember.extra?.lang &&
       currentMember.extra?.lang !== lang
     ) {
-      changeLang(currentMember.extra.lang);
+      _changeLang(currentMember.extra.lang);
     }
   }, [currentMember]);
+
+  const _changeLang = (newLang: string) => {
+    setLang(newLang);
+    i18n.changeLanguage(newLang);
+  };
 
   const changeLang = async (newLang: string) => {
     if (!currentMember) {
       console.error('current member is not logged in');
     } else {
-      setLang(newLang);
-      i18n.changeLanguage(newLang);
+      _changeLang(newLang);
       editMemberMutation.mutate({
         id: currentMember.id,
         extra: {

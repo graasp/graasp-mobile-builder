@@ -52,7 +52,7 @@ const Item: FC<ItemProps> = ({
   function renderListItem() {
     return (
       <ListItem testID={`${ITEM_LIST}-${index + 1}`}>
-        <ItemIcon type={type} extra={extra} name={name} />
+        <ItemIcon type={type} extra={extra} />
         <ListItem.Content style={{ flexDirection: 'row' }}>
           <ListItem.Title style={{ flex: 2 }}>{name}</ListItem.Title>
         </ListItem.Content>
