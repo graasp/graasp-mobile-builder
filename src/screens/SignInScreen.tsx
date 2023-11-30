@@ -11,6 +11,7 @@ import { buildSignInPath } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { SIGN_IN_BUTTON, SIGN_UP_BUTTON } from '../../e2e/constants/testIds';
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
   PLATFORM_OS,
@@ -130,6 +131,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
           title="Sign in"
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
+          testID={SIGN_IN_BUTTON}
         />
         {!isSignUp && (
           <Button
@@ -143,6 +145,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             title="Sign up"
             disabled={isLoading}
             onPress={_handlePressSignUpButtonAsync}
+            testID={SIGN_UP_BUTTON}
           />
         )}
 

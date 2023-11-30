@@ -11,6 +11,7 @@ import { UUID, buildPdfViewerLink } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { PDF_ITEM, PDF_SHARE } from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { GRAASP_ASSETS_URL } from '../config/env';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
@@ -65,6 +66,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
                 <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
               }
               onPress={handleShareFileFromS3Url}
+              testID={PDF_SHARE}
             ></Button>
           )}
         </View>
@@ -89,6 +91,7 @@ const FilePdf: FC<FilePdfProps> = ({ filePath, itemId, mimetype }) => {
         marginBottom: insets.bottom,
       }}
       scrollEnabled={false}
+      testID={PDF_ITEM}
     />
   );
 };

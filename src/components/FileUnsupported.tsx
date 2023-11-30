@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { UNSUPPORTED_SHARE } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 
@@ -44,6 +45,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile }) => {
           style={{ paddingRight: 3 }}
         />
       }
+      testID={UNSUPPORTED_SHARE}
     ></Button>
   );
 };

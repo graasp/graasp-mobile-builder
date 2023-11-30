@@ -9,6 +9,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import {
+  ITEM_LIST_OPTIONS_DELETE,
+  ITEM_LIST_OPTIONS_DETAILS,
+  ITEM_LIST_OPTIONS_EDIT,
+  ITEM_LIST_OPTIONS_SHARE,
+  SHARE_ITEM_BUILDER,
+  SHARE_ITEM_PLAYER,
+} from '../../e2e/constants/testIds';
+import {
   ANALYTICS_EVENTS,
   PRIMARY_COLOR,
   SHARE_HOST,
@@ -151,6 +159,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           onPress={async () => {
             await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PLAYER);
           }}
+          testID={SHARE_ITEM_PLAYER}
         />
         <Divider />
         <Button
@@ -160,6 +169,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           onPress={async () => {
             await onShare(shareModalVisible.itemId, SHARE_OPTIONS.BUILDER);
           }}
+          testID={SHARE_ITEM_BUILDER}
         />
       </Overlay>
       <Overlay
@@ -203,6 +213,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       <ListItem
         onPress={() => handleDetailsPress({ itemId: itemSelected.id })}
         style={{ paddingLeft: insets.left }}
+        testID={ITEM_LIST_OPTIONS_DETAILS}
       >
         <MaterialIcons name="info" size={24} color="grey" />
         <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -214,6 +225,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <ListItem
             onPress={() => handleEditItemPress({ itemId: itemSelected.id })}
             style={{ paddingLeft: insets.left }}
+            testID={ITEM_LIST_OPTIONS_EDIT}
           >
             <MaterialIcons name="edit" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -223,6 +235,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <ListItem
             onPress={() => handleDeleteItemPress({ itemId: itemSelected.id })}
             style={{ paddingLeft: insets.left }}
+            testID={ITEM_LIST_OPTIONS_DELETE}
           >
             <MaterialIcons name="delete" size={24} color="grey" />
             <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -234,6 +247,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       <ListItem
         onPress={() => handleSharePress({ itemId: itemSelected.id })}
         style={{ paddingLeft: insets.left }}
+        testID={ITEM_LIST_OPTIONS_SHARE}
       >
         <MaterialIcons name="share" size={24} color="grey" />
         <ListItem.Content style={{ flexDirection: 'row' }}>

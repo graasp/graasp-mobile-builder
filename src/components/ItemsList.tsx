@@ -58,8 +58,16 @@ const ItemsList: FC<ItemsListProps> = ({
     console.log('handleSheetChanges', index);
   }, []);
 
-  const renderItem = ({ item }: { item: DiscriminatedItem }) => {
-    return <Item item={item} openOptions={handlePresentModalPress} />;
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: DiscriminatedItem;
+    index: number;
+  }) => {
+    return (
+      <Item item={item} openOptions={handlePresentModalPress} index={index} />
+    );
   };
 
   return (

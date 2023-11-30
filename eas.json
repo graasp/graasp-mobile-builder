@@ -3,17 +3,26 @@
     "version": ">= 3.1.0"
   },
   "build": {
+    "base": {
+      "node": ">= 20.0.0"
+    },
     "development": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
       "android": {
         "buildType": "apk"
-      }
+      },
+      "extends": "base",
+      "distribution": "internal"
     },
-    "production": {},
+    "production": {
+      "extends": "base"
+    },
     "development-simulator": {
+      "extends": "base",
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
@@ -22,6 +31,40 @@
       "android": {
         "buildType": "apk"
       }
+    },
+    "test": {
+      "extends": "base",
+      "android": {
+        "gradleCommand": ":app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release",
+        "withoutCredentials": true
+      },
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "EXPO_PUBLIC_DETOX_MOCKED": "true",
+        "EXPO_PUBLIC_AUTH_HOST": "https://auth.stage.graasp.org",
+        "EXPO_PUBLIC_API_HOST": "https://api.stage.graasp.org"
+      },
+      "buildArtifactPaths": ["artifacts/**/*.png"]
+    },
+    "test_debug": {
+      "extends": "base",
+      "android": {
+        "gradleCommand": ":app:assembleDebug :app:assembleAndroidTest -DtestBuildType=debug",
+        "withoutCredentials": true
+      },
+      "ios": {
+        "buildConfiguration": "Debug",
+        "simulator": true
+      },
+      "env": {
+        "EXPO_USE_UPDATES": "1",
+        "EXPO_PUBLIC_DETOX_MOCKED": "true",
+        "EXPO_PUBLIC_AUTH_HOST": "https://auth.stage.graasp.org",
+        "EXPO_PUBLIC_API_HOST": "https://api.stage.graasp.org"
+      },
+      "channel": "test_debug"
     }
   },
   "submit": {

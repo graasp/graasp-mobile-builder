@@ -2,6 +2,9 @@ const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
+const mockSourceExt =
+  process.env.EXPO_PUBLIC_DETOX_MOCKED === 'true' ? ['mock.tsx'] : [];
+
 module.exports = {
   /* general options */
 
@@ -11,6 +14,7 @@ module.exports = {
       'cjs',
       // useful for mocking the camera
       process.env.RN_SRC_EXT && process.env.RN_SRC_EXT.split(','),
+      ...mockSourceExt,
       ...config.resolver.sourceExts,
     ],
   },

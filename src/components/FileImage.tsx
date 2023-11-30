@@ -7,6 +7,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 
+import {
+  IMAGE_ITEM,
+  IMAGE_SAVE,
+  IMAGE_SHARE,
+} from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -41,6 +46,7 @@ const FileImage: FC<FileImageProps> = ({
             buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
             icon={<MaterialIcons name={'save-alt'} color="#ffffff" size={25} />}
             onPress={handleSaveImage}
+            testID={IMAGE_SAVE}
           ></Button>
           <Button
             buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
@@ -48,6 +54,7 @@ const FileImage: FC<FileImageProps> = ({
               <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
             }
             onPress={() => handleShareFile()}
+            testID={IMAGE_SHARE}
           ></Button>
         </View>
       ),
@@ -61,6 +68,7 @@ const FileImage: FC<FileImageProps> = ({
       source={{
         uri: filePath,
       }}
+      testID={IMAGE_ITEM}
     />
   );
 };

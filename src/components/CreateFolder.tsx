@@ -7,6 +7,11 @@ import { ItemType, UUID } from '@graasp/sdk';
 
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
+import {
+  CANCEL_CREATE_FOLDER,
+  CONFIRM_CREATE_FOLDER,
+  FOLDER_NAME_INPUT,
+} from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
@@ -64,6 +69,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
         autoCapitalize="none"
         autoCorrect={false}
         placeholderTextColor="#cccccc"
+        testID={FOLDER_NAME_INPUT}
       />
       <View style={styles.acceptSaveItem}>
         <Button
@@ -71,6 +77,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={mutateItem}
+          testID={CONFIRM_CREATE_FOLDER}
         />
       </View>
       <Button
@@ -78,6 +85,7 @@ const CreateFolder: FC<CreateFolderProps> = ({
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={() => setCreateItemModalVisible({ toggle: false })}
+        testID={CANCEL_CREATE_FOLDER}
       />
     </>
   );

@@ -19,8 +19,8 @@ import { API_HOST } from '../config/env';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 interface AuthContextInterface {
-  signIn: (data: any) => Promise<void>;
-  signOut: () => Promise<void>;
+  signIn: (data: any) => object;
+  signOut: () => object;
   restoreUserRefreshToken: (
     newAuthToken: string,
     newRefreshToken: string,
@@ -85,6 +85,11 @@ const AuthProvider = (props: any) => {
       let userToken;
 
       try {
+        await SecureStore.setItemAsync(
+          SECURE_STORE_VALUES.REFRESH_TOKEN,
+          process.env.EXPO_PUBLIC_TEST_REFRESH_TOKEN!,
+        );
+
         userToken = await SecureStore.getItemAsync(
           SECURE_STORE_VALUES.AUTH_TOKEN,
         );
@@ -131,7 +136,6 @@ const AuthProvider = (props: any) => {
       },
       signOut: async () => {
         // TODO: add alert indicating automatic log out because refresh token has expired
-        await axiosAuthInstance.get(`${API_HOST}/logout`);
         dispatch({ type: AuthActionKind.SIGN_OUT, token: null });
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
@@ -151,6 +155,7 @@ const AuthProvider = (props: any) => {
       getAuthTokenByRefreshToken: async (refreshToken: string) => {
         const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {
           withCredentials: true,
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: refreshToken ? `Bearer ${refreshToken}` : undefined,
