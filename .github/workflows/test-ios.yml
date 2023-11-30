@@ -12,7 +12,7 @@ jobs:
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          echo $DATA | base64 --decode > ./GoogleService-Info.plist
+          echo $DATA | base64 --decode > ~/GoogleService-Info.plist
 
       - name: checkout
         uses: actions/checkout@v4
@@ -56,7 +56,7 @@ jobs:
 
       - name: Prebuild
         env:
-          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ./GoogleService-Info.plist
+          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ~/GoogleService-Info.plist
         run: npx expo prebuild --platform ios
 
       # - name: Detox rebuild framework cache
