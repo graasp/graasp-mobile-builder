@@ -44,6 +44,7 @@ const LibraryScreen = () => {
     // // does not show children
     isPublishedRoot: true,
   });
+
   const allCollections = prevResults.concat(
     // @ts-ignore todo fix type
     collections?.results?.[0]?.hits ?? [],

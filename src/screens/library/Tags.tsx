@@ -24,8 +24,9 @@ function Tags({ item }: Props) {
     c1.category.name.localeCompare(c2.category.name),
   );
 
-  const categories = sortedItemCategories?.map(({ category: { name } }) => (
+  const categories = sortedItemCategories?.map(({ category: { name }, id }) => (
     <Chip
+      key={id}
       // need both styles to apply correctly
       titleStyle={styles.chip}
       buttonStyle={styles.chip}

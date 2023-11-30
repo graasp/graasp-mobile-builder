@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { Button, CheckBox, Divider, Text } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -133,7 +133,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
                 type="clear"
                 onPress={onSavePress}
                 disabled={
-                  JSON.stringify(currentSelection) ==
+                  JSON.stringify(currentSelection) ===
                   JSON.stringify(selectedCategories)
                 }
               />
