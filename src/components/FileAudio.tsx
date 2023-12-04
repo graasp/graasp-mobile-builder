@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import FileHeaderButton from './common/FileHederButton';
 
 interface FileAudioProps {
   filePath: string;
@@ -45,13 +46,7 @@ const FileAudio: FC<FileAudioProps> = ({
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <Button
-            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-            icon={
-              <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-            }
-            onPress={() => handleShareFile()}
-          ></Button>
+          <FileHeaderButton name="ios-share" handler={handleShareFile} />
         ),
       });
     }

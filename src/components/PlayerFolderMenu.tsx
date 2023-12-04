@@ -1,5 +1,4 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   FlatList,
   Pressable,
@@ -7,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Divider, ListItem, Text } from 'react-native-elements';
+import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -27,7 +26,6 @@ interface PlayerFolderMenuProps {
 }
 
 const PlayerFolderMenu: FC<PlayerFolderMenuProps> = ({ folderItems }) => {
-  const { t } = useTranslation();
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['40%', '95%'], []);

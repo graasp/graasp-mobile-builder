@@ -6,10 +6,8 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { MaterialIcons } from '@expo/vector-icons';
 import { ResizeMode, Video } from 'expo-av';
 import * as Sharing from 'expo-sharing';
 
@@ -22,10 +20,11 @@ import {
   VIDEO_SAVE,
   VIDEO_SHARE,
 } from '../../e2e/constants/testIds';
-import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
+import FileHeaderButton from './common/FileHederButton';
 
 interface FileVideoProps {
   filePath: string;
@@ -79,43 +78,20 @@ const FileVideo: FC<FileVideoProps> = ({
           <View>
             {isDownloading ? (
               <View style={styles.headerButtonsDownloadingState}>
-                <Button
-                  disabled
-                  disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
-                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                  icon={
-                    <MaterialIcons
-                      name={'cloud-download'}
-                      color="#ffffff"
-                      size={25}
-                    />
-                  }
-                ></Button>
+                <FileHeaderButton disabled={true} name="cloud-download" />
               </View>
             ) : (
               <View style={styles.headerButtons}>
-                <Button
-                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                  icon={
-                    <MaterialIcons
-                      name={'save-alt'}
-                      color="#ffffff"
-                      size={25}
-                    />
-                  }
-                  onPress={handleSaveFileFromS3Url}
-                ></Button>
-                <Button
-                  buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                  icon={
-                    <MaterialIcons
-                      name={'ios-share'}
-                      color="#ffffff"
-                      size={25}
-                    />
-                  }
-                  onPress={handleShareFileFromS3Url}
-                ></Button>
+                <FileHeaderButton
+                  name="save-alt"
+                  handler={handleSaveFileFromS3Url}
+                  testID={VIDEO_SAVE}
+                />
+                <FileHeaderButton
+                  name="ios-share"
+                  handler={handleShareFileFromS3Url}
+                  testID={VIDEO_SHARE}
+                />
               </View>
             )}
           </View>

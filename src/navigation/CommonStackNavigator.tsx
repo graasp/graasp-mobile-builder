@@ -4,8 +4,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
-import { NavigatorScreenParams } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 
 import { PLAYER_COLOR, PRIMARY_COLOR } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
@@ -25,8 +28,12 @@ export type CommonStackParamList = {
   CommonStackDetail: { itemId: UUID };
 };
 
+export type PlayerFolderScreenRouteProp = RouteProp<
+  CommonStackParamList,
+  'CommonStackPlayerFolder'
+>;
 export type CommonStackNavigationProp =
-  NavigatorScreenParams<CommonStackParamList>;
+  StackNavigationProp<CommonStackParamList>;
 const CommonStack = createStackNavigator<CommonStackParamList>();
 
 const CommonStackNavigator = () => {
