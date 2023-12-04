@@ -25,7 +25,7 @@ type CommonStackFolderProps = CompositeScreenProps<
 >;
 type FolderScreenRouteProp = CommonStackFolderProps['route'];
 
-const FolderScreen: FC<any> = ({ navigation }) => {
+const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
   const route = useRoute<FolderScreenRouteProp>();
   const { itemId, headerTitle } = route.params;
   const { hooks } = useQueryClient();
