@@ -5,11 +5,9 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
-import { MaterialIcons } from '@expo/vector-icons';
 import * as Sharing from 'expo-sharing';
 
 import { UUID, buildPdfViewerLink } from '@graasp/sdk';
@@ -17,11 +15,12 @@ import { UUID, buildPdfViewerLink } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 
 import { PDF_ITEM, PDF_SHARE } from '../../e2e/constants/testIds';
-import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { GRAASP_ASSETS_URL } from '../config/env';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';
+import FileHeaderButton from './common/FileHederButton';
 
 interface FilePdfProps {
   filePath: string;
@@ -60,33 +59,20 @@ const FilePdf: FC<FilePdfProps> = ({
         headerRight: () => (
           <View style={styles.headerButtons}>
             {isDownloading ? (
-              <Button
-                disabled
-                disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
-                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                icon={
-                  <MaterialIcons
-                    name={'cloud-download'}
-                    color="#ffffff"
-                    size={25}
-                  />
-                }
-              ></Button>
+              <FileHeaderButton disabled={true} name="cloud-download" />
             ) : (
-              <Button
-                buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-                icon={
-                  <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-                }
-                onPress={handleShareFileFromS3Url}
-              ></Button>
+              <FileHeaderButton
+                name="ios-share"
+                handler={handleShareFileFromS3Url}
+                testID={PDF_SHARE}
+              />
             )}
           </View>
         ),
       });
     }
   }, [isDownloading, isPlayerView]);
-  
+
   return (
     <WebView
       source={{

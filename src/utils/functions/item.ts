@@ -1,4 +1,4 @@
-import { UUID } from '@graasp/sdk';
+import { ItemType, UUID } from '@graasp/sdk';
 
 // eslint-disable-next-line no-useless-escape
 export const transformIdForPath = (id: UUID) => id.replace(/\-/g, '_');
@@ -47,7 +47,7 @@ export const divideContentAndFolderItems = (children: any[]) => {
   const folders = [];
   const content = [];
   for (const item of children) {
-    item.type === 'folder' ? folders.push(item) : content.push(item);
+    item.type === ItemType.FOLDER ? folders.push(item) : content.push(item);
   }
   return {
     folders,

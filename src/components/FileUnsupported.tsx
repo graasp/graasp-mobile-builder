@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UNSUPPORTED_SHARE } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
   filePath: string;
@@ -25,13 +26,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile, isPlayerView }) => {
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <Button
-            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-            icon={
-              <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-            }
-            onPress={() => handleShareFile()}
-          ></Button>
+          <FileHeaderButton name="ios-share" handler={handleShareFile} />
         ),
       });
     }

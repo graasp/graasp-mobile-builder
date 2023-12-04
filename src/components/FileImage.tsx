@@ -1,9 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DimensionValue, Image, StyleSheet, View } from 'react-native';
-import { Button } from 'react-native-elements';
-
-import { MaterialIcons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,10 +9,11 @@ import {
   IMAGE_SAVE,
   IMAGE_SHARE,
 } from '../../e2e/constants/testIds';
-import { ANALYTICS_EVENTS, PRIMARY_COLOR } from '../config/constants/constants';
+import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenNavigationProp } from '../screens/ItemScreen';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { saveMedia } from '../utils/functions/media';
+import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
   filePath: string;
@@ -52,20 +50,8 @@ const FileImage: FC<FileImageProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <Button
-              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <MaterialIcons name={'save-alt'} color="#ffffff" size={25} />
-              }
-              onPress={handleSaveImage}
-            ></Button>
-            <Button
-              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <MaterialIcons name={'ios-share'} color="#ffffff" size={25} />
-              }
-              onPress={() => handleShareFile()}
-            ></Button>
+            <FileHeaderButton name="save-alt" handler={handleSaveImage} testID={IMAGE_SAVE} />
+            <FileHeaderButton name="ios-share" handler={handleShareFile} testID={IMAGE_SHARE} />
           </View>
         ),
       });
@@ -87,6 +73,7 @@ const FileImage: FC<FileImageProps> = ({
         source={{
           uri: filePath,
         }}
+        testID={IMAGE_ITEM}
       />
     </View>
   );

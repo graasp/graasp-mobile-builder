@@ -10,6 +10,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
+import { PlayerFolderScreenRouteProp } from '../navigation/CommonStackNavigator';
+import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
 import ItemIcon from './ItemIcon';
 
 interface ItemProps {
@@ -25,8 +27,8 @@ const Item: FC<ItemProps> = ({
   index,
   parentItemId,
 }) => {
-  const { navigate } = useNavigation<any>();
-  const { params } = useRoute<any>();
+  const { navigate } = useNavigation<MyItemsStackPropsNavigationProp>();
+  const { params } = useRoute<PlayerFolderScreenRouteProp>();
   async function handleItemPress(isPlayer: boolean) {
     switch (type) {
       case ItemType.FOLDER:
