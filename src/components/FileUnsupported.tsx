@@ -47,6 +47,7 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile, isPlayerView }) => {
             style={{ paddingRight: 3 }}
           />
         }
+        testID={UNSUPPORTED_SHARE}
       ></Button>
     </View>
   );

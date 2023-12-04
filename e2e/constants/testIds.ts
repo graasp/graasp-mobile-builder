@@ -30,7 +30,6 @@ export const IMAGE_ITEM = 'image_item';
 export const IMAGE_SAVE = 'image-save';
 export const IMAGE_SHARE = 'image-share';
 export const UNSUPPORTED_SHARE = 'unsupported-share';
-export const SHARED_ITEMS_SCREEN = 'shared_items_screen';
 export const SIGN_IN_BUTTON = 'sign-in';
 export const SIGN_UP_BUTTON = 'sign-up';
 
