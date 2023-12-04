@@ -58,7 +58,13 @@ const ItemsList: FC<ItemsListProps> = ({
     console.log('handleSheetChanges', index);
   }, []);
 
-  const renderItem = ({ item, index }: { item: DiscriminatedItem; index: number; }) => {
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: DiscriminatedItem;
+    index: number;
+  }) => {
     return (
       <Item
         item={item}

@@ -50,8 +50,16 @@ const FileImage: FC<FileImageProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton name="save-alt" handler={handleSaveImage} testID={IMAGE_SAVE} />
-            <FileHeaderButton name="ios-share" handler={handleShareFile} testID={IMAGE_SHARE} />
+            <FileHeaderButton
+              name="save-alt"
+              handler={handleSaveImage}
+              testID={IMAGE_SAVE}
+            />
+            <FileHeaderButton
+              name="ios-share"
+              handler={handleShareFile}
+              testID={IMAGE_SHARE}
+            />
           </View>
         ),
       });
