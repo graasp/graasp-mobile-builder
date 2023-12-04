@@ -12,7 +12,7 @@ import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import 'expo-document-picker';
 
-import { Item as ItemType } from '@graasp/sdk';
+import { DiscriminatedItem } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -22,7 +22,7 @@ import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
 
 interface PlayerFolderMenuProps {
-  folderItems: ItemType[];
+  folderItems: DiscriminatedItem[];
 }
 
 const PlayerFolderMenu: FC<PlayerFolderMenuProps> = ({ folderItems }) => {
@@ -46,11 +46,11 @@ const PlayerFolderMenu: FC<PlayerFolderMenuProps> = ({ folderItems }) => {
     }
   }, [selectedItem]);
 
-  const renderItem = ({ item }: { item: any }) => {
+  const renderItem = ({ item }: { item: DiscriminatedItem }) => {
     return (
       <Pressable onPress={() => setSelectedItem(item)} style={{ flex: 2 }}>
         <ListItem>
-          <ItemIcon type={item.type} extra={item.extra} name={item.name} />
+          <ItemIcon type={item.type} extra={item.extra} />
           <ListItem.Content style={{ flexDirection: 'row' }}>
             <ListItem.Title style={{ flex: 2 }}>{item.name}</ListItem.Title>
           </ListItem.Content>
