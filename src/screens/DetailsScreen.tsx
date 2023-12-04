@@ -111,7 +111,8 @@ const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
             <Text style={styles.value}>{humanFileSize(sizeContent, true)}</Text>
           </>
         )}
-        <Text style={styles.header}>{t('Creator')}</Text>{' '}
+        <Text style={styles.header}>{t('Creator')}</Text>
+        <Text> </Text>
         {creatorData.name && (
           <>
             <Text style={styles.header}>{t('Creator')}</Text>
