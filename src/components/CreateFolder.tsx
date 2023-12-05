@@ -30,7 +30,6 @@ interface CreateFolderProps {
 const CreateFolder: FC<CreateFolderProps> = ({
   setCreateItemModalVisible,
   bottomSheetAddItemModalRef,
-  refresh,
   parentId,
 }) => {
   const [itemName, setItemName] = useState<string | undefined>('');

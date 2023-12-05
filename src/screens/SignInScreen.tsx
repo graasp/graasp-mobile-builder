@@ -39,21 +39,27 @@ export type SignInProps = StackScreenProps<
 const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const isSignUp = Boolean(params?.signUp);
   const authContext = useAuth();
-  const signInWithToken = authContext?.signIn;
+  const { userToken, signIn: signInWithToken } = authContext;
   const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
-  const { state } = useAuth();
   const { navigate } = useNavigation<RootNavigationProp>();
 
   const { hooks } = useQueryClient();
-  const { data: currentMember } = hooks.useCurrentMember();
+  const { data: currentMember, refetch } = hooks.useCurrentMember();
 
   // redirect to main if member is signed in
   useEffect(() => {
-    if (currentMember || state.userToken) {
+    if (currentMember) {
       navigate('Main');
     }
-  }, [currentMember, state.userToken]);
+  }, [currentMember]);
+
+  // necessary manual refetch because axios interceptor might have change
+  useEffect(() => {
+    if (userToken) {
+      refetch();
+    }
+  }, [userToken]);
 
   useEffect(() => {
     // Catch email-link on iOS/Android and email-password on Android login redirection

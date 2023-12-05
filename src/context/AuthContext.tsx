@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
@@ -25,8 +19,8 @@ interface AuthContextInterface {
     newAuthToken: string,
     newRefreshToken: string,
   ) => object;
-  state: AuthState;
-  dispatch: React.Dispatch<AuthAction>;
+  userToken: string | null;
+  setUserToken: React.Dispatch<string | null>;
   getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
     authToken: string;
     refreshToken: string;
@@ -36,49 +30,8 @@ interface AuthContextInterface {
 const AuthContext = createContext<AuthContextInterface | null>(null);
 AuthContext.displayName = 'AuthContext';
 
-type AuthAction = {
-  type: AuthActionKind;
-  token: string | null;
-};
-
-type AuthState = {
-  isLoading: boolean;
-  isSignout: boolean;
-  userToken: string | null;
-};
-
-const initialCounterState: AuthState = {
-  isLoading: true,
-  isSignout: false,
-  userToken: null,
-};
-
 const AuthProvider = (props: any) => {
-  const [state, dispatch] = useReducer(
-    (prevState: AuthState, action: AuthAction): AuthState => {
-      switch (action.type) {
-        case AuthActionKind.RESTORE_TOKEN:
-          return {
-            ...prevState,
-            userToken: action.token,
-            isLoading: false,
-          };
-        case AuthActionKind.SIGN_IN:
-          return {
-            ...prevState,
-            isSignout: false,
-            userToken: action.token,
-          };
-        case AuthActionKind.SIGN_OUT:
-          return {
-            ...prevState,
-            isSignout: true,
-            userToken: null,
-          };
-      }
-    },
-    initialCounterState,
-  );
+  const [userToken, setUserToken] = useState<string | null>(null);
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -91,7 +44,7 @@ const AuthProvider = (props: any) => {
       } catch {
         userToken = null;
       }
-      dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: userToken });
+      setUserToken(userToken);
     };
 
     bootstrapAsync();
@@ -99,6 +52,8 @@ const AuthProvider = (props: any) => {
 
   const authContext: AuthContextInterface = useMemo(
     () => ({
+      userToken,
+      setUserToken,
       signIn: async (data) => {
         try {
           const nonce = await SecureStore.getItemAsync(
@@ -111,7 +66,7 @@ const AuthProvider = (props: any) => {
           if (response.data?.authToken && response.data?.refreshToken) {
             const token = response.data?.authToken;
             const refreshToken = response.data?.refreshToken;
-            dispatch({ type: AuthActionKind.SIGN_IN, token });
+            setUserToken(token);
             await SecureStore.setItemAsync(
               SECURE_STORE_VALUES.AUTH_TOKEN,
               token,
@@ -132,13 +87,13 @@ const AuthProvider = (props: any) => {
       signOut: async () => {
         // TODO: add alert indicating automatic log out because refresh token has expired
         await axiosAuthInstance.get(`${API_HOST}/logout`);
-        dispatch({ type: AuthActionKind.SIGN_OUT, token: null });
+        setUserToken(null);
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
         await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
       },
       restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
-        dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: newAuthToken });
+        setUserToken(newAuthToken);
         await SecureStore.setItemAsync(
           SECURE_STORE_VALUES.AUTH_TOKEN,
           newAuthToken,
@@ -158,11 +113,8 @@ const AuthProvider = (props: any) => {
         });
         return res.data;
       },
-
-      state,
-      dispatch,
     }),
-    [state],
+    [userToken],
   );
 
   return <AuthContext.Provider value={authContext} {...props} />;

@@ -25,16 +25,11 @@ export const QueryClientContext = createContext<{
 
 export const QueryClientProvider = ({ children }: any) => {
   const authContext = useAuth();
-  const dispatch = authContext?.dispatch;
   const { signOut, restoreUserRefreshToken, getAuthTokenByRefreshToken } =
     authContext;
   const { t } = useTranslation();
   // we use an array to be able to stack them and safely remove them all
   const [interceptors, setInterceptors] = useState<number[]>([]);
-
-  if (!dispatch) {
-    throw new Error(`Context error`);
-  }
 
   // Create a client
   const {
@@ -43,68 +38,48 @@ export const QueryClientProvider = ({ children }: any) => {
     QueryClientProvider: QCProvider,
     hooks,
     mutations,
-  } = useMemo(
-    () =>
-      configureQueryClient({
-        API_HOST,
-        notifier: (e) => {
-          // todo: use toaster
-          console.log(e);
-        },
-        onConfigAxios: (axios) => {
-          // remove previous interceptors
-          if (interceptors.length) {
-            interceptors.forEach((interceptor) => {
-              axios.interceptors.request.eject(interceptor);
-            });
-          }
-
-          // always set token in headers
-          const bearer = axios.interceptors.request.use(function (config) {
-            const token = authContext?.state.userToken;
-            // Do something before request is sent
-            if (config.headers && token) {
-              config.headers.Authorization = `Bearer ${token}`;
-            }
-            return config;
+  } = useMemo(() => {
+    const state = configureQueryClient({
+      API_HOST,
+      notifier: (e) => {
+        // todo: use toaster
+        console.log(e);
+      },
+      onConfigAxios: (axios) => {
+        // remove previous interceptors
+        if (interceptors.length) {
+          interceptors.forEach((interceptor) => {
+            axios.interceptors.request.eject(interceptor);
           });
+        }
 
-          // refresh interceptors
-          const refetch = axios.interceptors.response.use(
-            (response) => {
-              return response;
-            },
-            async function (error) {
-              const originalRequest = error.config;
-              if (
-                error?.response?.status === 401 &&
-                !originalRequest?.sent &&
-                !authContext.state.isSignout
-              ) {
-                try {
-                  const refreshToken = await SecureStore.getItemAsync(
-                    SECURE_STORE_VALUES.REFRESH_TOKEN,
-                  );
-                  if (!refreshToken) {
-                    Toast.show({
-                      type: 'error',
-                      text1: t('You must sign in again'),
-                    });
-                    signOut();
-                    return Promise.reject(error);
-                  }
+        // always set token in headers
+        const bearer = axios.interceptors.request.use(function (config) {
+          const token = authContext.userToken;
+          // Do something before request is sent
+          if (config.headers && token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+          return config;
+        });
 
-                  const data = await getAuthTokenByRefreshToken(refreshToken);
-                  const newAuthToken = data.authToken;
-                  const newRefreshToken = data.refreshToken;
-                  originalRequest.headers = {
-                    ...originalRequest.headers,
-                    Authorization: `Bearer ${newAuthToken}`,
-                  };
-                  restoreUserRefreshToken(newAuthToken, newRefreshToken);
-                  return axios(originalRequest);
-                } catch (e) {
-                  console.error(e);
+        // refresh interceptors
+        const refetch = axios.interceptors.response.use(
+          (response) => {
+            return response;
+          },
+          async function (error) {
+            const originalRequest = error.config;
+            if (
+              error?.response?.status === 401 &&
+              !originalRequest?.sent &&
+              !authContext.userToken
+            ) {
+              try {
+                const refreshToken = await SecureStore.getItemAsync(
+                  SECURE_STORE_VALUES.REFRESH_TOKEN,
+                );
+                if (!refreshToken) {
                   Toast.show({
                     type: 'error',
                     text1: t('You must sign in again'),
@@ -112,16 +87,39 @@ export const QueryClientProvider = ({ children }: any) => {
                   signOut();
                   return Promise.reject(error);
                 }
+
+                const data = await getAuthTokenByRefreshToken(refreshToken);
+                const newAuthToken = data.authToken;
+                const newRefreshToken = data.refreshToken;
+                originalRequest.headers = {
+                  ...originalRequest.headers,
+                  Authorization: `Bearer ${newAuthToken}`,
+                };
+                restoreUserRefreshToken(newAuthToken, newRefreshToken);
+                return axios(originalRequest);
+              } catch (e) {
+                console.error(e);
+                Toast.show({
+                  type: 'error',
+                  text1: t('You must sign in again'),
+                });
+                signOut();
+                return Promise.reject(error);
               }
-              return Promise.reject(error);
-            },
-          );
-          setInterceptors([...interceptors, bearer, refetch]);
-        },
-        enableWebsocket: false,
-      }),
-    [authContext.state.userToken],
-  );
+            }
+            return Promise.reject(error);
+          },
+        );
+        setInterceptors([...interceptors, bearer, refetch]);
+      },
+      enableWebsocket: false,
+    });
+
+    // remove cache of all queries
+    state.queryClient.clear();
+
+    return state;
+  }, [authContext.userToken]);
 
   const value = {
     queryConfig,
