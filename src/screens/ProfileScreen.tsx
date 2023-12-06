@@ -41,7 +41,6 @@ import type {
   RootStackParamList,
 } from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
   StackScreenProps<ProfileStackParamList>,
@@ -75,7 +74,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
   } = hooks.useCurrentMember();
   const authContext = useAuth();
   const { navigate } = useNavigation<RootNavigationProp>();
-  const userToken: any = getUserToken();
+  const { userToken } = useAuth();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
