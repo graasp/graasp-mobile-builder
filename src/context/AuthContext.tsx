@@ -21,6 +21,7 @@ interface AuthContextInterface {
   userToken: string | null;
   refreshToken: string | null;
   setUserToken: (t: string) => Promise<void>;
+  setRefreshToken: (t: string) => Promise<void>;
   getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
     authToken: string;
     refreshToken: string;
@@ -70,6 +71,7 @@ const AuthProvider = (props: any) => {
       userToken,
       refreshToken,
       setUserToken,
+      setRefreshToken,
       signIn: async (data) => {
         try {
           const nonce = await SecureStore.getItemAsync(

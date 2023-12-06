@@ -24,9 +24,13 @@ export const QueryClientContext = createContext<{
 });
 
 export const QueryClientProvider = ({ children }: any) => {
-  const authContext = useAuth();
-  const { signOut, restoreUserRefreshToken, getAuthTokenByRefreshToken } =
-    authContext;
+  const {
+    signOut,
+    userToken,
+    getAuthTokenByRefreshToken,
+    setUserToken,
+    setRefreshToken,
+  } = useAuth();
   const { t } = useTranslation();
   // we use an array to be able to stack them and safely remove them all
   const [interceptors, setInterceptors] = useState<number[]>([]);
@@ -55,10 +59,9 @@ export const QueryClientProvider = ({ children }: any) => {
 
         // always set token in headers
         const bearer = axios.interceptors.request.use(function (config) {
-          const token = authContext.userToken;
           // Do something before request is sent
-          if (config.headers && token) {
-            config.headers.Authorization = `Bearer ${token}`;
+          if (config.headers && userToken) {
+            config.headers.Authorization = `Bearer ${userToken}`;
           }
           return config;
         });
@@ -73,9 +76,10 @@ export const QueryClientProvider = ({ children }: any) => {
             if (
               error?.response?.status === 401 &&
               !originalRequest?.sent &&
-              !authContext.userToken
+              !userToken
             ) {
               try {
+                // we have to use the direct value from the store
                 const refreshToken = await SecureStore.getItemAsync(
                   SECURE_STORE_VALUES.REFRESH_TOKEN,
                 );
@@ -95,7 +99,8 @@ export const QueryClientProvider = ({ children }: any) => {
                   ...originalRequest.headers,
                   Authorization: `Bearer ${newAuthToken}`,
                 };
-                restoreUserRefreshToken(newAuthToken, newRefreshToken);
+                await setUserToken(newAuthToken);
+                await setRefreshToken(newRefreshToken);
                 return axios(originalRequest);
               } catch (e) {
                 console.error(e);
@@ -119,7 +124,7 @@ export const QueryClientProvider = ({ children }: any) => {
     state.queryClient.clear();
 
     return state;
-  }, [authContext.userToken]);
+  }, [userToken]);
 
   const value = {
     queryConfig,
