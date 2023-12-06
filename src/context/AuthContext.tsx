@@ -14,10 +14,6 @@ import { customAnalyticsEvent } from '../utils/functions/analytics';
 interface AuthContextInterface {
   signIn: (data: any) => Promise<void>;
   signOut: () => Promise<void>;
-  restoreUserRefreshToken: (
-    newAuthToken: string,
-    newRefreshToken: string,
-  ) => object;
   userToken: string | null;
   refreshToken: string | null;
   setUserToken: (t: string) => Promise<void>;
@@ -65,6 +61,10 @@ const AuthProvider = (props: any) => {
     setUserTokenDispatch(null);
     await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
   };
+  const deleteRefreshToken = async () => {
+    setRefreshTokenDispatch(null);
+    await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
+  };
 
   const authContext: AuthContextInterface = useMemo(
     () => ({
@@ -99,12 +99,8 @@ const AuthProvider = (props: any) => {
         // TODO: add alert indicating automatic log out because refresh token has expired
         await axiosAuthInstance.get(`${API_HOST}/logout`);
         await deleteUserToken();
-        await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
+        await deleteRefreshToken();
         await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
-      },
-      restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
-        await setUserToken(newAuthToken);
-        await setRefreshToken(newRefreshToken);
       },
       getAuthTokenByRefreshToken: async (refreshToken: string) => {
         const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {

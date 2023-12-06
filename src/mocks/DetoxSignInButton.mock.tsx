@@ -1,13 +1,12 @@
 import { Button } from 'react-native-elements';
 
-import * as SecureStore from 'expo-secure-store';
-
 import { DETOX_SIGN_IN_BUTTON } from '../../e2e/constants/testIds';
-import { SECURE_STORE_VALUES } from '../config/constants/constants';
+import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
 
 const DetoxSignInButton = () => {
   const { hooks } = useQueryClient();
+  const { setRefreshToken } = useAuth();
   const { refetch } = hooks.useCurrentMember();
 
   const onPress = async () => {
@@ -15,10 +14,7 @@ const DetoxSignInButton = () => {
     if (!process.env.EXPO_PUBLIC_TEST_REFRESH_TOKEN) {
       return alert('EXPO_PUBLIC_TEST_REFRESH_TOKEN is not set!');
     } else {
-      await SecureStore.setItemAsync(
-        SECURE_STORE_VALUES.REFRESH_TOKEN,
-        process.env.EXPO_PUBLIC_TEST_REFRESH_TOKEN,
-      );
+      await setRefreshToken(process.env.EXPO_PUBLIC_TEST_REFRESH_TOKEN);
 
       refetch();
     }
