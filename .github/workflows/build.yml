@@ -24,3 +24,6 @@ jobs:
 
       - name: Typescript Build
         run: yarn build:ts
+
+      - name: Check Expo versions match
+        run: npx expo install --check

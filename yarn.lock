@@ -3394,14 +3394,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:^1.19.6":
-  version: 1.19.6
-  resolution: "@react-native-async-storage/async-storage@npm:1.19.6"
+"@react-native-async-storage/async-storage@npm:1.18.2":
+  version: 1.18.2
+  resolution: "@react-native-async-storage/async-storage@npm:1.18.2"
   dependencies:
     merge-options: "npm:^3.0.4"
   peerDependencies:
-    react-native: ^0.0.0-0 || >=0.60 <1.0
-  checksum: 75dea2ca95295f397947d2db2f1792912ee4a75dafd866a753a317066f549fd1eab61edcaef6b78b293e439a6881fa64d0ff38a348f7793cf1abb04ab7b47ed3
+    react-native: ^0.0.0-0 || 0.60 - 0.72 || 1000.0.0
+  checksum: 3830828c608c9bdc36e147f7b8ff8632368eb8c97ee6f8dc30629a6ba802b99e5307202d86fe5ec37affcef225f82e331be6723921b91d500b935006da2e25ac
   languageName: node
   linkType: hard
 
@@ -7410,14 +7410,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-barcode-scanner@npm:^12.7.0":
-  version: 12.9.0
-  resolution: "expo-barcode-scanner@npm:12.9.0"
+"expo-barcode-scanner@npm:~12.5.3":
+  version: 12.5.3
+  resolution: "expo-barcode-scanner@npm:12.5.3"
   dependencies:
-    expo-image-loader: "npm:~4.6.0"
+    expo-image-loader: "npm:~4.3.0"
   peerDependencies:
     expo: "*"
-  checksum: 81d3bb62bd47f6f68f4af0c9c00d4a026fa62a81f13eb61e294e9f6d0f90ce95b56364979b791bab37834822f1ed6005367b4a758c6202d6a310be5a67a2138e
+  checksum: f8f79da3130a46714293f3d611e8eeaee744ecfa38d80d771dad5b067ca108c25800739a21a478f000a1c3adedbf60fc2375cb6a19b2ef8f987fd7abb761bc9a
   languageName: node
   linkType: hard
 
@@ -7467,31 +7467,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-dev-client@npm:~2.4.11":
-  version: 2.4.11
-  resolution: "expo-dev-client@npm:2.4.11"
+"expo-dev-client@npm:~2.4.12":
+  version: 2.4.12
+  resolution: "expo-dev-client@npm:2.4.12"
   dependencies:
-    expo-dev-launcher: "npm:2.4.13"
-    expo-dev-menu: "npm:3.2.1"
+    expo-dev-launcher: "npm:2.4.14"
+    expo-dev-menu: "npm:3.2.2"
     expo-dev-menu-interface: "npm:1.3.0"
     expo-manifests: "npm:~0.7.0"
     expo-updates-interface: "npm:~0.10.0"
   peerDependencies:
     expo: "*"
-  checksum: fc370502f76421ad3cfa5be986c92379174f76ff7f53f8d7f90e3886d2fcaeb040ef89260d54ca0ea2f676f17887df48a471ae317a18ba0f5784400704735455
+  checksum: 5f7a5d23e7bb53a06900982de4e60cc0847ce65dde32e344389f856fbc3c221698ec38ceae059f6a66b778b08121b94f2d67ac5fe96e9267502cdec220aa1a8c
   languageName: node
   linkType: hard
 
-"expo-dev-launcher@npm:2.4.13":
-  version: 2.4.13
-  resolution: "expo-dev-launcher@npm:2.4.13"
+"expo-dev-launcher@npm:2.4.14":
+  version: 2.4.14
+  resolution: "expo-dev-launcher@npm:2.4.14"
   dependencies:
-    expo-dev-menu: "npm:3.2.1"
+    expo-dev-menu: "npm:3.2.2"
     resolve-from: "npm:^5.0.0"
     semver: "npm:^7.5.3"
   peerDependencies:
     expo: "*"
-  checksum: fb291a83bbc5da983baca825bd98e12b97be5e723441433b4dd9ed8c36bb3462ff1eca410e0de599c34dacf1c7bd154730185634b713114ae9cdce1a8cec512f
+  checksum: fae42a52bcde3447f449c3b0b243e623d51d9fdcf8508c29ff5bce5938c888417baae419d7f0040eb84b89be001e89836db48a1669cd4fab62171bc2db31759e
   languageName: node
   linkType: hard
 
@@ -7504,15 +7504,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-dev-menu@npm:3.2.1":
-  version: 3.2.1
-  resolution: "expo-dev-menu@npm:3.2.1"
+"expo-dev-menu@npm:3.2.2":
+  version: 3.2.2
+  resolution: "expo-dev-menu@npm:3.2.2"
   dependencies:
     expo-dev-menu-interface: "npm:1.3.0"
     semver: "npm:^7.5.3"
   peerDependencies:
     expo: "*"
-  checksum: 7d1646bf81646cc1b82cb188060d0dc384eb0350d1a8e01c783a1e619e93f6d95f7c63c43008ca041c21b380820d82935100f10fc1f606eb6b173d6a5bdba700
+  checksum: 491860f24eedec7a545538546fb156b481ad38dfab15dbe0455a61ca8e7dfbd82b95c4d7cdf19a062045293029ffe81825aa54ba23b0cc576a115ef83f84fe4e
   languageName: node
   linkType: hard
 
@@ -7556,14 +7556,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-image-picker@npm:~14.5.0":
-  version: 14.5.0
-  resolution: "expo-image-picker@npm:14.5.0"
+"expo-image-picker@npm:~14.3.2":
+  version: 14.3.2
+  resolution: "expo-image-picker@npm:14.3.2"
   dependencies:
-    expo-image-loader: "npm:~4.4.0"
+    expo-image-loader: "npm:~4.3.0"
   peerDependencies:
     expo: "*"
-  checksum: b0f6ddcf2bb72abb1e20428ed36204bc27224cee5d5f2240f9083f740442dd727399185b8f7a696409cc6b488248dcd6246e7a9f921c6a99a76badadc196190b
+  checksum: 18b0c1f200c8ccc8683e9f859123d073a5580197135d269423d23109065eb79dbca68c79b6b30ab32f34d44d3a8e9fc77709b90f3cadd11d55012221fb804cc7
   languageName: node
   linkType: hard
 
@@ -7640,12 +7640,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-secure-store@npm:^12.5.0":
-  version: 12.7.0
-  resolution: "expo-secure-store@npm:12.7.0"
+"expo-secure-store@npm:~12.3.1":
+  version: 12.3.1
+  resolution: "expo-secure-store@npm:12.3.1"
   peerDependencies:
     expo: "*"
-  checksum: 0ceedf6aa99a055ef43b987946ce8636fcc86557f47059914a129b25d07b7ebf008928f7948b8a6e0b9ce062155c60b6903d9e99afcde85ac76e424674673b85
+  checksum: 26964e46c8d3c71c5e344b96f12e3292a2175e842acf4efc38b98d7e7f55b94bcb927f85eb3acdc96136e4b9049eba4055f33a772128b6da5686e33a0606f4fe
   languageName: node
   linkType: hard
 
@@ -8473,7 +8473,7 @@ __metadata:
     "@gorhom/bottom-sheet": "npm:^4.5.1"
     "@graasp/query-client": "npm:2.1.0"
     "@graasp/sdk": "npm:3.3.0"
-    "@react-native-async-storage/async-storage": "npm:^1.19.6"
+    "@react-native-async-storage/async-storage": "npm:1.18.2"
     "@react-native-firebase/analytics": "npm:^18.6.1"
     "@react-native-firebase/app": "npm:^18.6.1"
     "@react-navigation/bottom-tabs": "npm:^6.5.11"
@@ -8498,18 +8498,18 @@ __metadata:
     expo: "npm:^49.0.16"
     expo-asset: "npm:~8.10.1"
     expo-av: "npm:~13.4.1"
-    expo-barcode-scanner: "npm:^12.7.0"
+    expo-barcode-scanner: "npm:~12.5.3"
     expo-build-properties: "npm:~0.8.3"
     expo-camera: "npm:~13.4.4"
     expo-constants: "npm:~14.4.2"
     expo-crypto: "npm:~12.4.1"
-    expo-dev-client: "npm:~2.4.11"
+    expo-dev-client: "npm:~2.4.12"
     expo-document-picker: "npm:~11.5.4"
     expo-font: "npm:~11.4.0"
-    expo-image-picker: "npm:~14.5.0"
+    expo-image-picker: "npm:~14.3.2"
     expo-linking: "npm:~5.0.2"
     expo-media-library: "npm:~15.4.1"
-    expo-secure-store: "npm:^12.5.0"
+    expo-secure-store: "npm:~12.3.1"
     expo-sharing: "npm:~11.5.0"
     expo-splash-screen: "npm:~0.20.5"
     expo-status-bar: "npm:~1.6.0"

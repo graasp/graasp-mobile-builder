@@ -1,27 +1,58 @@
 # Graasp Mobile Builder
 
-## Install the project
+This repository hosts the source code of the mobile app for the [Graasp Learning Experience Platform](graasp.org).
 
-Run `yarn` to install all necessary dependencies.
+## Technology stack
 
-You would need to install EAS CLI to manage the development and build of the project. Run the command `npm install -g eas-cli`. Then, you need to log in to an Expo dev account using the command [expo login](https://docs.expo.dev/more/expo-cli).
+This project is written in Typescript and uses Expo to create a React Native cross-platform mobile application.
+The Async State Manager used is [Tanstack Query](https://tanstack.com/query/latest).
 
-If you want to add a new package to the project, use the command `yarn expo install <package>`. This would determine the best version of the package compatible with the current version of Expo in the project and the rest of the dependencies. Not necessarily it would install the latest version of the package.
+## Installing project dependencies
 
-Run `yarn start --dev-client` to start a development client into a simulator. See Test the app in a simulator section to know how to install and run the app in a simulator.
+> **Prerequisite**
+Make sure you have a working installation of yarn available on your system.
+Also comply with the required node version set in he package.json file.
+
+Run `yarn` inside the root folder to install all necessary dependencies.
+
+### EAS Cli
+
+Some commands will require you to use [the EAS CLI](https://www.npmjs.com/package/eas-cli). We recommend you to run these commands using `npx` or `yarn dlx`. For example: `npx eas-cli account:view`.
+
+<details>
+<summary>Alternatively you can install the eas cli globally (not recommended).</summary>
+
+You should install the EAS CLI to manage the development and build of the project. Run the command `npm install -g eas-cli`. Then, you need to log in to an Expo dev account using the command [expo login](https://docs.expo.dev/more/expo-cli).
+
+</details>
+
+### Adding new dependencies
+
+If you want to add a new package to the project, use the `yarn expo install <package>` command. This will determine the version of the package that has the best compatibility with the current expo version. :warning: It will not necessarily install the latest version of the package.
+
+Run `yarn start --dev-client` to start a development client on a simulator. See [the Testing the app in a simulator](#running-the-app-in-a-simulator) section to learn how to install and run the app in a simulator.
 
 ### Local environment variables
 
 Create a file called `.env.development` with the following content:
 
-```
-GOOGLE_SERVICE_INFO_PLIST=./GoogleService-Info.plist
-GOOGLE_SERVICES_JSON=./google-services.json
+```sh
+# Google service files for the Firebase service
+# paths need to be absolute, relative paths will not work !
+# these variables are only used during build step, they do not need to be exposed to the app with the EXPO_PUBLIC_ prefix
+GOOGLE_SERVICES_INFO_PLIST=~/path/to/folder/GoogleService-Info.plist
+GOOGLE_SERVICES_JSON=~/path/to/folder/google-services.json
+
+# Variable accessible to the application code
+# optionally provide the API server base url
+EXPO_PUBLIC_API_HOST=http://localhost:3000
+# optionally provide the Auth frontend base url
+EXPO_PUBLIC_AUTH_HOST=http://localhost:3001
 ```
 
-Then include the `GoogleService-Info.plist` and `google-services.json` files in the root of your project.
+Save the `GoogleService-Info.plist` and `google-services.json` files somewhere in your computer and copy the absolute path into the env variables. :warning: It is not advised to put them at the root of the project.
 
-## Test the app in a simulator
+## Running the app in a Simulator
 
 First, you need to install Xcode (only available on Mac) or Android Studio and create a virtual device. To create one:
 
@@ -30,12 +61,12 @@ First, you need to install Xcode (only available on Mac) or Android Studio and c
 
 Secondly, you need to generate a binary file of the app to install in the previous simulator.
 
-- **Remote**: One solution is to build on expo servers by running the command `eas build --profile development-simulator` inside the project terminal. \_You need to be part of the expo organization to build_on the eas servers. Then the prompt will ask which operating systems binary files you want to generate. This build takes time. You can download it from Expo Services or the link generated in the terminal once the build process is completed.
+- **Remote**: One solution is to build on expo servers by running the command `eas build --profile development-simulator` inside the project terminal. **You need to be part of the Graasp expo organization to build on EAS servers**. Then the prompt will ask which operating systems binary files you want to generate. This build takes time. You can download it from Expo Services or the link generated in the terminal once the build process is completed.
   - **For iOS:** it generates an `.app` file.
   - **For Android:** it generates a `.ipa` file. Notice that this format differs from the one generated on production, an `.abb` file.
-- **Local**: Otherwise you can build locally following this [guide](https://graasp.github.io/docs/developer/mobile-app/local-setup).
+- **Local**: Otherwise you can build locally following [this guide](https://graasp.github.io/docs/developer/mobile-app/local-setup).
 
-Then you can drag and drop the file directly to a launched simulator.
+Then you can drag and drop the file directly inside a running simulator to install it.
 
 Once the app is installed in a simulator, you need to launch a development server from your project to update the changes you made in the app automatically. Run the command `yarn start --dev-client` and select option i to open the iOS simulator and the Android simulator. You must have the simulator opened and launched before starting the development server. The app should be automatically launched in the simulator. If you make a change and save the file inside your project, the simulator app should be reloaded automatically.
 
@@ -48,17 +79,53 @@ Notice that major changes in the app need to build a new entire binary file. For
 - Run `export ANDROID_HOME=/Users/<username>/Library/Android/sdk/`
 - Add the following line in your `.env.local` file.
 
+```sh
+ANDROID_SDK_ROOT=/Users/<username>/Library/Android/sdk
 ```
-    ANDROID_SDK_ROOT=/Users/<username>/Library/Android/sdk
-```
 
-## Export and publish the app
+## Building and publishing
 
-Firstly, you have to decide the correct version of the app to publish. In the `app.config.js` file:
+In this section we describe the process and the setting steps needed to create a production build of the app for iOS and Android suitable for distribution on TestFlight/AppStore and PlayStore Internal testing and PlayStore (production).
 
-- **Version:** displayed version to the user in the App/Play Store. It is mandatory to be superior to the latest published one.
-- **iOS -> Build number:** It is the version number associated with the version. For example, Version: 1.1.2 Build number: 3. It is mandatory to be superior to the latest published one within a version. If you change to a superior version number, the build number should start from 1 again.
+### Ensuring the dependencies are compatible together
+
+This should be handled by a CI check. But if you run into issues during the expo doctor step you should run `npx expo install --check` when prompted to fix the versions, say "yes".
+
+### Ensuring the Firebase files are available
+
+You should have set the absolute path to the google services files (.plist and .json) as described in [the Local Environnement Variables](#local-environment-variables) section. For a more detailed explaantion of the setup process for local build you can check out [the full local building guide](https://graasp.github.io/docs/developer/mobile-app/local-setup)
+
+**Warning**: If you are building locally, the environnement variables are not pulled automatically from the env files, we use the `env-cmd` package to bring them in the execution environment. This should be taken care of in the pre-defined build commands in `package.json`.
+
+### Bumping version numbers
+
+Defined in `app.config.js` file.
+
+On iOS a build is identified by its version and build number, that combination has to be unique. You will not be able to upload a version with the same build number. When bumping the version you should reset the build number to `1`. If building the same version again, please increment the `build number`.
+On Android you have to increment the `versionCode` to achieve the same effect.
+
+General guidance on version numbers:
+
+- **Version:** displayed version to the user in the AppStore/PlayStore. It should always be superior to the latest published version.
+- **iOS -> Build number:** It is the build number associated with the version. For example, Version: 1.1.2 Build number: 3. It should be superior to the latest published version's build number for the same version. If you change to a superior version number, the build number should start from 1 again.
 - **Android -> Version Code:** It is mandatory to be superior to the latest published one and it is not associated with the version number. For example, if the previous version was: Version 1.1.2 Version Code 45, and you want to increment the version because of a small change, it should be Version 1.1.3 Version Code 46. You cannot start the version code to 1 if you change the version number.
+
+### Building production app bundles
+
+> **NOTE:**
+If you encounter an issue related to fingerprints while building for iOS, you might have to download an updated Apple Certificate. For more info see [this forum post](https://developer.apple.com/forums/thread/662300). You should ultimately download [the updated Developer Relations Intermediate Certificate](https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer).
+
+> **Warning**
+make sure you use the production commands in these steps so the built apps point to the production apis, have the production firebase configs etc ...
+
+#### iOS
+
+Running `yarn build:ios:prod` should generate a local build of the iOS bundle. The file will be called something like `build-1701795453442.ipa`.
+This file can be added to [the Transporter app](https://apps.apple.com/us/app/transporter/id1450874784) which allows you to send app bundles to AppStore Connect where you can manage them.
+
+#### Android
+
+You can either generate a `.apk` file so users can install it directly on their devices, or a `.abb` file that can be submitted to the PlayStore and downloaded by internal testers.
 
 ## Testing
 
@@ -95,4 +162,4 @@ Complete documentation to set up testing:
 
 - [https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project](https://docs.expo.dev/build-reference/e2e-tests/#1-initialize-a-new-bare-workflow-project)
 - [https://github.com/expo/config-plugins/tree/main/packages/detox](https://github.com/expo/config-plugins/tree/main/packages/detox)
-- [https://wix.github.io/Detox/docs/19.x/introduction/getting-started](https://wix.github.io/Detox/docs/introduction/getting-started)https://wix.github.io/Detox/docs/introduction/getting-started
+- [https://wix.github.io/Detox/docs/19.x/introduction/getting-started](https://wix.github.io/Detox/docs/introduction/getting-started)<https://wix.github.io/Detox/docs/introduction/getting-started>
