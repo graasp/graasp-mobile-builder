@@ -72,9 +72,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isError,
     refetch,
   } = hooks.useCurrentMember();
-  const authContext = useAuth();
+  const { userToken, signOut } = useAuth();
   const { navigate } = useNavigation<RootNavigationProp>();
-  const { userToken } = useAuth();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
@@ -325,7 +324,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           }
           testID={LOG_OUT_BUTTON}
           onPress={async () => {
-            await authContext.signOut();
+            await signOut();
             queryClient.resetQueries();
             navigate('SignIn');
           }}

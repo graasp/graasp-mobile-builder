@@ -44,8 +44,7 @@ export type SignInProps = StackScreenProps<
 
 const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const isSignUp = Boolean(params?.signUp);
-  const authContext = useAuth();
-  const { userToken, signIn: signInWithToken } = authContext;
+  const { userToken, signIn: signInWithToken } = useAuth();
   const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
   const { navigate } = useNavigation<RootNavigationProp>();
