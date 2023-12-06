@@ -19,6 +19,7 @@ interface AuthContextInterface {
     newRefreshToken: string,
   ) => object;
   userToken: string | null;
+  refreshToken: string | null;
   setUserToken: (t: string) => Promise<void>;
   getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
     authToken: string;
@@ -31,10 +32,15 @@ AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = (props: any) => {
   const [userToken, setUserTokenDispatch] = useState<string | null>(null);
+  const [refreshToken, setRefreshTokenDispatch] = useState<string | null>(null);
 
   const setUserToken = async (token: string) => {
     setUserTokenDispatch(token);
     await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
+  };
+  const setRefreshToken = async (token: string) => {
+    setRefreshTokenDispatch(token);
+    await SecureStore.setItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN, token);
   };
 
   useEffect(() => {
@@ -62,6 +68,7 @@ const AuthProvider = (props: any) => {
   const authContext: AuthContextInterface = useMemo(
     () => ({
       userToken,
+      refreshToken,
       setUserToken,
       signIn: async (data) => {
         try {
@@ -76,10 +83,7 @@ const AuthProvider = (props: any) => {
             const token = response.data?.authToken;
             const refreshToken = response.data?.refreshToken;
             await setUserToken(token);
-            await SecureStore.setItemAsync(
-              SECURE_STORE_VALUES.REFRESH_TOKEN,
-              refreshToken,
-            );
+            await setRefreshToken(refreshToken);
           }
         } catch {
           Toast.show({
@@ -97,11 +101,8 @@ const AuthProvider = (props: any) => {
         await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
       },
       restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
-        setUserToken(newAuthToken);
-        await SecureStore.setItemAsync(
-          SECURE_STORE_VALUES.REFRESH_TOKEN,
-          newRefreshToken,
-        );
+        await setUserToken(newAuthToken);
+        await setRefreshToken(newRefreshToken);
       },
       getAuthTokenByRefreshToken: async (refreshToken: string) => {
         const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {
