@@ -19,7 +19,7 @@ interface AuthContextInterface {
     newRefreshToken: string,
   ) => object;
   userToken: string | null;
-  setUserToken: React.Dispatch<string | null>;
+  setUserToken: (t: string) => Promise<void>;
   getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
     authToken: string;
     refreshToken: string;
@@ -30,24 +30,34 @@ const AuthContext = createContext<AuthContextInterface | null>(null);
 AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = (props: any) => {
-  const [userToken, setUserToken] = useState<string | null>(null);
+  const [userToken, setUserTokenDispatch] = useState<string | null>(null);
+
+  const setUserToken = async (token: string) => {
+    setUserTokenDispatch(token);
+    await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
+  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
-
       try {
-        userToken = await SecureStore.getItemAsync(
+        const userToken = await SecureStore.getItemAsync(
           SECURE_STORE_VALUES.AUTH_TOKEN,
         );
+        if (userToken) {
+          await setUserToken(userToken);
+        }
       } catch {
-        userToken = null;
+        await deleteUserToken();
       }
-      setUserToken(userToken);
     };
 
     bootstrapAsync();
   }, []);
+
+  const deleteUserToken = async () => {
+    setUserTokenDispatch(null);
+    await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
+  };
 
   const authContext: AuthContextInterface = useMemo(
     () => ({
@@ -65,11 +75,7 @@ const AuthProvider = (props: any) => {
           if (response.data?.authToken && response.data?.refreshToken) {
             const token = response.data?.authToken;
             const refreshToken = response.data?.refreshToken;
-            setUserToken(token);
-            await SecureStore.setItemAsync(
-              SECURE_STORE_VALUES.AUTH_TOKEN,
-              token,
-            );
+            await setUserToken(token);
             await SecureStore.setItemAsync(
               SECURE_STORE_VALUES.REFRESH_TOKEN,
               refreshToken,
@@ -86,17 +92,12 @@ const AuthProvider = (props: any) => {
       signOut: async () => {
         // TODO: add alert indicating automatic log out because refresh token has expired
         await axiosAuthInstance.get(`${API_HOST}/logout`);
-        setUserToken(null);
-        await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
+        await deleteUserToken();
         await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
         await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
       },
       restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
         setUserToken(newAuthToken);
-        await SecureStore.setItemAsync(
-          SECURE_STORE_VALUES.AUTH_TOKEN,
-          newAuthToken,
-        );
         await SecureStore.setItemAsync(
           SECURE_STORE_VALUES.REFRESH_TOKEN,
           newRefreshToken,
