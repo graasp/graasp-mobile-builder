@@ -52,7 +52,7 @@ module.exports = {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
     buildNumber: '1',
-    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST,
+    googleServicesFile: process.env.GOOGLE_SERVICE_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
       NSCameraUsageDescription:
@@ -60,18 +60,19 @@ module.exports = {
       NSPhotoLibraryUsageDescription:
         'Allow access to photos in order to upload photos from your library to Graasp. These photos can be then used within your account on Graasp.',
     },
-
-    // https://docs.expo.dev/versions/latest/sdk/securestore/#ios
-    usesNonExemptEncryption: false,
+    config: {
+      // https://docs.expo.dev/versions/latest/sdk/securestore/#ios
+      usesNonExemptEncryption: false,
+    },
   },
   android: {
-    versionCode: 17,
+    versionCode: 18,
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     package: 'org.graasp.mobile',
-    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_JSON,
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     intentFilters: [
       {
         action: 'VIEW',
