@@ -7669,10 +7669,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-status-bar@npm:~1.7.0":
-  version: 1.7.1
-  resolution: "expo-status-bar@npm:1.7.1"
-  checksum: 35b80df925144c6cae0160fc359eb32dac388ad0820a9cf9349112fb2f28ad3e3a973646c10415b99d50dea5dc80ab9125eb638c6934470c256e4f40e3c11e74
+"expo-status-bar@npm:~1.6.0":
+  version: 1.6.0
+  resolution: "expo-status-bar@npm:1.6.0"
+  checksum: ea390e22bba71d2fabfd44de6d9c1c54d8fc08b483a2eb7545ba2ac1d593601dfdecdccae47db9a27379636be9016121fb237d88798ca6ac8b572249b6faa672
   languageName: node
   linkType: hard
 
@@ -8512,7 +8512,7 @@ __metadata:
     expo-secure-store: "npm:~12.3.1"
     expo-sharing: "npm:~11.5.0"
     expo-splash-screen: "npm:~0.20.5"
-    expo-status-bar: "npm:~1.7.0"
+    expo-status-bar: "npm:~1.6.0"
     expo-system-ui: "npm:~2.4.0"
     expo-web-browser: "npm:~12.3.2"
     i18next: "npm:^23.7.6"
