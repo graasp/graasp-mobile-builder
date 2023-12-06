@@ -8,7 +8,9 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import {
   HOME_TAB,
   MY_ITEMS_TAB,
+  PROFILE_TAB,
   SHARED_ITEMS_TAB,
+  SIGN_IN_TAB,
 } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
@@ -126,6 +128,7 @@ const TabNavigator = () => {
                 />
               ),
               tabBarActiveTintColor: PRIMARY_COLOR,
+              tabBarTestID: PROFILE_TAB,
             }}
           />
         </>
@@ -151,6 +154,7 @@ const TabNavigator = () => {
               <MaterialIcons name="login" size={size} color={color} />
             ),
             tabBarActiveTintColor: PRIMARY_COLOR,
+            tabBarTestID: SIGN_IN_TAB,
           }}
         />
       )}

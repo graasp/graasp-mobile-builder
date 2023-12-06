@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,7 +12,11 @@ import { buildSignInPath } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
-import { SIGN_IN_BUTTON, SIGN_UP_BUTTON } from '../../e2e/constants/testIds';
+import {
+  SIGN_IN_BUTTON,
+  SIGN_IN_LATER_BUTTON,
+  SIGN_UP_BUTTON,
+} from '../../e2e/constants/testIds';
 import GraaspLogo from '../components/common/GraaspLogo';
 import {
   PLATFORM_OS,
@@ -22,6 +27,7 @@ import {
 import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
+import DetoxSignInButton from '../mocks/DetoxSignInButton';
 import type {
   RootNavigationProp,
   RootStackParamList,
@@ -43,7 +49,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
   const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
   const { navigate } = useNavigation<RootNavigationProp>();
-
+  const { t } = useTranslation();
   const { hooks } = useQueryClient();
   const { data: currentMember, refetch } = hooks.useCurrentMember();
 
@@ -125,6 +131,8 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
       </View>
 
       <View style={styles.buttons}>
+        {/* button for test */}
+        <DetoxSignInButton />
         <Button
           buttonStyle={{
             backgroundColor: '#fff',
@@ -134,7 +142,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             borderColor: '#fff',
           }}
           titleStyle={{ color: PRIMARY_COLOR, fontWeight: '700' }}
-          title="Sign in"
+          title={t('Sign in')}
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
           testID={SIGN_IN_BUTTON}
@@ -148,7 +156,7 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
               borderColor: '#fff',
             }}
             titleStyle={{ color: '#fff', fontWeight: '700' }}
-            title="Sign up"
+            title={t('Sign up')}
             disabled={isLoading}
             onPress={_handlePressSignUpButtonAsync}
             testID={SIGN_UP_BUTTON}
@@ -164,11 +172,12 @@ const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
             marginTop: 16,
           }}
           titleStyle={{ color: '#fff', fontWeight: '700' }}
-          title="Later"
+          title={t('Later')}
           disabled={isLoading}
           onPress={() => {
             navigate('Main');
           }}
+          testID={SIGN_IN_LATER_BUTTON}
         />
       </View>
     </SafeAreaView>

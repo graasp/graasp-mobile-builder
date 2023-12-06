@@ -20,6 +20,7 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { LOG_OUT_BUTTON } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
 import DeleteAccount from '../components/DeleteAccount';
 import LanguageSelector from '../components/LanguageSelector';
@@ -323,6 +324,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               size={25}
             />
           }
+          testID={LOG_OUT_BUTTON}
           onPress={async () => {
             await authContext.signOut();
             queryClient.resetQueries();

@@ -2,6 +2,7 @@ import { expect } from 'detox';
 
 import {
   ADD_ITEMS,
+  FOLDER_SCREEN_BACK_BUTTON,
   ITEM_LIST,
   ITEM_LIST_OPTIONS,
   ITEM_LIST_OPTIONS_DELETE,
@@ -11,6 +12,7 @@ import {
   SHARED_ITEMS_TAB,
 } from './constants/testIds';
 import FIXTURES from './fixtures/stage/structure.json';
+import { signIn, signOut } from './utils/auth';
 import { openApp } from './utils/openApp';
 
 describe('Check item options with ADMIN membership', () => {
@@ -20,8 +22,14 @@ describe('Check item options with ADMIN membership', () => {
 
   beforeAll(async () => {
     await openApp();
+    await signIn();
     await element(by.id(SHARED_ITEMS_TAB)).tap();
     await element(by.id(`${ITEM_LIST_OPTIONS}-${idx}`)).tap();
+  });
+
+  afterAll(async () => {
+    await element(by.id(FOLDER_SCREEN_BACK_BUTTON)).tap();
+    await signOut();
   });
 
   it('"Details" option should be visible for admin rights', async () => {
@@ -53,8 +61,13 @@ describe('Check item options with WRITE membership', () => {
   )!;
   beforeAll(async () => {
     await openApp();
+    await signIn();
     await element(by.id(SHARED_ITEMS_TAB)).tap();
     await element(by.id(`${ITEM_LIST_OPTIONS}-${idx}`)).tap();
+  });
+  afterAll(async () => {
+    await element(by.id(FOLDER_SCREEN_BACK_BUTTON)).tap();
+    await signOut();
   });
 
   it('"Details" option should be visible for write rights', async () => {
@@ -86,8 +99,12 @@ describe('Check item options with READ membership', () => {
   )!;
   beforeAll(async () => {
     await openApp();
+    await signIn();
     await element(by.id(SHARED_ITEMS_TAB)).tap();
     await element(by.id(`${ITEM_LIST_OPTIONS}-${idx}`)).tap();
+  });
+  afterAll(async () => {
+    await element(by.id(FOLDER_SCREEN_BACK_BUTTON)).tap();
   });
 
   it('"Details" option should be visible for read rights', async () => {

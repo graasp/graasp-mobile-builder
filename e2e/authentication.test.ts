@@ -1,47 +1,51 @@
 import { expect } from 'detox';
 
 import {
-  ADD_ITEMS,
-  CANCEL_CREATE_FOLDER,
-  CONFIRM_CREATE_FOLDER,
-  CONFIRM_DELETE_ITEM,
-  CONFIRM_EDIT_ITEM,
-  CREATE_FOLDER,
-  EDIT_ITEM_NAME_INPUT,
-  FOLDER_NAME_INPUT,
-  ITEM_LIST_OPTIONS,
-  ITEM_LIST_OPTIONS_DELETE,
-  ITEM_LIST_OPTIONS_DETAILS,
-  ITEM_LIST_OPTIONS_EDIT,
-  MY_ITEMS_TAB,
-  PDF_SHARE,
-  SLEEP_TIME_HEAVY_ITEMS,
+  PROFILE_TAB,
+  SIGN_IN_BUTTON,
+  SIGN_IN_LATER_BUTTON,
+  SIGN_IN_TAB,
+  URL_INPUT,
 } from './constants/testIds';
+import { signIn, signOut } from './utils/auth';
 import { openApp } from './utils/openApp';
-import { sleep } from './utils/utils';
-
-const FOLDER_NAME = 'Test folder by Detox';
-
-const createFolder = async (folderName: string) => {
-  await element(by.id(ADD_ITEMS)).tap();
-  await element(by.id(CREATE_FOLDER)).tap();
-  await expect(element(by.id(FOLDER_NAME_INPUT))).toBeVisible();
-  await expect(element(by.id(CONFIRM_CREATE_FOLDER))).toBeVisible();
-  await expect(element(by.id(CANCEL_CREATE_FOLDER))).toBeVisible();
-  await element(by.id(FOLDER_NAME_INPUT)).typeText(folderName);
-  await element(by.id(CONFIRM_CREATE_FOLDER)).tap();
-  await expect(element(by.id(ITEM_LIST_OPTIONS_EDIT))).not.toBeVisible();
-  await expect(element(by.text(folderName))).toBeVisible();
-};
 
 describe('Authentication', () => {
-  beforeAll(async () => {
+  it('Login goes to home page & Logout should return to sign in screen', async () => {
     await openApp();
-    await element(by.id(MY_ITEMS_TAB)).tap();
+
+    await signIn();
+
+    // goes to home
+    await expect(element(by.id(URL_INPUT))).toBeVisible();
+    await expect(element(by.id(PROFILE_TAB))).toBeVisible();
+
+    // !! we don't logout !!
   });
 
-  it(`Sign In`, async () => {
-    // create folder
-    await createFolder(FOLDER_NAME);
+  // this test cannot be played alone, it requires to be logged in at the beginning of the app
+  it('On open, user is signed in and goes to main directly', async () => {
+    await openApp();
+
+    // show  home with input url
+    await expect(element(by.id(URL_INPUT))).toBeVisible();
+
+    await signOut();
+    await expect(element(by.id(SIGN_IN_BUTTON))).toBeVisible();
+  });
+
+  describe('Start log out', () => {
+    beforeEach(async () => {
+      await openApp();
+    });
+
+    it('On open logged out user stay on sign in screen', async () => {
+      await expect(element(by.id(SIGN_IN_BUTTON))).toBeVisible();
+
+      await element(by.id(SIGN_IN_LATER_BUTTON)).tap();
+
+      await element(by.id(SIGN_IN_TAB)).tap();
+      await expect(element(by.id(SIGN_IN_BUTTON))).toBeVisible();
+    });
   });
 });
