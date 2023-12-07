@@ -23,6 +23,7 @@ import {
   VIDEO_SAVE,
   VIDEO_SHARE,
 } from './constants/testIds';
+import { signIn } from './utils/auth';
 import { openApp } from './utils/openApp';
 import { sleep } from './utils/utils';
 
@@ -43,6 +44,7 @@ const createFolder = async (folderName: string) => {
 describe('Create, edit and delete item folder', () => {
   beforeAll(async () => {
     await openApp();
+    await signIn();
     await element(by.id(MY_ITEMS_TAB)).tap();
   });
 
@@ -73,6 +75,7 @@ describe('Create, edit and delete item folder', () => {
 describe('Check item details screen', () => {
   beforeAll(async () => {
     await openApp();
+    await signIn();
   });
 
   it('Check detail screen', async () => {
@@ -94,6 +97,7 @@ describe('Check item details screen', () => {
 describe('Check files are loaded (screenshots)', () => {
   beforeEach(async () => {
     await openApp();
+    await signIn();
     await element(by.id(MY_ITEMS_TAB)).tap();
   });
 

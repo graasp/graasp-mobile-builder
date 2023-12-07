@@ -10,6 +10,11 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 
+import {
+  DETAILS_SCREEN_BACK_BUTTON,
+  FOLDER_SCREEN_BACK_BUTTON,
+  ITEM_SCREEN_BACK_BUTTON,
+} from '../../e2e/constants/testIds';
 import { PLAYER_COLOR, PRIMARY_COLOR } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -56,6 +61,7 @@ const CommonStackNavigator = () => {
         }) => ({
           title: headerTitle,
           headerTitleAlign: 'center',
+          headerBackTestID: FOLDER_SCREEN_BACK_BUTTON,
           headerBackTitleVisible: false,
         })}
       />
@@ -89,6 +95,7 @@ const CommonStackNavigator = () => {
           title: headerTitle,
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
+          headerBackTestID: ITEM_SCREEN_BACK_BUTTON,
           headerRight: () => (
             <Button
               disabled
@@ -111,6 +118,7 @@ const CommonStackNavigator = () => {
         options={{
           title: '',
           headerBackTitleVisible: false,
+          headerBackTestID: DETAILS_SCREEN_BACK_BUTTON,
         }}
       />
     </CommonStack.Navigator>

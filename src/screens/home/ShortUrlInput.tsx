@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
+import { URL_INPUT } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
 
 function ShortUrlInput() {
@@ -34,6 +35,7 @@ function ShortUrlInput() {
           autoCapitalize="none"
           autoCorrect={false}
           placeholderTextColor="#cccccc"
+          testID={URL_INPUT}
         />
       </View>
       <View

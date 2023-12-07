@@ -137,7 +137,7 @@ Detox framework needs to access native code to perform the tests, so it is neces
 
 ##### Prerequisites
 
-- Run `npx expo prebuild` to generate an `ios` and `android` folders that contain native projects. On iOS, it is necessary first to have Cocoapods installed on your macOS computer:
+- Run `prebuild:test:ios` and `prebuild:test:android` to generate an `ios` or `android` folders that contain native projects. On iOS, it is necessary first to have Cocoapods installed on your macOS computer:
   - Check you have the latest version of Ruby. The best way to install the latest version is through Homebrew `brew install cocoapods`. Remember to restart the Terminal or the computer to save the changes.
   - Install Cocoapods by running `sudo gem install` cocoapods and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
 - The tests uses a refresh token to access a test account. This account should already own the `e2e/fixtures/stage` structure.
@@ -147,10 +147,11 @@ Detox framework needs to access native code to perform the tests, so it is neces
 Once you have successfully generated the native projects in the `ios` and `android` folders, use the following commands:
 
 - Add the local environment variables before the build. You can use `.env.test`. `.env.development` takes precedence over `.env.test`!
-- Run `detox build --configuration <detox config>` to build the iOS or Android app inside its corresponding folder.
+- Run `yarn build:test:ios` or `yarn build:test:android` to build the iOS or Android app inside its corresponding folder.
 - Open the corresponding simulator and run `yarn start:test` to open the development server up.
-- Run `detox test --configuration <detox config>` to run the tests over the previously generated build.
-- When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
+- Run `yarn test:ios` or `yarn test:android` to run the tests over the previously generated build.
+
+When all tests have been executed, Detox saves screenshots of the failing ones in the folder `./artifacts`.
 
 Note: `<detox config>` is obtained from the `.detoxrc.js` configuration file, where you can edit the specific simulator you are using. It has been tested successfully using `iPhone 14` and `pixel_4` (API 33) simulators.
 

@@ -20,6 +20,7 @@ import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
+import { LOG_OUT_BUTTON } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
 import DeleteAccount from '../components/DeleteAccount';
 import LanguageSelector from '../components/LanguageSelector';
@@ -40,7 +41,6 @@ import type {
   RootStackParamList,
 } from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 
 type ProfileStackProfileProps = CompositeScreenProps<
   StackScreenProps<ProfileStackParamList>,
@@ -72,9 +72,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     isError,
     refetch,
   } = hooks.useCurrentMember();
-  const authContext = useAuth();
+  const { userToken, signOut } = useAuth();
   const { navigate } = useNavigation<RootNavigationProp>();
-  const userToken: any = getUserToken();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
@@ -323,8 +322,9 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
               size={25}
             />
           }
+          testID={LOG_OUT_BUTTON}
           onPress={async () => {
-            await authContext.signOut();
+            await signOut();
             queryClient.resetQueries();
             navigate('SignIn');
           }}

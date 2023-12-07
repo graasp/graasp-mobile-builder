@@ -29,8 +29,8 @@ import {
   STATUS_CODES_OK,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
+import { useAuth } from '../context/AuthContext';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { getUserToken } from '../utils/functions/token';
 import ActivityIndicator from './ActivityIndicator';
 import CreateFolder from './CreateFolder';
 import CustomBackdrop from './common/CustomBackdrop';
@@ -44,7 +44,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const bottomSheetAddItemModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
-  const token: any = getUserToken();
+  const { userToken: token } = useAuth();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const [createItemModalVisible, setCreateItemModalVisible] = useState<{

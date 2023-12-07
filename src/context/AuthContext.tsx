@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
@@ -12,7 +6,6 @@ import * as SecureStore from 'expo-secure-store';
 import { axiosAuthInstance } from '../config/axios';
 import {
   ANALYTICS_EVENTS,
-  AuthActionKind,
   SECURE_STORE_VALUES,
 } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
@@ -21,12 +14,10 @@ import { customAnalyticsEvent } from '../utils/functions/analytics';
 interface AuthContextInterface {
   signIn: (data: any) => Promise<void>;
   signOut: () => Promise<void>;
-  restoreUserRefreshToken: (
-    newAuthToken: string,
-    newRefreshToken: string,
-  ) => object;
-  state: AuthState;
-  dispatch: React.Dispatch<AuthAction>;
+  userToken: string | null;
+  refreshToken: string | null;
+  setUserToken: (t: string) => Promise<void>;
+  setRefreshToken: (t: string) => Promise<void>;
   getAuthTokenByRefreshToken: (refreshToken: string) => Promise<{
     authToken: string;
     refreshToken: string;
@@ -36,69 +27,51 @@ interface AuthContextInterface {
 const AuthContext = createContext<AuthContextInterface | null>(null);
 AuthContext.displayName = 'AuthContext';
 
-type AuthAction = {
-  type: AuthActionKind;
-  token: string | null;
-};
-
-type AuthState = {
-  isLoading: boolean;
-  isSignout: boolean;
-  userToken: string | null;
-};
-
-const initialCounterState: AuthState = {
-  isLoading: true,
-  isSignout: false,
-  userToken: null,
-};
-
 const AuthProvider = (props: any) => {
-  const [state, dispatch] = useReducer(
-    (prevState: AuthState, action: AuthAction): AuthState => {
-      switch (action.type) {
-        case AuthActionKind.RESTORE_TOKEN:
-          return {
-            ...prevState,
-            userToken: action.token,
-            isLoading: false,
-          };
-        case AuthActionKind.SIGN_IN:
-          return {
-            ...prevState,
-            isSignout: false,
-            userToken: action.token,
-          };
-        case AuthActionKind.SIGN_OUT:
-          return {
-            ...prevState,
-            isSignout: true,
-            userToken: null,
-          };
-      }
-    },
-    initialCounterState,
-  );
+  const [userToken, setUserTokenDispatch] = useState<string | null>(null);
+  const [refreshToken, setRefreshTokenDispatch] = useState<string | null>(null);
+
+  const setUserToken = async (token: string) => {
+    setUserTokenDispatch(token);
+    await SecureStore.setItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN, token);
+  };
+  const setRefreshToken = async (token: string) => {
+    setRefreshTokenDispatch(token);
+    await SecureStore.setItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN, token);
+  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
-
       try {
-        userToken = await SecureStore.getItemAsync(
+        const userToken = await SecureStore.getItemAsync(
           SECURE_STORE_VALUES.AUTH_TOKEN,
         );
+        if (userToken) {
+          await setUserToken(userToken);
+        }
       } catch {
-        userToken = null;
+        await deleteUserToken();
       }
-      dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: userToken });
     };
 
     bootstrapAsync();
   }, []);
 
+  const deleteUserToken = async () => {
+    setUserTokenDispatch(null);
+    await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
+  };
+  const deleteRefreshToken = async () => {
+    setRefreshTokenDispatch(null);
+    await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
+  };
+
   const authContext: AuthContextInterface = useMemo(
     () => ({
+      userToken,
+      refreshToken,
+      setUserToken,
+      setRefreshToken,
       signIn: async (data) => {
         try {
           const nonce = await SecureStore.getItemAsync(
@@ -111,15 +84,8 @@ const AuthProvider = (props: any) => {
           if (response.data?.authToken && response.data?.refreshToken) {
             const token = response.data?.authToken;
             const refreshToken = response.data?.refreshToken;
-            dispatch({ type: AuthActionKind.SIGN_IN, token });
-            await SecureStore.setItemAsync(
-              SECURE_STORE_VALUES.AUTH_TOKEN,
-              token,
-            );
-            await SecureStore.setItemAsync(
-              SECURE_STORE_VALUES.REFRESH_TOKEN,
-              refreshToken,
-            );
+            await setUserToken(token);
+            await setRefreshToken(refreshToken);
           }
         } catch {
           Toast.show({
@@ -132,21 +98,9 @@ const AuthProvider = (props: any) => {
       signOut: async () => {
         // TODO: add alert indicating automatic log out because refresh token has expired
         await axiosAuthInstance.get(`${API_HOST}/logout`);
-        dispatch({ type: AuthActionKind.SIGN_OUT, token: null });
-        await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.AUTH_TOKEN);
-        await SecureStore.deleteItemAsync(SECURE_STORE_VALUES.REFRESH_TOKEN);
+        await deleteUserToken();
+        await deleteRefreshToken();
         await customAnalyticsEvent(ANALYTICS_EVENTS.LOG_OUT);
-      },
-      restoreUserRefreshToken: async (newAuthToken, newRefreshToken) => {
-        dispatch({ type: AuthActionKind.RESTORE_TOKEN, token: newAuthToken });
-        await SecureStore.setItemAsync(
-          SECURE_STORE_VALUES.AUTH_TOKEN,
-          newAuthToken,
-        );
-        await SecureStore.setItemAsync(
-          SECURE_STORE_VALUES.REFRESH_TOKEN,
-          newRefreshToken,
-        );
       },
       getAuthTokenByRefreshToken: async (refreshToken: string) => {
         const res = await axiosAuthInstance.get(`${API_HOST}/m/auth/refresh`, {
@@ -158,11 +112,8 @@ const AuthProvider = (props: any) => {
         });
         return res.data;
       },
-
-      state,
-      dispatch,
     }),
-    [state],
+    [userToken],
   );
 
   return <AuthContext.Provider value={authContext} {...props} />;

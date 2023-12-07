@@ -25,8 +25,7 @@ const DeleteAccount: FC<DeleteAccountProps> = ({
 }) => {
   const { t } = useTranslation();
   const { mutations } = useQueryClient();
-  const authContext = useAuth();
-  const { signOut } = authContext;
+  const { signOut } = useAuth();
   const deleteMemberMutation = mutations.useDeleteMember();
 
   const deleteItem = async () => {
