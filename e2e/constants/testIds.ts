@@ -41,6 +41,9 @@ export const SIGN_IN_LATER_BUTTON = 'sign-in-later-button';
 export const FOLDER_SCREEN_BACK_BUTTON = 'folder-screen-back-button';
 export const DETAILS_SCREEN_BACK_BUTTON = 'details-screen-back-button';
 export const ITEM_SCREEN_BACK_BUTTON = 'item-screen-back-button';
+export const SCAN_QR_CODE_BUTTON = 'scan-qr-code-button';
+export const buildItemsListTestId = (id: string) => `items-list-${id}`;
+export const URL_INPUT_SUBMIT_BUTTON = 'url-input-submit-button';
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;

@@ -30,7 +30,9 @@ export const QrCameraScreen = ({
 
   const onBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
     // push intermediate state for go back to work
-    navigate('Main');
+    // todo: fix type
+    // @ts-ignore
+    navigate('MainStack');
 
     if (type === 'qr') {
       // todo: host manager

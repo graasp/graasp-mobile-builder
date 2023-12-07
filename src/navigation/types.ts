@@ -9,7 +9,7 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
 export type RootStackParamList = {
   SignIn?: { signUp?: boolean };
-  Main: undefined;
+  Main: NavigatorScreenParams<MainStackParamList>;
 };
 
 export type MainStackParamList = {

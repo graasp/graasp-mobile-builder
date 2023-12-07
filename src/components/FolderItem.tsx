@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompleteMember, DiscriminatedItem } from '@graasp/sdk';
 
@@ -15,6 +12,7 @@ import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembersh
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
+import PlayerButton from './common/PlayerButton';
 
 type Props = {
   item: DiscriminatedItem;
@@ -44,15 +42,22 @@ const FolderItem = ({ item }: Props) => {
   useFocusQuery(refetch);
   const navigation = useNavigation();
 
-  const { height } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
   useEffect(() => {
-    if (!headerTitle) {
+    if (item) {
       navigation.setOptions({
-        title: item?.name,
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            <PlayerButton
+              itemId={itemId}
+              name={item.name}
+              type={item.type}
+              color="white"
+            />
+          </View>
+        ),
       });
     }
-  }, [navigation, headerTitle]);
+  }, [navigation, item]);
 
   if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
     return <ActivityIndicator />;
@@ -86,6 +91,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#fff',
+  },
+  headerButtons: {
+    paddingRight: 10,
   },
 });
 

@@ -46,20 +46,6 @@ const ItemStackNavigator = () => {
           title: headerTitle,
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
-          headerRight: () => (
-            <Button
-              disabled
-              disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <MaterialIcons
-                  name={'ios-share'}
-                  color="rgba(255,255,255,0.3)"
-                  size={25}
-                  style={{ paddingRight: 3 }}
-                />
-              }
-            ></Button>
-          ),
         })}
       />
       <ItemStack.Screen

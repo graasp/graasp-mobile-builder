@@ -12,9 +12,16 @@ type Props = {
   type: DiscriminatedItem['type'];
   name: DiscriminatedItem['name'];
   size?: number;
+  color?: string;
 };
 
-const PlayerButton = ({ itemId, type, name, size = 24 }: Props) => {
+const PlayerButton = ({
+  itemId,
+  type,
+  name,
+  size = 24,
+  color = ITEMS_TABLE_ROW_ICON_COLOR,
+}: Props) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
@@ -47,7 +54,7 @@ const PlayerButton = ({ itemId, type, name, size = 24 }: Props) => {
       type="material"
       name="play-circle-outline"
       size={size}
-      color={ITEMS_TABLE_ROW_ICON_COLOR}
+      color={color}
       onPress={() => handleItemPress()}
       //   containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
     />

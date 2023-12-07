@@ -8,6 +8,7 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
+import { buildItemsListTestId } from '../../e2e/constants/testIds';
 import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
@@ -75,6 +76,7 @@ const ItemsList: FC<ItemsListProps> = ({
   return (
     <>
       <FlatList
+        testID={parentId ? buildItemsListTestId(parentId) : undefined}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}

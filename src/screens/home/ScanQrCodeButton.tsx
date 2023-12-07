@@ -9,6 +9,7 @@ import { Camera } from 'expo-camera';
 
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
+import { SCAN_QR_CODE_BUTTON } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
 import { MainStackScreenProps } from '../../navigation/types';
 
@@ -54,6 +55,7 @@ const ScanQrCodeButton = (): JSX.Element | null => {
         }
         title={t('Scan QR Code')}
         onPress={onPress}
+        testID={SCAN_QR_CODE_BUTTON}
       />
       {disabled && (
         <Text style={styles.permissionInfo}>
