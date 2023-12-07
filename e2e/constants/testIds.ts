@@ -44,6 +44,8 @@ export const ITEM_SCREEN_BACK_BUTTON = 'item-screen-back-button';
 export const SCAN_QR_CODE_BUTTON = 'scan-qr-code-button';
 export const buildItemsListTestId = (id: string) => `items-list-${id}`;
 export const URL_INPUT_SUBMIT_BUTTON = 'url-input-submit-button';
+export const buildPlayerButtonId = (id: string) => `palyer-button-${id}`;
+export const ITEM_SCREEN_ERROR = 'item-screen-error';
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;

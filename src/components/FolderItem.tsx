@@ -20,20 +20,19 @@ type Props = {
 
 const FolderItem = ({ item }: Props) => {
   const route = useRoute<ItemScreenProps<'ItemStackItem'>['route']>();
-  const { itemId, headerTitle } = route.params;
 
   const { hooks } = useQueryClient();
   const {
     data: itemMemberships,
     isLoading: isLoadingItemMemberships,
     isError: isErrorItemMemberships,
-  } = hooks.useItemMemberships(itemId);
+  } = hooks.useItemMemberships(item.id);
   const {
     data: children,
     isLoading,
     isError,
     refetch,
-  } = hooks.useChildren(itemId);
+  } = hooks.useChildren(item.id);
   const {
     data: currentMember,
     isLoading: isLoadingCurrentMember,
@@ -48,7 +47,7 @@ const FolderItem = ({ item }: Props) => {
         headerRight: () => (
           <View style={styles.headerButtons}>
             <PlayerButton
-              itemId={itemId}
+              itemId={item.id}
               name={item.name}
               type={item.type}
               color="white"
@@ -68,7 +67,7 @@ const FolderItem = ({ item }: Props) => {
   }
 
   const displayAddItem = checkWriteOrAdminItemMembership(
-    itemId,
+    item.id,
     (currentMember as CompleteMember)?.id,
     itemMemberships,
   );
@@ -76,7 +75,7 @@ const FolderItem = ({ item }: Props) => {
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
       <ItemsList
-        parentId={itemId}
+        parentId={item.id}
         items={[...children]}
         isLoading={isLoading}
         refresh={refetch}

@@ -4,6 +4,7 @@ import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { buildPlayerButtonId } from '../../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
 import { ItemScreenProps } from '../../navigation/types';
 
@@ -51,6 +52,7 @@ const PlayerButton = ({
 
   return (
     <MaterialIcons
+      testID={buildPlayerButtonId(itemId)}
       type="material"
       name="play-circle-outline"
       size={size}

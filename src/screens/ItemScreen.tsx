@@ -2,11 +2,13 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Context, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { ITEM_SCREEN_ERROR } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
 import AppItem from '../components/AppItem';
 import Document from '../components/Document';
@@ -24,6 +26,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
   const { setOptions } = useNavigation();
   useFocusQuery(refetch);
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (item) {
@@ -38,11 +41,19 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
   if (isError || !item) {
     setOptions({ title: t('Error') });
     return (
-      <Text h4 style={styles.error}>
-        {t(
-          `An error occured. This item with id '${itemId}' might not exist or you cannot access it.`,
-        )}
-      </Text>
+      <View
+        style={{
+          paddingTop: insets.top,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        }}
+      >
+        <Text testID={ITEM_SCREEN_ERROR} h4 style={styles.error}>
+          {t(
+            `An error occured. This item with id '${itemId}' might not exist or you cannot access it.`,
+          )}
+        </Text>
+      </View>
     );
   }
 
