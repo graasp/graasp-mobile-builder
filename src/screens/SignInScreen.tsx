@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
@@ -8,9 +8,6 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 
 import { buildSignInPath } from '@graasp/sdk';
-
-import { useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import {
   SIGN_IN_BUTTON,
@@ -28,10 +25,7 @@ import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
 import DetoxSignInButton from '../mocks/DetoxSignInButton';
-import type {
-  RootNavigationProp,
-  RootStackParamList,
-} from '../navigation/RootNavigator';
+import { RootStackScreenProps } from '../navigation/types';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { checkLoginUri } from '../utils/functions/helper';
 import { useAsync } from '../utils/hooks/useAsync';
@@ -44,7 +38,6 @@ const SignInScreen = ({
   const { userToken, signIn: signInWithToken } = useAuth();
   const deepLink = Linking.useURL();
   const { isLoading } = useAsync(null);
-  const { navigate } = useNavigation<RootNavigationProp>();
   const { t } = useTranslation();
   const { hooks } = useQueryClient();
   const { data: currentMember, refetch } = hooks.useCurrentMember();

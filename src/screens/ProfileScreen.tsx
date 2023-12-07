@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
@@ -33,6 +33,7 @@ import {
 import { API_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
+import { TabScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
 const ProfileScreen = () => {
@@ -58,7 +59,8 @@ const ProfileScreen = () => {
     refetch,
   } = hooks.useCurrentMember();
   const { userToken, signOut } = useAuth();
-  const { navigate } = useNavigation<RootNavigationProp>();
+  const { navigate } =
+    useNavigation<TabScreenProps<'ProfileTab'>['navigation']>();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
