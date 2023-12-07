@@ -3,10 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import MyItemsScreen from '../screens/MyItemsScreen';
-
-export type MyItemsStackParamList = {
-  MyItemsStack: undefined;
-};
+import { MyItemsStackParamList } from './types';
 
 const MyItemsStack = createStackNavigator<MyItemsStackParamList>();
 

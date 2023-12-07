@@ -9,7 +9,7 @@ export class GraaspBarCodeScanner extends React.PureComponent<{
   render() {
     const type = 'qr';
     const data =
-      'https://builder.stage.graasp.org/items/553d9d89-523e-4cb3-a16d-0b3498465568';
+      'https://library.dev.graasp.org/collections/bcbf59a7-6871-4217-9045-6bf0270ba4a6';
     this.props.onBarCodeScanned({ type, data });
     return <Text>Mocked BarCodeScanner</Text>;
   }

@@ -3,10 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import SharedScreen from '../screens/SharedScreen';
-
-export type SharedStackParamList = {
-  SharedStackShared: undefined;
-};
+import { SharedStackParamList } from './types';
 
 const SharedStack = createStackNavigator<SharedStackParamList>();
 

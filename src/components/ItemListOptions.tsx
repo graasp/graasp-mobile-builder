@@ -8,6 +8,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
+import { useNavigation } from '@react-navigation/native';
+
 import {
   ITEM_LIST_OPTIONS_DELETE,
   ITEM_LIST_OPTIONS_DETAILS,
@@ -24,6 +26,7 @@ import {
   VIEWS,
 } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import ActivityIndicator from './ActivityIndicator';
@@ -34,16 +37,16 @@ import EditItem from './EditItem';
 interface ItemListOptionsProps {
   itemSelected: DiscriminatedItem;
   bottomSheetModalRef: any;
-  navigation: any;
   refresh: () => void;
 }
 
 const ItemListOptions: FC<ItemListOptionsProps> = ({
   itemSelected,
   bottomSheetModalRef,
-  navigation,
   refresh,
 }) => {
+  const { navigate } =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { hooks } = useQueryClient();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -89,8 +92,8 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
 
   const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
     bottomSheetModalRef.current?.close();
-    navigation.push('CommonStack', {
-      screen: 'CommonStackDetail',
+    navigate('ItemStack', {
+      screen: 'ItemStackDetail',
       params: { itemId },
     });
   };

@@ -5,13 +5,23 @@ import { Button, Input } from 'react-native-elements';
 
 import { URL_INPUT } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
+import { TabScreenProps } from '../../navigation/types';
+import { getItemIdFromUrl } from '../../utils/functions/url';
 
 function ShortUrlInput() {
   const { t } = useTranslation();
   const [url, setUrl] = useState('');
+  const { navigate } = useNavigation<TabScreenProps<'HomeTab'>['navigation']>();
 
   const submitUrl = () => {
-    alert(url);
+    const itemId = getItemIdFromUrl(url);
+    if (itemId) {
+      setUrl('');
+      navigate('ItemStack', {
+        screen: 'ItemStackItem',
+        params: { itemId },
+      });
+    }
   };
 
   return (
@@ -24,6 +34,7 @@ function ShortUrlInput() {
         }}
       >
         <Input
+          value={url}
           onChangeText={(value) => setUrl(value)}
           style={{}}
           placeholder={t('link')}

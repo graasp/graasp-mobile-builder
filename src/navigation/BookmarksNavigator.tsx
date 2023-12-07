@@ -1,22 +1,12 @@
 import { useTranslation } from 'react-i18next';
 
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
-import BookmarksScreen, {
-  BookmarksStackProps,
-} from '../screens/bookmarks/BookmarksScreen';
+import BookmarksScreen from '../screens/bookmarks/BookmarksScreen';
+import { BookmarksStackParamList } from './types';
 
-export type BookmarksStackParamList = {
-  BookmarksStack: BookmarksStackProps;
-};
-
-export type BookmarksStackNavigationProp =
-  StackNavigationProp<BookmarksStackProps>;
 const Stack = createStackNavigator<BookmarksStackParamList>();
 
 const BookmarksStackNavigator = () => {

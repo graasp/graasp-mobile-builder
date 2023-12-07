@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigatorScreenParams } from '@react-navigation/native';
 
 import {
   HOME_TAB,
@@ -15,32 +14,13 @@ import {
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import LibraryIcon from '../screens/library/LibraryIcon';
-import BookmarksStackNavigator, {
-  BookmarksStackParamList,
-} from './BookmarksNavigator';
-import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
-import LibraryStackNavigator, {
-  LibraryStackParamList,
-} from './LibraryNavigator';
-import MyItemsStackNavigator, {
-  MyItemsStackParamList,
-} from './MyItemsStackNavigator';
-import ProfileStackNavigator, {
-  ProfileStackParamList,
-} from './ProfileStackNavigator';
-import SharedStackNavigator, {
-  SharedStackParamList,
-} from './SharedStackNavigator';
-
-export type TabParamList = {
-  HomeTab: NavigatorScreenParams<HomeStackParamList>;
-  MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
-  SharedTab: NavigatorScreenParams<SharedStackParamList>;
-  SignInTab: undefined;
-  ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
-  BookmarksTab: NavigatorScreenParams<BookmarksStackParamList>;
-  LibraryTab: NavigatorScreenParams<LibraryStackParamList>;
-};
+import BookmarksStackNavigator from './BookmarksNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
+import LibraryStackNavigator from './LibraryNavigator';
+import MyItemsStackNavigator from './MyItemsStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
+import SharedStackNavigator from './SharedStackNavigator';
+import { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const TabNavigator = () => {

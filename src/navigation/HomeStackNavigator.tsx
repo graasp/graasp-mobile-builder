@@ -1,17 +1,10 @@
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
-import HomeScreen, { HomeStackProps } from '../screens/home/HomeScreen';
+import HomeScreen from '../screens/home/HomeScreen';
+import { HomeStackParamList } from './types';
 
-export type HomeStackParamList = {
-  HomeStack: HomeStackProps;
-};
-
-export type HomeStackNavigationProp = StackNavigationProp<HomeStackProps>;
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {

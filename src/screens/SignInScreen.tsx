@@ -36,13 +36,10 @@ import { generateNonce } from '../utils/functions/generateNonce';
 import { checkLoginUri } from '../utils/functions/helper';
 import { useAsync } from '../utils/hooks/useAsync';
 
-export type SignInProps = StackScreenProps<
-  RootStackParamList,
-  'SignIn',
-  'RootStackNavigator'
->;
-
-const SignInScreen: FC<SignInProps> = ({ route: { params } }) => {
+const SignInScreen = ({
+  route: { params },
+  navigation: { navigate },
+}: RootStackScreenProps<'SignIn'>) => {
   const isSignUp = Boolean(params?.signUp);
   const { userToken, signIn: signInWithToken } = useAuth();
   const deepLink = Linking.useURL();

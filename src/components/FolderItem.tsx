@@ -1,39 +1,30 @@
-import { FC, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect } from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
-import { CompleteMember } from '@graasp/sdk';
+import { CompleteMember, DiscriminatedItem } from '@graasp/sdk';
 
-import { CompositeScreenProps, useRoute } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-import ActivityIndicator from '../components/ActivityIndicator';
-import ItemsList from '../components/ItemsList';
 import { useQueryClient } from '../context/QueryClientContext';
-import { CommonStackParamList } from '../navigation/CommonStackNavigator';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
+import ActivityIndicator from './ActivityIndicator';
+import ItemsList from './ItemsList';
 
-type CommonStackFolderProps = CompositeScreenProps<
-  StackScreenProps<
-    CommonStackParamList,
-    'CommonStackFolder',
-    'CommonStackNavigator'
-  >,
-  StackScreenProps<RootStackParamList>
->;
-type FolderScreenRouteProp = CommonStackFolderProps['route'];
+type Props = {
+  item: DiscriminatedItem;
+};
 
-const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
-  const route = useRoute<FolderScreenRouteProp>();
+const FolderItem = ({ item }: Props) => {
+  const route = useRoute<ItemScreenProps<'ItemStackItem'>['route']>();
   const { itemId, headerTitle } = route.params;
+
   const { hooks } = useQueryClient();
-  const {
-    data: item,
-    isLoading: isLoadingItem,
-    isError: isErrorItem,
-  } = hooks.useItem(itemId);
   const {
     data: itemMemberships,
     isLoading: isLoadingItemMemberships,
@@ -51,7 +42,10 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
   useFocusQuery(refetch);
+  const navigation = useNavigation();
 
+  const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     if (!headerTitle) {
       navigation.setOptions({
@@ -60,22 +54,11 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
     }
   }, [navigation, headerTitle]);
 
-  if (
-    isLoadingItem ||
-    isLoading ||
-    isLoadingItemMemberships ||
-    isLoadingCurrentMember
-  ) {
+  if (isLoading || isLoadingItemMemberships || isLoadingCurrentMember) {
     return <ActivityIndicator />;
   }
 
-  if (
-    isErrorItem ||
-    isError ||
-    isErrorItemMemberships ||
-    isErrorCurrentMember ||
-    !children
-  ) {
+  if (isError || isErrorItemMemberships || isErrorCurrentMember || !children) {
     return null;
   }
 
@@ -100,10 +83,10 @@ const FolderScreen: FC<CommonStackFolderProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: '#fff',
-    justifyContent: 'center',
   },
 });
 
-export default FolderScreen;
+export default FolderItem;

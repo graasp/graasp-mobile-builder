@@ -3,23 +3,16 @@ import { StyleSheet, View } from 'react-native';
 
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useIsFocused } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { GraaspBarCodeScanner } from '../mocks/camera';
-import {
-  MainStackNavigationProp,
-  MainStackNavigatorParamList,
-} from '../navigation/MainStackNavigator';
+import { MainStackScreenProps } from '../navigation/types';
+import { getItemIdFromUrl } from '../utils/functions/url';
 
-type StackItemProps = StackScreenProps<MainStackNavigatorParamList>;
-
-export type CameraViewNavigationProp = StackItemProps['navigation'];
-
-export const QrCameraScreen = () => {
-  const { goBack } = useNavigation<MainStackNavigationProp>();
-
+export const QrCameraScreen = ({
+  navigation: { goBack, navigate },
+}: MainStackScreenProps<'QrCamera'>) => {
   // only activate Camera when the app is focused and this screen is currently opened
   const isFocused = useIsFocused();
 
@@ -36,13 +29,21 @@ export const QrCameraScreen = () => {
   }, [isFocused]);
 
   const onBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+    // push intermediate state for go back to work
+    navigate('Main');
+
     if (type === 'qr') {
       // todo: host manager
       if (data.includes('graasp.org')) {
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        // navigate('CommonStackItem', {
-        //   itemId: '553d9d89-523e-4cb3-a16d-0b3498465568',
-        // });
+        const itemId = getItemIdFromUrl(data);
+        if (itemId) {
+          navigate('ItemStack', {
+            screen: 'ItemStackItem',
+            params: {
+              itemId,
+            },
+          });
+        }
       }
     }
     // todo: get value and navigate

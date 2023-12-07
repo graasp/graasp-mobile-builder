@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { UNSUPPORTED_SHARE } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
-import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { ItemScreenProps } from '../navigation/types';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
@@ -19,7 +19,8 @@ interface FileImageProps {
 }
 
 const FileImage: FC<FileImageProps> = ({ handleShareFile, isPlayerView }) => {
-  const navigation = useNavigation<ItemScreenNavigationProp>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { t } = useTranslation();
 
   useEffect(() => {

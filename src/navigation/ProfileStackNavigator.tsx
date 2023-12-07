@@ -3,10 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import ProfileScreen from '../screens/ProfileScreen';
-
-export type ProfileStackParamList = {
-  ProfileStackProfile: undefined;
-};
+import { ProfileStackParamList } from './types';
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
 

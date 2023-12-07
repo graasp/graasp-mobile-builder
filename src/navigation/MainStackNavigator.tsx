@@ -1,22 +1,12 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
 import QrCameraScreen from '../screens/QrCameraScreen';
-import TabNavigator, { TabParamList } from './TabNavigator';
+import ItemStackNavigator from './ItemStackNavigator';
+import TabNavigator from './TabNavigator';
+import { MainStackParamList } from './types';
 
-export type MainStackNavigatorParamList = {
-  MainStack: NavigatorScreenParams<TabParamList>;
-  QrCamera: undefined;
-  ItemStack: undefined;
-};
-
-export type MainStackNavigationProp =
-  StackNavigationProp<MainStackNavigatorParamList>;
-const MainStack = createStackNavigator<MainStackNavigatorParamList>();
+const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainStackNavigator = () => {
   const screenOptions = { headerShown: false, ...defaultScreenOptions };
@@ -44,6 +34,7 @@ const MainStackNavigator = () => {
           headerBackTitleVisible: false,
         })}
       />
+      <MainStack.Screen name="ItemStack" component={ItemStackNavigator} />
     </MainStack.Navigator>
   );
 };

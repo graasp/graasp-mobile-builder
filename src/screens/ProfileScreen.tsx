@@ -17,8 +17,7 @@ import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import { LOG_OUT_BUTTON } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -34,23 +33,9 @@ import {
 import { API_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import type { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
-import type { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
-import type {
-  RootNavigationProp,
-  RootStackParamList,
-} from '../navigation/RootNavigator';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
-type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<ProfileStackParamList>,
-  CompositeScreenProps<
-    StackScreenProps<MainStackNavigatorParamList>,
-    StackScreenProps<RootStackParamList>
-  >
->;
-
-const ProfileScreen: FC<ProfileStackProfileProps> = () => {
+const ProfileScreen = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();

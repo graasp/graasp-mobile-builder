@@ -10,14 +10,15 @@ import { Camera } from 'expo-camera';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../../config/constants/constants';
-import { MainStackNavigationProp } from '../../navigation/MainStackNavigator';
+import { MainStackScreenProps } from '../../navigation/types';
 
 const ScanQrCodeButton = (): JSX.Element | null => {
   const { t } = useTranslation();
 
   const [permission] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(false);
-  const { navigate } = useNavigation<MainStackNavigationProp>();
+  const { navigate } =
+    useNavigation<MainStackScreenProps<'QrCamera'>['navigation']>();
 
   // only activate Camera when the app is focused and this screen is currently opened
   const isFocused = useIsFocused();

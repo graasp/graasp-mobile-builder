@@ -10,15 +10,10 @@ import {
 
 import { Category, CategoryType, DiscriminatedItem } from '@graasp/sdk';
 
-import { StackScreenProps } from '@react-navigation/stack';
-
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { useQueryClient } from '../../context/QueryClientContext';
-import type { LibraryStackParamList } from '../../navigation/LibraryNavigator';
 import CollectionCard from './CollectionCard';
 import SearchFilterButton from './SearchFilterButton';
-
-export type LibraryStackProps = StackScreenProps<LibraryStackParamList>;
 
 const LibraryScreen = () => {
   const { hooks } = useQueryClient();
