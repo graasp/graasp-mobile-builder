@@ -73,7 +73,7 @@ const EditItem: FC<EditItemProps> = ({
         />
       </View>
       <Button
-        title="Cancel"
+        title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
         onPress={() => setEditItemModalVisible({ toggle: false, itemId: null })}

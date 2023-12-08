@@ -99,7 +99,7 @@ function BookmarkListItem({ item }: Props) {
       />
       <ListItem.Content style={{ flexDirection: 'row' }}>
         <ListItem.Title style={{ flex: 2 }}>
-          {isBookmarked ? t('Remove from Bookmarks') : t('Bookmark')}
+          {isBookmarked ? t('Remove from Bookmarks') : t('Add to Bookmarks')}
         </ListItem.Title>
       </ListItem.Content>
     </ListItem>

@@ -134,7 +134,7 @@ const SignInScreen = ({
             borderColor: '#fff',
           }}
           titleStyle={{ color: PRIMARY_COLOR, fontWeight: '700' }}
-          title={t('Sign in')}
+          title={t('I already have an account')}
           disabled={isLoading}
           onPress={_handlePressLoginButtonAsync}
           testID={SIGN_IN_BUTTON}
@@ -148,7 +148,7 @@ const SignInScreen = ({
               borderColor: '#fff',
             }}
             titleStyle={{ color: '#fff', fontWeight: '700' }}
-            title={t('Sign up')}
+            title={t(`Create a new account`)}
             disabled={isLoading}
             onPress={_handlePressSignUpButtonAsync}
             testID={SIGN_UP_BUTTON}

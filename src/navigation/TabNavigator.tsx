@@ -48,36 +48,13 @@ const TabNavigator = () => {
       <Tab.Screen
         name={TAB_NAVIGATOR_HOME}
         component={HomeStackNavigator}
-        options={({ route }) => ({
+        options={() => ({
           tabBarLabel: t('Home'),
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
           ),
           tabBarActiveTintColor: PRIMARY_COLOR,
           tabBarTestID: HOME_TAB,
-        })}
-      />
-      <Tab.Screen
-        name={TAB_NAVIGATOR_BOOKMARKS}
-        component={BookmarksStackNavigator}
-        options={({ route }) => ({
-          tabBarLabel: t('Bookmarks'),
-          tabBarIcon: ({ color, size }) => (
-            <Entypo name="bookmarks" size={size} color={color} />
-          ),
-          tabBarActiveTintColor: PRIMARY_COLOR,
-        })}
-      />
-      <Tab.Screen
-        name={TAB_NAVIGATOR_LIBRARY}
-        component={LibraryStackNavigator}
-        options={() => ({
-          tabBarLabel: t('Library'),
-          tabBarIcon: ({ focused }) => (
-            <LibraryIcon primaryColor={focused ? PRIMARY_COLOR : 'grey'} />
-          ),
-
-          tabBarActiveTintColor: PRIMARY_COLOR,
         })}
       />
       {currentMember ? (
@@ -106,6 +83,33 @@ const TabNavigator = () => {
               tabBarTestID: SHARED_ITEMS_TAB,
             }}
           />
+        </>
+      ) : null}
+      <Tab.Screen
+        name={TAB_NAVIGATOR_BOOKMARKS}
+        component={BookmarksStackNavigator}
+        options={({ route }) => ({
+          tabBarLabel: t('Bookmarks'),
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="bookmarks" size={size} color={color} />
+          ),
+          tabBarActiveTintColor: PRIMARY_COLOR,
+        })}
+      />
+      <Tab.Screen
+        name={TAB_NAVIGATOR_LIBRARY}
+        component={LibraryStackNavigator}
+        options={() => ({
+          tabBarLabel: t('Library'),
+          tabBarIcon: ({ focused }) => (
+            <LibraryIcon primaryColor={focused ? PRIMARY_COLOR : 'grey'} />
+          ),
+
+          tabBarActiveTintColor: PRIMARY_COLOR,
+        })}
+      />
+      {currentMember ? (
+        <>
           <Tab.Screen
             name={TAB_NAVIGATOR_PROFILE}
             component={ProfileStackNavigator}

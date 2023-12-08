@@ -63,7 +63,7 @@ function ShortUrlInput() {
         }}
       >
         <Button
-          title="Submit"
+          title={t('Submit')}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={submitUrl}
           testID={URL_INPUT_SUBMIT_BUTTON}
