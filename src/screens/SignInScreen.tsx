@@ -47,7 +47,7 @@ const SignInScreen = ({
     if (currentMember) {
       // todo: fix type
       // @ts-ignore
-      navigate('MainStack');
+      navigate('Main');
     }
   }, [currentMember]);
 
@@ -168,7 +168,7 @@ const SignInScreen = ({
           onPress={() => {
             // todo: fix type
             // @ts-ignore
-            navigate('MainStack');
+            navigate('Main');
           }}
           testID={SIGN_IN_LATER_BUTTON}
         />
