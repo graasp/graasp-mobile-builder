@@ -1,11 +1,10 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
-import { QueryClient } from 'react-query';
 
 import * as SecureStore from 'expo-secure-store';
 
-import { QueryClientConfig, configureQueryClient } from '@graasp/query-client';
+import { configureQueryClient } from '@graasp/query-client';
 
 import { SECURE_STORE_VALUES } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
@@ -13,14 +12,16 @@ import { useAuth } from './AuthContext';
 
 export const QueryClientContext = createContext<{
   queryConfig: ReturnType<typeof configureQueryClient>['queryConfig'];
-  queryClient: QueryClient;
+  queryClient: ReturnType<typeof configureQueryClient>['queryClient'];
   hooks: ReturnType<typeof configureQueryClient>['hooks'];
   mutations: ReturnType<typeof configureQueryClient>['mutations'];
 }>({
-  queryConfig: {} as QueryClientConfig,
-  queryClient: {} as QueryClient,
-  hooks: {} as unknown as any,
-  mutations: {} as unknown as any,
+  queryConfig: {} as ReturnType<typeof configureQueryClient>['queryConfig'],
+  queryClient: {} as ReturnType<typeof configureQueryClient>['queryClient'],
+  hooks: {} as unknown as ReturnType<typeof configureQueryClient>['hooks'],
+  mutations: {} as unknown as ReturnType<
+    typeof configureQueryClient
+  >['mutations'],
 });
 
 export const QueryClientProvider = ({ children }: any) => {

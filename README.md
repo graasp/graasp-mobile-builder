@@ -53,6 +53,9 @@ EXPO_PUBLIC_SHORT_HOST=http://localhost:8888
 EXPO_PUBLIC_API_HOST=http://localhost:3000
 # optionally provide the Auth frontend base url
 EXPO_PUBLIC_AUTH_HOST=http://localhost:3001
+
+# Optional
+EXPO_PUBLIC_CAMERA_ITEM_URL=some-url
 ```
 
 Save the `GoogleService-Info.plist` and `google-services.json` files somewhere in your computer and copy the absolute path into the env variables. :warning: It is not advised to put them at the root of the project.

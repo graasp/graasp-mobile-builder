@@ -10,7 +10,6 @@ export const ID_FORMAT = '(?=.*[0-9])(?=.*[a-zA-Z])([a-z0-9-]+)';
 export const getItemIdFromUrl = (url: string): string | null => {
   try {
     const obj = new URL(url);
-    console.log(BUILDER_HOST, PLAYER_HOST, LIBRARY_HOST, SHORT_HOST);
     // validate host
     if (
       ![BUILDER_HOST, PLAYER_HOST, LIBRARY_HOST, SHORT_HOST].some((host) =>

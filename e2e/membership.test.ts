@@ -11,7 +11,7 @@ import {
   ITEM_LIST_OPTIONS_SHARE,
   SHARED_ITEMS_TAB,
 } from './constants/testIds';
-import FIXTURES from './fixtures/stage/structure.json';
+import FIXTURES from './fixtures/stage/structure';
 import { signIn, signOut } from './utils/auth';
 import { openApp } from './utils/openApp';
 

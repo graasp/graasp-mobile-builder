@@ -1,3 +1,4 @@
+import { LaunchArgs } from '../../src/mocks/types';
 import { SLEEP_TIME_OPEN_APP } from '../constants/testIds';
 import { getAppId, sleep } from './utils';
 
@@ -5,20 +6,23 @@ const { resolveConfig } = require('detox/internals');
 
 const platform = device.getPlatform();
 
-export const openApp = async () => {
+export const openApp = async ({
+  launchArgs = {},
+}: { launchArgs?: LaunchArgs } = {}) => {
   const { configurationName } = await resolveConfig();
   if (configurationName.split('.')[1] === 'debug') {
-    return await openAppForDebugBuild(platform);
+    return await openAppForDebugBuild(platform, launchArgs);
   } else {
     return await device.launchApp({
       newInstance: true,
       // works only on ios?
+      launchArgs,
       permissions: { camera: 'YES' },
     });
   }
 };
 
-async function openAppForDebugBuild(platform: string) {
+async function openAppForDebugBuild(platform: string, launchArgs: LaunchArgs) {
   const deepLinkUrl = process.env.EXPO_USE_UPDATES
     ? // Testing latest published EAS update for the test_debug channel
       getDeepLinkUrl(getLatestUpdateUrl())
@@ -28,6 +32,7 @@ async function openAppForDebugBuild(platform: string) {
   if (platform === 'ios') {
     await device.launchApp({
       newInstance: true,
+      launchArgs,
       // works only on ios?
       permissions: { camera: 'YES' },
     });
@@ -39,6 +44,7 @@ async function openAppForDebugBuild(platform: string) {
     await device.launchApp({
       newInstance: true,
       url: deepLinkUrl,
+      launchArgs,
       // works only on ios?
       permissions: { camera: 'YES' },
     });

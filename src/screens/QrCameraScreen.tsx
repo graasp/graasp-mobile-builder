@@ -36,17 +36,17 @@ export const QrCameraScreen = ({
 
     if (type === 'qr') {
       // todo: host manager
-      if (data.includes('graasp.org')) {
-        const itemId = getItemIdFromUrl(data);
-        if (itemId) {
-          navigate('ItemStack', {
-            screen: 'ItemStackItem',
-            params: {
-              itemId,
-            },
-          });
-        }
+      const itemId = getItemIdFromUrl(data);
+      if (itemId) {
+        navigate('ItemStack', {
+          screen: 'ItemStackItem',
+          params: {
+            itemId,
+          },
+        });
       }
+    } else {
+      console.error(`scanned code is of type ${type}`);
     }
     // todo: get value and navigate
   };

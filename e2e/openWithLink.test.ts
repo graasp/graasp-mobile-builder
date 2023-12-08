@@ -10,17 +10,23 @@ import {
   buildItemsListTestId,
   buildPlayerButtonId,
 } from './constants/testIds';
+import FIXTURES from './fixtures/stage/structure';
 import { signIn } from './utils/auth';
 import { openApp } from './utils/openApp';
 
-const url =
-  'https://library.stage.graasp.org/collections/9214ad4e-48ca-4aa5-9a9c-c9bfd4cb19d3';
-const item: DiscriminatedItem = {
-  id: '9214ad4e-48ca-4aa5-9a9c-c9bfd4cb19d3',
-  name: 'Super sample collection',
-} as DiscriminatedItem;
+const item = FIXTURES.items[3] as unknown as DiscriminatedItem;
+const libraryUrl = `${process.env.EXPO_PUBLIC_LIBRARY_HOST}/collections/${item.id}`;
 
-const expectBuilderFolderScreen = async (item: DiscriminatedItem) => {
+// we rely on the fact that no item with this id exists
+const wrongUrl = `${process.env.EXPO_PUBLIC_LIBRARY_HOST}/collections/ef97abd5-770c-46f0-b773-04fcc8945fea`;
+
+const notAnItemUrl = `${process.env.EXPO_PUBLIC_LIBRARY_HOST}/collections`;
+const nonGraaspUrl = `https://no.graasp.org/ef97abd5-770c-46f0-b773-04fcc8945fea`;
+
+const expectBuilderFolderScreen = async (item: {
+  id: string;
+  name: string;
+}) => {
   await expect(element(by.id(buildItemsListTestId(item.id)))).toBeVisible();
   await expect(element(by.id(buildItemsListTestId(item.id)))).toBeVisible();
   await expect(element(by.text(item.name))).toBeVisible();
@@ -28,15 +34,55 @@ const expectBuilderFolderScreen = async (item: DiscriminatedItem) => {
 };
 
 describe('Camera QR Scan', () => {
-  beforeEach(async () => {
-    await openApp();
-    await signIn();
-  });
-
   it(`Camera redirect to item in builder mode`, async () => {
+    await openApp({ launchArgs: { cameraItemUrl: libraryUrl } });
+    await signIn();
     await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
 
     await expectBuilderFolderScreen(item);
+  });
+
+  it(`Url input redirects to error item for incorrect/unknown id`, async () => {
+    await openApp({ launchArgs: { cameraItemUrl: wrongUrl } });
+    await signIn();
+
+    await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
+
+    await expect(element(by.id(ITEM_SCREEN_ERROR))).toBeVisible();
+  });
+
+  it(`Url input shows alert for incorrect url`, async () => {
+    await openApp({ launchArgs: { cameraItemUrl: notAnItemUrl } });
+    await signIn();
+
+    await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
+
+    // show alert
+    // duplicate because of mock
+    await expect(element(by.text('OK')).atIndex(0)).toBeVisible();
+  });
+
+  it(`Url input shows alert for non-graasp url`, async () => {
+    await openApp({ launchArgs: { cameraItemUrl: nonGraaspUrl } });
+    await signIn();
+
+    await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
+
+    // show alert
+    // duplicate because of mock
+    await expect(element(by.text('OK')).atIndex(0)).toBeVisible();
+  });
+
+  it(`Url input shows alert for non url`, async () => {
+    const noUrl = `some-text`;
+    await openApp({ launchArgs: { cameraItemUrl: noUrl } });
+    await signIn();
+
+    await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
+
+    // show alert
+    // duplicate because of mock
+    await expect(element(by.text('OK')).atIndex(0)).toBeVisible();
   });
 });
 
@@ -47,7 +93,7 @@ describe('Url input', () => {
   });
 
   it(`Url input redirects to item in builder mode`, async () => {
-    await element(by.id(URL_INPUT)).typeText(url);
+    await element(by.id(URL_INPUT)).typeText(libraryUrl);
 
     await element(by.id(URL_INPUT_SUBMIT_BUTTON)).tap();
 
@@ -55,8 +101,6 @@ describe('Url input', () => {
   });
 
   it(`Url input redirects to error item for incorrect/unknown id`, async () => {
-    // we rely on the fact that no item with this id exists
-    const wrongUrl = `https://library.stage.graasp.org/collections/ef97abd5-770c-46f0-b773-04fcc8945fea`;
     await element(by.id(URL_INPUT)).typeText(wrongUrl);
 
     await element(by.id(URL_INPUT_SUBMIT_BUTTON)).tap();
@@ -65,15 +109,13 @@ describe('Url input', () => {
   });
 
   it(`Url input shows alert for incorrect url`, async () => {
-    const wrongUrl = `https://library.stage.graasp.org/collections`;
-    await element(by.id(URL_INPUT)).typeText(wrongUrl);
+    await element(by.id(URL_INPUT)).typeText(notAnItemUrl);
 
     await element(by.id(URL_INPUT_SUBMIT_BUTTON)).tap();
 
     // show alert and close it
     await element(by.text('OK')).tap();
 
-    const nonGraaspUrl = `https://no.graasp.org/ef97abd5-770c-46f0-b773-04fcc8945fea`;
     await element(by.id(URL_INPUT)).clearText();
     await element(by.id(URL_INPUT)).typeText(nonGraaspUrl);
 

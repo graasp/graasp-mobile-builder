@@ -45,7 +45,9 @@ const SignInScreen = ({
   // redirect to main if member is signed in
   useEffect(() => {
     if (currentMember) {
-      navigate('Main');
+      // todo: fix type
+      // @ts-ignore
+      navigate('MainStack');
     }
   }, [currentMember]);
 
@@ -164,7 +166,9 @@ const SignInScreen = ({
           title={t('Later')}
           disabled={isLoading}
           onPress={() => {
-            navigate('Main');
+            // todo: fix type
+            // @ts-ignore
+            navigate('MainStack');
           }}
           testID={SIGN_IN_LATER_BUTTON}
         />
