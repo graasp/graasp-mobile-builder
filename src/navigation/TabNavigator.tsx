@@ -75,7 +75,7 @@ const TabNavigator = () => {
             name={TAB_NAVIGATOR_SHARED}
             component={SharedStackNavigator}
             options={{
-              tabBarLabel: t('Shared Items'),
+              tabBarLabel: t('Shared'),
               tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="folder-shared" size={size} color={color} />
               ),

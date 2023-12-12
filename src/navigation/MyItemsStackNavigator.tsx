@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
@@ -9,6 +11,7 @@ import { MyItemsStackParamList } from './types';
 const MyItemsStack = createStackNavigator<MyItemsStackParamList>();
 
 const MyItemsStackNavigator = () => {
+  const { t } = useTranslation();
   return (
     <MyItemsStack.Navigator
       id={MY_ITEMS_NAVIGATOR}
@@ -20,7 +23,7 @@ const MyItemsStackNavigator = () => {
         component={MyItemsScreen}
         options={{
           title: '',
-          headerLeft: () => <Header title="My Items" />,
+          headerLeft: () => <Header title={t('My Items')} />,
           headerLeftContainerStyle: { paddingLeft: 10 },
         }}
       />
