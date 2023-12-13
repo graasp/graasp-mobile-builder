@@ -5,7 +5,8 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { LibraryStackNavigationProp } from '../../navigation/LibraryNavigator';
+import { LIBRARY_NAVIGATOR_COLLECTION } from '../../navigation/names';
+import { LibraryScreenProp } from '../../navigation/types';
 import CollectionCreator from './CollectionCreator';
 import CollectionThumbnail from './CollectionThumbnail';
 import Tags from './Tags';
@@ -15,12 +16,13 @@ type Props = {
 };
 
 const CollectionCard = ({ item }: Props) => {
-  const { navigate } = useNavigation<LibraryStackNavigationProp>();
+  const { navigate } =
+    useNavigation<LibraryScreenProp<'CollectionStack'>['navigation']>();
 
   return (
     <TouchableOpacity
       onPress={() => {
-        navigate('CollectionStack', { itemId: item.id });
+        navigate(LIBRARY_NAVIGATOR_COLLECTION, { itemId: item.id });
       }}
     >
       {/* @ts-ignore */}

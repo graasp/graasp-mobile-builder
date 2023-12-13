@@ -9,15 +9,18 @@ import { Camera } from 'expo-camera';
 
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 
+import { SCAN_QR_CODE_BUTTON } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
-import { MainStackNavigationProp } from '../../navigation/MainStackNavigator';
+import { MAIN_NAVIGATOR_QR_CAMERA } from '../../navigation/names';
+import { MainStackScreenProps } from '../../navigation/types';
 
 const ScanQrCodeButton = (): JSX.Element | null => {
   const { t } = useTranslation();
 
   const [permission] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(false);
-  const { navigate } = useNavigation<MainStackNavigationProp>();
+  const { navigate } =
+    useNavigation<MainStackScreenProps<'QrCamera'>['navigation']>();
 
   // only activate Camera when the app is focused and this screen is currently opened
   const isFocused = useIsFocused();
@@ -35,7 +38,7 @@ const ScanQrCodeButton = (): JSX.Element | null => {
 
   const onPress = () => {
     console.debug('open camera');
-    navigate('QrCamera');
+    navigate(MAIN_NAVIGATOR_QR_CAMERA);
   };
 
   return (
@@ -53,6 +56,7 @@ const ScanQrCodeButton = (): JSX.Element | null => {
         }
         title={t('Scan QR Code')}
         onPress={onPress}
+        testID={SCAN_QR_CODE_BUTTON}
       />
       {disabled && (
         <Text style={styles.permissionInfo}>

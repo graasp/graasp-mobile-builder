@@ -3,15 +3,31 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
-import { URL_INPUT } from '../../../e2e/constants/testIds';
+import { useNavigation } from '@react-navigation/native';
+
+import {
+  URL_INPUT,
+  URL_INPUT_SUBMIT_BUTTON,
+} from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
+import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../../navigation/names';
+import { TabScreenProps } from '../../navigation/types';
+import { getItemIdFromUrl } from '../../utils/functions/url';
 
 function ShortUrlInput() {
   const { t } = useTranslation();
   const [url, setUrl] = useState('');
+  const { navigate } = useNavigation<TabScreenProps<'HomeTab'>['navigation']>();
 
   const submitUrl = () => {
-    alert(url);
+    const itemId = getItemIdFromUrl(url);
+    if (itemId) {
+      setUrl('');
+      navigate(ITEM_NAVIGATOR, {
+        screen: ITEM_NAVIGATOR_ITEM,
+        params: { itemId },
+      });
+    }
   };
 
   return (
@@ -24,6 +40,7 @@ function ShortUrlInput() {
         }}
       >
         <Input
+          value={url}
           onChangeText={(value) => setUrl(value)}
           style={{}}
           placeholder={t('link')}
@@ -49,6 +66,7 @@ function ShortUrlInput() {
           title="Submit"
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={submitUrl}
+          testID={URL_INPUT_SUBMIT_BUTTON}
         />
       </View>
     </View>

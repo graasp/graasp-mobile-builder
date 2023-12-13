@@ -2,17 +2,16 @@ import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 
-import { MaterialIcons } from '@expo/vector-icons';
-
 import { DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
-import { PlayerFolderScreenRouteProp } from '../navigation/CommonStackNavigator';
-import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
+import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../navigation/names';
+import { ItemScreenProps } from '../navigation/types';
 import ItemIcon from './ItemIcon';
+import PlayerButton from './common/PlayerButton';
 
 interface ItemProps {
   item: DiscriminatedItem;
@@ -27,38 +26,13 @@ const Item: FC<ItemProps> = ({
   index,
   parentItemId,
 }) => {
-  const { navigate } = useNavigation<MyItemsStackPropsNavigationProp>();
-  const { params } = useRoute<PlayerFolderScreenRouteProp>();
-  async function handleItemPress(isPlayer: boolean) {
-    switch (type) {
-      case ItemType.FOLDER:
-        if (isPlayer) {
-          navigate('CommonStack', {
-            screen: 'CommonStackPlayerFolder',
-            params: {
-              itemId: id,
-              headerTitle: name,
-              builderItemId: params?.builderItemId || parentItemId,
-            },
-          });
-        } else {
-          navigate('CommonStack', {
-            screen: 'CommonStackFolder',
-            params: { itemId: id, headerTitle: name },
-          });
-        }
-
-        break;
-      case ItemType.LINK:
-      case ItemType.APP:
-      case ItemType.DOCUMENT:
-      case ItemType.S3_FILE:
-        navigate('CommonStack', {
-          screen: 'CommonStackItem',
-          params: { itemId: id, headerTitle: name },
-        });
-        break;
-    }
+  const { navigate } =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+  async function handleItemPress() {
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_ITEM,
+      params: { itemId: id, headerTitle: name },
+    });
   }
 
   function renderListItem() {
@@ -74,20 +48,13 @@ const Item: FC<ItemProps> = ({
 
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Pressable onPress={() => handleItemPress(false)} style={{ flex: 2 }}>
+      <Pressable onPress={() => handleItemPress()} style={{ flex: 2 }}>
         {renderListItem()}
       </Pressable>
       {openOptions && (
         <>
           {type === ItemType.FOLDER && (
-            <MaterialIcons
-              type="material"
-              name="play-circle-outline"
-              size={24}
-              color={ITEMS_TABLE_ROW_ICON_COLOR}
-              onPress={() => handleItemPress(true)}
-              containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
-            />
+            <PlayerButton name={name} type={type} itemId={id} />
           )}
           <Icon
             type="material"

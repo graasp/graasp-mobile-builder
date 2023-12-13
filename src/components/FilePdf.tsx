@@ -17,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PDF_ITEM, PDF_SHARE } from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { GRAASP_ASSETS_URL } from '../config/env';
-import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';
 import FileHeaderButton from './common/FileHederButton';
@@ -36,7 +36,8 @@ const FilePdf: FC<FilePdfProps> = ({
   isPlayerView,
 }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
-  const navigation = useNavigation<ItemScreenNavigationProp>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const height = Dimensions.get('window').height * 0.8;

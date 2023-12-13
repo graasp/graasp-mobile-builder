@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
@@ -17,8 +17,7 @@ import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 
 import { LOG_OUT_BUTTON } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -34,23 +33,11 @@ import {
 import { API_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
-import type { MainStackNavigatorParamList } from '../navigation/MainStackNavigator';
-import type { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
-import type {
-  RootNavigationProp,
-  RootStackParamList,
-} from '../navigation/RootNavigator';
+import { ROOT_NAVIGATOR_SIGN_IN } from '../navigation/names';
+import { TabScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
-type ProfileStackProfileProps = CompositeScreenProps<
-  StackScreenProps<ProfileStackParamList>,
-  CompositeScreenProps<
-    StackScreenProps<MainStackNavigatorParamList>,
-    StackScreenProps<RootStackParamList>
-  >
->;
-
-const ProfileScreen: FC<ProfileStackProfileProps> = () => {
+const ProfileScreen = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [localPath, setLocalPath] = useState<string | undefined>(undefined);
   const { t } = useTranslation();
@@ -73,7 +60,8 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
     refetch,
   } = hooks.useCurrentMember();
   const { userToken, signOut } = useAuth();
-  const { navigate } = useNavigation<RootNavigationProp>();
+  const { navigate } =
+    useNavigation<TabScreenProps<'ProfileTab'>['navigation']>();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
@@ -326,7 +314,7 @@ const ProfileScreen: FC<ProfileStackProfileProps> = () => {
           onPress={async () => {
             await signOut();
             queryClient.resetQueries();
-            navigate('SignIn');
+            navigate(ROOT_NAVIGATOR_SIGN_IN);
           }}
         ></Button>
 

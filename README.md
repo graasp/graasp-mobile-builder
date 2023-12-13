@@ -10,8 +10,8 @@ The Async State Manager used is [Tanstack Query](https://tanstack.com/query/late
 ## Installing project dependencies
 
 > **Prerequisite**
-Make sure you have a working installation of yarn available on your system.
-Also comply with the required node version set in he package.json file.
+> Make sure you have a working installation of yarn available on your system.
+> Also comply with the required node version set in he package.json file.
 
 Run `yarn` inside the root folder to install all necessary dependencies.
 
@@ -43,11 +43,19 @@ Create a file called `.env.development` with the following content:
 GOOGLE_SERVICES_INFO_PLIST=~/path/to/folder/GoogleService-Info.plist
 GOOGLE_SERVICES_JSON=~/path/to/folder/google-services.json
 
+EXPO_PUBLIC_BUILDER_HOST=http://localhost:3111
+EXPO_PUBLIC_PLAYER_HOST=http://localhost:3112
+EXPO_PUBLIC_LIBRARY_HOST=http://localhost:3005
+EXPO_PUBLIC_SHORT_HOST=http://localhost:8888
+
 # Variable accessible to the application code
 # optionally provide the API server base url
 EXPO_PUBLIC_API_HOST=http://localhost:3000
 # optionally provide the Auth frontend base url
 EXPO_PUBLIC_AUTH_HOST=http://localhost:3001
+
+# Optional
+EXPO_PUBLIC_CAMERA_ITEM_URL=some-url
 ```
 
 Save the `GoogleService-Info.plist` and `google-services.json` files somewhere in your computer and copy the absolute path into the env variables. :warning: It is not advised to put them at the root of the project.
@@ -113,10 +121,10 @@ General guidance on version numbers:
 ### Building production app bundles
 
 > **NOTE:**
-If you encounter an issue related to fingerprints while building for iOS, you might have to download an updated Apple Certificate. For more info see [this forum post](https://developer.apple.com/forums/thread/662300). You should ultimately download [the updated Developer Relations Intermediate Certificate](https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer).
+> If you encounter an issue related to fingerprints while building for iOS, you might have to download an updated Apple Certificate. For more info see [this forum post](https://developer.apple.com/forums/thread/662300). You should ultimately download [the updated Developer Relations Intermediate Certificate](https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer).
 
 > **Warning**
-make sure you use the production commands in these steps so the built apps point to the production apis, have the production firebase configs etc ...
+> make sure you use the production commands in these steps so the built apps point to the production apis, have the production firebase configs etc ...
 
 #### iOS
 

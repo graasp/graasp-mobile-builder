@@ -9,32 +9,34 @@ import { formatDate } from '@graasp/sdk';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 import ActivityIndicator from '../../components/ActivityIndicator';
+import PlayerButton from '../../components/common/PlayerButton';
 import { DEFAULT_LOCALE } from '../../config/constants/constants';
 import { useQueryClient } from '../../context/QueryClientContext';
-import { LibraryStackParamList } from '../../navigation/LibraryNavigator';
+import { LibraryScreenProp } from '../../navigation/types';
 import CollectionContent from './CollectionContent';
 import CollectionCreator from './CollectionCreator';
 import CollectionThumbnail from './CollectionThumbnail';
 import Tags from './Tags';
 
-type Props = NativeStackScreenProps<LibraryStackParamList, 'CollectionStack'>;
-
 const CollectionScreen = ({
   route: {
     params: { itemId },
   },
-}: Props) => {
+}: LibraryScreenProp<'CollectionStack'>) => {
   const { t, i18n } = useTranslation();
   const { width, height } = useWindowDimensions();
   const { hooks } = useQueryClient();
   const headerHeight = useHeaderHeight();
   const tabHeight = useBottomTabBarHeight();
   const { data: item, isLoading } = hooks.useItem(itemId);
+  const { setOptions } = useNavigation();
 
   if (item) {
+    setOptions({ title: item.name });
+
     return (
       <SafeAreaView edges={['left']}>
         <ScrollView style={{ backgroundColor: 'white' }}>
@@ -48,7 +50,17 @@ const CollectionScreen = ({
             <Text h3 style={styles.title}>
               {item.name}
             </Text>
-            <CollectionCreator item={item} />
+            <View style={styles.titleAndicon}>
+              <CollectionCreator item={item} />
+              <View>
+                <PlayerButton
+                  size={28}
+                  itemId={item.id}
+                  name={item.name}
+                  type={item.type}
+                />
+              </View>
+            </View>
             <Tags item={item} />
             {item.description && (
               <RenderHTML
@@ -99,6 +111,11 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 15,
+  },
+  titleAndicon: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    justifyItems: 'center',
   },
 });
 

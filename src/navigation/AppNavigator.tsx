@@ -6,7 +6,8 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { LinkingOptions, NavigationContainer } from '@react-navigation/native';
 
 import { CurrentMemberProvider } from '../context/CurrentMemberContext';
-import RootNavigator, { RootStackParamList } from './RootNavigator';
+import RootNavigator from './RootNavigator';
+import { RootStackParamList } from './types';
 
 const AppNavigator = () => {
   const config = {

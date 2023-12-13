@@ -1,28 +1,22 @@
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
-import HomeScreen, { HomeStackProps } from '../screens/home/HomeScreen';
+import HomeScreen from '../screens/home/HomeScreen';
+import { HOME_NAVIGATOR, HOME_NAVIGATOR_HOME } from './names';
+import { HomeStackParamList } from './types';
 
-export type HomeStackParamList = {
-  HomeStack: HomeStackProps;
-};
-
-export type HomeStackNavigationProp = StackNavigationProp<HomeStackProps>;
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
-      id="HomeStackNavigator"
+      id={HOME_NAVIGATOR}
       initialRouteName="HomeStack"
       screenOptions={defaultScreenOptions}
     >
       <Stack.Screen
-        name="HomeStack"
+        name={HOME_NAVIGATOR_HOME}
         component={HomeScreen}
         options={{
           title: '',

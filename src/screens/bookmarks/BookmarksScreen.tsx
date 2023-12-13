@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -9,19 +9,12 @@ import {
 
 import { DiscriminatedItem } from '@graasp/sdk';
 
-import { StackScreenProps } from '@react-navigation/stack';
-
 import ActivityIndicator from '../../components/ActivityIndicator';
 import ItemsList from '../../components/ItemsList';
 import { useQueryClient } from '../../context/QueryClientContext';
-import type { BookmarksStackParamList } from '../../navigation/BookmarksNavigator';
 import { getLocalBookmarkedItemIds } from '../../utils/bookmark';
 
-export type BookmarksStackProps = StackScreenProps<BookmarksStackParamList>;
-
-export type BookMarksPropsRouteProp = BookmarksStackProps['route'];
-
-const BookmarksScreen: FC<BookmarksStackProps> = () => {
+const BookmarksScreen = () => {
   const { hooks } = useQueryClient();
 
   const insets = useSafeAreaInsets();

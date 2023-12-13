@@ -8527,6 +8527,7 @@ __metadata:
     react-native-blob-util: "npm:^0.19.2"
     react-native-elements: "npm:^3.4.3"
     react-native-gesture-handler: "npm:~2.12.0"
+    react-native-launch-arguments: "npm:^4.0.2"
     react-native-pdf: "npm:^6.7.1"
     react-native-reanimated: "npm:~3.3.0"
     react-native-render-html: "npm:^6.3.4"
@@ -8538,7 +8539,6 @@ __metadata:
     react-native-url-polyfill: "npm:^2.0.0"
     react-native-web: "npm:~0.19.9"
     react-native-webview: "npm:13.2.2"
-    react-query: "npm:^3.39.3"
     react-test-renderer: "npm:18.2.0"
     ts-jest: "npm:^29.1.1"
     typescript: "npm:^5.2.2"
@@ -12871,6 +12871,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-launch-arguments@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "react-native-launch-arguments@npm:4.0.2"
+  peerDependencies:
+    react: ">=16.8.1"
+    react-native: ">=0.60.0-rc.0 <1.0.x"
+  checksum: f616b9a8493e85b74e03a82de58bd86fcdc8d9a572ef2752d81d323251fb3cb66e758848f23418d2d63ddc083656f84fb570ad1fd7eb5e876db152f929797843
+  languageName: node
+  linkType: hard
+
 "react-native-pdf@npm:^6.7.1":
   version: 6.7.1
   resolution: "react-native-pdf@npm:6.7.1"
@@ -13091,7 +13101,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-query@npm:3.39.3, react-query@npm:^3.39.3":
+"react-query@npm:3.39.3":
   version: 3.39.3
   resolution: "react-query@npm:3.39.3"
   dependencies:

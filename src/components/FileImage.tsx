@@ -10,7 +10,7 @@ import {
   IMAGE_SHARE,
 } from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
-import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { saveMedia } from '../utils/functions/media';
 import FileHeaderButton from './common/FileHederButton';
@@ -32,7 +32,8 @@ const FileImage: FC<FileImageProps> = ({
     width: DimensionValue;
     height: DimensionValue;
   }>({ width: '100%', height: '100%' });
-  const navigation = useNavigation<ItemScreenNavigationProp>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { t } = useTranslation();
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import { Audio } from 'expo-av';
 import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
-import { ItemScreenNavigationProp } from '../screens/ItemScreen';
+import { ItemScreenProps } from '../navigation/types';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileAudioProps {
@@ -24,7 +24,8 @@ const FileAudio: FC<FileAudioProps> = ({
   isPlayerView,
 }) => {
   const [sound, setSound] = useState<any>();
-  const navigation = useNavigation<ItemScreenNavigationProp>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { t } = useTranslation();
 
   async function playSound() {

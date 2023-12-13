@@ -29,8 +29,8 @@
     "prebuild:test:android": "npx expo prebuild --platform android",
     "build:test:ios": "detox build --configuration ios.debug",
     "build:test:android": "detox build --configuration android.debug",
-    "test:ios": "detox test --configuration ios.debug",
-    "test:android": "detox test --configuration android.debug"
+    "test:ios": "env-cmd -f ./.env.test detox test --configuration ios.debug",
+    "test:android": "env-cmd -f ./.env.test detox test --configuration android.debug"
   },
   "jest": {
     "preset": "jest-expo"
@@ -94,8 +94,7 @@
     "react-native-toast-message": "^2.1.7",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.9",
-    "react-native-webview": "13.2.2",
-    "react-query": "^3.39.3"
+    "react-native-webview": "13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -117,6 +116,7 @@
     "jest-circus": "^29.7.0",
     "jest-expo": "^49.0.0",
     "prettier": "3.0.3",
+    "react-native-launch-arguments": "^4.0.2",
     "react-test-renderer": "18.2.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"

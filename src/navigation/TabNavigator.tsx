@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigatorScreenParams } from '@react-navigation/native';
 
 import {
   HOME_TAB,
@@ -15,32 +14,24 @@ import {
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
 import LibraryIcon from '../screens/library/LibraryIcon';
-import BookmarksStackNavigator, {
-  BookmarksStackParamList,
-} from './BookmarksNavigator';
-import HomeStackNavigator, { HomeStackParamList } from './HomeStackNavigator';
-import LibraryStackNavigator, {
-  LibraryStackParamList,
-} from './LibraryNavigator';
-import MyItemsStackNavigator, {
-  MyItemsStackParamList,
-} from './MyItemsStackNavigator';
-import ProfileStackNavigator, {
-  ProfileStackParamList,
-} from './ProfileStackNavigator';
-import SharedStackNavigator, {
-  SharedStackParamList,
-} from './SharedStackNavigator';
-
-export type TabParamList = {
-  HomeTab: NavigatorScreenParams<HomeStackParamList>;
-  MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
-  SharedTab: NavigatorScreenParams<SharedStackParamList>;
-  SignInTab: undefined;
-  ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
-  BookmarksTab: NavigatorScreenParams<BookmarksStackParamList>;
-  LibraryTab: NavigatorScreenParams<LibraryStackParamList>;
-};
+import BookmarksStackNavigator from './BookmarksNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
+import LibraryStackNavigator from './LibraryNavigator';
+import MyItemsStackNavigator from './MyItemsStackNavigator';
+import ProfileStackNavigator from './ProfileStackNavigator';
+import SharedStackNavigator from './SharedStackNavigator';
+import {
+  ROOT_NAVIGATOR_SIGN_IN,
+  TAB_NAVIGATOR,
+  TAB_NAVIGATOR_BOOKMARKS,
+  TAB_NAVIGATOR_HOME,
+  TAB_NAVIGATOR_LIBRARY,
+  TAB_NAVIGATOR_MY_ITEMS,
+  TAB_NAVIGATOR_PROFILE,
+  TAB_NAVIGATOR_SHARED,
+  TAB_NAVIGATOR_SIGN_IN,
+} from './names';
+import { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const TabNavigator = () => {
@@ -50,12 +41,12 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      id="TabNavigator"
-      initialRouteName="HomeTab"
+      id={TAB_NAVIGATOR}
+      initialRouteName={TAB_NAVIGATOR_HOME}
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen
-        name="HomeTab"
+        name={TAB_NAVIGATOR_HOME}
         component={HomeStackNavigator}
         options={({ route }) => ({
           tabBarLabel: t('Home'),
@@ -67,7 +58,7 @@ const TabNavigator = () => {
         })}
       />
       <Tab.Screen
-        name="BookmarksTab"
+        name={TAB_NAVIGATOR_BOOKMARKS}
         component={BookmarksStackNavigator}
         options={({ route }) => ({
           tabBarLabel: t('Bookmarks'),
@@ -78,7 +69,7 @@ const TabNavigator = () => {
         })}
       />
       <Tab.Screen
-        name="LibraryTab"
+        name={TAB_NAVIGATOR_LIBRARY}
         component={LibraryStackNavigator}
         options={() => ({
           tabBarLabel: t('Library'),
@@ -92,7 +83,7 @@ const TabNavigator = () => {
       {currentMember ? (
         <>
           <Tab.Screen
-            name="MyItemsTab"
+            name={TAB_NAVIGATOR_MY_ITEMS}
             component={MyItemsStackNavigator}
             options={{
               tabBarLabel: t('My Items'),
@@ -104,7 +95,7 @@ const TabNavigator = () => {
             }}
           />
           <Tab.Screen
-            name="SharedTab"
+            name={TAB_NAVIGATOR_SHARED}
             component={SharedStackNavigator}
             options={{
               tabBarLabel: t('Shared Items'),
@@ -116,7 +107,7 @@ const TabNavigator = () => {
             }}
           />
           <Tab.Screen
-            name="ProfileTab"
+            name={TAB_NAVIGATOR_PROFILE}
             component={ProfileStackNavigator}
             options={{
               tabBarLabel: t('Profile'),
@@ -134,7 +125,7 @@ const TabNavigator = () => {
         </>
       ) : (
         <Tab.Screen
-          name="SignInTab"
+          name={TAB_NAVIGATOR_SIGN_IN}
           navigationKey="SignIn"
           // component is not used as we navigate to higher stack for signin
           // it avoids showing tabs in the signin screen
@@ -145,7 +136,7 @@ const TabNavigator = () => {
               e.preventDefault();
 
               // Do something with the `navigation` object
-              navigation.navigate('SignIn');
+              navigation.navigate(ROOT_NAVIGATOR_SIGN_IN);
             },
           })}
           options={{

@@ -1,27 +1,12 @@
-import { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemsList from '../components/ItemsList';
 import { useQueryClient } from '../context/QueryClientContext';
-import { RootStackParamList } from '../navigation/RootNavigator';
-import { SharedStackParamList } from '../navigation/SharedStackNavigator';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
-type SharedStackSharedProps = CompositeScreenProps<
-  StackScreenProps<
-    SharedStackParamList,
-    'SharedStackShared',
-    'SharedStackNavigator'
-  >,
-  StackScreenProps<RootStackParamList>
->;
-
-const SharedScreen: FC<SharedStackSharedProps> = ({ navigation }) => {
+const SharedScreen = () => {
   const { hooks } = useQueryClient();
   const {
     data: sharedItems,

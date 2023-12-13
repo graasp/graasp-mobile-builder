@@ -7,9 +7,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useNavigation } from '@react-navigation/native';
 
-import { MyItemsStackPropsNavigationProp } from '../screens/MyItemsScreen';
+import { buildItemsListTestId } from '../../e2e/constants/testIds';
 import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
@@ -33,7 +32,6 @@ const ItemsList: FC<ItemsListProps> = ({
   isLoading,
   displayAddItem = true,
 }) => {
-  const navigation = useNavigation<MyItemsStackPropsNavigationProp>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(
@@ -78,6 +76,7 @@ const ItemsList: FC<ItemsListProps> = ({
   return (
     <>
       <FlatList
+        testID={parentId ? buildItemsListTestId(parentId) : undefined}
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
@@ -135,7 +134,6 @@ const ItemsList: FC<ItemsListProps> = ({
                 <ItemListOptions
                   itemSelected={itemSelected}
                   bottomSheetModalRef={bottomSheetModalRef}
-                  navigation={navigation}
                   refresh={refresh}
                 />
               </BottomSheetScrollView>

@@ -1,33 +1,29 @@
-import { NavigatorScreenParams } from '@react-navigation/native';
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
 import QrCameraScreen from '../screens/QrCameraScreen';
-import TabNavigator, { TabParamList } from './TabNavigator';
+import ItemStackNavigator from './ItemStackNavigator';
+import TabNavigator from './TabNavigator';
+import {
+  ITEM_NAVIGATOR,
+  MAIN_NAVIGATOR,
+  MAIN_NAVIGATOR_MAIN,
+  MAIN_NAVIGATOR_QR_CAMERA,
+} from './names';
+import { MainStackParamList } from './types';
 
-export type MainStackNavigatorParamList = {
-  MainStack: NavigatorScreenParams<TabParamList>;
-  QrCamera: undefined;
-  ItemStack: undefined;
-};
-
-export type MainStackNavigationProp =
-  StackNavigationProp<MainStackNavigatorParamList>;
-const MainStack = createStackNavigator<MainStackNavigatorParamList>();
+const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainStackNavigator = () => {
   const screenOptions = { headerShown: false, ...defaultScreenOptions };
   return (
     <MainStack.Navigator
-      id="MainStackNavigator"
-      initialRouteName="MainStack"
+      id={MAIN_NAVIGATOR}
+      initialRouteName={MAIN_NAVIGATOR_MAIN}
       screenOptions={screenOptions}
     >
       <MainStack.Screen
-        name="MainStack"
+        name={MAIN_NAVIGATOR_MAIN}
         component={TabNavigator}
         options={({ route: { params } }) => ({
           title: 'Home',
@@ -36,7 +32,7 @@ const MainStackNavigator = () => {
         })}
       />
       <MainStack.Screen
-        name="QrCamera"
+        name={MAIN_NAVIGATOR_QR_CAMERA}
         component={QrCameraScreen}
         options={({ route: { params } }) => ({
           title: 'QrCamera',
@@ -44,6 +40,7 @@ const MainStackNavigator = () => {
           headerBackTitleVisible: false,
         })}
       />
+      <MainStack.Screen name={ITEM_NAVIGATOR} component={ItemStackNavigator} />
     </MainStack.Navigator>
   );
 };

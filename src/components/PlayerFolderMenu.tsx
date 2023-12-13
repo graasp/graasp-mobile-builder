@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   Pressable,
@@ -15,9 +15,14 @@ import 'expo-document-picker';
 import { DiscriminatedItem } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { PLAYER_COLOR } from '../config/constants/constants';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_PLAYER_FOLDER,
+} from '../navigation/names';
+import { ItemScreenProps } from '../navigation/types';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
 
@@ -25,22 +30,24 @@ interface PlayerFolderMenuProps {
   folderItems: DiscriminatedItem[];
 }
 
-const PlayerFolderMenu: FC<PlayerFolderMenuProps> = ({ folderItems }) => {
-  const [selectedItem, setSelectedItem] = useState<any | null>(null);
+const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
+  const { navigate } =
+    useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
+
+  const [selectedItem, setSelectedItem] = useState<DiscriminatedItem | null>(
+    null,
+  );
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['40%', '95%'], []);
-  const navigation = useNavigation<any>();
-  const route = useRoute<any>();
 
   useEffect(() => {
     if (selectedItem) {
       bottomSheetMenuPlayerModalRef.current?.close();
-      navigation.navigate('CommonStack', {
-        screen: 'CommonStackPlayerFolder',
+      navigate(ITEM_NAVIGATOR, {
+        screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
         params: {
           itemId: selectedItem.id,
           headerTitle: selectedItem.name,
-          builderItemId: route.params?.builderItemId,
         },
       });
     }

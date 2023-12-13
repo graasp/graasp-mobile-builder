@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -12,26 +11,13 @@ import {
   getS3FileExtra,
 } from '@graasp/sdk';
 
-import { CompositeScreenProps } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
-
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
 import { DEFAULT_LOCALE, TEXT_ALIGNMENT } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { CommonStackParamList } from '../navigation/CommonStackNavigator';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { ItemScreenProps } from '../navigation/types';
 import { humanFileSize } from '../utils/functions/fileSize';
 import { useFocusQuery } from '../utils/functions/useQuery';
-
-type CommonStackDetailProps = CompositeScreenProps<
-  StackScreenProps<
-    CommonStackParamList,
-    'CommonStackDetail',
-    'CommonStackNavigator'
-  >,
-  StackScreenProps<RootStackParamList>
->;
 
 const classesStyles = {
   'ql-align-right': { textAlign: TEXT_ALIGNMENT.RIGHT },
@@ -40,7 +26,7 @@ const classesStyles = {
   'ql-align-justify': { textAlign: TEXT_ALIGNMENT.JUSTIFY },
 };
 
-const DetailsScreen: FC<CommonStackDetailProps> = ({ route }) => {
+const DetailsScreen = ({ route }: ItemScreenProps<'ItemStackDetail'>) => {
   const { itemId } = route.params;
   const { t } = useTranslation();
   const { hooks } = useQueryClient();

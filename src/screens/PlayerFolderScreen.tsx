@@ -1,34 +1,28 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { CompositeScreenProps, useRoute } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import ActivityIndicator from '../components/ActivityIndicator';
 import PlayerView from '../components/PlayerView';
 import { PLAYER_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
-import { CommonStackParamList } from '../navigation/CommonStackNavigator';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM,
+  MY_ITEMS_NAVIGATOR_MY_ITEMS,
+  TAB_NAVIGATOR_MY_ITEMS,
+} from '../navigation/names';
+import { ItemScreenProps } from '../navigation/types';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
-type CommonStackPlayerFolderProps = CompositeScreenProps<
-  StackScreenProps<
-    CommonStackParamList,
-    'CommonStackPlayerFolder',
-    'CommonStackNavigator'
-  >,
-  StackScreenProps<RootStackParamList>
->;
-type PlayerFolderScreenRouteProp = CommonStackPlayerFolderProps['route'];
-
-const PlayerFolderScreen: FC<any> = ({ navigation }) => {
-  const route = useRoute<PlayerFolderScreenRouteProp>();
-  const { itemId, builderItemId } = route.params;
+const PlayerFolderScreen = (): JSX.Element | null => {
+  const route = useRoute<ItemScreenProps<'ItemStackItem'>['route']>();
+  const { itemId } = route.params;
   const { hooks } = useQueryClient();
   const {
     data: children,
@@ -37,9 +31,14 @@ const PlayerFolderScreen: FC<any> = ({ navigation }) => {
     refetch,
   } = hooks.useChildren(itemId);
   useFocusQuery(refetch);
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
   useEffect(() => {
     navigation.setOptions({
+      headerStyle: {
+        backgroundColor: PLAYER_COLOR,
+      },
       headerRight: () => (
         <Button
           buttonStyle={{ backgroundColor: PLAYER_COLOR }}
@@ -52,13 +51,15 @@ const PlayerFolderScreen: FC<any> = ({ navigation }) => {
             />
           }
           onPress={() => {
-            if (builderItemId) {
-              navigation.navigate('CommonStack', {
-                screen: 'CommonStackFolder',
-                params: { itemId: builderItemId },
+            if (itemId) {
+              navigation.navigate(ITEM_NAVIGATOR, {
+                screen: ITEM_NAVIGATOR_ITEM,
+                params: { itemId },
               });
             } else {
-              navigation.navigate('MyItemsStack');
+              navigation.navigate(TAB_NAVIGATOR_MY_ITEMS, {
+                screen: MY_ITEMS_NAVIGATOR_MY_ITEMS,
+              });
             }
           }}
         ></Button>
