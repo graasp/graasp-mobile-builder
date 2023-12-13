@@ -10,6 +10,7 @@ import {
   URL_INPUT_SUBMIT_BUTTON,
 } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
+import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../../navigation/names';
 import { TabScreenProps } from '../../navigation/types';
 import { getItemIdFromUrl } from '../../utils/functions/url';
 
@@ -22,8 +23,8 @@ function ShortUrlInput() {
     const itemId = getItemIdFromUrl(url);
     if (itemId) {
       setUrl('');
-      navigate('ItemStack', {
-        screen: 'ItemStackItem',
+      navigate(ITEM_NAVIGATOR, {
+        screen: ITEM_NAVIGATOR_ITEM,
         params: { itemId },
       });
     }

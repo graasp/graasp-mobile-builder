@@ -8,7 +8,7 @@ import { Context, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { ITEM_SCREEN_ERROR } from '../../e2e/constants/testIds';
+import { ITEM_NAVIGATOR_ITEM_ERROR } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
 import AppItem from '../components/AppItem';
 import Document from '../components/Document';
@@ -48,7 +48,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
           paddingRight: insets.right,
         }}
       >
-        <Text testID={ITEM_SCREEN_ERROR} h4 style={styles.error}>
+        <Text testID={ITEM_NAVIGATOR_ITEM_ERROR} h4 style={styles.error}>
           {t(
             `An error occured. This item with id '${itemId}' might not exist or you cannot access it.`,
           )}

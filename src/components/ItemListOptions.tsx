@@ -26,6 +26,10 @@ import {
   VIEWS,
 } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM_DETAILS,
+} from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
@@ -92,8 +96,8 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
 
   const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
     bottomSheetModalRef.current?.close();
-    navigate('ItemStack', {
-      screen: 'ItemStackDetail',
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_ITEM_DETAILS,
       params: { itemId },
     });
   };

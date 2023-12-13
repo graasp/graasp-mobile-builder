@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import MyItemsScreen from '../screens/MyItemsScreen';
+import { MY_ITEMS_NAVIGATOR, MY_ITEMS_NAVIGATOR_MY_ITEMS } from './names';
 import { MyItemsStackParamList } from './types';
 
 const MyItemsStack = createStackNavigator<MyItemsStackParamList>();
@@ -10,12 +11,12 @@ const MyItemsStack = createStackNavigator<MyItemsStackParamList>();
 const MyItemsStackNavigator = () => {
   return (
     <MyItemsStack.Navigator
-      id="MyItemsStackNavigator"
-      initialRouteName="MyItemsStack"
+      id={MY_ITEMS_NAVIGATOR}
+      initialRouteName={MY_ITEMS_NAVIGATOR_MY_ITEMS}
       screenOptions={defaultScreenOptions}
     >
       <MyItemsStack.Screen
-        name="MyItemsStack"
+        name={MY_ITEMS_NAVIGATOR_MY_ITEMS}
         component={MyItemsScreen}
         options={{
           title: '',

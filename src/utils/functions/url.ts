@@ -33,6 +33,7 @@ export const getItemIdFromUrl = (url: string): string | null => {
 
     return match[0];
   } catch (e) {
+    console.error(e);
     alert('url is malformed');
     return null;
   }

@@ -7,6 +7,11 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { GraaspBarCodeScanner } from '../mocks/camera';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM,
+  MAIN_NAVIGATOR_MAIN,
+} from '../navigation/names';
 import { MainStackScreenProps } from '../navigation/types';
 import { getItemIdFromUrl } from '../utils/functions/url';
 
@@ -32,14 +37,14 @@ export const QrCameraScreen = ({
     // push intermediate state for go back to work
     // todo: fix type
     // @ts-ignore
-    navigate('MainStack');
+    navigate(MAIN_NAVIGATOR_MAIN);
 
     if (type === 'qr') {
       // todo: host manager
       const itemId = getItemIdFromUrl(data);
       if (itemId) {
-        navigate('ItemStack', {
-          screen: 'ItemStackItem',
+        navigate(ITEM_NAVIGATOR, {
+          screen: ITEM_NAVIGATOR_ITEM,
           params: {
             itemId,
           },

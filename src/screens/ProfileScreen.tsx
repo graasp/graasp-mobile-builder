@@ -33,6 +33,7 @@ import {
 import { API_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
+import { ROOT_NAVIGATOR_SIGN_IN } from '../navigation/names';
 import { TabScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 
@@ -313,7 +314,7 @@ const ProfileScreen = () => {
           onPress={async () => {
             await signOut();
             queryClient.resetQueries();
-            navigate('SignIn');
+            navigate(ROOT_NAVIGATOR_SIGN_IN);
           }}
         ></Button>
 

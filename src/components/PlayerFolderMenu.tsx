@@ -18,6 +18,10 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
 import { PLAYER_COLOR } from '../config/constants/constants';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_PLAYER_FOLDER,
+} from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import ItemIcon from './ItemIcon';
 import CustomBackdrop from './common/CustomBackdrop';
@@ -35,13 +39,12 @@ const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
   );
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['40%', '95%'], []);
-  // const navigation = useNavigation();
 
   useEffect(() => {
     if (selectedItem) {
       bottomSheetMenuPlayerModalRef.current?.close();
-      navigate('ItemStack', {
-        screen: 'ItemStackPlayerFolder',
+      navigate(ITEM_NAVIGATOR, {
+        screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
         params: {
           itemId: selectedItem.id,
           headerTitle: selectedItem.name,

@@ -11,6 +11,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 import { SCAN_QR_CODE_BUTTON } from '../../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../../config/constants/constants';
+import { MAIN_NAVIGATOR_QR_CAMERA } from '../../navigation/names';
 import { MainStackScreenProps } from '../../navigation/types';
 
 const ScanQrCodeButton = (): JSX.Element | null => {
@@ -37,7 +38,7 @@ const ScanQrCodeButton = (): JSX.Element | null => {
 
   const onPress = () => {
     console.debug('open camera');
-    navigate('QrCamera');
+    navigate(MAIN_NAVIGATOR_QR_CAMERA);
   };
 
   return (

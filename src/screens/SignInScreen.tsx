@@ -25,6 +25,7 @@ import { GRAASP_AUTH_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
 import { useQueryClient } from '../context/QueryClientContext';
 import DetoxSignInButton from '../mocks/DetoxSignInButton';
+import { ROOT_NAVIGATOR_MAIN } from '../navigation/names';
 import { RootStackScreenProps } from '../navigation/types';
 import { generateNonce } from '../utils/functions/generateNonce';
 import { checkLoginUri } from '../utils/functions/helper';
@@ -47,7 +48,7 @@ const SignInScreen = ({
     if (currentMember) {
       // todo: fix type
       // @ts-ignore
-      navigate('Main');
+      navigate(ROOT_NAVIGATOR_MAIN);
     }
   }, [currentMember]);
 
@@ -168,7 +169,7 @@ const SignInScreen = ({
           onPress={() => {
             // todo: fix type
             // @ts-ignore
-            navigate('Main');
+            navigate(ROOT_NAVIGATOR_MAIN);
           }}
           testID={SIGN_IN_LATER_BUTTON}
         />

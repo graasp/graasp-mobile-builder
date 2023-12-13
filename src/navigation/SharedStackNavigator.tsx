@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import SharedScreen from '../screens/SharedScreen';
+import { SHARED_NAVIGATOR, SHARED_NAVIGATOR_SHARED } from './names';
 import { SharedStackParamList } from './types';
 
 const SharedStack = createStackNavigator<SharedStackParamList>();
@@ -10,12 +11,12 @@ const SharedStack = createStackNavigator<SharedStackParamList>();
 const SharedStackNavigator = () => {
   return (
     <SharedStack.Navigator
-      id="SharedStackNavigator"
-      initialRouteName="SharedStackShared"
+      id={SHARED_NAVIGATOR}
+      initialRouteName={SHARED_NAVIGATOR_SHARED}
       screenOptions={defaultScreenOptions}
     >
       <SharedStack.Screen
-        name="SharedStackShared"
+        name={SHARED_NAVIGATOR_SHARED}
         component={SharedScreen}
         options={{
           title: '',

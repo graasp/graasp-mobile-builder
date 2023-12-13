@@ -7,38 +7,63 @@ import {
 } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 
+import {
+  BOOKMARKS_NAVIGATOR_BOOKMARKS,
+  HOME_NAVIGATOR_HOME,
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM,
+  ITEM_NAVIGATOR_ITEM_DETAILS,
+  ITEM_NAVIGATOR_PLAYER_FOLDER,
+  LIBRARY_NAVIGATOR_COLLECTION,
+  LIBRARY_NAVIGATOR_LIBRARY,
+  MAIN_NAVIGATOR_MAIN,
+  MAIN_NAVIGATOR_QR_CAMERA,
+  MY_ITEMS_NAVIGATOR_MY_ITEMS,
+  PROFILE_NAVIGATOR_PROFILE,
+  ROOT_NAVIGATOR_MAIN,
+  ROOT_NAVIGATOR_SIGN_IN,
+  SHARED_NAVIGATOR_SHARED,
+  TAB_NAVIGATOR_BOOKMARKS,
+  TAB_NAVIGATOR_HOME,
+  TAB_NAVIGATOR_LIBRARY,
+  TAB_NAVIGATOR_MY_ITEMS,
+  TAB_NAVIGATOR_PROFILE,
+  TAB_NAVIGATOR_SHARED,
+  TAB_NAVIGATOR_SIGN_IN,
+} from './names';
+
 export type RootStackParamList = {
-  SignIn?: { signUp?: boolean };
-  Main: NavigatorScreenParams<MainStackParamList>;
+  [ROOT_NAVIGATOR_SIGN_IN]?: { signUp?: boolean };
+  [ROOT_NAVIGATOR_MAIN]: NavigatorScreenParams<MainStackParamList>;
 };
 
 export type MainStackParamList = {
-  MainStack: NavigatorScreenParams<TabParamList>;
-  QrCamera: undefined;
-  ItemStack: NavigatorScreenParams<ItemStackParamList>;
+  [MAIN_NAVIGATOR_MAIN]: NavigatorScreenParams<TabParamList>;
+  [MAIN_NAVIGATOR_QR_CAMERA]: undefined;
+  [ITEM_NAVIGATOR]: NavigatorScreenParams<ItemStackParamList>;
 };
 
 export type TabParamList = {
-  HomeTab: NavigatorScreenParams<HomeStackParamList>;
-  MyItemsTab: NavigatorScreenParams<MyItemsStackParamList>;
-  SharedTab: NavigatorScreenParams<SharedStackParamList>;
-  SignInTab: undefined;
-  ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
-  BookmarksTab: NavigatorScreenParams<BookmarksStackParamList>;
-  LibraryTab: NavigatorScreenParams<LibraryStackParamList>;
+  [TAB_NAVIGATOR_HOME]: NavigatorScreenParams<HomeStackParamList>;
+  [TAB_NAVIGATOR_MY_ITEMS]: NavigatorScreenParams<MyItemsStackParamList>;
+  [TAB_NAVIGATOR_SHARED]: NavigatorScreenParams<SharedStackParamList>;
+  [TAB_NAVIGATOR_SIGN_IN]: undefined;
+  [TAB_NAVIGATOR_PROFILE]: NavigatorScreenParams<ProfileStackParamList>;
+  [TAB_NAVIGATOR_BOOKMARKS]: NavigatorScreenParams<BookmarksStackParamList>;
+  [TAB_NAVIGATOR_LIBRARY]: NavigatorScreenParams<LibraryStackParamList>;
 };
 
 export type HomeStackParamList = {
-  HomeStack: undefined;
+  [HOME_NAVIGATOR_HOME]: undefined;
 };
 
 export type BookmarksStackParamList = {
-  BookmarksStack: undefined;
+  [BOOKMARKS_NAVIGATOR_BOOKMARKS]: undefined;
 };
 
 export type LibraryStackParamList = {
-  LibraryStack: undefined;
-  CollectionStack: { itemId: DiscriminatedItem['id'] };
+  [LIBRARY_NAVIGATOR_LIBRARY]: undefined;
+  [LIBRARY_NAVIGATOR_COLLECTION]: { itemId: DiscriminatedItem['id'] };
 };
 
 export type LibraryScreenProp<T extends keyof LibraryStackParamList> =
@@ -48,24 +73,24 @@ export type LibraryScreenProp<T extends keyof LibraryStackParamList> =
   >;
 
 export type ProfileStackParamList = {
-  ProfileStackProfile: undefined;
+  [PROFILE_NAVIGATOR_PROFILE]: undefined;
 };
 
 export type SharedStackParamList = {
-  SharedStackShared: undefined;
+  [SHARED_NAVIGATOR_SHARED]: undefined;
 };
 
 export type MyItemsStackParamList = {
-  MyItemsStack: undefined;
+  [MY_ITEMS_NAVIGATOR_MY_ITEMS]: undefined;
 };
 
 export type ItemStackParamList = {
-  ItemStackPlayerFolder: {
+  [ITEM_NAVIGATOR_PLAYER_FOLDER]: {
     headerTitle?: string;
     itemId: UUID;
   };
-  ItemStackItem: { headerTitle?: string; itemId: UUID };
-  ItemStackDetail: { itemId: UUID };
+  [ITEM_NAVIGATOR_ITEM]: { headerTitle?: string; itemId: UUID };
+  [ITEM_NAVIGATOR_ITEM_DETAILS]: { itemId: UUID };
 };
 
 export type ItemStackNavigationProp = StackNavigationProp<ItemStackParamList>;

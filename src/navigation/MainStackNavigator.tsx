@@ -4,6 +4,12 @@ import { defaultScreenOptions } from '../config/constants/navigation';
 import QrCameraScreen from '../screens/QrCameraScreen';
 import ItemStackNavigator from './ItemStackNavigator';
 import TabNavigator from './TabNavigator';
+import {
+  ITEM_NAVIGATOR,
+  MAIN_NAVIGATOR,
+  MAIN_NAVIGATOR_MAIN,
+  MAIN_NAVIGATOR_QR_CAMERA,
+} from './names';
 import { MainStackParamList } from './types';
 
 const MainStack = createStackNavigator<MainStackParamList>();
@@ -12,12 +18,12 @@ const MainStackNavigator = () => {
   const screenOptions = { headerShown: false, ...defaultScreenOptions };
   return (
     <MainStack.Navigator
-      id="MainStackNavigator"
-      initialRouteName="MainStack"
+      id={MAIN_NAVIGATOR}
+      initialRouteName={MAIN_NAVIGATOR_MAIN}
       screenOptions={screenOptions}
     >
       <MainStack.Screen
-        name="MainStack"
+        name={MAIN_NAVIGATOR_MAIN}
         component={TabNavigator}
         options={({ route: { params } }) => ({
           title: 'Home',
@@ -26,7 +32,7 @@ const MainStackNavigator = () => {
         })}
       />
       <MainStack.Screen
-        name="QrCamera"
+        name={MAIN_NAVIGATOR_QR_CAMERA}
         component={QrCameraScreen}
         options={({ route: { params } }) => ({
           title: 'QrCamera',
@@ -34,7 +40,7 @@ const MainStackNavigator = () => {
           headerBackTitleVisible: false,
         })}
       />
-      <MainStack.Screen name="ItemStack" component={ItemStackNavigator} />
+      <MainStack.Screen name={ITEM_NAVIGATOR} component={ItemStackNavigator} />
     </MainStack.Navigator>
   );
 };

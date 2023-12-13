@@ -6,6 +6,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import { buildPlayerButtonId } from '../../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM,
+  ITEM_NAVIGATOR_PLAYER_FOLDER,
+} from '../../navigation/names';
 import { ItemScreenProps } from '../../navigation/types';
 
 type Props = {
@@ -29,8 +34,8 @@ const PlayerButton = ({
   function handleItemPress() {
     switch (type) {
       case ItemType.FOLDER:
-        navigate('ItemStack', {
-          screen: 'ItemStackPlayerFolder',
+        navigate(ITEM_NAVIGATOR, {
+          screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
           params: {
             itemId,
             headerTitle: name,
@@ -42,8 +47,8 @@ const PlayerButton = ({
       case ItemType.APP:
       case ItemType.DOCUMENT:
       case ItemType.S3_FILE:
-        navigate('ItemStack', {
-          screen: 'ItemStackItem',
+        navigate(ITEM_NAVIGATOR, {
+          screen: ITEM_NAVIGATOR_ITEM,
           params: { itemId, headerTitle: name },
         });
         break;
@@ -58,7 +63,6 @@ const PlayerButton = ({
       size={size}
       color={color}
       onPress={() => handleItemPress()}
-      //   containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
     />
   );
 };

@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import BookmarksScreen from '../screens/bookmarks/BookmarksScreen';
+import { BOOKMARKS_NAVIGATOR, BOOKMARKS_NAVIGATOR_BOOKMARKS } from './names';
 import { BookmarksStackParamList } from './types';
 
 const Stack = createStackNavigator<BookmarksStackParamList>();
@@ -13,12 +14,12 @@ const BookmarksStackNavigator = () => {
   const { t } = useTranslation();
   return (
     <Stack.Navigator
-      id="BookmarksStackNavigator"
-      initialRouteName="BookmarksStack"
+      id={BOOKMARKS_NAVIGATOR}
+      initialRouteName={BOOKMARKS_NAVIGATOR_BOOKMARKS}
       screenOptions={defaultScreenOptions}
     >
       <Stack.Screen
-        name="BookmarksStack"
+        name={BOOKMARKS_NAVIGATOR_BOOKMARKS}
         component={BookmarksScreen}
         options={{
           title: '',

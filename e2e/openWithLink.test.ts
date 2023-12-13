@@ -3,7 +3,7 @@ import { DiscriminatedItem } from '@graasp/sdk';
 import { expect } from 'detox';
 
 import {
-  ITEM_SCREEN_ERROR,
+  ITEM_NAVIGATOR_ITEM_ERROR,
   SCAN_QR_CODE_BUTTON,
   URL_INPUT,
   URL_INPUT_SUBMIT_BUTTON,
@@ -48,7 +48,7 @@ describe('Camera QR Scan', () => {
 
     await element(by.id(SCAN_QR_CODE_BUTTON)).tap();
 
-    await expect(element(by.id(ITEM_SCREEN_ERROR))).toBeVisible();
+    await expect(element(by.id(ITEM_NAVIGATOR_ITEM_ERROR))).toBeVisible();
   });
 
   it(`Url input shows alert for incorrect url`, async () => {
@@ -105,7 +105,7 @@ describe('Url input', () => {
 
     await element(by.id(URL_INPUT_SUBMIT_BUTTON)).tap();
 
-    await expect(element(by.id(ITEM_SCREEN_ERROR))).toBeVisible();
+    await expect(element(by.id(ITEM_NAVIGATOR_ITEM_ERROR))).toBeVisible();
   });
 
   it(`Url input shows alert for incorrect url`, async () => {

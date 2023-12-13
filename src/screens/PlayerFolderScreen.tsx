@@ -11,6 +11,12 @@ import ActivityIndicator from '../components/ActivityIndicator';
 import PlayerView from '../components/PlayerView';
 import { PLAYER_COLOR } from '../config/constants/constants';
 import { useQueryClient } from '../context/QueryClientContext';
+import {
+  ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM,
+  MY_ITEMS_NAVIGATOR_MY_ITEMS,
+  TAB_NAVIGATOR_MY_ITEMS,
+} from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
@@ -46,12 +52,14 @@ const PlayerFolderScreen = (): JSX.Element | null => {
           }
           onPress={() => {
             if (itemId) {
-              navigation.navigate('ItemStack', {
-                screen: 'ItemStackItem',
+              navigation.navigate(ITEM_NAVIGATOR, {
+                screen: ITEM_NAVIGATOR_ITEM,
                 params: { itemId },
               });
             } else {
-              navigation.navigate('MyItemsTab', { screen: 'MyItemsStack' });
+              navigation.navigate(TAB_NAVIGATOR_MY_ITEMS, {
+                screen: MY_ITEMS_NAVIGATOR_MY_ITEMS,
+              });
             }
           }}
         ></Button>

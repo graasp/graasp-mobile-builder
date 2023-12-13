@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
+import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import ItemIcon from './ItemIcon';
 import PlayerButton from './common/PlayerButton';
@@ -28,24 +29,10 @@ const Item: FC<ItemProps> = ({
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   async function handleItemPress() {
-    switch (type) {
-      case ItemType.FOLDER:
-        navigate('ItemStack', {
-          screen: 'ItemStackItem',
-          params: { itemId: id, headerTitle: name },
-        });
-
-        break;
-      case ItemType.LINK:
-      case ItemType.APP:
-      case ItemType.DOCUMENT:
-      case ItemType.S3_FILE:
-        navigate('ItemStack', {
-          screen: 'ItemStackItem',
-          params: { itemId: id, headerTitle: name },
-        });
-        break;
-    }
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_ITEM,
+      params: { itemId: id, headerTitle: name },
+    });
   }
 
   function renderListItem() {

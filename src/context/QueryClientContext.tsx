@@ -10,15 +10,17 @@ import { SECURE_STORE_VALUES } from '../config/constants/constants';
 import { API_HOST } from '../config/env';
 import { useAuth } from './AuthContext';
 
+type QueryClientConfigReturn = ReturnType<typeof configureQueryClient>;
+
 export const QueryClientContext = createContext<{
-  queryConfig: ReturnType<typeof configureQueryClient>['queryConfig'];
-  queryClient: ReturnType<typeof configureQueryClient>['queryClient'];
-  hooks: ReturnType<typeof configureQueryClient>['hooks'];
-  mutations: ReturnType<typeof configureQueryClient>['mutations'];
+  queryConfig: QueryClientConfigReturn['queryConfig'];
+  queryClient: QueryClientConfigReturn['queryClient'];
+  hooks: QueryClientConfigReturn['hooks'];
+  mutations: QueryClientConfigReturn['mutations'];
 }>({
-  queryConfig: {} as ReturnType<typeof configureQueryClient>['queryConfig'],
-  queryClient: {} as ReturnType<typeof configureQueryClient>['queryClient'],
-  hooks: {} as unknown as ReturnType<typeof configureQueryClient>['hooks'],
+  queryConfig: {} as QueryClientConfigReturn['queryConfig'],
+  queryClient: {} as QueryClientConfigReturn['queryClient'],
+  hooks: {} as unknown as QueryClientConfigReturn['hooks'],
   mutations: {} as unknown as ReturnType<
     typeof configureQueryClient
   >['mutations'],

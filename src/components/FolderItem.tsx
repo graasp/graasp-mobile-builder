@@ -4,10 +4,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CompleteMember, DiscriminatedItem } from '@graasp/sdk';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useQueryClient } from '../context/QueryClientContext';
-import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
@@ -19,8 +18,6 @@ type Props = {
 };
 
 const FolderItem = ({ item }: Props) => {
-  const route = useRoute<ItemScreenProps<'ItemStackItem'>['route']>();
-
   const { hooks } = useQueryClient();
   const {
     data: itemMemberships,
