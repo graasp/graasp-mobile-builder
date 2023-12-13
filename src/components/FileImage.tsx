@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DimensionValue, Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -28,10 +28,11 @@ const FileImage: FC<FileImageProps> = ({
   mimetype,
   isPlayerView,
 }) => {
+  const dimensions = useWindowDimensions();
   const [imageSize, setImageSize] = useState<{
-    width: DimensionValue;
-    height: DimensionValue;
-  }>({ width: '100%', height: '100%' });
+    width: number;
+    height: number;
+  }>({ width: dimensions.width, height: dimensions.height });
   const navigation =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { t } = useTranslation();
@@ -74,14 +75,15 @@ const FileImage: FC<FileImageProps> = ({
     });
   };
 
+  const width =
+    imageSize.width > dimensions.width ? dimensions.width : imageSize.width;
   return (
     <View style={styles.imageContainer}>
       <Image
         resizeMode="contain"
         style={{
-          height: imageSize.height,
-          width: imageSize.width,
-          maxWidth: '100%',
+          width,
+          height: (imageSize.height / imageSize.width) * width,
         }}
         source={{
           uri: filePath,

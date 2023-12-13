@@ -10,6 +10,7 @@ import {
 
 import { Category, CategoryType, DiscriminatedItem } from '@graasp/sdk';
 
+import { LIBRARY_SEARCH_BAR } from '../../../e2e/constants/testIds';
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { useQueryClient } from '../../context/QueryClientContext';
 import CollectionCard from './CollectionCard';
@@ -101,6 +102,7 @@ const LibraryScreen = () => {
           borderBlockColor: 'white',
         }}
         round
+        testID={LIBRARY_SEARCH_BAR}
       />
       <SearchFilterButton currentSelection={filters} onSave={setFilters} />
       {renderContent()}

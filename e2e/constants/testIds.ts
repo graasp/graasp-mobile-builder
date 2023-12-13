@@ -9,6 +9,7 @@ export const HOME_TAB = 'home-tab';
 export const MY_ITEMS_TAB = 'my-items-tab';
 export const SHARED_ITEMS_TAB = 'shared-items-tab';
 export const PROFILE_TAB = 'profile-tab';
+export const LIBRARY_TAB = 'library-tab';
 export const SIGN_IN_TAB = 'sign-in-tab';
 export const ITEM_LIST = 'item-list';
 export const ITEM_LIST_OPTIONS = 'item-list-options';
@@ -44,8 +45,14 @@ export const ITEM_NAVIGATOR_ITEM_BACK_BUTTON = 'item-screen-back-button';
 export const SCAN_QR_CODE_BUTTON = 'scan-qr-code-button';
 export const buildItemsListTestId = (id: string) => `items-list-${id}`;
 export const URL_INPUT_SUBMIT_BUTTON = 'url-input-submit-button';
-export const buildPlayerButtonId = (id: string) => `palyer-button-${id}`;
+export const buildPlayerButtonId = (id: string) => `player-button-${id}`;
 export const ITEM_NAVIGATOR_ITEM_ERROR = 'item-screen-error';
+export const LIBRARY_SEARCH_BAR = 'library-search-bar';
+export const PLAYER_FOLDER_MENU = 'player-folder-menu';
+export const buildPlayerFolderMenuItem = (id: string) =>
+  `player-folder-menu-item-${id}`;
+export const buildPlayerViewCloseButton = (id: string) =>
+  `player-view-close-button-${id}`;
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;
