@@ -39,25 +39,23 @@ export const QrCameraScreen = ({
     // @ts-ignore
     navigate(MAIN_NAVIGATOR_MAIN);
 
-    if (type === 'qr') {
-      // todo: host manager
-      const itemId = getItemIdFromUrl(data);
-      if (itemId) {
-        navigate(ITEM_NAVIGATOR, {
-          screen: ITEM_NAVIGATOR_ITEM,
-          params: {
-            itemId,
-          },
-        });
-      }
-    } else {
-      console.error(`scanned code is of type ${type}`);
+    // todo: host manager
+    const itemId = getItemIdFromUrl(data);
+    if (itemId) {
+      navigate(ITEM_NAVIGATOR, {
+        screen: ITEM_NAVIGATOR_ITEM,
+        params: {
+          itemId,
+        },
+      });
     }
+
     // todo: get value and navigate
   };
   return (
     <View style={styles.cameraContainer}>
       <GraaspBarCodeScanner
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.QR]}
         onBarCodeScanned={onBarCodeScanned}
         style={styles.camera}
       />

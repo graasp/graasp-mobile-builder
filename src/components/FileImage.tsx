@@ -78,7 +78,11 @@ const FileImage: FC<FileImageProps> = ({
     <View style={styles.imageContainer}>
       <Image
         resizeMode="contain"
-        style={{ height: imageSize.height, width: imageSize.width }}
+        style={{
+          height: imageSize.height,
+          width: imageSize.width,
+          maxWidth: '100%',
+        }}
         source={{
           uri: filePath,
         }}

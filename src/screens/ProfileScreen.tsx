@@ -303,7 +303,7 @@ const ProfileScreen = () => {
           icon={
             <MaterialIcons
               style={{ marginRight: 7 }}
-              name={'language'}
+              name={'logout'}
               color="#ffffff"
               size={25}
             />
