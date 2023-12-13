@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
@@ -9,6 +11,8 @@ import { HomeStackParamList } from './types';
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <Stack.Navigator
       id={HOME_NAVIGATOR}
@@ -20,7 +24,7 @@ const HomeStackNavigator = () => {
         component={HomeScreen}
         options={{
           title: '',
-          headerLeft: () => <Header title="Home" />,
+          headerLeft: () => <Header title={t('Home')} />,
           headerLeftContainerStyle: { paddingLeft: 10 },
           headerBackTitleVisible: false,
         }}

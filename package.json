@@ -47,6 +47,7 @@
     "@gorhom/bottom-sheet": "^4.5.1",
     "@graasp/query-client": "2.1.0",
     "@graasp/sdk": "3.3.0",
+    "@graasp/translations": "1.21.1",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-firebase/analytics": "^18.6.1",
     "@react-native-firebase/app": "^18.6.1",
@@ -76,7 +77,6 @@
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
     "expo-web-browser": "~12.3.2",
-    "i18next": "^23.7.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^13.5.0",
@@ -122,7 +122,8 @@
     "typescript": "^5.2.2"
   },
   "resolutions": {
-    "expo-image-loader": "4.6.0"
+    "expo-image-loader": "4.6.0",
+    "i18next": "^23.7.7"
   },
   "packageManager": "yarn@4.0.2"
 }

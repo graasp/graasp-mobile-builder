@@ -48,7 +48,7 @@ const TabNavigator = () => {
       <Tab.Screen
         name={TAB_NAVIGATOR_HOME}
         component={HomeStackNavigator}
-        options={({ route }) => ({
+        options={() => ({
           tabBarLabel: t('Home'),
           tabBarIcon: ({ color, size }) => (
             <Entypo name="home" size={size} color={color} />
@@ -57,6 +57,34 @@ const TabNavigator = () => {
           tabBarTestID: HOME_TAB,
         })}
       />
+      {currentMember ? (
+        <>
+          <Tab.Screen
+            name={TAB_NAVIGATOR_MY_ITEMS}
+            component={MyItemsStackNavigator}
+            options={{
+              tabBarLabel: t('My Items'),
+              tabBarIcon: ({ color, size }) => (
+                <MaterialIcons name="folder" size={size} color={color} />
+              ),
+              tabBarActiveTintColor: PRIMARY_COLOR,
+              tabBarTestID: MY_ITEMS_TAB,
+            }}
+          />
+          <Tab.Screen
+            name={TAB_NAVIGATOR_SHARED}
+            component={SharedStackNavigator}
+            options={{
+              tabBarLabel: t('Shared'),
+              tabBarIcon: ({ color, size }) => (
+                <MaterialIcons name="folder-shared" size={size} color={color} />
+              ),
+              tabBarActiveTintColor: PRIMARY_COLOR,
+              tabBarTestID: SHARED_ITEMS_TAB,
+            }}
+          />
+        </>
+      ) : null}
       <Tab.Screen
         name={TAB_NAVIGATOR_BOOKMARKS}
         component={BookmarksStackNavigator}
@@ -82,30 +110,6 @@ const TabNavigator = () => {
       />
       {currentMember ? (
         <>
-          <Tab.Screen
-            name={TAB_NAVIGATOR_MY_ITEMS}
-            component={MyItemsStackNavigator}
-            options={{
-              tabBarLabel: t('My Items'),
-              tabBarIcon: ({ color, size }) => (
-                <MaterialIcons name="folder" size={size} color={color} />
-              ),
-              tabBarActiveTintColor: PRIMARY_COLOR,
-              tabBarTestID: MY_ITEMS_TAB,
-            }}
-          />
-          <Tab.Screen
-            name={TAB_NAVIGATOR_SHARED}
-            component={SharedStackNavigator}
-            options={{
-              tabBarLabel: t('Shared Items'),
-              tabBarIcon: ({ color, size }) => (
-                <MaterialIcons name="folder-shared" size={size} color={color} />
-              ),
-              tabBarActiveTintColor: PRIMARY_COLOR,
-              tabBarTestID: SHARED_ITEMS_TAB,
-            }}
-          />
           <Tab.Screen
             name={TAB_NAVIGATOR_PROFILE}
             component={ProfileStackNavigator}

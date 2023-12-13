@@ -262,8 +262,6 @@ const ProfileScreen = () => {
         <Text h4 style={styles.name}>
           {currentMember.name}
         </Text>
-        <Text style={styles.header}>{t('Member ID')}</Text>
-        <Text style={styles.value}>{currentMember.id}</Text>
         <Text style={styles.header}>{t('Email')}</Text>
         <Text style={styles.value}>{currentMember.email}</Text>
         <Text style={styles.header}>{t('Member Since')}</Text>

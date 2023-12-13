@@ -14,6 +14,7 @@
   "Home": "Home",
   "Profile": "Profile",
   "Shared Items": "Shared Items",
+  "Shared": "Shared",
   "Type": "Type",
   "Size": "Size",
   "Creator": "Creator",
@@ -77,5 +78,14 @@
   "Search Here...": "Search Here...",
   "Filters": "Filters",
   "Apply": "Apply",
-  "Clear": "Clear"
+  "Clear": "Clear",
+  "Submit": "Submit",
+  "link": "link",
+  "I already have an account": "I already have an account",
+  "Create a new account": "Create a new account",
+  "You need to grant permission to the camera to use the QR scanner feature": "You need to grant permission to the camera to use the QR scanner feature",
+  "Later": "Later",
+  "Add to Bookmarks": "Add to Bookmarks",
+  "Remove from Bookmarks": "Remove from Bookmarks",
+  "Content": "Content"
 }

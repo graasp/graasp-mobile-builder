@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../components/common/Header';
@@ -9,6 +11,8 @@ import { SharedStackParamList } from './types';
 const SharedStack = createStackNavigator<SharedStackParamList>();
 
 const SharedStackNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <SharedStack.Navigator
       id={SHARED_NAVIGATOR}
@@ -20,7 +24,7 @@ const SharedStackNavigator = () => {
         component={SharedScreen}
         options={{
           title: '',
-          headerLeft: () => <Header title="Shared Items" />,
+          headerLeft: () => <Header title={t('Shared Items')} />,
           headerLeftContainerStyle: { paddingLeft: 10 },
         }}
       />
