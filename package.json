@@ -77,7 +77,6 @@
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
     "expo-web-browser": "~12.3.2",
-    "i18next": "^23.7.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^13.5.0",
@@ -123,7 +122,8 @@
     "typescript": "^5.2.2"
   },
   "resolutions": {
-    "expo-image-loader": "4.6.0"
+    "expo-image-loader": "4.6.0",
+    "i18next": "^23.7.7"
   },
   "packageManager": "yarn@4.0.2"
 }
