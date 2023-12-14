@@ -12,11 +12,15 @@ import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import 'expo-document-picker';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
+import {
+  PLAYER_FOLDER_MENU,
+  buildPlayerFolderMenuItem,
+} from '../../e2e/constants/testIds';
 import { PLAYER_COLOR } from '../config/constants/constants';
 import {
   ITEM_NAVIGATOR,
@@ -28,9 +32,13 @@ import CustomBackdrop from './common/CustomBackdrop';
 
 interface PlayerFolderMenuProps {
   folderItems: DiscriminatedItem[];
+  /**
+   * root where the player view will exit
+   * */
+  origin: { rootId: DiscriminatedItem['id']; context: Context };
 }
 
-const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
+const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
 
@@ -46,6 +54,7 @@ const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
       navigate(ITEM_NAVIGATOR, {
         screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
         params: {
+          origin,
           itemId: selectedItem.id,
           headerTitle: selectedItem.name,
         },
@@ -59,7 +68,12 @@ const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
         <ListItem>
           <ItemIcon type={item.type} extra={item.extra} />
           <ListItem.Content style={{ flexDirection: 'row' }}>
-            <ListItem.Title style={{ flex: 2 }}>{item.name}</ListItem.Title>
+            <ListItem.Title
+              testID={buildPlayerFolderMenuItem(item.id)}
+              style={{ flex: 2 }}
+            >
+              {item.name}
+            </ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </Pressable>
@@ -119,7 +133,12 @@ const PlayerFolderMenu = ({ folderItems }: PlayerFolderMenuProps) => {
         onPress={handleOpenBottomSheetMenuPlayerModal}
         style={styles.menuPlayerButton}
       >
-        <MaterialIcons name="menu" color="#ffffff" size={25} />
+        <MaterialIcons
+          name="menu"
+          color="#ffffff"
+          size={25}
+          testID={PLAYER_FOLDER_MENU}
+        />
       </TouchableOpacity>
     </>
   );

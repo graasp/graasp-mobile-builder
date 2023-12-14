@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { formatDate } from '@graasp/sdk';
+import { Context, formatDate } from '@graasp/sdk';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
@@ -56,6 +56,7 @@ const CollectionScreen = ({
                 <PlayerButton
                   size={28}
                   itemId={item.id}
+                  origin={{ rootId: item.id, context: Context.Library }}
                   name={item.name}
                   type={item.type}
                 />

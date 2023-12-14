@@ -1,4 +1,4 @@
-import { DiscriminatedItem, UUID } from '@graasp/sdk';
+import { Context, DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {
@@ -88,6 +88,10 @@ export type ItemStackParamList = {
   [ITEM_NAVIGATOR_PLAYER_FOLDER]: {
     headerTitle?: string;
     itemId: UUID;
+    /**
+     * root where the player view will exit
+     * */
+    origin: { rootId: DiscriminatedItem['id']; context: Context };
   };
   [ITEM_NAVIGATOR_ITEM]: { headerTitle?: string; itemId: UUID };
   [ITEM_NAVIGATOR_ITEM_DETAILS]: { itemId: UUID };

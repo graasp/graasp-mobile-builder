@@ -5,8 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { Context } from '@graasp/sdk';
+
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+import { buildPlayerViewCloseButton } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
 import PlayerView from '../components/PlayerView';
 import { PLAYER_COLOR } from '../config/constants/constants';
@@ -14,15 +17,17 @@ import { useQueryClient } from '../context/QueryClientContext';
 import {
   ITEM_NAVIGATOR,
   ITEM_NAVIGATOR_ITEM,
+  LIBRARY_NAVIGATOR_COLLECTION,
   MY_ITEMS_NAVIGATOR_MY_ITEMS,
+  TAB_NAVIGATOR_LIBRARY,
   TAB_NAVIGATOR_MY_ITEMS,
 } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import { useFocusQuery } from '../utils/functions/useQuery';
 
 const PlayerFolderScreen = (): JSX.Element | null => {
-  const route = useRoute<ItemScreenProps<'ItemStackItem'>['route']>();
-  const { itemId } = route.params;
+  const route = useRoute<ItemScreenProps<'ItemStackPlayerFolder'>['route']>();
+  const { itemId, origin } = route.params;
   const { hooks } = useQueryClient();
   const {
     data: children,
@@ -32,7 +37,7 @@ const PlayerFolderScreen = (): JSX.Element | null => {
   } = hooks.useChildren(itemId);
   useFocusQuery(refetch);
   const navigation =
-    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+    useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,6 +47,7 @@ const PlayerFolderScreen = (): JSX.Element | null => {
       headerRight: () => (
         <Button
           buttonStyle={{ backgroundColor: PLAYER_COLOR }}
+          testID={buildPlayerViewCloseButton(itemId)}
           icon={
             <MaterialIcons
               name={'close'}
@@ -51,16 +57,21 @@ const PlayerFolderScreen = (): JSX.Element | null => {
             />
           }
           onPress={() => {
-            if (itemId) {
-              navigation.navigate(ITEM_NAVIGATOR, {
+            if (origin.context === Context.Builder) {
+              return navigation.navigate(ITEM_NAVIGATOR, {
                 screen: ITEM_NAVIGATOR_ITEM,
-                params: { itemId },
+                params: { itemId: origin.rootId },
               });
-            } else {
-              navigation.navigate(TAB_NAVIGATOR_MY_ITEMS, {
-                screen: MY_ITEMS_NAVIGATOR_MY_ITEMS,
+            } else if (origin.context === Context.Library) {
+              return navigation.navigate(TAB_NAVIGATOR_LIBRARY, {
+                screen: LIBRARY_NAVIGATOR_COLLECTION,
+                params: { itemId: origin.rootId },
               });
             }
+
+            return navigation.navigate(TAB_NAVIGATOR_MY_ITEMS, {
+              screen: MY_ITEMS_NAVIGATOR_MY_ITEMS,
+            });
           }}
         ></Button>
       ),
@@ -77,7 +88,7 @@ const PlayerFolderScreen = (): JSX.Element | null => {
 
   return (
     <SafeAreaView style={styles.container} edges={['left']}>
-      <PlayerView children={children} />
+      <PlayerView children={children} origin={origin} />
     </SafeAreaView>
   );
 };

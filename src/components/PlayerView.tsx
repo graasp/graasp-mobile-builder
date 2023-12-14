@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { divideContentAndFolderItems } from '../utils/functions/item';
 import ActivityIndicator from './ActivityIndicator';
@@ -11,9 +11,10 @@ import EmptyList from './common/EmptyList';
 
 interface PlayerViewProps {
   children: DiscriminatedItem[];
+  origin: { rootId: DiscriminatedItem['id']; context: Context };
 }
 
-const PlayerView: FC<PlayerViewProps> = ({ children }) => {
+const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
   const [folderItems, setFolderItems] = useState<DiscriminatedItem[] | null>(
     null,
   );
@@ -50,7 +51,7 @@ const PlayerView: FC<PlayerViewProps> = ({ children }) => {
         </ScrollView>
       </View>
       {folderItems.length !== 0 && (
-        <PlayerFolderMenu folderItems={folderItems} />
+        <PlayerFolderMenu origin={origin} folderItems={folderItems} />
       )}
     </>
   );

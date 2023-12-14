@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { CompleteMember, DiscriminatedItem } from '@graasp/sdk';
+import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -45,6 +45,7 @@ const FolderItem = ({ item }: Props) => {
           <View style={styles.headerButtons}>
             <PlayerButton
               itemId={item.id}
+              origin={{ rootId: item.id, context: Context.Builder }}
               name={item.name}
               type={item.type}
               color="white"

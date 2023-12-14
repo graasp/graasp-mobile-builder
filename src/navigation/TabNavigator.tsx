@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import {
   HOME_TAB,
+  LIBRARY_TAB,
   MY_ITEMS_TAB,
   PROFILE_TAB,
   SHARED_ITEMS_TAB,
@@ -100,6 +101,7 @@ const TabNavigator = () => {
         name={TAB_NAVIGATOR_LIBRARY}
         component={LibraryStackNavigator}
         options={() => ({
+          tabBarTestID: LIBRARY_TAB,
           tabBarLabel: t('Library'),
           tabBarIcon: ({ focused }) => (
             <LibraryIcon primaryColor={focused ? PRIMARY_COLOR : 'grey'} />

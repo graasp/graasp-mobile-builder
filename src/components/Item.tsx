@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { Icon, ListItem } from 'react-native-elements';
 
-import { DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
+import { Context, DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -54,7 +54,12 @@ const Item: FC<ItemProps> = ({
       {openOptions && (
         <>
           {type === ItemType.FOLDER && (
-            <PlayerButton name={name} type={type} itemId={id} />
+            <PlayerButton
+              name={name}
+              type={type}
+              itemId={id}
+              origin={{ rootId: id, context: Context.Builder }}
+            />
           )}
           <Icon
             type="material"

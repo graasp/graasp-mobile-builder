@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { DiscriminatedItem, ItemType } from '@graasp/sdk';
+import { Context, DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,14 +15,18 @@ import { ItemScreenProps } from '../../navigation/types';
 
 type Props = {
   itemId: DiscriminatedItem['id'];
+
   type: DiscriminatedItem['type'];
   name: DiscriminatedItem['name'];
   size?: number;
   color?: string;
+
+  origin: { rootId: DiscriminatedItem['id']; context: Context };
 };
 
 const PlayerButton = ({
   itemId,
+  origin,
   type,
   name,
   size = 24,
@@ -39,6 +43,7 @@ const PlayerButton = ({
           params: {
             itemId,
             headerTitle: name,
+            origin,
           },
         });
 
