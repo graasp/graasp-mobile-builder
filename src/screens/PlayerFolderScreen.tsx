@@ -57,7 +57,6 @@ const PlayerFolderScreen = (): JSX.Element | null => {
             />
           }
           onPress={() => {
-            console.log(origin);
             if (origin.context === Context.Builder) {
               return navigation.navigate(ITEM_NAVIGATOR, {
                 screen: ITEM_NAVIGATOR_ITEM,
