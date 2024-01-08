@@ -5,6 +5,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // polyfill the URL and URLParams apis
 import 'react-native-url-polyfill/auto';
 
+// polyfill for android intl
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+
 import i18nConfig from './src/config/i18n';
 import { AuthProvider } from './src/context/AuthContext';
 import { QueryClientProvider } from './src/context/QueryClientContext';
