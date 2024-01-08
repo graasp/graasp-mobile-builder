@@ -36,20 +36,24 @@ const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
 
   return (
     <>
-      <View>
-        <ScrollView>
-          {contentItems.length === 0 ? (
-            <EmptyList />
-          ) : (
-            contentItems.map((item) => (
-              <View key={item.id} style={styles.item}>
-                <PlayerItem item={item} />
-                <View style={styles.bottomSpace}></View>
-              </View>
-            ))
-          )}
-        </ScrollView>
-      </View>
+      {/* <View renderToHardwareTextureAndroid={true}> */}
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {contentItems.length === 0 ? (
+          <EmptyList />
+        ) : (
+          contentItems.map((item) => (
+            <>
+              {/* todo:padding */}
+              <PlayerItem key={item.id + 'item'} item={item} />
+              <View
+                key={item.id + 'bottomspace'}
+                style={styles.bottomSpace}
+              ></View>
+            </>
+          ))
+        )}
+      </ScrollView>
+      {/* </View> */}
       {folderItems.length !== 0 && (
         <PlayerFolderMenu origin={origin} folderItems={folderItems} />
       )}
