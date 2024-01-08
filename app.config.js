@@ -2,7 +2,7 @@ module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
   owner: 'graasp',
-  version: '1.1.5',
+  version: '1.1.7',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -66,7 +66,7 @@ module.exports = {
     },
   },
   android: {
-    versionCode: 18,
+    versionCode: 20,
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
