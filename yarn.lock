@@ -8537,7 +8537,6 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-circus: "npm:^29.7.0"
     jest-expo: "npm:^49.0.0"
-    jsc-android: "npm:^250231.0.0"
     prettier: "npm:3.0.3"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
