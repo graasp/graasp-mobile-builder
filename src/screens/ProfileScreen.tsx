@@ -18,6 +18,7 @@ import { formatDate } from '@graasp/sdk';
 
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
+import 'intl';
 
 import { LOG_OUT_BUTTON } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';

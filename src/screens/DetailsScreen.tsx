@@ -14,6 +14,7 @@ import {
 import ActivityIndicator from '../components/ActivityIndicator';
 import ItemIcon from '../components/ItemIcon';
 import { DEFAULT_LOCALE, TEXT_ALIGNMENT } from '../config/constants/constants';
+import i18n from '../config/i18n';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
 import { humanFileSize } from '../utils/functions/fileSize';
@@ -37,7 +38,6 @@ const DetailsScreen = ({ route }: ItemScreenProps<'ItemStackDetail'>) => {
     refetch: refetchItem,
   } = hooks.useItem(itemId);
   useFocusQuery(refetchItem);
-
   const {
     data: creatorData,
     isLoading: isLoadingName,
@@ -105,11 +105,15 @@ const DetailsScreen = ({ route }: ItemScreenProps<'ItemStackDetail'>) => {
         )}
         <Text style={styles.header}>{t('Creation Date')}</Text>
         <Text style={styles.value}>
-          {formatDate(createdAt, { locale: DEFAULT_LOCALE })}
+          {formatDate(createdAt, {
+            locale: i18n.language || DEFAULT_LOCALE,
+          })}
         </Text>
         <Text style={styles.header}>{t('Last update')}</Text>
         <Text style={styles.value}>
-          {formatDate(updatedAt, { locale: DEFAULT_LOCALE })}
+          {formatDate(updatedAt, {
+            locale: i18n.language || DEFAULT_LOCALE,
+          })}
         </Text>
       </ScrollView>
     </SafeAreaView>
