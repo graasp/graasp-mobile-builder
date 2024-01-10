@@ -27,6 +27,7 @@ const CollectionCard = ({ item }: Props) => {
         navigate(LIBRARY_NAVIGATOR_COLLECTION, { itemId: item.id });
       }}
     >
+      {/* @ts-ignore */}
       <Card containerStyle={styles.container}>
         <CollectionThumbnail item={item} />
         <View style={styles.content}>
