@@ -5,6 +5,7 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { buildLibraryCardId } from '../../../e2e/constants/testIds';
 import { LIBRARY_NAVIGATOR_COLLECTION } from '../../navigation/names';
 import { LibraryScreenProp } from '../../navigation/types';
 import CollectionCreator from './CollectionCreator';
@@ -21,11 +22,11 @@ const CollectionCard = ({ item }: Props) => {
 
   return (
     <TouchableOpacity
+      testID={buildLibraryCardId(item.id)}
       onPress={() => {
         navigate(LIBRARY_NAVIGATOR_COLLECTION, { itemId: item.id });
       }}
     >
-      {/* @ts-ignore */}
       <Card containerStyle={styles.container}>
         <CollectionThumbnail item={item} />
         <View style={styles.content}>
@@ -52,12 +53,6 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'left',
-  },
-  avatarAndCreator: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 7,
   },
 });
 

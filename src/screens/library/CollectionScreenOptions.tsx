@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Context, DiscriminatedItem } from '@graasp/sdk';
 
+import { COLLECTION_BOOKMARK_BUTTON } from '../../../e2e/constants/testIds';
 import PlayerButton from '../../components/common/PlayerButton';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
 import { useBookmark } from '../../hooks/bookmark';
@@ -21,6 +22,7 @@ const CollectionScreenOptions = ({ item }: { item: DiscriminatedItem }) => {
         type={item.type}
       />
       <MaterialCommunityIcons
+        testID={COLLECTION_BOOKMARK_BUTTON}
         name={isBookmarked ? 'bookmark-minus' : 'bookmark-plus'}
         size={28}
         color={ITEMS_TABLE_ROW_ICON_COLOR}

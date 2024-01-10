@@ -31,10 +31,10 @@ const fixtures: {
     },
     // item with children
     {
-      id: '1da97a2a-2454-4413-b774-59b790c108dd',
+      id: '589da986-e00d-46cb-bb86-0ee782391f94',
       name: 'Compétences de vie',
       isPublished: true,
-      children: [{ id: '93d81850-7242-4f5d-baa9-79cfc0e25fb8' }],
+      children: [{ id: '8c7b78b5-55a6-4209-a4c2-471ab268d2b4' }],
     },
   ],
 };

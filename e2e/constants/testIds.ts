@@ -57,3 +57,5 @@ export const buildPlayerViewCloseButton = (id: string) =>
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;
 export const SLEEP_TIME_OPEN_APP = 3000;
+export const buildLibraryCardId = (id: string) => `library-card-${id}`;
+export const COLLECTION_BOOKMARK_BUTTON = 'collection-bookmark-button';
