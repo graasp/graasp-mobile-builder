@@ -5,19 +5,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Context, formatDate } from '@graasp/sdk';
+import { formatDate } from '@graasp/sdk';
 
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 
 import ActivityIndicator from '../../components/ActivityIndicator';
-import PlayerButton from '../../components/common/PlayerButton';
 import { DEFAULT_LOCALE } from '../../config/constants/constants';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { LibraryScreenProp } from '../../navigation/types';
 import CollectionContent from './CollectionContent';
 import CollectionCreator from './CollectionCreator';
+import CollectionScreenOptions from './CollectionScreenOptions';
 import CollectionThumbnail from './CollectionThumbnail';
 import Tags from './Tags';
 
@@ -52,15 +52,7 @@ const CollectionScreen = ({
             </Text>
             <View style={styles.titleAndicon}>
               <CollectionCreator item={item} />
-              <View>
-                <PlayerButton
-                  size={28}
-                  itemId={item.id}
-                  origin={{ rootId: item.id, context: Context.Library }}
-                  name={item.name}
-                  type={item.type}
-                />
-              </View>
+              <CollectionScreenOptions item={item} />
             </View>
             <Tags item={item} />
             {item.description && (
@@ -73,13 +65,13 @@ const CollectionScreen = ({
             <CollectionContent item={item} />
             <Divider style={styles.divider} />
             <Text>
-              <Text style={{ fontWeight: 'bold' }}>{t('Creation Date')}:</Text>{' '}
+              <Text style={{ fontWeight: 'bold' }}>{t('Creation Date')}:</Text>
               {formatDate(item.createdAt, {
                 locale: i18n.language ?? DEFAULT_LOCALE,
               })}
             </Text>
             <Text>
-              <Text style={{ fontWeight: 'bold' }}>{t('Last Update')}:</Text>{' '}
+              <Text style={{ fontWeight: 'bold' }}>{t('Last Update')}:</Text>
               {formatDate(item.updatedAt, {
                 locale: i18n.language ?? DEFAULT_LOCALE,
               })}
