@@ -35,25 +35,24 @@ const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
   }
 
   return (
+    // do not add a view here because it might contain a link - webview
     <>
-      {/* <View renderToHardwareTextureAndroid={true}> */}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         {contentItems.length === 0 ? (
           <EmptyList />
         ) : (
           contentItems.map((item) => (
             <>
-              {/* todo:padding */}
-              <PlayerItem key={item.id + 'item'} item={item} />
+              <View key={item.id + '-topspace'} style={styles.topSpace}></View>
+              <PlayerItem key={item.id + '-item'} item={item} />
               <View
-                key={item.id + 'bottomspace'}
+                key={item.id + '-bottomspace'}
                 style={styles.bottomSpace}
               ></View>
             </>
           ))
         )}
       </ScrollView>
-      {/* </View> */}
       {folderItems.length !== 0 && (
         <PlayerFolderMenu origin={origin} folderItems={folderItems} />
       )}
@@ -62,14 +61,14 @@ const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
 };
 
 const styles = StyleSheet.create({
-  item: {
-    paddingTop: 20,
+  topSpace: {
+    height: 20,
   },
   flatList: {
     height: '100%',
   },
   bottomSpace: {
-    height: 120,
+    height: 100,
   },
 });
 
