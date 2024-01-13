@@ -53,6 +53,9 @@ export const buildPlayerFolderMenuItem = (id: string) =>
   `player-folder-menu-item-${id}`;
 export const buildPlayerViewCloseButton = (id: string) =>
   `player-view-close-button-${id}`;
+export const CHAT_BUTTON_HEADER = 'chat-button-header';
+export const CHAT_MESSAGE_OPTIONS_EDIT = 'chat-message-options-edit';
+export const CHAT_MESSAGE_OPTIONS_DELETE = 'chat-message-options-delete';
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;

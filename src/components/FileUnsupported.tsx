@@ -5,20 +5,31 @@ import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { DiscriminatedItem } from '@graasp/sdk';
+
 import { useNavigation } from '@react-navigation/native';
 
-import { UNSUPPORTED_SHARE } from '../../e2e/constants/testIds';
+import {
+  CHAT_BUTTON_HEADER,
+  UNSUPPORTED_SHARE,
+} from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
+import { handleOpenChat } from '../utils/functions/chat';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
   filePath: string;
   handleShareFile: () => Promise<void>;
   isPlayerView: boolean;
+  item: DiscriminatedItem;
 }
 
-const FileImage: FC<FileImageProps> = ({ handleShareFile, isPlayerView }) => {
+const FileImage: FC<FileImageProps> = ({
+  handleShareFile,
+  isPlayerView,
+  item,
+}) => {
   const navigation =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const { t } = useTranslation();
@@ -27,7 +38,14 @@ const FileImage: FC<FileImageProps> = ({ handleShareFile, isPlayerView }) => {
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <FileHeaderButton name="ios-share" handler={handleShareFile} />
+          <View style={styles.headerButtons}>
+            <FileHeaderButton
+              name="chat"
+              handler={() => handleOpenChat(navigation, item)}
+              testID={CHAT_BUTTON_HEADER}
+            />
+            <FileHeaderButton name="ios-share" handler={handleShareFile} />
+          </View>
         ),
       });
     }
@@ -58,6 +76,10 @@ const styles = StyleSheet.create({
   fileContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    width: 82,
   },
 });
 

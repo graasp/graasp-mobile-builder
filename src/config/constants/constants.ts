@@ -149,3 +149,13 @@ export const buildSignUpPath = (
 // todo: use graasp ui?
 export const PRIMARY_COLOR = '#5050d2';
 export const PLAYER_COLOR = '#009eff';
+export const CHAT_SELECTED_MESSAGE_COLOR = '#fc9607';
+export const PRIMARY_LIGHT_COLOR = '#edeefb';
+
+export const MENTION_REGEX =
+  /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[.*\]$/i;
+export const MENTION_REGEX_WITH_NAME =
+  /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[(?<name>[^\]]*)\]/gi;
+
+export const MENTION_CHAT_TRIGGER = '@';
+export const UNKNOWN_CHAT_MEMBER = 'Unknown';

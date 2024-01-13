@@ -63,8 +63,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
         return <FolderItem item={item} />;
       }
       case ItemType.DOCUMENT: {
-        const content = item.extra.document.content;
-        return <Document content={content} />;
+        return <Document item={item} />;
       }
       case ItemType.APP: {
         return <AppItem item={item} context={Context.Builder} />;

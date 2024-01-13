@@ -6,6 +6,7 @@ export const ITEM_NAVIGATOR = 'ItemStack';
 export const ITEM_NAVIGATOR_PLAYER_FOLDER = 'ItemStackPlayerFolder';
 export const ITEM_NAVIGATOR_ITEM = 'ItemStackItem';
 export const ITEM_NAVIGATOR_ITEM_DETAILS = 'ItemStackDetail';
+export const ITEM_NAVIGATOR_ITEM_CHAT = 'ItemStackChat';
 export const LIBRARY_NAVIGATOR = 'LibraryStackNavigator';
 export const LIBRARY_NAVIGATOR_LIBRARY = 'LibraryStack';
 export const LIBRARY_NAVIGATOR_COLLECTION = 'CollectionStack';

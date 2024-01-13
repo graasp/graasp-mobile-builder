@@ -11,11 +11,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ResizeMode, Video } from 'expo-av';
 import * as Sharing from 'expo-sharing';
 
-import { UUID } from '@graasp/sdk';
+import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
 import {
+  CHAT_BUTTON_HEADER,
   VIDEO_ITEM,
   VIDEO_SAVE,
   VIDEO_SHARE,
@@ -23,6 +24,7 @@ import {
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
+import { handleOpenChat } from '../utils/functions/chat';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
 import FileHeaderButton from './common/FileHederButton';
 
@@ -31,6 +33,7 @@ interface FileVideoProps {
   itemId: UUID;
   mimetype: string;
   isPlayerView: boolean;
+  item: DiscriminatedItem;
 }
 
 const FileVideo: FC<FileVideoProps> = ({
@@ -38,6 +41,7 @@ const FileVideo: FC<FileVideoProps> = ({
   itemId,
   mimetype,
   isPlayerView,
+  item,
 }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const navigation =
@@ -76,13 +80,22 @@ const FileVideo: FC<FileVideoProps> = ({
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <View>
+          <View
+            style={
+              isDownloading
+                ? styles.headerButtonsDownloadingState
+                : styles.headerButtons
+            }
+          >
+            <FileHeaderButton
+              name="chat"
+              handler={() => handleOpenChat(navigation, item)}
+              testID={CHAT_BUTTON_HEADER}
+            />
             {isDownloading ? (
-              <View style={styles.headerButtonsDownloadingState}>
-                <FileHeaderButton disabled={true} name="cloud-download" />
-              </View>
+              <FileHeaderButton disabled={true} name="cloud-download" />
             ) : (
-              <View style={styles.headerButtons}>
+              <>
                 <FileHeaderButton
                   name="save-alt"
                   handler={handleSaveFileFromS3Url}
@@ -93,7 +106,7 @@ const FileVideo: FC<FileVideoProps> = ({
                   handler={handleShareFileFromS3Url}
                   testID={VIDEO_SHARE}
                 />
-              </View>
+              </>
             )}
           </View>
         ),
@@ -129,11 +142,11 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     flexDirection: 'row',
-    width: 82,
+    width: 123,
   },
   headerButtonsDownloadingState: {
     flexDirection: 'row',
-    width: 41,
+    width: 82,
   },
 });
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -11,7 +11,11 @@ import { EmbeddedLinkItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
+import { handleOpenChat } from '../utils/functions/chat';
+import FileHeaderButton from './common/FileHederButton';
+import { ItemScreenProps } from '../navigation/types';
 
 const LinkItem = ({
   item,
@@ -23,22 +27,32 @@ const LinkItem = ({
   const ref = useRef<WebView | null>(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
+  const navigation = useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const uri = item.extra.embeddedLink?.url;
 
   useEffect(() => {
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <Button
-            buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-            icon={<Ionicons name={'open-outline'} color="#ffffff" size={25} />}
-            onPress={() => Linking.openURL(uri)}
-          ></Button>
+          <View style={styles.headerButtons}>
+            <FileHeaderButton
+              name="chat"
+              handler={() => handleOpenChat(navigation, item)}
+              testID={CHAT_BUTTON_HEADER}
+            />
+            <Button
+              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+              icon={
+                <Ionicons name={'open-outline'} color="#ffffff" size={25} />
+              }
+              onPress={() => Linking.openURL(uri)}
+            ></Button>
+          </View>
         ),
       });
     }
   }, [isPlayerView]);
+
   return (
     <WebView
       ref={(r) => (ref.current = r)}
@@ -56,4 +70,12 @@ const LinkItem = ({
     />
   );
 };
+
+const styles = StyleSheet.create({
+  headerButtons: {
+    flexDirection: 'row',
+    width: 82,
+  },
+});
+
 export default LinkItem;

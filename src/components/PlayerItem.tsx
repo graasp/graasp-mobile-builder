@@ -15,11 +15,12 @@ interface PlayerItemProps {
 const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
   switch (item.type) {
     case ItemType.DOCUMENT: {
-      const content = item.extra.document?.content;
-      return <Document content={content} />;
+      return <Document item={item} isPlayerView={true} />;
     }
     case ItemType.APP: {
-      return <AppItem item={item} context={Context.Player} />;
+      return (
+        <AppItem item={item} context={Context.Player} isPlayerView={true} />
+      );
     }
     case ItemType.LINK: {
       return <LinkItem item={item} isPlayerView={true} />;

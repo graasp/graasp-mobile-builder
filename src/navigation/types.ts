@@ -12,6 +12,7 @@ import {
   HOME_NAVIGATOR_HOME,
   ITEM_NAVIGATOR,
   ITEM_NAVIGATOR_ITEM,
+  ITEM_NAVIGATOR_ITEM_CHAT,
   ITEM_NAVIGATOR_ITEM_DETAILS,
   ITEM_NAVIGATOR_PLAYER_FOLDER,
   LIBRARY_NAVIGATOR_COLLECTION,
@@ -95,6 +96,7 @@ export type ItemStackParamList = {
   };
   [ITEM_NAVIGATOR_ITEM]: { headerTitle?: string; itemId: UUID };
   [ITEM_NAVIGATOR_ITEM_DETAILS]: { itemId: UUID };
+  [ITEM_NAVIGATOR_ITEM_CHAT]: { itemId: UUID; headerTitle?: string };
 };
 
 export type ItemStackNavigationProp = StackNavigationProp<ItemStackParamList>;
