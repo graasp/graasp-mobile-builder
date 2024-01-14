@@ -13,9 +13,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
+import { ItemScreenProps } from '../navigation/types';
 import { handleOpenChat } from '../utils/functions/chat';
 import FileHeaderButton from './common/FileHederButton';
-import { ItemScreenProps } from '../navigation/types';
 
 const LinkItem = ({
   item,
@@ -27,7 +27,8 @@ const LinkItem = ({
   const ref = useRef<WebView | null>(null);
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  const navigation = useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const uri = item.extra.embeddedLink?.url;
 
   useEffect(() => {

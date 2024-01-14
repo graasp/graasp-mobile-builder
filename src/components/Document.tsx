@@ -12,9 +12,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { TEXT_ALIGNMENT } from '../config/constants/constants';
+import { ItemScreenProps } from '../navigation/types';
 import { handleOpenChat } from '../utils/functions/chat';
 import FileHeaderButton from './common/FileHederButton';
-import { ItemScreenProps } from '../navigation/types';
 
 interface DocumentProps {
   item: any;
@@ -23,7 +23,8 @@ interface DocumentProps {
 
 const Document: FC<DocumentProps> = ({ item, isPlayerView = false }) => {
   const { width } = useWindowDimensions();
-  const navigation = useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
   useEffect(() => {
     if (!isPlayerView) {

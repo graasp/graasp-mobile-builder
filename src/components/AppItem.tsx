@@ -10,9 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
+import { ItemScreenProps } from '../navigation/types';
 import { handleOpenChat } from '../utils/functions/chat';
 import FileHeaderButton from './common/FileHederButton';
-import { ItemScreenProps } from '../navigation/types';
 
 const buildPostMessageKeys = (itemId: AppItemType['id']) => ({
   GET_CONTEXT_SUCCESS: `GET_CONTEXT_SUCCESS_${itemId}`,
@@ -31,7 +31,8 @@ type AppItemProps = {
 };
 
 const AppItem = ({ item, context, isPlayerView = false }: AppItemProps) => {
-  const navigation = useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
   // dimensions
   const dimensions = useWindowDimensions();
