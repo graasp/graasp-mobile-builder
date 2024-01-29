@@ -18,9 +18,7 @@ const PlayerItem: FC<PlayerItemProps> = ({ item }) => {
       return <Document item={item} isPlayerView={true} />;
     }
     case ItemType.APP: {
-      return (
-        <AppItem item={item} context={Context.Player} isPlayerView={true} />
-      );
+      return <AppItem item={item} context={Context.Player} />;
     }
     case ItemType.LINK: {
       return <LinkItem item={item} isPlayerView={true} />;

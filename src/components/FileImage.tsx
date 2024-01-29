@@ -7,7 +7,6 @@ import { DiscriminatedItem } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 
 import {
-  CHAT_BUTTON_HEADER,
   IMAGE_ITEM,
   IMAGE_SAVE,
   IMAGE_SHARE,
@@ -15,8 +14,8 @@ import {
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { handleOpenChat } from '../utils/functions/chat';
 import { saveMedia } from '../utils/functions/media';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
@@ -58,11 +57,7 @@ const FileImage: FC<FileImageProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+            <ChatButton item={item} />
             <FileHeaderButton
               name="save-alt"
               handler={handleSaveImage}
@@ -108,7 +103,6 @@ const FileImage: FC<FileImageProps> = ({
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 123,
   },
   imageContainer: {
     flexDirection: 'row',

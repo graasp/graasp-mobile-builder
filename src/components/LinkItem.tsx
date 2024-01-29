@@ -1,20 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Button } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
-import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 
 import { EmbeddedLinkItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
-import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
-import { handleOpenChat } from '../utils/functions/chat';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 const LinkItem = ({
@@ -36,23 +32,17 @@ const LinkItem = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
-            <Button
-              buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-              icon={
-                <Ionicons name={'open-outline'} color="#ffffff" size={25} />
-              }
-              onPress={() => Linking.openURL(uri)}
-            ></Button>
+            <ChatButton item={item} />
+            <FileHeaderButton name="open-in-new" handler={handleOpenLink} />
           </View>
         ),
       });
     }
   }, [isPlayerView]);
+
+  const handleOpenLink = async () => {
+    return await Linking.openURL(uri);
+  };
 
   return (
     <WebView
@@ -75,7 +65,6 @@ const LinkItem = ({
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 82,
   },
 });
 

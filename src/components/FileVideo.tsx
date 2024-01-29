@@ -16,7 +16,6 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 
 import {
-  CHAT_BUTTON_HEADER,
   VIDEO_ITEM,
   VIDEO_SAVE,
   VIDEO_SHARE,
@@ -24,8 +23,8 @@ import {
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { handleOpenChat } from '../utils/functions/chat';
 import { downloadFileFromS3Url, saveMedia } from '../utils/functions/media';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileVideoProps {
@@ -80,18 +79,8 @@ const FileVideo: FC<FileVideoProps> = ({
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <View
-            style={
-              isDownloading
-                ? styles.headerButtonsDownloadingState
-                : styles.headerButtons
-            }
-          >
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+          <View style={styles.headerButtons}>
+            <ChatButton item={item} />
             {isDownloading ? (
               <FileHeaderButton disabled={true} name="cloud-download" />
             ) : (
@@ -142,11 +131,6 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     flexDirection: 'row',
-    width: 123,
-  },
-  headerButtonsDownloadingState: {
-    flexDirection: 'row',
-    width: 82,
   },
 });
 

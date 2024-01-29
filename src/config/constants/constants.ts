@@ -159,3 +159,10 @@ export const MENTION_REGEX_WITH_NAME =
 
 export const MENTION_CHAT_TRIGGER = '@';
 export const UNKNOWN_CHAT_MEMBER = 'Unknown';
+
+export const BOTTOM_SNAP_POINTS_CHAT = ['20%', '40%'];
+export const BOTTOM_SNAP_POINTS_ADD_ITEM = ['25%', '50%'];
+export const BOTTOM_SNAP_POINTS_ITEM_LIST = ['45%', '60%', '90%'];
+export const BOTTOM_SNAP_POINTS_PLAYER = ['40%', '95%'];
+export const BOTTOM_SNAP_POINTS_PROFILE = ['25%', '50%'];
+export const BOTTOM_SNAP_POINTS_SEARCH_FILTER = ['90%'];

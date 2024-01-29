@@ -14,17 +14,13 @@ import { DiscriminatedItem, UUID, buildPdfViewerLink } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  CHAT_BUTTON_HEADER,
-  PDF_ITEM,
-  PDF_SHARE,
-} from '../../e2e/constants/testIds';
+import { PDF_ITEM, PDF_SHARE } from '../../e2e/constants/testIds';
 import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { GRAASP_ASSETS_URL } from '../config/env';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
-import { handleOpenChat } from '../utils/functions/chat';
 import { downloadFileFromS3Url } from '../utils/functions/media';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FilePdfProps {
@@ -66,11 +62,7 @@ const FilePdf: FC<FilePdfProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+            <ChatButton item={item} />
             {isDownloading ? (
               <FileHeaderButton disabled={true} name="cloud-download" />
             ) : (
@@ -112,7 +104,6 @@ const FilePdf: FC<FilePdfProps> = ({
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 82,
   },
 
   container: {

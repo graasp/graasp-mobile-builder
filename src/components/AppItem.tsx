@@ -8,11 +8,9 @@ import { AppItemType, Context, PermissionLevelCompare } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
-import { handleOpenChat } from '../utils/functions/chat';
-import FileHeaderButton from './common/FileHederButton';
+import ChatButton from './common/ChatButton';
 
 const buildPostMessageKeys = (itemId: AppItemType['id']) => ({
   GET_CONTEXT_SUCCESS: `GET_CONTEXT_SUCCESS_${itemId}`,
@@ -27,10 +25,9 @@ const buildPostMessageKeys = (itemId: AppItemType['id']) => ({
 type AppItemProps = {
   item: AppItemType;
   context: `${Context}`;
-  isPlayerView?: boolean;
 };
 
-const AppItem = ({ item, context, isPlayerView = false }: AppItemProps) => {
+const AppItem = ({ item, context }: AppItemProps) => {
   const navigation =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
@@ -47,20 +44,16 @@ const AppItem = ({ item, context, isPlayerView = false }: AppItemProps) => {
   const ref = useRef<WebView | null>(null);
 
   useEffect(() => {
-    if (!isPlayerView) {
+    if (context !== Context.Player) {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+            <ChatButton item={item} />
           </View>
         ),
       });
     }
-  }, [isPlayerView]);
+  }, [context]);
 
   // extract app url from the item extra and append the item id to the url
   const url = new URL(item.extra.app.url);
@@ -151,7 +144,6 @@ const AppItem = ({ item, context, isPlayerView = false }: AppItemProps) => {
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 41,
   },
 });
 

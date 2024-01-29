@@ -8,16 +8,16 @@ import {
 import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { DiscriminatedItem } from '@graasp/sdk';
+
 import { useNavigation } from '@react-navigation/native';
 
-import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { TEXT_ALIGNMENT } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
-import { handleOpenChat } from '../utils/functions/chat';
-import FileHeaderButton from './common/FileHederButton';
+import ChatButton from './common/ChatButton';
 
 interface DocumentProps {
-  item: any;
+  item: DiscriminatedItem;
   isPlayerView?: boolean;
 }
 
@@ -31,11 +31,7 @@ const Document: FC<DocumentProps> = ({ item, isPlayerView = false }) => {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+            <ChatButton item={item} />
           </View>
         ),
       });
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     flexDirection: 'row',
-    width: 41,
   },
 });
 

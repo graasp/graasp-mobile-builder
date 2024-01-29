@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
@@ -9,6 +9,7 @@ import { DiscriminatedItem, UUID } from '@graasp/sdk';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { buildItemsListTestId } from '../../e2e/constants/testIds';
+import { BOTTOM_SNAP_POINTS_ITEM_LIST } from '../config/constants/constants';
 import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
@@ -33,7 +34,6 @@ const ItemsList: FC<ItemsListProps> = ({
   displayAddItem = true,
 }) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['45%', '60%', '90%'], []);
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(
     null,
   );
@@ -95,7 +95,7 @@ const ItemsList: FC<ItemsListProps> = ({
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_ITEM_LIST}
         onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop

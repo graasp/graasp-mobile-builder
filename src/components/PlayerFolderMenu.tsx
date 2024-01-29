@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   FlatList,
   Pressable,
@@ -21,7 +21,10 @@ import {
   PLAYER_FOLDER_MENU,
   buildPlayerFolderMenuItem,
 } from '../../e2e/constants/testIds';
-import { PLAYER_COLOR } from '../config/constants/constants';
+import {
+  BOTTOM_SNAP_POINTS_PLAYER,
+  PLAYER_COLOR,
+} from '../config/constants/constants';
 import {
   ITEM_NAVIGATOR,
   ITEM_NAVIGATOR_PLAYER_FOLDER,
@@ -42,7 +45,6 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['40%', '95%'], []);
 
   const navigatePlayerFolder = (item: DiscriminatedItem) => {
     bottomSheetMenuPlayerModalRef.current?.close();
@@ -89,7 +91,7 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
         ref={bottomSheetMenuPlayerModalRef}
         style={styles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_PLAYER}
         onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop

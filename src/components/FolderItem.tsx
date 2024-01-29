@@ -6,15 +6,13 @@ import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { CHAT_BUTTON_HEADER } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
-import { handleOpenChat } from '../utils/functions/chat';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
-import FileHeaderButton from './common/FileHederButton';
+import ChatButton from './common/ChatButton';
 import PlayerButton from './common/PlayerButton';
 
 type Props = {
@@ -48,11 +46,7 @@ const FolderItem = ({ item }: Props) => {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <FileHeaderButton
-              name="chat"
-              handler={() => handleOpenChat(navigation, item)}
-              testID={CHAT_BUTTON_HEADER}
-            />
+            <ChatButton item={item} />
             <PlayerButton
               itemId={item.id}
               origin={{ rootId: item.id, context: Context.Builder }}
@@ -102,7 +96,6 @@ const styles = StyleSheet.create({
   headerButtons: {
     paddingRight: 10,
     flexDirection: 'row',
-    width: 82,
   },
 });
 
