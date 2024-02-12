@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { StyleSheet } from 'react-native';
+import { FC, RefObject } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
 import { replaceMentionValues } from 'react-native-controlled-mentions';
 import { IMessage, Send } from 'react-native-gifted-chat';
 
@@ -7,14 +7,18 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
-import { PRIMARY_COLOR } from '../../config/constants/constants';
+import {
+  PRIMARY_COLOR,
+  PRIMARY_LIGHT_COLOR,
+} from '../../config/constants/constants';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { convertIMessageToText } from '../../utils/functions/chat';
 
 interface SendMessageProps {
   itemId: UUID;
-  text: string;
+  text?: string;
   messageSelected: IMessage | null;
+  chatRef?: RefObject<FlatList<IMessage>>;
   handleMessageSelected: (message: IMessage | null) => void;
   handleIsEditMessage: (value: boolean) => void;
   handleInputMessage: (inputText: string) => void;
@@ -24,6 +28,7 @@ const SendMessage: FC<SendMessageProps> = ({
   itemId,
   text,
   messageSelected,
+  chatRef,
   handleMessageSelected,
   handleIsEditMessage,
   handleInputMessage,
@@ -74,6 +79,9 @@ const SendMessage: FC<SendMessageProps> = ({
     }
     handleIsEditMessage(false);
     handleInputMessage('');
+    if (chatRef && chatRef.current) {
+      chatRef.current.scrollToEnd?.();
+    }
   };
 
   return (
@@ -82,8 +90,13 @@ const SendMessage: FC<SendMessageProps> = ({
       containerStyle={styles.sendButtonContainer}
       onSend={(messages) => onSend(convertIMessageToText(messages))}
       text={text}
+      alwaysShowSend={true}
     >
-      <MaterialIcons name="send" size={24} color={PRIMARY_COLOR} />
+      <MaterialIcons
+        name="send"
+        size={24}
+        color={text ? PRIMARY_COLOR : PRIMARY_LIGHT_COLOR}
+      />
     </Send>
   );
 };
@@ -92,6 +105,7 @@ const styles = StyleSheet.create({
   sendButtonContainer: {
     paddingLeft: 12,
     paddingRight: 12,
+    justifyContent: 'center',
   },
 });
 

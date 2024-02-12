@@ -1,43 +1,78 @@
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  Platform,
+  StyleSheet,
+  TextInputContentSizeChangeEventData,
+  View,
+} from 'react-native';
 import { MentionInput, Suggestion } from 'react-native-controlled-mentions';
-import { IMessage } from 'react-native-gifted-chat';
+import { MIN_COMPOSER_HEIGHT } from 'react-native-gifted-chat';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
+import { useCallbackOne } from 'use-memo-one';
+
 import {
+  CHAT_MAX_LENGTH,
   MENTION_CHAT_TRIGGER,
   PRIMARY_COLOR,
 } from '../../config/constants/constants';
 import { getPlainString } from '../../utils/functions/chat';
-import SendMessage from './SendMessage';
 import SuggestionMembers from './SuggestionMembers';
 
 interface ChatComposerProps {
   itemId: UUID;
-  text: string;
+  inputMessage: string;
   isEditMessage: boolean;
-  messageSelected: IMessage | null;
+  composerHeight?: number;
+  onInputSizeChanged?: (layout: { width: number; height: number }) => void;
   handleCancelEditMessage: () => void;
   handleInputMessage: (inputText: string) => void;
-  handleMessageSelected: (message: IMessage | null) => void;
-  handleIsEditMessage: (value: boolean) => void;
 }
 
 const ChatComposer: FC<ChatComposerProps> = ({
   itemId,
-  text,
+  inputMessage,
   isEditMessage,
-  messageSelected,
+  composerHeight = MIN_COMPOSER_HEIGHT,
+  onInputSizeChanged,
   handleCancelEditMessage,
   handleInputMessage,
-  handleMessageSelected,
-  handleIsEditMessage,
 }) => {
   const { t } = useTranslation();
+
+  const dimensionsRef = useRef<{ width: number; height: number }>();
+
+  const determineInputSizeChange = useCallbackOne(
+    (dimensions: { width: number; height: number }) => {
+      if (!dimensions) {
+        return;
+      }
+
+      if (
+        !dimensionsRef ||
+        !dimensionsRef.current ||
+        (dimensionsRef.current &&
+          (dimensionsRef.current.width !== dimensions.width ||
+            dimensionsRef.current.height !== dimensions.height))
+      ) {
+        dimensionsRef.current = dimensions;
+        if (onInputSizeChanged) {
+          onInputSizeChanged(dimensions);
+        }
+      }
+    },
+    [onInputSizeChanged],
+  );
+
+  const handleContentSizeChange = ({
+    nativeEvent: { contentSize },
+  }: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) =>
+    determineInputSizeChange(contentSize);
 
   const renderSuggestions = (
     keyword: string | undefined,
@@ -50,10 +85,15 @@ const ChatComposer: FC<ChatComposerProps> = ({
     />
   );
 
-  return text ? (
-    <View style={styles.composerContainer}>
+  return (
+    <>
       {isEditMessage && (
-        <View style={styles.cancelEditButtonContainer}>
+        <View
+          style={{
+            ...styles.editMessage,
+            height: composerHeight,
+          }}
+        >
           <MaterialIcons
             name="cancel"
             size={24}
@@ -63,49 +103,66 @@ const ChatComposer: FC<ChatComposerProps> = ({
         </View>
       )}
 
-      <View style={styles.inputContainer}>
-        <MentionInput
-          placeholder={t('Type something....')}
-          value={text}
-          onChange={(value) => handleInputMessage(value)}
-          partTypes={[
-            {
-              trigger: MENTION_CHAT_TRIGGER,
-              renderSuggestions: ({ keyword, onSuggestionPress }) =>
-                renderSuggestions(keyword, onSuggestionPress),
-              textStyle: { fontWeight: 'bold', color: PRIMARY_COLOR },
-              getPlainString: (mention) => getPlainString(mention),
-            },
-          ]}
-        />
-      </View>
-      <SendMessage
-        itemId={itemId}
-        text={text}
-        messageSelected={messageSelected}
-        handleMessageSelected={handleMessageSelected}
-        handleIsEditMessage={handleIsEditMessage}
-        handleInputMessage={handleInputMessage}
+      <MentionInput
+        placeholder={t('Type something....')}
+        multiline={true}
+        maxLength={CHAT_MAX_LENGTH}
+        enablesReturnKeyAutomatically
+        underlineColorAndroid="transparent"
+        onContentSizeChange={handleContentSizeChange}
+        value={inputMessage}
+        onChange={(value) => handleInputMessage(value)}
+        partTypes={[
+          {
+            trigger: MENTION_CHAT_TRIGGER,
+            renderSuggestions: ({ keyword, onSuggestionPress }) =>
+              renderSuggestions(keyword, onSuggestionPress),
+            textStyle: { fontWeight: 'bold', color: PRIMARY_COLOR },
+            getPlainString: (mention) => getPlainString(mention),
+          },
+        ]}
+        containerStyle={[
+          styles.containerTextInput,
+          {
+            height: composerHeight,
+          },
+        ]}
+        style={[
+          styles.textInput,
+          {
+            height: composerHeight,
+          },
+        ]}
       />
-    </View>
-  ) : null;
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
-  composerContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  editMessage: {
     alignItems: 'center',
-    paddingTop: 5,
+    justifyContent: 'center',
+    paddingLeft: 12,
   },
-  inputContainer: {
+  textInput: {
     flex: 1,
-    paddingLeft: 12,
-    paddingRight: 12,
+    marginLeft: 12,
+    fontSize: 16,
+    lineHeight: 16,
+    alignSelf: 'center',
+    marginTop: Platform.select({
+      ios: 6,
+      android: 0,
+    }),
+    marginBottom: Platform.select({
+      ios: 5,
+      android: 3,
+    }),
   },
-  cancelEditButtonContainer: {
-    paddingLeft: 12,
+  containerTextInput: {
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
 });
 

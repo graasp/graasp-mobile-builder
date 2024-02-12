@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, Keyboard, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import {
@@ -7,7 +7,10 @@ import {
   ComposerProps,
   GiftedChat,
   IMessage,
+  InputToolbar,
+  InputToolbarProps,
   MessageTextProps,
+  SendProps,
 } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -21,6 +24,7 @@ import ChatComposer from '../components/chat/ChatComposer';
 import ChatMessageText from '../components/chat/ChatMessageText';
 import DeleteMessage from '../components/chat/DeleteMessage';
 import EditMessage from '../components/chat/EditMessage';
+import SendMessage from '../components/chat/SendMessage';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   BOTTOM_SNAP_POINTS_CHAT,
@@ -39,6 +43,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const [messageSelected, setMessageSelected] = useState<IMessage | null>(null);
   const [isEditMessage, setIsEditMessage] = useState<boolean>(false);
   const [inputMessage, setInputMessage] = useState<string>('');
+  const chatRef = useRef<FlatList<IMessage> | null>(null);
   const insets = useSafeAreaInsets();
   const {
     data: itemChat,
@@ -65,6 +70,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   }, []);
 
   const handleSheetChanges = useCallback((index: number) => {
+    Keyboard.dismiss();
     console.log('handleMessageOptionsSheetChanges', index);
   }, []);
 
@@ -111,19 +117,21 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     setMessageSelected(null);
   };
 
-  const renderComposer = ({ text }: ComposerProps) => {
-    return text ? (
+  const renderComposer = ({
+    composerHeight,
+    onInputSizeChanged,
+  }: ComposerProps) => {
+    return (
       <ChatComposer
         itemId={itemId}
-        text={text}
+        inputMessage={inputMessage}
         isEditMessage={isEditMessage}
-        messageSelected={messageSelected}
+        composerHeight={composerHeight}
+        onInputSizeChanged={onInputSizeChanged}
         handleCancelEditMessage={handleCancelEditMessage}
         handleInputMessage={handleInputMessage}
-        handleMessageSelected={handleMessageSelected}
-        handleIsEditMessage={handleIsEditMessage}
       />
-    ) : null;
+    );
   };
 
   const renderMessageText = ({
@@ -160,6 +168,30 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         onQuickReply={onQuickReply}
       />
     ) : null;
+  };
+
+  const renderSend = ({ text }: SendProps<IMessage>) => {
+    return (
+      <SendMessage
+        itemId={itemId}
+        text={text}
+        messageSelected={messageSelected}
+        chatRef={chatRef}
+        handleMessageSelected={handleMessageSelected}
+        handleIsEditMessage={handleIsEditMessage}
+        handleInputMessage={handleInputMessage}
+      />
+    );
+  };
+
+  const renderInputToolbar = (props: InputToolbarProps<IMessage>) => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={{ marginBottom: insets.bottom }}
+        primaryStyle={styles.inputToolbar}
+      />
+    );
   };
 
   return (
@@ -205,8 +237,9 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
           </View>
         </NativeViewGestureHandler>
       </BottomSheetModal>
-      <View style={{ ...styles.container, paddingBottom: insets.bottom }}>
+      <View style={{ ...styles.container }}>
         <GiftedChat
+          messageContainerRef={chatRef}
           messages={messages}
           user={{
             _id: currentMember?.id,
@@ -218,6 +251,8 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
           renderBubble={renderBubble}
           renderComposer={renderComposer}
           renderMessageText={renderMessageText}
+          renderSend={renderSend}
+          renderInputToolbar={renderInputToolbar}
         />
       </View>
     </>
@@ -241,6 +276,9 @@ const styles = StyleSheet.create({
   },
   messageOptionsContainer: {
     backgroundColor: PRIMARY_LIGHT_COLOR,
+  },
+  inputToolbar: {
+    alignItems: 'center',
   },
 });
 

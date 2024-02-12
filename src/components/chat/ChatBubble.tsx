@@ -7,6 +7,7 @@ import {
   Reply,
   User,
 } from 'react-native-gifted-chat';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -40,10 +41,17 @@ const ChatBubble: FC<ChatBubbleProps> = ({
   position,
   onQuickReply,
 }) => {
+  const insets = useSafeAreaInsets();
   const isSelected = messageSelected?._id === currentMessage?._id;
 
   return (
-    <View style={styles.messageContainer}>
+    <View
+      style={{
+        ...styles.messageContainer,
+        marginBottom:
+          !nextMessage?._id && insets.bottom !== 0 ? insets.bottom : 0,
+      }}
+    >
       <Bubble
         currentMessage={currentMessage}
         nextMessage={nextMessage}
