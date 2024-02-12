@@ -59,6 +59,7 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
           headerTitle: selectedItem.name,
         },
       });
+      setSelectedItem(null);
     }
   }, [selectedItem]);
 
