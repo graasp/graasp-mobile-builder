@@ -31,6 +31,7 @@ import {
   PRIMARY_COLOR,
   PRIMARY_LIGHT_COLOR,
 } from '../config/constants/constants';
+import { ChatMessage } from '../config/types';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
 import { convertToGiftedMessages } from '../utils/functions/chat';
@@ -40,7 +41,9 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const navigation = useNavigation();
   const { itemId } = route.params;
   const bottomSheetMessageOptionsModalRef = useRef<BottomSheetModal>(null);
-  const [messageSelected, setMessageSelected] = useState<IMessage | null>(null);
+  const [messageSelected, setMessageSelected] = useState<ChatMessage | null>(
+    null,
+  );
   const [isEditMessage, setIsEditMessage] = useState<boolean>(false);
   const [inputMessage, setInputMessage] = useState<string>('');
   const chatRef = useRef<FlatList<IMessage> | null>(null);
@@ -93,7 +96,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
 
   const messages = convertToGiftedMessages(itemChat);
 
-  const handleMessageOptions = (message: IMessage) => {
+  const handleMessageOptions = (message: ChatMessage) => {
     setMessageSelected(message);
     handleOpenBottomSheetMessageOptionsModal();
   };
@@ -108,7 +111,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
 
   const handleIsEditMessage = (value: boolean) => setIsEditMessage(value);
 
-  const handleMessageSelected = (message: IMessage | null) =>
+  const handleMessageSelected = (message: ChatMessage | null) =>
     setMessageSelected(message);
 
   const handleCancelEditMessage = () => {
@@ -136,7 +139,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
 
   const renderMessageText = ({
     currentMessage,
-  }: MessageTextProps<IMessage>) => {
+  }: MessageTextProps<ChatMessage>) => {
     return currentMessage ? (
       <ChatMessageText
         itemId={itemId}
@@ -154,7 +157,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     renderMessageText,
     position,
     onQuickReply,
-  }: Readonly<BubbleProps<IMessage>>) => {
+  }: Readonly<BubbleProps<ChatMessage>>) => {
     return currentMessage ? (
       <ChatBubble
         messageSelected={messageSelected}
@@ -170,7 +173,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     ) : null;
   };
 
-  const renderSend = ({ text }: SendProps<IMessage>) => {
+  const renderSend = ({ text }: SendProps<ChatMessage>) => {
     return (
       <SendMessage
         itemId={itemId}
@@ -184,7 +187,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     );
   };
 
-  const renderInputToolbar = (props: InputToolbarProps<IMessage>) => {
+  const renderInputToolbar = (props: InputToolbarProps<ChatMessage>) => {
     return (
       <InputToolbar
         {...props}

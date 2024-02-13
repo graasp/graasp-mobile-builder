@@ -2,7 +2,6 @@ import { FC, ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
   Bubble,
-  IMessage,
   RenderMessageTextProps,
   Reply,
   User,
@@ -15,16 +14,17 @@ import {
   CHAT_SELECTED_MESSAGE_COLOR,
   PRIMARY_COLOR,
 } from '../../config/constants/constants';
+import { ChatMessage } from '../../config/types';
 
 interface ChatBubbleProps {
-  messageSelected: IMessage | null;
-  handleMessageOptions: (message: IMessage) => void;
-  currentMessage: IMessage;
-  nextMessage: IMessage | undefined;
-  previousMessage: IMessage | undefined;
+  messageSelected: ChatMessage | null;
+  handleMessageOptions: (message: ChatMessage) => void;
+  currentMessage: ChatMessage;
+  nextMessage: ChatMessage | undefined;
+  previousMessage: ChatMessage | undefined;
   user: User | undefined;
   renderMessageText:
-    | ((props: RenderMessageTextProps<IMessage>) => ReactNode)
+    | ((props: RenderMessageTextProps<ChatMessage>) => ReactNode)
     | undefined;
   position: 'left' | 'right';
   onQuickReply: ((replies: Reply[]) => void) | undefined;

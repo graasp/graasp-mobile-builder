@@ -8,7 +8,7 @@ import {
 import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { DiscriminatedItem } from '@graasp/sdk';
+import { DocumentItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,7 +17,7 @@ import { ItemScreenProps } from '../navigation/types';
 import ChatButton from './common/ChatButton';
 
 interface DocumentProps {
-  item: DiscriminatedItem;
+  item: DocumentItemType;
   isPlayerView?: boolean;
 }
 

@@ -2,7 +2,6 @@ import { FC, RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { IMessage } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -13,13 +12,14 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 
 import { CHAT_MESSAGE_OPTIONS_DELETE } from '../../../e2e/constants/testIds';
 import { PRIMARY_LIGHT_COLOR } from '../../config/constants/constants';
+import { ChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 
 interface DeleteMessageProps {
-  messageSelected: IMessage;
+  messageSelected: ChatMessage;
   itemId: UUID;
   bottomSheetMessageOptionsModalRef: RefObject<BottomSheetModalMethods>;
-  handleMessageSelected: (message: IMessage | null) => void;
+  handleMessageSelected: (message: ChatMessage | null) => void;
 }
 
 const DeleteMessage: FC<DeleteMessageProps> = ({
@@ -44,7 +44,7 @@ const DeleteMessage: FC<DeleteMessageProps> = ({
 
   return (
     <ListItem
-      onPress={() => handleDeleteItemPress(messageSelected._id as string)}
+      onPress={() => handleDeleteItemPress(messageSelected._id)}
       style={{ paddingLeft: insets.left }}
       containerStyle={styles.messageOptionsContainer}
       testID={CHAT_MESSAGE_OPTIONS_DELETE}

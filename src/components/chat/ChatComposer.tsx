@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   NativeSyntheticEvent,
@@ -13,8 +13,6 @@ import { MIN_COMPOSER_HEIGHT } from 'react-native-gifted-chat';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
-
-import { useCallbackOne } from 'use-memo-one';
 
 import {
   CHAT_MAX_LENGTH,
@@ -47,7 +45,7 @@ const ChatComposer: FC<ChatComposerProps> = ({
 
   const dimensionsRef = useRef<{ width: number; height: number }>();
 
-  const determineInputSizeChange = useCallbackOne(
+  const determineInputSizeChange = useCallback(
     (dimensions: { width: number; height: number }) => {
       if (!dimensions) {
         return;

@@ -11,15 +11,16 @@ import {
   PRIMARY_COLOR,
   PRIMARY_LIGHT_COLOR,
 } from '../../config/constants/constants';
+import { ChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { convertIMessageToText } from '../../utils/functions/chat';
 
 interface SendMessageProps {
   itemId: UUID;
   text?: string;
-  messageSelected: IMessage | null;
+  messageSelected: ChatMessage | null;
   chatRef?: RefObject<FlatList<IMessage>>;
-  handleMessageSelected: (message: IMessage | null) => void;
+  handleMessageSelected: (message: ChatMessage | null) => void;
   handleIsEditMessage: (value: boolean) => void;
   handleInputMessage: (inputText: string) => void;
 }
