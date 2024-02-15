@@ -1,4 +1,4 @@
-import { FC, RefObject } from 'react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
@@ -8,8 +8,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-
 import { CHAT_MESSAGE_OPTIONS_DELETE } from '../../../e2e/constants/testIds';
 import { PRIMARY_LIGHT_COLOR } from '../../config/constants/constants';
 import { ChatMessage } from '../../config/types';
@@ -18,15 +16,13 @@ import { useQueryClient } from '../../context/QueryClientContext';
 interface DeleteMessageProps {
   messageSelected: ChatMessage;
   itemId: UUID;
-  bottomSheetMessageOptionsModalRef: RefObject<BottomSheetModalMethods>;
-  handleMessageSelected: (message: ChatMessage | null) => void;
+  handlePostDeleteMessage: () => void;
 }
 
 const DeleteMessage: FC<DeleteMessageProps> = ({
   messageSelected,
   itemId,
-  bottomSheetMessageOptionsModalRef,
-  handleMessageSelected,
+  handlePostDeleteMessage,
 }) => {
   const { mutations } = useQueryClient();
   const { mutate: deleteMessage } = mutations.useDeleteItemChatMessage();
@@ -38,8 +34,7 @@ const DeleteMessage: FC<DeleteMessageProps> = ({
       itemId,
       messageId,
     });
-    bottomSheetMessageOptionsModalRef.current?.close();
-    handleMessageSelected(null);
+    handlePostDeleteMessage();
   };
 
   return (

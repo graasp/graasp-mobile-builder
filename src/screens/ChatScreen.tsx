@@ -114,6 +114,12 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const handleMessageSelected = (message: ChatMessage | null) =>
     setMessageSelected(message);
 
+  const handlePostDeleteMessage = () => {
+    bottomSheetMessageOptionsModalRef.current?.close();
+    setInputMessage('');
+    setMessageSelected(null);
+  };
+
   const handleCancelEditMessage = () => {
     setInputMessage('');
     setIsEditMessage(false);
@@ -230,10 +236,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
                 <DeleteMessage
                   messageSelected={messageSelected}
                   itemId={itemId}
-                  bottomSheetMessageOptionsModalRef={
-                    bottomSheetMessageOptionsModalRef
-                  }
-                  handleMessageSelected={handleMessageSelected}
+                  handlePostDeleteMessage={handlePostDeleteMessage}
                 />
               </View>
             )}
