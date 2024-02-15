@@ -18,6 +18,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 LogBox.ignoreAllLogs();
 
 function App() {
+  // Prevent hidding spash screen until real content is available. Disabled in RootNavigator
   SplashScreen.preventAutoHideAsync();
 
   return (

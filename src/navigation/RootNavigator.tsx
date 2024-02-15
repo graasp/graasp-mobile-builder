@@ -19,14 +19,12 @@ const RootNavigator = () => {
   const screenOptions = { headerShown: false };
 
   useEffect(() => {
+    // Hide splash screen once RootNavigator is loaded
     const hideSplashScreen = async () => {
       await SplashScreen.hideAsync();
     };
-    try {
-      hideSplashScreen();
-    } catch (error) {
-      console.log(error);
-    }
+
+    hideSplashScreen().catch((error) => console.log(error));
   }, []);
 
   return (
