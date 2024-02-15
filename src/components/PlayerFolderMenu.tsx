@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import {
   FlatList,
   Pressable,
@@ -41,31 +41,24 @@ interface PlayerFolderMenuProps {
 const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
-
-  const [selectedItem, setSelectedItem] = useState<DiscriminatedItem | null>(
-    null,
-  );
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['40%', '95%'], []);
 
-  useEffect(() => {
-    if (selectedItem) {
-      bottomSheetMenuPlayerModalRef.current?.close();
-      navigate(ITEM_NAVIGATOR, {
-        screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
-        params: {
-          origin,
-          itemId: selectedItem.id,
-          headerTitle: selectedItem.name,
-        },
-      });
-      setSelectedItem(null);
-    }
-  }, [selectedItem]);
+  const navigatePlayerFolder = (item: DiscriminatedItem) => {
+    bottomSheetMenuPlayerModalRef.current?.close();
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
+      params: {
+        origin,
+        itemId: item.id,
+        headerTitle: item.name,
+      },
+    });
+  };
 
   const renderItem = ({ item }: { item: DiscriminatedItem }) => {
     return (
-      <Pressable onPress={() => setSelectedItem(item)} style={{ flex: 2 }}>
+      <Pressable onPress={() => navigatePlayerFolder(item)} style={{ flex: 2 }}>
         <ListItem>
           <ItemIcon type={item.type} extra={item.extra} />
           <ListItem.Content style={{ flexDirection: 'row' }}>
