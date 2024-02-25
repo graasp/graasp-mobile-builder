@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { UUID } from '@graasp/sdk';
 
 import {
+  MENTION_CHAT_TRIGGER,
   PRIMARY_COLOR,
   PRIMARY_LIGHT_COLOR,
 } from '../../config/constants/constants';
@@ -67,9 +68,12 @@ const SendMessage: FC<SendMessageProps> = ({
     const mentions: string[] = [];
     const replacedMentionsMessage = replaceMentionValues(
       text,
-      ({ id, name }) => {
-        mentions.push(id);
-        return `\`<!@${id}>[${name}]\``;
+      ({ id, name, trigger, original }) => {
+        if (trigger === MENTION_CHAT_TRIGGER) {
+          mentions.push(id);
+          return `\`<!@${id}>[${name}]\``;
+        }
+        return original;
       },
     );
     if (messageSelected) {

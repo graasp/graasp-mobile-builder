@@ -168,3 +168,4 @@ export const BOTTOM_SNAP_POINTS_PROFILE = ['25%', '50%'];
 export const BOTTOM_SNAP_POINTS_SEARCH_FILTER = ['90%'];
 
 export const CHAT_MAX_LENGTH = 400;
+export const CHAT_WIDTH_IMAGE_MESSAGE = 0.65;

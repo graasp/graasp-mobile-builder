@@ -1,10 +1,20 @@
 import { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import Markdown, { ASTNode } from 'react-native-markdown-display';
 
 import { CompleteMember, UUID } from '@graasp/sdk';
 
-import { MENTION_REGEX } from '../../config/constants/constants';
+import {
+  CHAT_WIDTH_IMAGE_MESSAGE,
+  MENTION_REGEX,
+  PRIMARY_COLOR,
+} from '../../config/constants/constants';
 import { ChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { chatMentionsReplacer } from '../../utils/functions/chat';
@@ -20,6 +30,7 @@ const ChatMessageText: FC<ChatMessageTextProps> = ({
   currentMessage,
   currentMember,
 }) => {
+  const { width, height } = useWindowDimensions();
   const { hooks } = useQueryClient();
   const { data: itemMemberships, isLoading: isLoadingItemMemberships } =
     hooks.useItemMemberships(itemId);
@@ -33,6 +44,25 @@ const ChatMessageText: FC<ChatMessageTextProps> = ({
         );
         return <Text key={node.key}>{messageTextMentions}</Text>;
       },
+      image: (node: ASTNode) => {
+        return (
+          <Image
+            style={{
+              width: width * CHAT_WIDTH_IMAGE_MESSAGE,
+              height:
+                ((height * CHAT_WIDTH_IMAGE_MESSAGE) / width) *
+                CHAT_WIDTH_IMAGE_MESSAGE *
+                width *
+                CHAT_WIDTH_IMAGE_MESSAGE,
+            }}
+            resizeMode="contain"
+            source={{
+              uri: node.attributes.src,
+            }}
+            key={node.key}
+          ></Image>
+        );
+      },
     };
 
     return (
@@ -42,6 +72,9 @@ const ChatMessageText: FC<ChatMessageTextProps> = ({
             textgroup: {
               color:
                 currentMember.id === currentMessage.user._id ? '#fff' : '#000',
+            },
+            blockquote: {
+              backgroundColor: PRIMARY_COLOR,
             },
           }}
           rules={rules}
