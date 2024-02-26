@@ -10,11 +10,11 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 
 import { CHAT_MESSAGE_OPTIONS_EDIT } from '../../../e2e/constants/testIds';
 import { PRIMARY_LIGHT_COLOR } from '../../config/constants/constants';
-import { ChatMessage } from '../../config/types';
+import { GiftedChatMessage } from '../../config/types';
 import { replaceMessageWithMentions } from '../../utils/functions/chat';
 
 interface EditMessageProps {
-  messageSelected: ChatMessage;
+  messageSelected: GiftedChatMessage;
   bottomSheetMessageOptionsModalRef: RefObject<BottomSheetModalMethods>;
   handleInputMessage: (inputText: string) => void;
   handleIsEditMessage: (value: boolean) => void;
@@ -29,7 +29,7 @@ const EditMessage: FC<EditMessageProps> = ({
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
-  const handleEditItemPress = (message: ChatMessage) => {
+  const handleEditItemPress = (message: GiftedChatMessage) => {
     bottomSheetMessageOptionsModalRef.current?.close();
     handleIsEditMessage(true);
     handleInputMessage(replaceMessageWithMentions(message.text));

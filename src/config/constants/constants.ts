@@ -1,3 +1,5 @@
+import { UUID } from "@graasp/sdk";
+
 export const APP_NAME = 'Graasp';
 
 export const HELP_EMAIL = 'contact@graasp.org';
@@ -156,6 +158,7 @@ export const MENTION_REGEX =
   /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[.*\]$/i;
 export const MENTION_REGEX_WITH_NAME =
   /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[(?<name>[^\]]*)\]/gi;
+export const buildChatMentionRegex = (id: UUID, name: string) => `\`<!@${id}>[${name}]\``;
 
 export const MENTION_CHAT_TRIGGER = '@';
 export const UNKNOWN_CHAT_MEMBER = 'Unknown';

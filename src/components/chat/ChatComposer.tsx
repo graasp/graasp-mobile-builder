@@ -72,10 +72,13 @@ const ChatComposer: FC<ChatComposerProps> = ({
   }: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) =>
     determineInputSizeChange(contentSize);
 
-  const renderSuggestions = (
-    keyword: string | undefined,
-    onSuggestionPress: (suggestion: Suggestion) => void,
-  ) => (
+  const renderSuggestions = ({
+    keyword,
+    onSuggestionPress,
+  }: {
+    keyword: string | undefined;
+    onSuggestionPress: (suggestion: Suggestion) => void;
+  }) => (
     <SuggestionMembers
       itemId={itemId}
       keyword={keyword}
@@ -113,10 +116,9 @@ const ChatComposer: FC<ChatComposerProps> = ({
         partTypes={[
           {
             trigger: MENTION_CHAT_TRIGGER,
-            renderSuggestions: ({ keyword, onSuggestionPress }) =>
-              renderSuggestions(keyword, onSuggestionPress),
+            renderSuggestions,
             textStyle: { fontWeight: 'bold', color: PRIMARY_COLOR },
-            getPlainString: (mention) => getPlainString(mention),
+            getPlainString,
           },
         ]}
         containerStyle={[

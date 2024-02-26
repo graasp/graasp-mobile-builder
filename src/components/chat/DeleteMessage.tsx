@@ -10,11 +10,11 @@ import { UUID } from '@graasp/sdk';
 
 import { CHAT_MESSAGE_OPTIONS_DELETE } from '../../../e2e/constants/testIds';
 import { PRIMARY_LIGHT_COLOR } from '../../config/constants/constants';
-import { ChatMessage } from '../../config/types';
+import { GiftedChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 
 interface DeleteMessageProps {
-  messageSelected: ChatMessage;
+  messageSelected: GiftedChatMessage;
   itemId: UUID;
   handlePostDeleteMessage: () => void;
 }

@@ -15,13 +15,13 @@ import {
   MENTION_REGEX,
   PRIMARY_COLOR,
 } from '../../config/constants/constants';
-import { ChatMessage } from '../../config/types';
+import { GiftedChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { chatMentionsReplacer } from '../../utils/functions/chat';
 
 interface ChatMessageTextProps {
   itemId: UUID;
-  currentMessage: ChatMessage;
+  currentMessage: GiftedChatMessage;
   currentMember: CompleteMember;
 }
 

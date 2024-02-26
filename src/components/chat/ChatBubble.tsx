@@ -14,17 +14,17 @@ import {
   CHAT_SELECTED_MESSAGE_COLOR,
   PRIMARY_COLOR,
 } from '../../config/constants/constants';
-import { ChatMessage } from '../../config/types';
+import { GiftedChatMessage } from '../../config/types';
 
 interface ChatBubbleProps {
-  messageSelected: ChatMessage | null;
-  handleMessageOptions: (message: ChatMessage) => void;
-  currentMessage: ChatMessage;
-  nextMessage: ChatMessage | undefined;
-  previousMessage: ChatMessage | undefined;
+  messageSelected: GiftedChatMessage | null;
+  handleMessageOptions: (message: GiftedChatMessage) => void;
+  currentMessage: GiftedChatMessage;
+  nextMessage: GiftedChatMessage | undefined;
+  previousMessage: GiftedChatMessage | undefined;
   user: User | undefined;
   renderMessageText:
-    | ((props: RenderMessageTextProps<ChatMessage>) => ReactNode)
+    | ((props: RenderMessageTextProps<GiftedChatMessage>) => ReactNode)
     | undefined;
   position: 'left' | 'right';
   onQuickReply: ((replies: Reply[]) => void) | undefined;

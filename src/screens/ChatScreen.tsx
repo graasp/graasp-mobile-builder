@@ -31,7 +31,7 @@ import {
   PRIMARY_COLOR,
   PRIMARY_LIGHT_COLOR,
 } from '../config/constants/constants';
-import { ChatMessage } from '../config/types';
+import { GiftedChatMessage } from '../config/types';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
 import { convertToGiftedMessages } from '../utils/functions/chat';
@@ -41,7 +41,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const navigation = useNavigation();
   const { itemId } = route.params;
   const bottomSheetMessageOptionsModalRef = useRef<BottomSheetModal>(null);
-  const [messageSelected, setMessageSelected] = useState<ChatMessage | null>(
+  const [messageSelected, setMessageSelected] = useState<GiftedChatMessage | null>(
     null,
   );
   const [isEditMessage, setIsEditMessage] = useState<boolean>(false);
@@ -81,22 +81,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     bottomSheetMessageOptionsModalRef.current?.present();
   }, []);
 
-  if (
-    isLoadingItemChat ||
-    !itemChat ||
-    isLoadingCurrentMember ||
-    !currentMember
-  ) {
-    return null;
-  }
-  if (isErrorItemChat || isErrorCurrentMember) {
-    console.error('Error in ChatScreen');
-    return null;
-  }
-
-  const messages = convertToGiftedMessages(itemChat);
-
-  const handleMessageOptions = (message: ChatMessage) => {
+  const handleMessageOptions = (message: GiftedChatMessage) => {
     setMessageSelected(message);
     handleOpenBottomSheetMessageOptionsModal();
   };
@@ -111,7 +96,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
 
   const handleIsEditMessage = (value: boolean) => setIsEditMessage(value);
 
-  const handleMessageSelected = (message: ChatMessage | null) =>
+  const handleMessageSelected = (message: GiftedChatMessage | null) =>
     setMessageSelected(message);
 
   const handlePostDeleteMessage = () => {
@@ -126,143 +111,160 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     setMessageSelected(null);
   };
 
-  const renderComposer = ({
-    composerHeight,
-    onInputSizeChanged,
-  }: ComposerProps) => {
-    return (
-      <ChatComposer
-        itemId={itemId}
-        inputMessage={inputMessage}
-        isEditMessage={isEditMessage}
-        composerHeight={composerHeight}
-        onInputSizeChanged={onInputSizeChanged}
-        handleCancelEditMessage={handleCancelEditMessage}
-        handleInputMessage={handleInputMessage}
-      />
-    );
-  };
-
-  const renderMessageText = ({
-    currentMessage,
-  }: MessageTextProps<ChatMessage>) => {
-    return currentMessage ? (
-      <ChatMessageText
-        itemId={itemId}
-        currentMessage={currentMessage}
-        currentMember={currentMember}
-      />
-    ) : null;
-  };
-
-  const renderBubble = ({
-    currentMessage,
-    nextMessage,
-    previousMessage,
-    user,
-    renderMessageText,
-    position,
-    onQuickReply,
-  }: Readonly<BubbleProps<ChatMessage>>) => {
-    return currentMessage ? (
-      <ChatBubble
-        messageSelected={messageSelected}
-        handleMessageOptions={handleMessageOptions}
-        nextMessage={nextMessage}
-        currentMessage={currentMessage}
-        previousMessage={previousMessage}
-        user={user}
-        renderMessageText={renderMessageText}
-        position={position}
-        onQuickReply={onQuickReply}
-      />
-    ) : null;
-  };
-
-  const renderSend = ({ text }: SendProps<ChatMessage>) => {
-    return (
-      <SendMessage
-        itemId={itemId}
-        text={text}
-        messageSelected={messageSelected}
-        chatRef={chatRef}
-        handleMessageSelected={handleMessageSelected}
-        handleIsEditMessage={handleIsEditMessage}
-        handleInputMessage={handleInputMessage}
-      />
-    );
-  };
-
-  const renderInputToolbar = (props: InputToolbarProps<ChatMessage>) => {
-    return (
-      <InputToolbar
-        {...props}
-        containerStyle={{ marginBottom: insets.bottom }}
-        primaryStyle={styles.inputToolbar}
-      />
-    );
-  };
-
-  return (
-    <>
-      <BottomSheetModal
-        containerStyle={{ flex: 1 }}
-        ref={bottomSheetMessageOptionsModalRef}
-        style={styles.bottomSheetModal}
-        index={0}
-        snapPoints={BOTTOM_SNAP_POINTS_CHAT}
-        onChange={handleSheetChanges}
-        backgroundStyle={styles.messageOptionsContainer}
-        backdropComponent={({ animatedIndex, style: backDropStyle }) => (
-          <CustomBackdrop
-            animatedIndex={animatedIndex}
-            style={backDropStyle}
-            onBackDropPressed={() => handleOnBackDropPressed()}
-          />
-        )}
-      >
-        <NativeViewGestureHandler disallowInterruption={true}>
-          <View style={{ flex: 1 }}>
-            {messageSelected && (
-              <View style={{ flex: 1 }}>
-                <EditMessage
-                  messageSelected={messageSelected}
-                  bottomSheetMessageOptionsModalRef={
-                    bottomSheetMessageOptionsModalRef
-                  }
-                  handleInputMessage={handleInputMessage}
-                  handleIsEditMessage={handleIsEditMessage}
-                />
-                <DeleteMessage
-                  messageSelected={messageSelected}
-                  itemId={itemId}
-                  handlePostDeleteMessage={handlePostDeleteMessage}
-                />
-              </View>
-            )}
-          </View>
-        </NativeViewGestureHandler>
-      </BottomSheetModal>
-      <View style={{ ...styles.container }}>
-        <GiftedChat
-          messageContainerRef={chatRef}
-          messages={messages}
-          user={{
-            _id: currentMember?.id,
-          }}
-          text={inputMessage}
-          onInputTextChanged={(message) => setInputMessage(message)}
-          inverted={false}
-          alignTop={false}
-          renderBubble={renderBubble}
-          renderComposer={renderComposer}
-          renderMessageText={renderMessageText}
-          renderSend={renderSend}
-          renderInputToolbar={renderInputToolbar}
+  if (itemChat && currentMember) {
+    const messages = convertToGiftedMessages(itemChat);
+    
+    const renderComposer = ({
+      composerHeight,
+      onInputSizeChanged,
+    }: ComposerProps) => {
+      return (
+        <ChatComposer
+          itemId={itemId}
+          inputMessage={inputMessage}
+          isEditMessage={isEditMessage}
+          composerHeight={composerHeight}
+          onInputSizeChanged={onInputSizeChanged}
+          handleCancelEditMessage={handleCancelEditMessage}
+          handleInputMessage={handleInputMessage}
         />
-      </View>
-    </>
-  );
+      );
+    };
+  
+    const renderMessageText = ({
+      currentMessage,
+    }: MessageTextProps<GiftedChatMessage>) => {
+      return currentMessage ? (
+        <ChatMessageText
+          itemId={itemId}
+          currentMessage={currentMessage}
+          currentMember={currentMember}
+        />
+      ) : null;
+    };
+  
+    const renderBubble = ({
+      currentMessage,
+      nextMessage,
+      previousMessage,
+      user,
+      renderMessageText,
+      position,
+      onQuickReply,
+    }: Readonly<BubbleProps<GiftedChatMessage>>) => {
+      return currentMessage ? (
+        <ChatBubble
+          messageSelected={messageSelected}
+          handleMessageOptions={handleMessageOptions}
+          nextMessage={nextMessage}
+          currentMessage={currentMessage}
+          previousMessage={previousMessage}
+          user={user}
+          renderMessageText={renderMessageText}
+          position={position}
+          onQuickReply={onQuickReply}
+        />
+      ) : null;
+    };
+  
+    const renderSend = ({ text }: SendProps<GiftedChatMessage>) => {
+      return (
+        <SendMessage
+          itemId={itemId}
+          text={text}
+          messageSelected={messageSelected}
+          chatRef={chatRef}
+          handleMessageSelected={handleMessageSelected}
+          handleIsEditMessage={handleIsEditMessage}
+          handleInputMessage={handleInputMessage}
+        />
+      );
+    };
+  
+    const renderInputToolbar = (props: InputToolbarProps<GiftedChatMessage>) => {
+      return (
+        <InputToolbar
+          {...props}
+          containerStyle={{ marginBottom: insets.bottom }}
+          primaryStyle={styles.inputToolbar}
+        />
+      );
+    };
+  
+    return (
+      <>
+        <BottomSheetModal
+          containerStyle={{ flex: 1 }}
+          ref={bottomSheetMessageOptionsModalRef}
+          style={styles.bottomSheetModal}
+          index={0}
+          snapPoints={BOTTOM_SNAP_POINTS_CHAT}
+          onChange={handleSheetChanges}
+          backgroundStyle={styles.messageOptionsContainer}
+          backdropComponent={({ animatedIndex, style: backDropStyle }) => (
+            <CustomBackdrop
+              animatedIndex={animatedIndex}
+              style={backDropStyle}
+              onBackDropPressed={() => handleOnBackDropPressed()}
+            />
+          )}
+        >
+          <NativeViewGestureHandler disallowInterruption={true}>
+            <View style={{ flex: 1 }}>
+              {messageSelected && (
+                <View style={{ flex: 1 }}>
+                  <EditMessage
+                    messageSelected={messageSelected}
+                    bottomSheetMessageOptionsModalRef={
+                      bottomSheetMessageOptionsModalRef
+                    }
+                    handleInputMessage={handleInputMessage}
+                    handleIsEditMessage={handleIsEditMessage}
+                  />
+                  <DeleteMessage
+                    messageSelected={messageSelected}
+                    itemId={itemId}
+                    handlePostDeleteMessage={handlePostDeleteMessage}
+                  />
+                </View>
+              )}
+            </View>
+          </NativeViewGestureHandler>
+        </BottomSheetModal>
+        <View style={{ ...styles.container }}>
+          <GiftedChat
+            messageContainerRef={chatRef}
+            messages={messages}
+            user={{
+              _id: currentMember?.id,
+            }}
+            text={inputMessage}
+            onInputTextChanged={(message) => setInputMessage(message)}
+            inverted={false}
+            alignTop={false}
+            renderBubble={renderBubble}
+            renderComposer={renderComposer}
+            renderMessageText={renderMessageText}
+            renderSend={renderSend}
+            renderInputToolbar={renderInputToolbar}
+          />
+        </View>
+      </>
+    );
+  }
+
+  if (
+    isLoadingItemChat ||
+    !itemChat ||
+    isLoadingCurrentMember ||
+    !currentMember
+  ) {
+    return null;
+  }
+  if (isErrorItemChat || isErrorCurrentMember) {
+    console.error('Error in ChatScreen');
+    return null;
+  }
 };
 
 const styles = StyleSheet.create({

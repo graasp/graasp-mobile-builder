@@ -24,42 +24,39 @@ const SuggestionMembers: FC<SuggestionMembersProps> = ({
     isError: isErrorItemMemberships,
   } = hooks.useItemMemberships(itemId);
 
-  if (isLoadingItemMemberships || !itemMemberships) {
+  if (itemMemberships && keyword != null) {
+    const chatMembers: Pick<Member, 'id' | 'name'>[] = itemMemberships.map(
+      ({ member }) => ({
+        id: member.id,
+        name: member.name,
+      }),
+    ).filter(({ name }) =>
+    name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+    
+    return (
+      <View style={styles.suggestionContainer}>
+        {chatMembers
+          .map(({ id, name }) => (
+            <Pressable
+              key={id}
+              onPress={() => onSuggestionPress({ id, name })}
+              style={{ padding: 10 }}
+            >
+              <Text>{name}</Text>
+            </Pressable>
+          ))}
+      </View>
+    );
+  }
+
+  if (isLoadingItemMemberships || keyword == null) {
     return null;
   }
   if (isErrorItemMemberships) {
     console.error('Error in SuggestionMembers');
     return null;
   }
-
-  if (keyword == null) {
-    return null;
-  }
-
-  const chatMembers: Pick<Member, 'id' | 'name'>[] = itemMemberships.map(
-    ({ member }) => ({
-      id: member.id,
-      name: member.name,
-    }),
-  );
-
-  return (
-    <View style={styles.suggestionContainer}>
-      {chatMembers
-        .filter(({ name }) =>
-          name.toLowerCase().includes(keyword.toLowerCase()),
-        )
-        .map(({ id, name }) => (
-          <Pressable
-            key={id}
-            onPress={() => onSuggestionPress({ id, name })}
-            style={{ padding: 10 }}
-          >
-            <Text>{name}</Text>
-          </Pressable>
-        ))}
-    </View>
-  );
 };
 
 const styles = StyleSheet.create({

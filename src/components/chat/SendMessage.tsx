@@ -11,17 +11,18 @@ import {
   MENTION_CHAT_TRIGGER,
   PRIMARY_COLOR,
   PRIMARY_LIGHT_COLOR,
+  buildChatMentionRegex,
 } from '../../config/constants/constants';
-import { ChatMessage } from '../../config/types';
+import { GiftedChatMessage } from '../../config/types';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { convertIMessageToText } from '../../utils/functions/chat';
 
 interface SendMessageProps {
   itemId: UUID;
   text?: string;
-  messageSelected: ChatMessage | null;
+  messageSelected: GiftedChatMessage | null;
   chatRef?: RefObject<FlatList<IMessage>>;
-  handleMessageSelected: (message: ChatMessage | null) => void;
+  handleMessageSelected: (message: GiftedChatMessage | null) => void;
   handleIsEditMessage: (value: boolean) => void;
   handleInputMessage: (inputText: string) => void;
 }
@@ -54,13 +55,13 @@ const SendMessage: FC<SendMessageProps> = ({
     if (messageSelected) {
       patchMessage({
         itemId,
-        messageId: messageSelected._id as string,
+        messageId: messageSelected._id,
         body: editedMessageText,
       });
     }
   };
 
-  const onSend = async (text: string | undefined) => {
+  const onSend = async (text?: string) => {
     if (!text) {
       return;
     }
@@ -71,7 +72,7 @@ const SendMessage: FC<SendMessageProps> = ({
       ({ id, name, trigger, original }) => {
         if (trigger === MENTION_CHAT_TRIGGER) {
           mentions.push(id);
-          return `\`<!@${id}>[${name}]\``;
+          return buildChatMentionRegex(id, name);
         }
         return original;
       },
@@ -82,11 +83,11 @@ const SendMessage: FC<SendMessageProps> = ({
     } else {
       await postChatMessage(replacedMentionsMessage, mentions);
     }
-    handleIsEditMessage(false);
-    handleInputMessage('');
     if (chatRef && chatRef.current) {
       chatRef.current.scrollToEnd?.();
     }
+    handleIsEditMessage(false);
+    handleInputMessage('');
   };
 
   return (
@@ -95,7 +96,7 @@ const SendMessage: FC<SendMessageProps> = ({
       containerStyle={styles.sendButtonContainer}
       onSend={(messages) => onSend(convertIMessageToText(messages))}
       text={text}
-      alwaysShowSend={true}
+      alwaysShowSend
     >
       <MaterialIcons
         name="send"
