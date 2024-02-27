@@ -19,6 +19,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
+import { CHAT_WRAPPER } from '../../e2e/constants/testIds';
 import ChatBubble from '../components/chat/ChatBubble';
 import ChatComposer from '../components/chat/ChatComposer';
 import ChatMessageText from '../components/chat/ChatMessageText';
@@ -41,9 +42,8 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const navigation = useNavigation();
   const { itemId } = route.params;
   const bottomSheetMessageOptionsModalRef = useRef<BottomSheetModal>(null);
-  const [messageSelected, setMessageSelected] = useState<GiftedChatMessage | null>(
-    null,
-  );
+  const [messageSelected, setMessageSelected] =
+    useState<GiftedChatMessage | null>(null);
   const [isEditMessage, setIsEditMessage] = useState<boolean>(false);
   const [inputMessage, setInputMessage] = useState<string>('');
   const chatRef = useRef<FlatList<IMessage> | null>(null);
@@ -113,7 +113,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
 
   if (itemChat && currentMember) {
     const messages = convertToGiftedMessages(itemChat);
-    
+
     const renderComposer = ({
       composerHeight,
       onInputSizeChanged,
@@ -130,7 +130,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         />
       );
     };
-  
+
     const renderMessageText = ({
       currentMessage,
     }: MessageTextProps<GiftedChatMessage>) => {
@@ -142,7 +142,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         />
       ) : null;
     };
-  
+
     const renderBubble = ({
       currentMessage,
       nextMessage,
@@ -166,7 +166,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         />
       ) : null;
     };
-  
+
     const renderSend = ({ text }: SendProps<GiftedChatMessage>) => {
       return (
         <SendMessage
@@ -180,8 +180,10 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         />
       );
     };
-  
-    const renderInputToolbar = (props: InputToolbarProps<GiftedChatMessage>) => {
+
+    const renderInputToolbar = (
+      props: InputToolbarProps<GiftedChatMessage>,
+    ) => {
       return (
         <InputToolbar
           {...props}
@@ -190,7 +192,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         />
       );
     };
-  
+
     return (
       <>
         <BottomSheetModal
@@ -231,7 +233,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
             </View>
           </NativeViewGestureHandler>
         </BottomSheetModal>
-        <View style={{ ...styles.container }}>
+        <View testID={CHAT_WRAPPER} style={{ ...styles.container }}>
           <GiftedChat
             messageContainerRef={chatRef}
             messages={messages}

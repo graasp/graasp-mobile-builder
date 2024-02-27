@@ -15,6 +15,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { UUID } from '@graasp/sdk';
 
 import {
+  CHAT_INPUT_TEXT,
+  CHAT_MESSAGE_OPTIONS_CANCEL_EDIT,
+} from '../../../e2e/constants/testIds';
+import {
   CHAT_MAX_LENGTH,
   MENTION_CHAT_TRIGGER,
   PRIMARY_COLOR,
@@ -100,6 +104,7 @@ const ChatComposer: FC<ChatComposerProps> = ({
             size={24}
             color={PRIMARY_COLOR}
             onPress={() => handleCancelEditMessage()}
+            testID={CHAT_MESSAGE_OPTIONS_CANCEL_EDIT}
           />
         </View>
       )}
@@ -113,6 +118,7 @@ const ChatComposer: FC<ChatComposerProps> = ({
         onContentSizeChange={handleContentSizeChange}
         value={inputMessage}
         onChange={(value) => handleInputMessage(value)}
+        testID={CHAT_INPUT_TEXT}
         partTypes={[
           {
             trigger: MENTION_CHAT_TRIGGER,

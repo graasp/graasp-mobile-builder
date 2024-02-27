@@ -7,6 +7,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import { UUID } from '@graasp/sdk';
 
+import { CHAT_SEND_BUTTON } from '../../../e2e/constants/testIds';
 import {
   MENTION_CHAT_TRIGGER,
   PRIMARY_COLOR,
@@ -102,6 +103,7 @@ const SendMessage: FC<SendMessageProps> = ({
         name="send"
         size={24}
         color={text ? PRIMARY_COLOR : PRIMARY_LIGHT_COLOR}
+        testID={CHAT_SEND_BUTTON}
       />
     </Send>
   );

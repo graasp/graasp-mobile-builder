@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
+import { buildChatMessageId } from '../../../e2e/constants/testIds';
 import {
   CHAT_SELECTED_MESSAGE_COLOR,
   PRIMARY_COLOR,
@@ -73,6 +74,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({
         size={24}
         color="grey"
         onPress={() => handleMessageOptions(currentMessage)}
+        testID={buildChatMessageId(currentMessage.text)}
       />
     </View>
   );

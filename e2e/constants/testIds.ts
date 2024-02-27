@@ -53,12 +53,20 @@ export const buildPlayerFolderMenuItem = (id: string) =>
   `player-folder-menu-item-${id}`;
 export const buildPlayerViewCloseButton = (id: string) =>
   `player-view-close-button-${id}`;
+export const CHAT_WRAPPER = 'chat-wrapper';
 export const CHAT_BUTTON_HEADER = 'chat-button-header';
 export const CHAT_MESSAGE_OPTIONS_EDIT = 'chat-message-options-edit';
+export const CHAT_MESSAGE_OPTIONS_CANCEL_EDIT = 'chat-message-options-cancel-edit';
 export const CHAT_MESSAGE_OPTIONS_DELETE = 'chat-message-options-delete';
+export const CHAT_INPUT_TEXT = 'chat-input-text';
+export const CHAT_SEND_BUTTON = 'chat-send-button';
+export const buildChatMessageId = (id: string) => `chat-message-${id}`;
+export const buildChatMentionMemberId = (name: string) => `chat-member-${name}`;
+export const buildTestFolderChatId = (date: string) => `Chat-${date}`;
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;
 export const SLEEP_TIME_OPEN_APP = 3000;
+export const SLEEP_TIME_MINIMUM = 1000;
 export const buildLibraryCardId = (id: string) => `library-card-${id}`;
 export const COLLECTION_BOOKMARK_BUTTON = 'collection-bookmark-button';

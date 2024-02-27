@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Member, UUID } from '@graasp/sdk';
 
+import { buildChatMentionMemberId } from '../../../e2e/constants/testIds';
 import { PRIMARY_LIGHT_COLOR } from '../../config/constants/constants';
 import { useQueryClient } from '../../context/QueryClientContext';
 
@@ -25,27 +26,25 @@ const SuggestionMembers: FC<SuggestionMembersProps> = ({
   } = hooks.useItemMemberships(itemId);
 
   if (itemMemberships && keyword != null) {
-    const chatMembers: Pick<Member, 'id' | 'name'>[] = itemMemberships.map(
-      ({ member }) => ({
+    const chatMembers: Pick<Member, 'id' | 'name'>[] = itemMemberships
+      .map(({ member }) => ({
         id: member.id,
         name: member.name,
-      }),
-    ).filter(({ name }) =>
-    name.toLowerCase().includes(keyword.toLowerCase()),
-  );
-    
+      }))
+      .filter(({ name }) => name.toLowerCase().includes(keyword.toLowerCase()));
+
     return (
       <View style={styles.suggestionContainer}>
-        {chatMembers
-          .map(({ id, name }) => (
-            <Pressable
-              key={id}
-              onPress={() => onSuggestionPress({ id, name })}
-              style={{ padding: 10 }}
-            >
-              <Text>{name}</Text>
-            </Pressable>
-          ))}
+        {chatMembers.map(({ id, name }) => (
+          <Pressable
+            key={id}
+            onPress={() => onSuggestionPress({ id, name })}
+            style={{ padding: 10 }}
+            testID={buildChatMentionMemberId(name)}
+          >
+            <Text>{name}</Text>
+          </Pressable>
+        ))}
       </View>
     );
   }
