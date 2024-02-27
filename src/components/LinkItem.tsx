@@ -39,19 +39,22 @@ const LinkItem = ({
       });
     }
   }, [isPlayerView]);
+
   return (
     <WebView
       ref={(r) => (ref.current = r)}
       source={{ uri }}
       scalesPageToFit={false}
       startInLoadingState={true}
-      overScrollMode="never"
       cacheEnabled={true}
+      nestedScrollEnabled
       style={{
         width: dimensions.width - insets.left,
-        height: '100%',
+        // 200 prevents the webview to take the full page in player mode
+        minHeight: dimensions.height - 200,
         marginLeft: insets.left,
         marginRight: insets.right,
+        flex: 1,
       }}
     />
   );
