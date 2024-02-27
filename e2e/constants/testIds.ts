@@ -62,7 +62,7 @@ export const CHAT_INPUT_TEXT = 'chat-input-text';
 export const CHAT_SEND_BUTTON = 'chat-send-button';
 export const buildChatMessageId = (id: string) => `chat-message-${id}`;
 export const buildChatMentionMemberId = (name: string) => `chat-member-${name}`;
-export const buildTestFolderChatId = (date: string) => `Chat-${date}`;
+export const buildTestFolderChatId = (date: string) => `chat-${date}`;
 
 export const SLEEP_TIME_HEAVY_ITEMS = 10000;
 export const SLEEP_TIME_LIGHT_ITEMS = 5000;

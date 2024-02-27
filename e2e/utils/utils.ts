@@ -1,12 +1,14 @@
 import { expect } from 'detox';
 
-import { ADD_ITEMS, CANCEL_CREATE_FOLDER, CONFIRM_CREATE_FOLDER, CREATE_FOLDER, FOLDER_NAME_INPUT, ITEM_LIST_OPTIONS_EDIT } from "../constants/testIds";
+import { ADD_ITEMS, CANCEL_CREATE_FOLDER, CHAT_WRAPPER, CONFIRM_CREATE_FOLDER, CREATE_FOLDER, FOLDER_NAME_INPUT, ITEM_LIST_OPTIONS_EDIT } from "../constants/testIds";
 
 const appConfig = require('../../app.config.js');
 
 export const getAppId = () => appConfig?.expo?.extra?.eas?.projectId ?? '';
 
 export const sleep = (t: number) => new Promise(res => setTimeout(res, t));
+
+export const tapOnTopChat = async () => await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
 
 export const createFolder = async (folderName: string) => {
   await element(by.id(ADD_ITEMS)).tap();

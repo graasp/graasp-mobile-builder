@@ -16,7 +16,7 @@ import {
 } from './constants/testIds';
 import { signIn } from './utils/auth';
 import { openApp } from './utils/openApp';
-import { createFolder, sleep } from './utils/utils';
+import { createFolder, sleep, tapOnTopChat } from './utils/utils';
 import fixtures from './fixtures/stage/structure';
 
 const testDate = Date.now().toString();
@@ -62,7 +62,7 @@ describe('Chat test', () => {
 
   afterEach(async () => {
     // Tap on the screen to close the keyboard
-    await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
+    await tapOnTopChat();
   });
 
   it(`Show chat`, async () => {
@@ -102,7 +102,7 @@ describe('Chat test', () => {
     await element(by.id(CHAT_INPUT_TEXT)).tap();
     await element(by.id(CHAT_INPUT_TEXT)).typeText(MESSAGE_DELETED_TEXT);
     await element(by.id(CHAT_SEND_BUTTON)).tap();
-    await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
+    await tapOnTopChat();    
     await sleep(SLEEP_TIME_MINIMUM);
     await device.takeScreenshot('Message before deletion');
     await element(by.id(buildChatMessageId(MESSAGE_DELETED_TEXT))).tap();
@@ -129,7 +129,7 @@ describe('Chat test', () => {
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_INPUT_TEXT))).toHaveText('');
     await expect(element(by.text(MARKDOWN_TEXT_IMAGE))).not.toBeVisible();
-    await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
+    await tapOnTopChat();    
     await device.takeScreenshot('Message with markdown image');
   });
 
@@ -140,7 +140,7 @@ describe('Chat test', () => {
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_INPUT_TEXT))).toHaveText('');
     await expect(element(by.text(MARKDOWN_TEXT_LINK))).not.toBeVisible();
-    await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
+    await tapOnTopChat();    
     await device.takeScreenshot('Message with markdown link');
   });
 
@@ -149,7 +149,7 @@ describe('Chat test', () => {
     await element(by.id(CHAT_INPUT_TEXT)).typeText(MARKDOWN_TEXT);
     await element(by.id(CHAT_SEND_BUTTON)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
-    await element(by.id(CHAT_WRAPPER)).tap({x: 1, y: 1});
+    await tapOnTopChat();    
     await device.takeScreenshot('Message with markdown');
   });
 });
