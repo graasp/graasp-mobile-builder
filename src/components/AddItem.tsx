@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
@@ -25,6 +25,7 @@ import {
 } from '../../e2e/constants/testIds';
 import {
   ANALYTICS_EVENTS,
+  BOTTOM_SNAP_POINTS_ADD_ITEM,
   PRIMARY_COLOR,
   STATUS_CODES_OK,
 } from '../config/constants/constants';
@@ -43,7 +44,6 @@ interface AddItemProps {
 const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const bottomSheetAddItemModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { userToken: token } = useAuth();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -158,7 +158,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         ref={bottomSheetAddItemModalRef}
         style={styles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_ADD_ITEM}
         onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop

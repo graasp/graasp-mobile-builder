@@ -10,7 +10,7 @@ import WebView from 'react-native-webview';
 
 import * as Sharing from 'expo-sharing';
 
-import { UUID, buildPdfViewerLink } from '@graasp/sdk';
+import { DiscriminatedItem, UUID, buildPdfViewerLink } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,6 +20,7 @@ import { GRAASP_ASSETS_URL } from '../config/env';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { downloadFileFromS3Url } from '../utils/functions/media';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FilePdfProps {
@@ -27,6 +28,7 @@ interface FilePdfProps {
   itemId: UUID;
   mimetype: string;
   isPlayerView: boolean;
+  item: DiscriminatedItem;
 }
 
 const FilePdf: FC<FilePdfProps> = ({
@@ -34,6 +36,7 @@ const FilePdf: FC<FilePdfProps> = ({
   itemId,
   mimetype,
   isPlayerView,
+  item,
 }) => {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const navigation =
@@ -59,6 +62,7 @@ const FilePdf: FC<FilePdfProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
+            <ChatButton item={item} />
             {isDownloading ? (
               <FileHeaderButton disabled={true} name="cloud-download" />
             ) : (
@@ -100,7 +104,6 @@ const FilePdf: FC<FilePdfProps> = ({
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 41,
   },
 
   container: {

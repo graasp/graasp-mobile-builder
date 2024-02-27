@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { defaultScreenOptions } from '../config/constants/navigation';
+import ChatScreen from '../screens/ChatScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import ItemScreen from '../screens/ItemScreen';
 import PlayerFolderScreen from '../screens/PlayerFolderScreen';
@@ -56,6 +57,18 @@ const ItemStackNavigator = () => {
           title: '',
           headerBackTitleVisible: false,
         }}
+      />
+      <ItemStack.Screen
+        name="ItemStackChat"
+        component={ChatScreen}
+        options={({
+          route: {
+            params: { headerTitle },
+          },
+        }) => ({
+          title: headerTitle,
+          headerTitleAlign: 'center',
+        })}
       />
     </ItemStack.Navigator>
   );

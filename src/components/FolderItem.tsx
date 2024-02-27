@@ -7,10 +7,12 @@ import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 import { useNavigation } from '@react-navigation/native';
 
 import { useQueryClient } from '../context/QueryClientContext';
+import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
+import ChatButton from './common/ChatButton';
 import PlayerButton from './common/PlayerButton';
 
 type Props = {
@@ -36,13 +38,15 @@ const FolderItem = ({ item }: Props) => {
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
   useFocusQuery(refetch);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
   useEffect(() => {
     if (item) {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
+            <ChatButton item={item} />
             <PlayerButton
               itemId={item.id}
               origin={{ rootId: item.id, context: Context.Builder }}
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     paddingRight: 10,
+    flexDirection: 'row',
   },
 });
 

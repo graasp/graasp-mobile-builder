@@ -1,12 +1,16 @@
-import { useRef } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
 import { Api } from '@graasp/query-client';
 import { AppItemType, Context, PermissionLevelCompare } from '@graasp/sdk';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { useQueryClient } from '../context/QueryClientContext';
+import { ItemScreenProps } from '../navigation/types';
+import ChatButton from './common/ChatButton';
 
 const buildPostMessageKeys = (itemId: AppItemType['id']) => ({
   GET_CONTEXT_SUCCESS: `GET_CONTEXT_SUCCESS_${itemId}`,
@@ -24,6 +28,9 @@ type AppItemProps = {
 };
 
 const AppItem = ({ item, context }: AppItemProps) => {
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+
   // dimensions
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -35,6 +42,18 @@ const AppItem = ({ item, context }: AppItemProps) => {
 
   // use a ref on the webview to inject javascript and access other methods
   const ref = useRef<WebView | null>(null);
+
+  useEffect(() => {
+    if (context !== Context.Player) {
+      navigation.setOptions({
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            <ChatButton item={item} />
+          </View>
+        ),
+      });
+    }
+  }, [context]);
 
   // extract app url from the item extra and append the item id to the url
   const url = new URL(item.extra.app.url);
@@ -121,4 +140,11 @@ const AppItem = ({ item, context }: AppItemProps) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  headerButtons: {
+    flexDirection: 'row',
+  },
+});
+
 export default AppItem;

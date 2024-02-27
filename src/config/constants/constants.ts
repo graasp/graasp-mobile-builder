@@ -1,3 +1,5 @@
+import { UUID } from '@graasp/sdk';
+
 export const APP_NAME = 'Graasp';
 
 export const HELP_EMAIL = 'contact@graasp.org';
@@ -149,3 +151,25 @@ export const buildSignUpPath = (
 // todo: use graasp ui?
 export const PRIMARY_COLOR = '#5050d2';
 export const PLAYER_COLOR = '#009eff';
+export const CHAT_SELECTED_MESSAGE_COLOR = '#fc9607';
+export const PRIMARY_LIGHT_COLOR = '#edeefb';
+
+export const MENTION_REGEX =
+  /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[.*\]$/i;
+export const MENTION_REGEX_WITH_NAME =
+  /<!@(?<id>[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12})>\[(?<name>[^\]]*)\]/gi;
+export const buildChatMentionRegex = (id: UUID, name: string) =>
+  `\`<!@${id}>[${name}]\``;
+
+export const MENTION_CHAT_TRIGGER = '@';
+export const UNKNOWN_CHAT_MEMBER = 'Unknown';
+
+export const BOTTOM_SNAP_POINTS_CHAT = ['20%', '40%'];
+export const BOTTOM_SNAP_POINTS_ADD_ITEM = ['25%', '50%'];
+export const BOTTOM_SNAP_POINTS_ITEM_LIST = ['45%', '60%', '90%'];
+export const BOTTOM_SNAP_POINTS_PLAYER = ['40%', '95%'];
+export const BOTTOM_SNAP_POINTS_PROFILE = ['25%', '50%'];
+export const BOTTOM_SNAP_POINTS_SEARCH_FILTER = ['90%'];
+
+export const CHAT_MAX_LENGTH = 400;
+export const CHAT_WIDTH_IMAGE_MESSAGE = 0.65;

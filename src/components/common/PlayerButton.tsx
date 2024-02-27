@@ -1,3 +1,5 @@
+import { Button } from 'react-native-elements';
+
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { Context, DiscriminatedItem, ItemType } from '@graasp/sdk';
@@ -61,14 +63,19 @@ const PlayerButton = ({
   }
 
   return (
-    <MaterialIcons
-      testID={buildPlayerButtonId(itemId)}
-      type="material"
-      name="play-circle-outline"
-      size={size}
-      color={color}
+    <Button
+      buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)' }}
+      icon={
+        <MaterialIcons
+          type="material"
+          name="play-circle-outline"
+          size={size}
+          color={color}
+        />
+      }
       onPress={() => handleItemPress()}
-    />
+      testID={buildPlayerButtonId(itemId)}
+    ></Button>
   );
 };
 

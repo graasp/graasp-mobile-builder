@@ -9,12 +9,13 @@ import { Category, CategoryType } from '@graasp/sdk';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import CustomBackdrop from '../../components/common/CustomBackdrop';
-import { PRIMARY_COLOR } from '../../config/constants/constants';
+import {
+  BOTTOM_SNAP_POINTS_SEARCH_FILTER,
+  PRIMARY_COLOR,
+} from '../../config/constants/constants';
 import { useCategoriesTranslation } from '../../config/i18n';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { bottomSheetModalStyles } from '../../utils/styles';
-
-const snapPoints = ['90%'];
 
 type Props = {
   currentSelection: Category['id'][][];
@@ -100,7 +101,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_SEARCH_FILTER}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop
             animatedIndex={animatedIndex}

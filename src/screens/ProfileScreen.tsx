@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
@@ -27,6 +27,7 @@ import LanguageSelector from '../components/LanguageSelector';
 import CustomBackdrop from '../components/common/CustomBackdrop';
 import {
   ANALYTICS_EVENTS,
+  BOTTOM_SNAP_POINTS_PROFILE,
   DEFAULT_LOCALE,
   PRIMARY_COLOR,
   STATUS_CODES_OK,
@@ -64,7 +65,6 @@ const ProfileScreen = () => {
   const { navigate } =
     useNavigation<TabScreenProps<'ProfileTab'>['navigation']>();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['25%', '50%'], []);
   const { data: avatarUrl } = hooks.useAvatarUrl({
     id: currentMember ? currentMember.id : undefined,
   });
@@ -336,7 +336,7 @@ const ProfileScreen = () => {
         ref={bottomSheetChangeAvatarModalRef}
         style={styles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_PROFILE}
         onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop

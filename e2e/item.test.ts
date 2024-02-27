@@ -1,14 +1,9 @@
 import { expect } from 'detox';
 
 import {
-  ADD_ITEMS,
-  CANCEL_CREATE_FOLDER,
-  CONFIRM_CREATE_FOLDER,
   CONFIRM_DELETE_ITEM,
   CONFIRM_EDIT_ITEM,
-  CREATE_FOLDER,
   EDIT_ITEM_NAME_INPUT,
-  FOLDER_NAME_INPUT,
   IMAGE_SAVE,
   IMAGE_SHARE,
   ITEM_LIST_OPTIONS,
@@ -25,21 +20,9 @@ import {
 } from './constants/testIds';
 import { signIn } from './utils/auth';
 import { openApp } from './utils/openApp';
-import { sleep } from './utils/utils';
+import { createFolder, sleep } from './utils/utils';
 
 const FOLDER_NAME = 'Test folder by Detox';
-
-const createFolder = async (folderName: string) => {
-  await element(by.id(ADD_ITEMS)).tap();
-  await element(by.id(CREATE_FOLDER)).tap();
-  await expect(element(by.id(FOLDER_NAME_INPUT))).toBeVisible();
-  await expect(element(by.id(CONFIRM_CREATE_FOLDER))).toBeVisible();
-  await expect(element(by.id(CANCEL_CREATE_FOLDER))).toBeVisible();
-  await element(by.id(FOLDER_NAME_INPUT)).typeText(folderName);
-  await element(by.id(CONFIRM_CREATE_FOLDER)).tap();
-  await expect(element(by.id(ITEM_LIST_OPTIONS_EDIT))).not.toBeVisible();
-  await expect(element(by.text(folderName))).toBeVisible();
-};
 
 describe('Create, edit and delete item folder', () => {
   beforeAll(async () => {
