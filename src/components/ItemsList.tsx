@@ -2,11 +2,16 @@ import { FC, useCallback, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {
+  ANIMATION_CONFIGS,
+  BottomSheetModal,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 
 import { buildItemsListTestId } from '../../e2e/constants/testIds';
 import { BOTTOM_SNAP_POINTS_ITEM_LIST } from '../config/constants/constants';
@@ -92,6 +97,10 @@ const ItemsList: FC<ItemsListProps> = ({
         )}
       />
       <BottomSheetModal
+        animationConfigs={{
+          ...ANIMATION_CONFIGS,
+          reduceMotion: ReduceMotion.Never,
+        }}
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}

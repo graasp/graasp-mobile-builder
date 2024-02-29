@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { ReduceMotion } from 'react-native-reanimated';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import 'expo-document-picker';
 
 import { Context, DiscriminatedItem } from '@graasp/sdk';
 
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ANIMATION_CONFIGS, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -87,6 +88,10 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   return (
     <>
       <BottomSheetModal
+        animationConfigs={{
+          ...ANIMATION_CONFIGS,
+          reduceMotion: ReduceMotion.Never,
+        }}
         containerStyle={{ flex: 1 }}
         ref={bottomSheetMenuPlayerModalRef}
         style={styles.bottomSheetModal}

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -15,7 +16,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { API_ROUTES } from '@graasp/query-client';
 import { UUID } from '@graasp/sdk';
 
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {
+  ANIMATION_CONFIGS,
+  BottomSheetModal,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 
 import {
   ADD_DOCUMENTS,
@@ -155,6 +160,10 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         />
       </Overlay>
       <BottomSheetModal
+        animationConfigs={{
+          ...ANIMATION_CONFIGS,
+          reduceMotion: ReduceMotion.Never,
+        }}
         ref={bottomSheetAddItemModalRef}
         style={styles.bottomSheetModal}
         index={0}

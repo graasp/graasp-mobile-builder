@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { ReduceMotion } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -16,7 +17,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {
+  ANIMATION_CONFIGS,
+  BottomSheetModal,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import 'intl';
 
@@ -333,6 +338,10 @@ const ProfileScreen = () => {
       </ScrollView>
 
       <BottomSheetModal
+        animationConfigs={{
+          ...ANIMATION_CONFIGS,
+          reduceMotion: ReduceMotion.Never,
+        }}
         ref={bottomSheetChangeAvatarModalRef}
         style={styles.bottomSheetModal}
         index={0}

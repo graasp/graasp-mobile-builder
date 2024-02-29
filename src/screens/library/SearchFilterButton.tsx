@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Button, CheckBox, Divider, Text } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { ReduceMotion } from 'react-native-reanimated';
 
 import { Category, CategoryType } from '@graasp/sdk';
 
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ANIMATION_CONFIGS, BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import CustomBackdrop from '../../components/common/CustomBackdrop';
 import {
@@ -98,6 +99,10 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
       />
       <Divider />
       <BottomSheetModal
+        animationConfigs={{
+          ...ANIMATION_CONFIGS,
+          reduceMotion: ReduceMotion.Never,
+        }}
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
@@ -152,7 +157,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
               );
 
               return (
-                <>
+                <View key={idx}>
                   <Text style={{ fontSize: 16 }}>
                     {translateCategories(ct)}
                   </Text>
@@ -173,7 +178,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
                     />
                   ))}
                   <Divider style={{ marginVertical: 15 }} />
-                </>
+                </View>
               );
             })}
           </View>

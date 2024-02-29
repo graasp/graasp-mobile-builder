@@ -2,36 +2,22 @@ const { getDefaultConfig } = require('expo/metro-config');
 
 const config = getDefaultConfig(__dirname);
 
-const mockSourceExt =
-  process.env.EXPO_PUBLIC_DETOX_MOCKED === 'true' ? ['mock.tsx'] : [];
+// Additional source extensions
+const additionalSourceExts = ['cjs'];
+// Additional asset plugins
+const additionalAssetPlugins = ['expo-asset/tools/hashAssetFiles'];
 
-module.exports = {
-  /* general options */
+if (process.env.RN_SRC_EXT) {
+  additionalSourceExts.push(...process.env.RN_SRC_EXT.split(','));
+}
 
-  resolver: {
-    ...config.resolver,
-    sourceExts: [
-      'cjs',
-      // useful for mocking the camera
-      process.env.RN_SRC_EXT && process.env.RN_SRC_EXT.split(','),
-      ...mockSourceExt,
-      ...config.resolver.sourceExts,
-    ],
-  },
-  transformer: {
-    /* transformer options */
-    assetPlugins: ['expo-asset/tools/hashAssetFiles'],
-  },
-  serializer: {
-    /* serializer options */
-  },
-  server: {
-    /* server options */
-  },
-  watcher: {
-    /* watcher options */
-    watchman: {
-      /* Watchman-specific options */
-    },
-  },
-};
+if (process.env.EXPO_PUBLIC_DETOX_MOCKED === 'true') {
+  additionalSourceExts.push('mock.tsx');
+}
+
+// Add additional source extensions
+config.resolver.sourceExts.push(...additionalSourceExts);
+// Add additional asset plugins
+config.transformer.assetPlugins.push(...additionalAssetPlugins);
+
+module.exports = config;

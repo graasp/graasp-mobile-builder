@@ -12,11 +12,12 @@ import {
   MessageTextProps,
   SendProps,
 } from 'react-native-gifted-chat';
+import { ReduceMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ANIMATION_CONFIGS, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
 import { CHAT_WRAPPER } from '../../e2e/constants/testIds';
@@ -196,6 +197,10 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     return (
       <>
         <BottomSheetModal
+          animationConfigs={{
+            ...ANIMATION_CONFIGS,
+            reduceMotion: ReduceMotion.Never,
+          }}
           containerStyle={{ flex: 1 }}
           ref={bottomSheetMessageOptionsModalRef}
           style={styles.bottomSheetModal}
