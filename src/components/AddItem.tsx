@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
-import { ReduceMotion } from 'react-native-reanimated';
+import { useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -16,11 +16,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { API_ROUTES } from '@graasp/query-client';
 import { UUID } from '@graasp/sdk';
 
-import {
-  ANIMATION_CONFIGS,
-  BottomSheetModal,
-  BottomSheetScrollView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import {
   ADD_DOCUMENTS,
@@ -57,6 +53,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   }>({
     toggle: false,
   });
+  const reducedMotion = useReducedMotion();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -160,10 +157,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         />
       </Overlay>
       <BottomSheetModal
-        animationConfigs={{
-          ...ANIMATION_CONFIGS,
-          reduceMotion: ReduceMotion.Never,
-        }}
+        animateOnMount={!reducedMotion}
         ref={bottomSheetAddItemModalRef}
         style={styles.bottomSheetModal}
         index={0}

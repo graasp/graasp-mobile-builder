@@ -12,12 +12,12 @@ import {
   MessageTextProps,
   SendProps,
 } from 'react-native-gifted-chat';
-import { ReduceMotion } from 'react-native-reanimated';
+import { useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { ANIMATION_CONFIGS, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
 import { CHAT_WRAPPER } from '../../e2e/constants/testIds';
@@ -49,6 +49,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const [inputMessage, setInputMessage] = useState<string>('');
   const chatRef = useRef<FlatList<IMessage> | null>(null);
   const insets = useSafeAreaInsets();
+  const reducedMotion = useReducedMotion();
   const {
     data: itemChat,
     isLoading: isLoadingItemChat,
@@ -197,10 +198,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     return (
       <>
         <BottomSheetModal
-          animationConfigs={{
-            ...ANIMATION_CONFIGS,
-            reduceMotion: ReduceMotion.Never,
-          }}
+          animateOnMount={!reducedMotion}
           containerStyle={{ flex: 1 }}
           ref={bottomSheetMessageOptionsModalRef}
           style={styles.bottomSheetModal}

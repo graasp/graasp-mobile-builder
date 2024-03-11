@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
-import { ReduceMotion } from 'react-native-reanimated';
+import { useReducedMotion } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -17,11 +17,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { API_ROUTES } from '@graasp/query-client';
 import { formatDate } from '@graasp/sdk';
 
-import {
-  ANIMATION_CONFIGS,
-  BottomSheetModal,
-  BottomSheetScrollView,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import 'intl';
 
@@ -70,6 +66,7 @@ const ProfileScreen = () => {
   const { navigate } =
     useNavigation<TabScreenProps<'ProfileTab'>['navigation']>();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
+  const reducedMotion = useReducedMotion();
   const { data: avatarUrl } = hooks.useAvatarUrl({
     id: currentMember ? currentMember.id : undefined,
   });
@@ -338,10 +335,7 @@ const ProfileScreen = () => {
       </ScrollView>
 
       <BottomSheetModal
-        animationConfigs={{
-          ...ANIMATION_CONFIGS,
-          reduceMotion: ReduceMotion.Never,
-        }}
+        animateOnMount={!reducedMotion}
         ref={bottomSheetChangeAvatarModalRef}
         style={styles.bottomSheetModal}
         index={0}

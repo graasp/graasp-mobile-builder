@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Button, CheckBox, Divider, Text } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { ReduceMotion } from 'react-native-reanimated';
+import { useReducedMotion } from 'react-native-reanimated';
 
 import { Category, CategoryType } from '@graasp/sdk';
 
-import { ANIMATION_CONFIGS, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import CustomBackdrop from '../../components/common/CustomBackdrop';
 import {
@@ -37,6 +37,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<
     Category['id'][][]
   >(EMPTY_SELECTED_CATEGORIES);
+  const reducedMotion = useReducedMotion();
 
   const handlePresentModalPress = () => {
     bottomSheetModalRef.current?.present();
@@ -99,10 +100,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
       />
       <Divider />
       <BottomSheetModal
-        animationConfigs={{
-          ...ANIMATION_CONFIGS,
-          reduceMotion: ReduceMotion.Never,
-        }}
+        animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
