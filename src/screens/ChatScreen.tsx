@@ -61,6 +61,13 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
+  const { refetch: refetchItemMembershipsChat } =
+    hooks.useItemMemberships(itemId);
+
+  const refetchChat = () => {
+    refetchItemChat();
+    refetchItemMembershipsChat();
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -68,7 +75,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         <Button
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<MaterialIcons name={'refresh'} color="#ffffff" size={25} />}
-          onPress={() => refetchItemChat()}
+          onPress={() => refetchChat()}
         ></Button>
       ),
     });
