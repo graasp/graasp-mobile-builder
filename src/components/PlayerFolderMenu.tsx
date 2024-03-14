@@ -46,6 +46,8 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
   const reducedMotion = useReducedMotion();
 
   const navigatePlayerFolder = (item: DiscriminatedItem) => {

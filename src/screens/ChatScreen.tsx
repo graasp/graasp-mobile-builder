@@ -49,6 +49,8 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const [inputMessage, setInputMessage] = useState<string>('');
   const chatRef = useRef<FlatList<IMessage> | null>(null);
   const insets = useSafeAreaInsets();
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
   const reducedMotion = useReducedMotion();
   const {
     data: itemChat,

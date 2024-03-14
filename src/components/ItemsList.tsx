@@ -36,6 +36,8 @@ const ItemsList: FC<ItemsListProps> = ({
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(
     null,
   );
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
   const reducedMotion = useReducedMotion();
 
   const handlePresentModalPress = useCallback(
