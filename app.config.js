@@ -43,6 +43,13 @@ module.exports = {
         subdomains: '*',
       },
     ],
+    [
+      "@sentry/react-native/expo",
+      {
+        "organization": process.env.SENTRY_ORG,
+        "project": process.env.SENTRY_PROJECT,
+      }
+    ],
     'expo-font',
     'expo-secure-store',
   ],
@@ -53,7 +60,7 @@ module.exports = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
-    buildNumber: '2',
+    buildNumber: '4',
     googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
@@ -68,7 +75,7 @@ module.exports = {
     },
   },
   android: {
-    versionCode: 25,
+    versionCode: 27,
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',

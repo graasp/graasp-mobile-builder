@@ -1,11 +1,16 @@
-import { MaterialIcons } from '@expo/vector-icons';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
+
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { DiscriminatedItem } from '@graasp/sdk';
+
+import * as Sentry from '@sentry/react-native';
+
 import { UNSUPPORTED_ITEM } from '../../e2e/constants/testIds';
 import { PRIMARY_COLOR } from '../config/constants/constants';
-import { DiscriminatedItem } from '@graasp/sdk';
-import { FC } from 'react';
 
 interface ItemunsupportedProps {
   item: DiscriminatedItem;
@@ -17,12 +22,17 @@ const ItemUnsupported: FC<ItemunsupportedProps> = ({ item }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {t('This element cannot be opened in the mobile app')}
+        {t('The element cannot be opened in the mobile app', {
+          type: item.type,
+        })}
       </Text>
       <Button
         title={t('I would like to be able to see this item')}
         raised={true}
         buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+        onPress={() =>
+          Sentry.captureMessage(`Unsupported element of type: ${item.type}`)
+        }
         icon={
           <MaterialIcons
             name={'feedback'}
@@ -45,7 +55,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    marginBottom: 20
+    marginBottom: 20,
   },
 });
 

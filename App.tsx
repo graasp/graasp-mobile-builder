@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native';
 import { I18nextProvider } from 'react-i18next';
 import { LogBox } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -18,6 +19,11 @@ import AppNavigator from './src/navigation/AppNavigator';
 
 LogBox.ignoreAllLogs();
 
+Sentry.init({
+  dsn: process.env.SENTRY_DNS,
+  debug: false,
+});
+
 function App() {
   // Prevent hidding spash screen until real content is available. Disabled in RootNavigator
   SplashScreen.preventAutoHideAsync();
@@ -37,4 +43,4 @@ function App() {
   );
 }
 
-export default App;
+export default Sentry.wrap(App);
