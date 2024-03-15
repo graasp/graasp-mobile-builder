@@ -12,6 +12,7 @@ import {
   MessageTextProps,
   SendProps,
 } from 'react-native-gifted-chat';
+import { useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -48,6 +49,9 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
   const [inputMessage, setInputMessage] = useState<string>('');
   const chatRef = useRef<FlatList<IMessage> | null>(null);
   const insets = useSafeAreaInsets();
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
   const {
     data: itemChat,
     isLoading: isLoadingItemChat,
@@ -59,6 +63,13 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
+  const { refetch: refetchItemMembershipsChat } =
+    hooks.useItemMemberships(itemId);
+
+  const refetchChat = () => {
+    refetchItemChat();
+    refetchItemMembershipsChat();
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -66,7 +77,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
         <Button
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<MaterialIcons name={'refresh'} color="#ffffff" size={25} />}
-          onPress={() => refetchItemChat()}
+          onPress={() => refetchChat()}
         ></Button>
       ),
     });
@@ -196,6 +207,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
     return (
       <>
         <BottomSheetModal
+          animateOnMount={!reducedMotion}
           containerStyle={{ flex: 1 }}
           ref={bottomSheetMessageOptionsModalRef}
           style={styles.bottomSheetModal}

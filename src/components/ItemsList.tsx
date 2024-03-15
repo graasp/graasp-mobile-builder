@@ -1,19 +1,18 @@
 import { FC, useCallback, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { Divider, ListItem } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useReducedMotion } from 'react-native-reanimated';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
 
-import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { buildItemsListTestId } from '../../e2e/constants/testIds';
 import { BOTTOM_SNAP_POINTS_ITEM_LIST } from '../config/constants/constants';
 import { bottomSheetModalStyles } from '../utils/styles';
 import AddItem from './AddItem';
 import Item from './Item';
-import ItemIcon from './ItemIcon';
 import ItemListOptions from './ItemListOptions';
 import CustomBackdrop from './common/CustomBackdrop';
 import EmptyList from './common/EmptyList';
@@ -37,7 +36,9 @@ const ItemsList: FC<ItemsListProps> = ({
   const [itemSelected, setItemSelected] = useState<DiscriminatedItem | null>(
     null,
   );
-  const insets = useSafeAreaInsets();
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
 
   const handlePresentModalPress = useCallback(
     ({ id }: { id: UUID }) => {
@@ -92,6 +93,7 @@ const ItemsList: FC<ItemsListProps> = ({
         )}
       />
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
@@ -107,36 +109,12 @@ const ItemsList: FC<ItemsListProps> = ({
       >
         <NativeViewGestureHandler disallowInterruption={true}>
           <View style={{ flex: 1 }}>
-            {itemSelected && Boolean(itemSelected?.name) && (
-              <>
-                <ListItem style={{ paddingLeft: insets.left }}>
-                  <ItemIcon
-                    type={itemSelected.type}
-                    extra={itemSelected.extra}
-                  />
-                  <ListItem.Content style={{ flexDirection: 'row' }}>
-                    <ListItem.Title style={{ flex: 2 }}>
-                      {itemSelected.name}
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-                <Divider
-                  style={{
-                    width: '100%',
-                    marginBottom: 10,
-                    marginLeft: insets.left,
-                  }}
-                />
-              </>
-            )}
             {itemSelected && (
-              <BottomSheetScrollView contentContainerStyle={null}>
-                <ItemListOptions
-                  itemSelected={itemSelected}
-                  bottomSheetModalRef={bottomSheetModalRef}
-                  refresh={refresh}
-                />
-              </BottomSheetScrollView>
+              <ItemListOptions
+                itemSelected={itemSelected}
+                bottomSheetModalRef={bottomSheetModalRef}
+                refresh={refresh}
+              />
             )}
           </View>
         </NativeViewGestureHandler>

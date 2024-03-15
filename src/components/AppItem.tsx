@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 
@@ -34,6 +39,7 @@ const AppItem = ({ item, context }: AppItemProps) => {
   // dimensions
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const playerHeight = Dimensions.get('window').height * 0.8;
 
   // use the queryConfig and the hooks from the queryClient
   const { queryConfig, hooks } = useQueryClient();
@@ -80,7 +86,7 @@ const AppItem = ({ item, context }: AppItemProps) => {
       cacheEnabled={true}
       style={{
         width: dimensions.width,
-        height: '100%',
+        height: context === Context.Player ? playerHeight : '100%',
         marginLeft: insets.left,
         marginBottom: insets.bottom,
       }}

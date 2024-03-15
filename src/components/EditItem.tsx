@@ -23,14 +23,14 @@ interface EditItemProps {
       itemId: UUID | null;
     }>
   >;
-  refresh: () => void;
+  refreshItem: () => void;
 }
 
 const EditItem: FC<EditItemProps> = ({
   itemId,
   item,
   setEditItemModalVisible,
-  refresh,
+  refreshItem,
 }) => {
   const [itemName, setItemName] = useState<string | undefined>(item.name);
   const { t } = useTranslation();
@@ -44,6 +44,7 @@ const EditItem: FC<EditItemProps> = ({
     await customAnalyticsEvent(ANALYTICS_EVENTS.EDIT_ITEM, {
       itemType: item.type,
     });
+    refreshItem();
   };
 
   return (

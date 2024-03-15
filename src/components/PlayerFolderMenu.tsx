@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { useReducedMotion } from 'react-native-reanimated';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import 'expo-document-picker';
@@ -45,6 +46,9 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
 
   const navigatePlayerFolder = (item: DiscriminatedItem) => {
     bottomSheetMenuPlayerModalRef.current?.close();
@@ -87,6 +91,7 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   return (
     <>
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         containerStyle={{ flex: 1 }}
         ref={bottomSheetMenuPlayerModalRef}
         style={styles.bottomSheetModal}

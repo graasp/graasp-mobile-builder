@@ -2,7 +2,7 @@ module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
   owner: 'graasp',
-  version: '1.1.8',
+  version: '1.1.9',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'graasp-mobile-builder',
@@ -12,7 +12,7 @@ module.exports = {
     resizeMode: 'contain',
     backgroundColor: '#5050d2',
   },
-  jsEngine: 'jsc',
+  jsEngine: 'hermes',
   plugins: [
     '@react-native-firebase/app',
     [
@@ -43,6 +43,8 @@ module.exports = {
         subdomains: '*',
       },
     ],
+    'expo-font',
+    'expo-secure-store',
   ],
   updates: {
     fallbackToCacheTimeout: 0,
@@ -66,7 +68,7 @@ module.exports = {
     },
   },
   android: {
-    versionCode: 22,
+    versionCode: 25,
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',

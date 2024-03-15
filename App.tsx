@@ -9,6 +9,7 @@ import 'react-native-url-polyfill/auto';
 // polyfill for android intl
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import 'intl-pluralrules';
 
 import i18nConfig from './src/config/i18n';
 import { AuthProvider } from './src/context/AuthContext';
