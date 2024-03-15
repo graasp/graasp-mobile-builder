@@ -76,7 +76,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
         return <FileItem item={item} />;
       }
       default: {
-        return <ItemUnsupported />;
+        return <ItemUnsupported item={item} />;
       }
     }
   };
