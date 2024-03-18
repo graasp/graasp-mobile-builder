@@ -31,7 +31,9 @@ const ItemUnsupported: FC<ItemunsupportedProps> = ({ item }) => {
         raised={true}
         buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
         onPress={() =>
-          Sentry.captureMessage(`Unsupported element of type: ${item.type}`)
+          Sentry.captureException(
+            new Error(`Support for ${item.type} requested`),
+          )
         }
         icon={
           <MaterialIcons
