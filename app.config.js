@@ -46,8 +46,8 @@ module.exports = {
     [
       "@sentry/react-native/expo",
       {
-        "organization": process.env.SENTRY_ORG,
-        "project": process.env.SENTRY_PROJECT,
+        "organization": process.env.EXPO_PUBLIC_SENTRY_ORG,
+        "project": process.env.EXPO_PUBLIC_SENTRY_PROJECT,
       }
     ],
     'expo-font',
@@ -60,7 +60,7 @@ module.exports = {
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
-    buildNumber: '5',
+    buildNumber: '7',
     googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {

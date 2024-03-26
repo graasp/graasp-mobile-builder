@@ -20,7 +20,8 @@ import AppNavigator from './src/navigation/AppNavigator';
 LogBox.ignoreAllLogs();
 
 Sentry.init({
-  dsn: process.env.SENTRY_DNS,
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DNS,
+  tracesSampleRate: 1.0,
   debug: false,
 });
 
