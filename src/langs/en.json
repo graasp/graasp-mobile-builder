@@ -87,5 +87,7 @@
   "Add to Bookmarks": "Add to Bookmarks",
   "Remove from Bookmarks": "Remove from Bookmarks",
   "Content": "Content",
-  "Type something....": "Type something...."
+  "Type something....": "Type something....",
+  "The item cannot be opened in the mobile app": "The {{type}} item cannot be opened in the mobile app",
+  "Send a request to the development team to support": "Send a request to the development team to support {{type}}"
 }
