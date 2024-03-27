@@ -22,12 +22,14 @@ const ItemUnsupported: FC<ItemunsupportedProps> = ({ item }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {t('The element cannot be opened in the mobile app', {
+        {t('The item cannot be opened in the mobile app', {
           type: item.type,
         })}
       </Text>
       <Button
-        title={t('I would like to be able to see this item')}
+        title={t('Send a request to the development team to support', {
+          type: item.type,
+        })}
         raised={true}
         buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
         onPress={() =>
@@ -37,7 +39,7 @@ const ItemUnsupported: FC<ItemunsupportedProps> = ({ item }) => {
         }
         icon={
           <MaterialIcons
-            name={'feedback'}
+            name="feedback"
             color="#ffffff"
             size={20}
             style={{ paddingRight: 3 }}

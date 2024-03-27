@@ -88,6 +88,6 @@
   "Remove from Bookmarks": "Enlever des Signets",
   "Content": "Contenu",
   "Type something....": "Ecrire quelque chose....",
-  "The element cannot be opened in the mobile app": "Cet {{type}} élément ne peut pas être ouvert dans l'application mobile",
-  "I would like to be able to see this item": "J'aimerais pouvoir voir cet article"
+  "The item cannot be opened in the mobile app": "L'élément {{type}} ne peut pas être ouvert dans l'application mobile",
+  "Send a request to the development team to support": "Envoyer une demande à l'équipe de développement pour soutenir {{type}}"
 }

@@ -88,6 +88,6 @@
   "Remove from Bookmarks": "Remove from Bookmarks",
   "Content": "Content",
   "Type something....": "Type something....",
-  "The element cannot be opened in the mobile app": "The {{type}} element cannot be opened in the mobile app",
-  "I would like to be able to see this item": "I would like to be able to see this item"
+  "The item cannot be opened in the mobile app": "The {{type}} item cannot be opened in the mobile app",
+  "Send a request to the development team to support": "Send a request to the development team to support {{type}}"
 }
