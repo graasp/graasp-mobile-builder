@@ -1,3 +1,47 @@
+const plugins = [
+  '@react-native-firebase/app',
+  [
+    'expo-build-properties',
+    {
+      ios: {
+        useFrameworks: 'static',
+        deploymentTarget: '14.0',
+      },
+    },
+  ],
+  [
+    'expo-camera',
+    {
+      cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+    },
+  ],
+  [
+    'expo-barcode-scanner',
+    {
+      cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+    },
+  ],
+  [
+    '@config-plugins/detox',
+    {
+      skipProguard: false,
+      subdomains: '*',
+    },
+  ],
+  'expo-font',
+  'expo-secure-store',
+];
+
+if (process.env.NODE_ENV === 'production') {
+  plugins.push([
+    '@sentry/react-native/expo',
+    {
+      organization: process.env.EXPO_PUBLIC_SENTRY_ORG,
+      project: process.env.EXPO_PUBLIC_SENTRY_PROJECT,
+    },
+  ]);
+}
+
 module.exports = {
   name: 'Graasp Builder',
   slug: 'graasp-mobile-builder',
@@ -13,46 +57,7 @@ module.exports = {
     backgroundColor: '#5050d2',
   },
   jsEngine: 'hermes',
-  plugins: [
-    '@react-native-firebase/app',
-    [
-      'expo-build-properties',
-      {
-        ios: {
-          useFrameworks: 'static',
-          deploymentTarget: '14.0',
-        },
-      },
-    ],
-    [
-      'expo-camera',
-      {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
-      },
-    ],
-    [
-      'expo-barcode-scanner',
-      {
-        cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
-      },
-    ],
-    [
-      '@config-plugins/detox',
-      {
-        skipProguard: false,
-        subdomains: '*',
-      },
-    ],
-    [
-      "@sentry/react-native/expo",
-      {
-        "organization": process.env.EXPO_PUBLIC_SENTRY_ORG,
-        "project": process.env.EXPO_PUBLIC_SENTRY_PROJECT,
-      }
-    ],
-    'expo-font',
-    'expo-secure-store',
-  ],
+  plugins,
   updates: {
     fallbackToCacheTimeout: 0,
   },

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -22,27 +22,31 @@ const ItemUnsupported: FC<ItemunsupportedProps> = ({ item }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {t('The item cannot be opened in the mobile app', {
+        {t('ITEM_UNSUPPORTED_MESSAGE', {
           type: item.type,
         })}
       </Text>
       <Button
-        title={t('Send a request to the development team to support', {
-          type: item.type,
-        })}
+        title={t('Please add support for this item')}
         raised={true}
         buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-        onPress={() =>
+        onPress={() => {
           Sentry.captureException(
             new Error(`Support for ${item.type} requested`),
-          )
-        }
+          );
+
+          Alert.alert(
+            t('REQUEST_ITEM_SUPPORT_ALERT_TITLE'),
+            t('REQUEST_ITEM_SUPPORT_ALERT_MESSAGE'),
+            [{ text: t('Close'), onPress: () => console.debug('Close alert') }],
+          );
+        }}
         icon={
           <MaterialIcons
             name="feedback"
             color="#ffffff"
             size={20}
-            style={{ paddingRight: 3 }}
+            style={{ paddingRight: 10 }}
           />
         }
         testID={UNSUPPORTED_ITEM}
