@@ -49,6 +49,7 @@ export const buildPlayerButtonId = (id: string) => `player-button-${id}`;
 export const ITEM_NAVIGATOR_ITEM_ERROR = 'item-screen-error';
 export const LIBRARY_SEARCH_BAR = 'library-search-bar';
 export const PLAYER_FOLDER_MENU = 'player-folder-menu';
+export const UNSUPPORTED_ITEM = 'unsupported-item';
 export const buildPlayerFolderMenuItem = (id: string) =>
   `player-folder-menu-item-${id}`;
 export const buildPlayerViewCloseButton = (id: string) =>

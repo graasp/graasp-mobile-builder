@@ -56,6 +56,11 @@ EXPO_PUBLIC_API_HOST=http://localhost:3000
 # optionally provide the Auth frontend base url
 EXPO_PUBLIC_AUTH_HOST=http://localhost:3001
 
+# sentry
+EXPO_PUBLIC_SENTRY_DNS=
+EXPO_PUBLIC_SENTRY_ORG=
+EXPO_PUBLIC_SENTRY_PROJECT=
+
 # Optional
 EXPO_PUBLIC_CAMERA_ITEM_URL=some-url
 ```
