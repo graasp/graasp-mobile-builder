@@ -1,31 +1,30 @@
 import { FC } from 'react';
 import { Pressable, View } from 'react-native';
-import { Icon, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
-import { Context, DiscriminatedItem, ItemType, UUID } from '@graasp/sdk';
+import { Context, DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
+import { ITEM_LIST } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
 import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import ItemIcon from './ItemIcon';
+import ItemOptionsButton, {
+  ItemOptionsButtonProps,
+} from './common/ItemOptionsButton';
 import PlayerButton from './common/PlayerButton';
 
 interface ItemProps {
   item: DiscriminatedItem;
-  openOptions?: ({ id }: { id: UUID }) => void;
+  showOptions?: boolean;
   index: number;
-  parentItemId?: UUID;
+  refresh: ItemOptionsButtonProps['refresh'];
 }
 
-const Item: FC<ItemProps> = ({
-  item: { id, name, type, extra },
-  openOptions,
-  index,
-  parentItemId,
-}) => {
+const Item: FC<ItemProps> = ({ item, showOptions = false, index, refresh }) => {
+  const { id, name, type, extra } = item;
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   async function handleItemPress() {
@@ -51,7 +50,7 @@ const Item: FC<ItemProps> = ({
       <Pressable onPress={() => handleItemPress()} style={{ flex: 2 }}>
         {renderListItem()}
       </Pressable>
-      {openOptions && (
+      {showOptions && (
         <>
           {type === ItemType.FOLDER && (
             <PlayerButton
@@ -61,14 +60,10 @@ const Item: FC<ItemProps> = ({
               origin={{ rootId: id, context: Context.Builder }}
             />
           )}
-          <Icon
-            type="material"
-            name="more-vert"
-            size={24}
+          <ItemOptionsButton
+            refresh={refresh}
+            item={item}
             color={ITEMS_TABLE_ROW_ICON_COLOR}
-            onPress={() => openOptions({ id })}
-            containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
-            testID={`${ITEM_LIST_OPTIONS}-${index + 1}`}
           />
         </>
       )}

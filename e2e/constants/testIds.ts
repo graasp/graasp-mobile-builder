@@ -10,11 +10,14 @@ export const MY_ITEMS_TAB = 'my-items-tab';
 export const SHARED_ITEMS_TAB = 'shared-items-tab';
 export const PROFILE_TAB = 'profile-tab';
 export const LIBRARY_TAB = 'library-tab';
+export const MAP_TAB = 'map-tab';
 export const SIGN_IN_TAB = 'sign-in-tab';
 export const ITEM_LIST = 'item-list';
 export const ITEM_LIST_OPTIONS = 'item-list-options';
 export const ITEM_LIST_OPTIONS_DETAILS = 'item-list-options-details';
 export const ITEM_LIST_OPTIONS_EDIT = 'item-list-options-edit';
+export const ITEM_LIST_OPTIONS_OPEN_CHAT = 'item-list-options-open-chat';
+export const ITEM_LIST_OPTIONS_OPEN_MAP = 'item-list-options-open-map';
 export const ITEM_LIST_OPTIONS_DELETE = 'item-list-options-delete';
 export const ITEM_LIST_OPTIONS_SHARE = 'item-list-options-share';
 export const CONFIRM_EDIT_ITEM = 'confirm-edit-item';
@@ -57,7 +60,8 @@ export const buildPlayerViewCloseButton = (id: string) =>
 export const CHAT_WRAPPER = 'chat-wrapper';
 export const CHAT_BUTTON_HEADER = 'chat-button-header';
 export const CHAT_MESSAGE_OPTIONS_EDIT = 'chat-message-options-edit';
-export const CHAT_MESSAGE_OPTIONS_CANCEL_EDIT = 'chat-message-options-cancel-edit';
+export const CHAT_MESSAGE_OPTIONS_CANCEL_EDIT =
+  'chat-message-options-cancel-edit';
 export const CHAT_MESSAGE_OPTIONS_DELETE = 'chat-message-options-delete';
 export const CHAT_INPUT_TEXT = 'chat-input-text';
 export const CHAT_SEND_BUTTON = 'chat-send-button';

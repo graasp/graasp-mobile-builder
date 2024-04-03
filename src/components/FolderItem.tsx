@@ -12,7 +12,7 @@ import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembersh
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
-import ChatButton from './common/ChatButton';
+import ItemOptionsButton from './common/ItemOptionsButton';
 import PlayerButton from './common/PlayerButton';
 
 type Props = {
@@ -46,7 +46,6 @@ const FolderItem = ({ item }: Props) => {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <ChatButton item={item} />
             <PlayerButton
               itemId={item.id}
               origin={{ rootId: item.id, context: Context.Builder }}
@@ -54,6 +53,7 @@ const FolderItem = ({ item }: Props) => {
               type={item.type}
               color="white"
             />
+            <ItemOptionsButton refresh={refetch} color="white" item={item} />
           </View>
         ),
       });

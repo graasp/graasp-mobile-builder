@@ -93,5 +93,7 @@
   "ITEM_UNSUPPORTED_MESSAGE": "The {{type}} item type is currently not supported in the mobile app. You can let us know that the support of this item is important for you by clicking on the button below. Thank you for your feedback.",
   "Close": "Close",
   "REQUEST_ITEM_SUPPORT_ALERT_TITLE": "Request sent!",
-  "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "The request has been successfully sent."
+  "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "The request has been successfully sent.",
+  "Open Chatbox": "Open Chatbox",
+  "Open Map": "Open Map"
 }

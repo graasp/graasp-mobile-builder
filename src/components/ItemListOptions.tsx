@@ -15,6 +15,7 @@ import {
   ITEM_LIST_OPTIONS_DELETE,
   ITEM_LIST_OPTIONS_DETAILS,
   ITEM_LIST_OPTIONS_EDIT,
+  ITEM_LIST_OPTIONS_OPEN_CHAT,
   ITEM_LIST_OPTIONS_SHARE,
   SHARE_ITEM_BUILDER,
   SHARE_ITEM_PLAYER,
@@ -29,6 +30,7 @@ import {
 import { useQueryClient } from '../context/QueryClientContext';
 import {
   ITEM_NAVIGATOR,
+  ITEM_NAVIGATOR_ITEM_CHAT,
   ITEM_NAVIGATOR_ITEM_DETAILS,
 } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
@@ -39,6 +41,7 @@ import BookmarkListItem from './BookmarkListItem';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 import ItemIcon from './ItemIcon';
+import MapButton from './common/MapButton';
 
 interface ItemListOptionsProps {
   itemSelected: DiscriminatedItem;
@@ -107,8 +110,12 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     return null;
   }
 
-  const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
+  const closeSheet = () => {
     bottomSheetModalRef.current?.close();
+  };
+
+  const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
+    closeSheet();
     navigate(ITEM_NAVIGATOR, {
       screen: ITEM_NAVIGATOR_ITEM_DETAILS,
       params: { itemId },
@@ -125,6 +132,14 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
 
   const handleSharePress = ({ itemId }: { itemId: UUID }) => {
     setShareModalVisible({ toggle: true, itemId });
+  };
+
+  const handleOpenChat = async () => {
+    closeSheet();
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_ITEM_CHAT,
+      params: { itemId: item.id, headerTitle: item.name },
+    });
   };
 
   const onShare = async (itemId: UUID | null, linkType: any) => {
@@ -244,7 +259,9 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         }}
       />
 
-      <BottomSheetScrollView contentContainerStyle={null}>
+      <BottomSheetScrollView
+        contentContainerStyle={{ backgroundColor: 'white' }}
+      >
         <ListItem
           onPress={() => handleDetailsPress({ itemId: item.id })}
           style={{ paddingLeft: insets.left }}
@@ -256,31 +273,36 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           </ListItem.Content>
         </ListItem>
         {displayEditOrDeleteItem && (
-          <>
-            <ListItem
-              onPress={() => handleEditItemPress({ itemId: item.id })}
-              style={{ paddingLeft: insets.left }}
-              testID={ITEM_LIST_OPTIONS_EDIT}
-            >
-              <MaterialIcons name="edit" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>{t('Edit')}</ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-            <ListItem
-              onPress={() => handleDeleteItemPress({ itemId: item.id })}
-              style={{ paddingLeft: insets.left }}
-              testID={ITEM_LIST_OPTIONS_DELETE}
-            >
-              <MaterialIcons name="delete" size={24} color="grey" />
-              <ListItem.Content style={{ flexDirection: 'row' }}>
-                <ListItem.Title style={{ flex: 2 }}>
-                  {t('Delete')}
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          </>
+          <ListItem
+            onPress={() => handleEditItemPress({ itemId: item.id })}
+            style={{ paddingLeft: insets.left }}
+            testID={ITEM_LIST_OPTIONS_EDIT}
+          >
+            <MaterialIcons name="edit" size={24} color="grey" />
+            <ListItem.Content style={{ flexDirection: 'row' }}>
+              <ListItem.Title style={{ flex: 2 }}>{t('Edit')}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
         )}
+        <ListItem
+          onPress={() => handleOpenChat()}
+          style={{ paddingLeft: insets.left }}
+          testID={ITEM_LIST_OPTIONS_OPEN_CHAT}
+        >
+          <MaterialIcons name="chat" size={24} color="grey" />
+          <ListItem.Content style={{ flexDirection: 'row' }}>
+            <ListItem.Title style={{ flex: 2 }}>
+              {t('Open Chatbox')}
+            </ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+
+        <MapButton
+          itemId={item.id}
+          name={item.name}
+          type="list-item"
+          onClick={closeSheet}
+        />
         <ListItem
           onPress={() => handleSharePress({ itemId: item.id })}
           style={{ paddingLeft: insets.left }}
@@ -292,6 +314,18 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           </ListItem.Content>
         </ListItem>
         <BookmarkListItem item={item} />
+        {displayEditOrDeleteItem && (
+          <ListItem
+            onPress={() => handleDeleteItemPress({ itemId: item.id })}
+            style={{ paddingLeft: insets.left }}
+            testID={ITEM_LIST_OPTIONS_DELETE}
+          >
+            <MaterialIcons name="delete" size={24} color="grey" />
+            <ListItem.Content style={{ flexDirection: 'row' }}>
+              <ListItem.Title style={{ flex: 2 }}>{t('Delete')}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        )}
       </BottomSheetScrollView>
     </>
   );
