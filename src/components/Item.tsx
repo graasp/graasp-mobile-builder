@@ -6,7 +6,7 @@ import { Context, DiscriminatedItem, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { ITEM_LIST } from '../../e2e/constants/testIds';
+import { ITEM_LIST, ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../config/constants/constants';
 import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
@@ -64,6 +64,7 @@ const Item: FC<ItemProps> = ({ item, showOptions = false, index, refresh }) => {
             refresh={refresh}
             item={item}
             color={ITEMS_TABLE_ROW_ICON_COLOR}
+            testId={`${ITEM_LIST_OPTIONS}-${index + 1}`}
           />
         </>
       )}

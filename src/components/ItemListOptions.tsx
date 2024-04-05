@@ -15,6 +15,7 @@ import {
   ITEM_LIST_OPTIONS_DELETE,
   ITEM_LIST_OPTIONS_DETAILS,
   ITEM_LIST_OPTIONS_EDIT,
+  ITEM_LIST_OPTIONS_MAP,
   ITEM_LIST_OPTIONS_OPEN_CHAT,
   ITEM_LIST_OPTIONS_SHARE,
   SHARE_ITEM_BUILDER,
@@ -75,27 +76,11 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
-  const [shareModalVisible, setShareModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
-  const [editItemModalVisible, setEditItemModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
-  const [deleteItemModalVisible, setDeleteItemModalVisible] = useState<{
-    toggle: boolean;
-    itemId: UUID | null;
-  }>({
-    toggle: false,
-    itemId: null,
-  });
+  const [shareModalVisible, setShareModalVisible] = useState<boolean>(false);
+  const [editItemModalVisible, setEditItemModalVisible] =
+    useState<boolean>(false);
+  const [deleteItemModalVisible, setDeleteItemModalVisible] =
+    useState<boolean>(false);
 
   if (
     isLoadingItem ||
@@ -114,24 +99,24 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     bottomSheetModalRef.current?.close();
   };
 
-  const handleDetailsPress = ({ itemId }: { itemId: UUID }) => {
+  const handleDetailsPress = () => {
     closeSheet();
     navigate(ITEM_NAVIGATOR, {
       screen: ITEM_NAVIGATOR_ITEM_DETAILS,
-      params: { itemId },
+      params: { itemId: item.id },
     });
   };
 
-  const handleEditItemPress = ({ itemId }: { itemId: UUID }) => {
-    setEditItemModalVisible({ toggle: true, itemId });
+  const handleEditItemPress = () => {
+    setEditItemModalVisible(true);
   };
 
-  const handleDeleteItemPress = ({ itemId }: { itemId: UUID }) => {
-    setDeleteItemModalVisible({ toggle: true, itemId });
+  const handleDeleteItemPress = () => {
+    setDeleteItemModalVisible(true);
   };
 
-  const handleSharePress = ({ itemId }: { itemId: UUID }) => {
-    setShareModalVisible({ toggle: true, itemId });
+  const handleSharePress = () => {
+    setShareModalVisible(true);
   };
 
   const handleOpenChat = async () => {
@@ -156,9 +141,9 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          setShareModalVisible({ toggle: false, itemId: null });
+          setShareModalVisible(false);
         } else {
-          setShareModalVisible({ toggle: false, itemId: null });
+          setShareModalVisible(false);
         }
         await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_GRAASP_LINK, {
           method:
@@ -181,10 +166,8 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     <>
       <Overlay
         overlayStyle={styles.modalView}
-        isVisible={shareModalVisible.toggle && shareModalVisible.itemId != null}
-        onBackdropPress={() =>
-          setShareModalVisible({ toggle: false, itemId: null })
-        }
+        isVisible={shareModalVisible}
+        onBackdropPress={() => setShareModalVisible(false)}
       >
         <Button
           title="Player"
@@ -192,7 +175,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           containerStyle={{ marginBottom: 20 }}
           onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.PLAYER);
+            await onShare(item.id, SHARE_OPTIONS.PLAYER);
           }}
           testID={SHARE_ITEM_PLAYER}
         />
@@ -202,23 +185,19 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           raised={true}
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           onPress={async () => {
-            await onShare(shareModalVisible.itemId, SHARE_OPTIONS.BUILDER);
+            await onShare(item.id, SHARE_OPTIONS.BUILDER);
           }}
           testID={SHARE_ITEM_BUILDER}
         />
       </Overlay>
       <Overlay
         overlayStyle={styles.modalEditItemView}
-        isVisible={
-          editItemModalVisible.toggle && editItemModalVisible.itemId != null
-        }
-        onBackdropPress={() =>
-          setEditItemModalVisible({ toggle: false, itemId: null })
-        }
+        isVisible={editItemModalVisible}
+        onBackdropPress={() => setEditItemModalVisible(false)}
       >
-        {editItemModalVisible.itemId && item && (
+        {editItemModalVisible && item && (
           <EditItem
-            itemId={editItemModalVisible.itemId}
+            itemId={item.id}
             item={item}
             setEditItemModalVisible={setEditItemModalVisible}
             refreshItem={refreshItem}
@@ -227,16 +206,12 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       </Overlay>
       <Overlay
         overlayStyle={styles.modalEditItemView}
-        isVisible={
-          deleteItemModalVisible.toggle && deleteItemModalVisible.itemId != null
-        }
-        onBackdropPress={() =>
-          setDeleteItemModalVisible({ toggle: false, itemId: null })
-        }
+        isVisible={deleteItemModalVisible}
+        onBackdropPress={() => setDeleteItemModalVisible(false)}
       >
-        {deleteItemModalVisible.itemId && item && (
+        {deleteItemModalVisible && item && (
           <DeleteItem
-            itemId={deleteItemModalVisible.itemId}
+            itemId={item.id}
             item={item}
             setDeleteItemModalVisible={setDeleteItemModalVisible}
             bottomSheetModalRef={bottomSheetModalRef}
@@ -263,7 +238,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         contentContainerStyle={{ backgroundColor: 'white' }}
       >
         <ListItem
-          onPress={() => handleDetailsPress({ itemId: item.id })}
+          onPress={() => handleDetailsPress()}
           style={{ paddingLeft: insets.left }}
           testID={ITEM_LIST_OPTIONS_DETAILS}
         >
@@ -274,7 +249,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         </ListItem>
         {displayEditOrDeleteItem && (
           <ListItem
-            onPress={() => handleEditItemPress({ itemId: item.id })}
+            onPress={() => handleEditItemPress()}
             style={{ paddingLeft: insets.left }}
             testID={ITEM_LIST_OPTIONS_EDIT}
           >
@@ -298,13 +273,14 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         </ListItem>
 
         <MapButton
+          testId={ITEM_LIST_OPTIONS_MAP}
           itemId={item.id}
           name={item.name}
           type="list-item"
           onClick={closeSheet}
         />
         <ListItem
-          onPress={() => handleSharePress({ itemId: item.id })}
+          onPress={() => handleSharePress()}
           style={{ paddingLeft: insets.left }}
           testID={ITEM_LIST_OPTIONS_SHARE}
         >
@@ -316,7 +292,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         <BookmarkListItem item={item} />
         {displayEditOrDeleteItem && (
           <ListItem
-            onPress={() => handleDeleteItemPress({ itemId: item.id })}
+            onPress={() => handleDeleteItemPress()}
             style={{ paddingLeft: insets.left }}
             testID={ITEM_LIST_OPTIONS_DELETE}
           >

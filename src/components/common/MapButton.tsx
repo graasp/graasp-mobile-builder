@@ -25,6 +25,7 @@ type Props = {
   size?: number;
   color?: string;
   type?: string;
+  testId?: string;
   onClick?: () => void;
 };
 
@@ -34,6 +35,7 @@ const MapButton = ({
   name,
   color = ITEMS_TABLE_ROW_ICON_COLOR,
   type = 'button',
+  testId,
   onClick,
 }: Props) => {
   const insets = useSafeAreaInsets();
@@ -62,7 +64,7 @@ const MapButton = ({
         <ListItem
           onPress={() => handleOpenMap()}
           style={{ paddingLeft: insets.left }}
-          testID={ITEM_LIST_OPTIONS_OPEN_MAP}
+          testID={testId}
         >
           {icon}
           <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -79,8 +81,8 @@ const MapButton = ({
           buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)' }}
           icon={icon}
           onPress={() => handleOpenMap()}
-          testID={buildPlayerButtonId(itemId ?? '')}
-        ></Button>
+          testID={testId}
+        />
       );
     }
   }

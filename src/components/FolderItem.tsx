@@ -6,6 +6,7 @@ import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
@@ -53,7 +54,12 @@ const FolderItem = ({ item }: Props) => {
               type={item.type}
               color="white"
             />
-            <ItemOptionsButton refresh={refetch} color="white" item={item} />
+            <ItemOptionsButton
+              testId={ITEM_LIST_OPTIONS}
+              refresh={refetch}
+              color="white"
+              item={item}
+            />
           </View>
         ),
       });

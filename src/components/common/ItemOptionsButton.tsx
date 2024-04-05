@@ -8,6 +8,7 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
+import { ITEM_LIST_OPTIONS } from '../../../e2e/constants/testIds';
 import { BOTTOM_SNAP_POINTS_ITEM_LIST } from '../../config/constants/constants';
 import { useFocusQuery } from '../../utils/functions/useQuery';
 import ItemListOptions from '../ItemListOptions';
@@ -17,12 +18,14 @@ export type ItemOptionsButtonProps = {
   item: DiscriminatedItem;
   refresh: () => void;
   color: string;
+  testId?: string;
 };
 
 const ItemOptionsButton = ({
   item,
   refresh,
   color,
+  testId,
 }: ItemOptionsButtonProps) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
@@ -44,6 +47,7 @@ const ItemOptionsButton = ({
         color={color}
         onPress={() => openOptions()}
         containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
+        testID={testId}
       />
       <BottomSheetModal
         animateOnMount={!reducedMotion}

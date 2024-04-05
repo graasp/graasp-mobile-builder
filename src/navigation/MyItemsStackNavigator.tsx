@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { MY_ITEMS_MAP_BUTTON } from '../../e2e/constants/testIds';
 import Header from '../components/common/Header';
 import MapButton from '../components/common/MapButton';
 import { defaultScreenOptions } from '../config/constants/navigation';
@@ -26,7 +27,13 @@ const MyItemsStackNavigator = () => {
           title: '',
           headerLeft: () => <Header title={t('My Items')} />,
           headerLeftContainerStyle: { paddingLeft: 10 },
-          headerRight: () => <MapButton name={t('My Items')} color="white" />,
+          headerRight: () => (
+            <MapButton
+              testId={MY_ITEMS_MAP_BUTTON}
+              name={t('My Items')}
+              color="white"
+            />
+          ),
         }}
       />
     </MyItemsStack.Navigator>
