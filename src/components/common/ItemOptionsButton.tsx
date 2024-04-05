@@ -8,7 +8,6 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { ITEM_LIST_OPTIONS } from '../../../e2e/constants/testIds';
 import { BOTTOM_SNAP_POINTS_ITEM_LIST } from '../../config/constants/constants';
 import { useFocusQuery } from '../../utils/functions/useQuery';
 import ItemListOptions from '../ItemListOptions';

@@ -8,10 +8,6 @@ import { DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
-import {
-  ITEM_LIST_OPTIONS_OPEN_MAP,
-  buildPlayerButtonId,
-} from '../../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
 import {
   ITEM_NAVIGATOR,
