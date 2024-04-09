@@ -16,12 +16,13 @@ const MapViewScreen = () => {
   const route = useRoute<ItemScreenProps<'ItemStackPlayerFolder'>['route']>();
   const { itemId } = route.params;
 
-  const url = new URL(
-    `${API_HOST}/m/auth/web?token=${userToken}&url=${BUILDER_HOST}/map`,
-  );
+  const url = new URL(`${API_HOST}/m/auth/web?token=${userToken}`);
+  const redirectionUrl = new URL(`${BUILDER_HOST}/map`);
+
   if (itemId) {
-    url.searchParams.set('parentId', itemId);
+    redirectionUrl.searchParams.set('parentId', itemId);
   }
+  url.searchParams.set('url', redirectionUrl.toString());
 
   return (
     <WebView
