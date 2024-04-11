@@ -1,23 +1,24 @@
 import { expect } from 'detox';
 
 import {
-  CHAT_BUTTON_HEADER,
   CHAT_INPUT_TEXT,
   CHAT_MESSAGE_OPTIONS_CANCEL_EDIT,
   CHAT_MESSAGE_OPTIONS_DELETE,
   CHAT_MESSAGE_OPTIONS_EDIT,
   CHAT_SEND_BUTTON,
   CHAT_WRAPPER,
+  ITEM_LIST_OPTIONS,
+  ITEM_LIST_OPTIONS_OPEN_CHAT,
   MY_ITEMS_TAB,
   SLEEP_TIME_MINIMUM,
   buildChatMentionMemberId,
   buildChatMessageId,
   buildTestFolderChatId,
 } from './constants/testIds';
+import fixtures from './fixtures/stage/structure';
 import { signIn } from './utils/auth';
 import { openApp } from './utils/openApp';
 import { createFolder, sleep, tapOnTopChat } from './utils/utils';
-import fixtures from './fixtures/stage/structure';
 
 const testDate = Date.now().toString();
 const TEST_CHAT_FOLDER = buildTestFolderChatId(testDate);
@@ -66,7 +67,8 @@ describe('Chat test', () => {
   });
 
   it(`Show chat`, async () => {
-    await element(by.id(CHAT_BUTTON_HEADER)).tap();
+    await element(by.id(ITEM_LIST_OPTIONS)).tap();
+    await element(by.id(ITEM_LIST_OPTIONS_OPEN_CHAT)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_WRAPPER))).toBeVisible();
   });
@@ -86,11 +88,15 @@ describe('Chat test', () => {
     await element(by.id(CHAT_SEND_BUTTON)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_INPUT_TEXT))).toHaveText('');
-    await expect(element(by.text(`${MESSAGE_TEXT}${MODIFIED_TEXT}`))).toBeVisible();
+    await expect(
+      element(by.text(`${MESSAGE_TEXT}${MODIFIED_TEXT}`)),
+    ).toBeVisible();
   });
 
   it(`Cancel edit a message`, async () => {
-    await element(by.id(buildChatMessageId(`${MESSAGE_TEXT}${MODIFIED_TEXT}`))).tap();
+    await element(
+      by.id(buildChatMessageId(`${MESSAGE_TEXT}${MODIFIED_TEXT}`)),
+    ).tap();
     await element(by.id(CHAT_MESSAGE_OPTIONS_EDIT)).tap();
     await element(by.id(CHAT_MESSAGE_OPTIONS_CANCEL_EDIT)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
@@ -102,7 +108,7 @@ describe('Chat test', () => {
     await element(by.id(CHAT_INPUT_TEXT)).tap();
     await element(by.id(CHAT_INPUT_TEXT)).typeText(MESSAGE_DELETED_TEXT);
     await element(by.id(CHAT_SEND_BUTTON)).tap();
-    await tapOnTopChat();    
+    await tapOnTopChat();
     await sleep(SLEEP_TIME_MINIMUM);
     await device.takeScreenshot('Message before deletion');
     await element(by.id(buildChatMessageId(MESSAGE_DELETED_TEXT))).tap();
@@ -114,7 +120,9 @@ describe('Chat test', () => {
 
   it(`Send a message with mention`, async () => {
     await element(by.id(CHAT_INPUT_TEXT)).tap();
-    await element(by.id(CHAT_INPUT_TEXT)).typeText(`Mention @${CHAT_MEMBER.substring(0, 2)}`);
+    await element(by.id(CHAT_INPUT_TEXT)).typeText(
+      `Mention @${CHAT_MEMBER.substring(0, 2)}`,
+    );
     await element(by.id(buildChatMentionMemberId(CHAT_MEMBER))).tap();
     await element(by.id(CHAT_SEND_BUTTON)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
@@ -129,7 +137,7 @@ describe('Chat test', () => {
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_INPUT_TEXT))).toHaveText('');
     await expect(element(by.text(MARKDOWN_TEXT_IMAGE))).not.toBeVisible();
-    await tapOnTopChat();    
+    await tapOnTopChat();
     await device.takeScreenshot('Message with markdown image');
   });
 
@@ -140,7 +148,7 @@ describe('Chat test', () => {
     await sleep(SLEEP_TIME_MINIMUM);
     await expect(element(by.id(CHAT_INPUT_TEXT))).toHaveText('');
     await expect(element(by.text(MARKDOWN_TEXT_LINK))).not.toBeVisible();
-    await tapOnTopChat();    
+    await tapOnTopChat();
     await device.takeScreenshot('Message with markdown link');
   });
 
@@ -149,7 +157,7 @@ describe('Chat test', () => {
     await element(by.id(CHAT_INPUT_TEXT)).typeText(MARKDOWN_TEXT);
     await element(by.id(CHAT_SEND_BUTTON)).tap();
     await sleep(SLEEP_TIME_MINIMUM);
-    await tapOnTopChat();    
+    await tapOnTopChat();
     await device.takeScreenshot('Message with markdown');
   });
 });

@@ -154,7 +154,7 @@ Detox framework needs to access native code to perform the tests, so it is neces
 
 - Run `prebuild:test:ios` and `prebuild:test:android` to generate an `ios` or `android` folders that contain native projects. On iOS, it is necessary first to have Cocoapods installed on your macOS computer:
   - Check you have the latest version of Ruby. The best way to install the latest version is through Homebrew `brew install cocoapods`. Remember to restart the Terminal or the computer to save the changes.
-  - Install Cocoapods by running `sudo gem install` cocoapods and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
+  - Install Cocoapods by running `sudo gem install cocoapods` and `sudo gem install cocoapods -n /usr/local/bin`. If everything is correct, you should be able to use the command `pod`. You can check the version you use with `pod --version`.
 - The tests uses a refresh token to access a test account. This account should already own the `e2e/fixtures/stage` structure.
 
 ##### Commands

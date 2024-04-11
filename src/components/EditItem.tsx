@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { Dispatch, FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
@@ -17,12 +17,7 @@ import { customAnalyticsEvent } from '../utils/functions/analytics';
 interface EditItemProps {
   itemId: UUID;
   item: DiscriminatedItem;
-  setEditItemModalVisible: React.Dispatch<
-    React.SetStateAction<{
-      toggle: boolean;
-      itemId: UUID | null;
-    }>
-  >;
+  setEditItemModalVisible: Dispatch<boolean>;
   refreshItem: () => void;
 }
 
@@ -40,7 +35,7 @@ const EditItem: FC<EditItemProps> = ({
   const mutateItem = async () => {
     const itemNameSingleSpaces = itemName?.replace(/ +(?= )/g, '');
     editItemMutation.mutate({ id: itemId, name: itemNameSingleSpaces });
-    setEditItemModalVisible({ toggle: false, itemId: null });
+    setEditItemModalVisible(false);
     await customAnalyticsEvent(ANALYTICS_EVENTS.EDIT_ITEM, {
       itemType: item.type,
     });
@@ -77,7 +72,7 @@ const EditItem: FC<EditItemProps> = ({
         title={t('Cancel')}
         raised={true}
         buttonStyle={{ backgroundColor: '#b5b5b5' }}
-        onPress={() => setEditItemModalVisible({ toggle: false, itemId: null })}
+        onPress={() => setEditItemModalVisible(false)}
         testID={CANCEL_EDIT_ITEM}
       />
     </>

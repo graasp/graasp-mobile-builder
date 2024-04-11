@@ -6,13 +6,14 @@ import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
-import ChatButton from './common/ChatButton';
+import ItemOptionsButton from './common/ItemOptionsButton';
 import PlayerButton from './common/PlayerButton';
 
 type Props = {
@@ -46,13 +47,18 @@ const FolderItem = ({ item }: Props) => {
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
-            <ChatButton item={item} />
             <PlayerButton
               itemId={item.id}
               origin={{ rootId: item.id, context: Context.Builder }}
               name={item.name}
               type={item.type}
               color="white"
+            />
+            <ItemOptionsButton
+              testId={ITEM_LIST_OPTIONS}
+              refresh={refetch}
+              color="white"
+              item={item}
             />
           </View>
         ),
