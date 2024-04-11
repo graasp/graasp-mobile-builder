@@ -42,7 +42,7 @@ import BookmarkListItem from './BookmarkListItem';
 import DeleteItem from './DeleteItem';
 import EditItem from './EditItem';
 import ItemIcon from './ItemIcon';
-import MapButton from './common/MapButton';
+import MapButton, { MapButtonType } from './common/MapButton';
 
 interface ItemListOptionsProps {
   itemSelected: DiscriminatedItem;
@@ -276,7 +276,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           testId={ITEM_LIST_OPTIONS_MAP}
           itemId={item.id}
           name={item.name}
-          type="list-item"
+          type={MapButtonType.ListItem}
           onClick={closeSheet}
         />
         <ListItem

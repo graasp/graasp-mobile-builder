@@ -15,6 +15,11 @@ import {
 } from '../../navigation/names';
 import { ItemScreenProps } from '../../navigation/types';
 
+export enum MapButtonType {
+  ListItem = 'list-item',
+  Button = 'button',
+}
+
 type Props = {
   itemId?: DiscriminatedItem['id'];
   name: string;
@@ -30,7 +35,7 @@ const MapButton = ({
   size = 24,
   name,
   color = ITEMS_TABLE_ROW_ICON_COLOR,
-  type = 'button',
+  type = MapButtonType.Button,
   testId,
   onClick,
 }: Props) => {
