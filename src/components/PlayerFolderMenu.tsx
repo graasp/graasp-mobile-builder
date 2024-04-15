@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   FlatList,
   Pressable,
@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { useReducedMotion } from 'react-native-reanimated';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import 'expo-document-picker';
@@ -21,7 +22,10 @@ import {
   PLAYER_FOLDER_MENU,
   buildPlayerFolderMenuItem,
 } from '../../e2e/constants/testIds';
-import { PLAYER_COLOR } from '../config/constants/constants';
+import {
+  BOTTOM_SNAP_POINTS_PLAYER,
+  PLAYER_COLOR,
+} from '../config/constants/constants';
 import {
   ITEM_NAVIGATOR,
   ITEM_NAVIGATOR_PLAYER_FOLDER,
@@ -41,30 +45,26 @@ interface PlayerFolderMenuProps {
 const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackPlayerFolder'>['navigation']>();
-
-  const [selectedItem, setSelectedItem] = useState<DiscriminatedItem | null>(
-    null,
-  );
   const bottomSheetMenuPlayerModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['40%', '95%'], []);
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (selectedItem) {
-      bottomSheetMenuPlayerModalRef.current?.close();
-      navigate(ITEM_NAVIGATOR, {
-        screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
-        params: {
-          origin,
-          itemId: selectedItem.id,
-          headerTitle: selectedItem.name,
-        },
-      });
-    }
-  }, [selectedItem]);
+  const navigatePlayerFolder = (item: DiscriminatedItem) => {
+    bottomSheetMenuPlayerModalRef.current?.close();
+    navigate(ITEM_NAVIGATOR, {
+      screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
+      params: {
+        origin,
+        itemId: item.id,
+        headerTitle: item.name,
+      },
+    });
+  };
 
   const renderItem = ({ item }: { item: DiscriminatedItem }) => {
     return (
-      <Pressable onPress={() => setSelectedItem(item)} style={{ flex: 2 }}>
+      <Pressable onPress={() => navigatePlayerFolder(item)} style={{ flex: 2 }}>
         <ListItem>
           <ItemIcon type={item.type} extra={item.extra} />
           <ListItem.Content style={{ flexDirection: 'row' }}>
@@ -91,11 +91,12 @@ const PlayerFolderMenu = ({ folderItems, origin }: PlayerFolderMenuProps) => {
   return (
     <>
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         containerStyle={{ flex: 1 }}
         ref={bottomSheetMenuPlayerModalRef}
         style={styles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_PLAYER}
         onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop

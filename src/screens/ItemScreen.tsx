@@ -14,6 +14,7 @@ import AppItem from '../components/AppItem';
 import Document from '../components/Document';
 import FileItem from '../components/FileItem';
 import FolderItem from '../components/FolderItem';
+import ItemUnsupported from '../components/ItemUnsupported';
 import LinkItem from '../components/LinkItem';
 import { useQueryClient } from '../context/QueryClientContext';
 import { ItemScreenProps } from '../navigation/types';
@@ -63,8 +64,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
         return <FolderItem item={item} />;
       }
       case ItemType.DOCUMENT: {
-        const content = item.extra.document.content;
-        return <Document content={content} />;
+        return <Document item={item} />;
       }
       case ItemType.APP: {
         return <AppItem item={item} context={Context.Builder} />;
@@ -74,6 +74,9 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
       }
       case ItemType.S3_FILE: {
         return <FileItem item={item} />;
+      }
+      default: {
+        return <ItemUnsupported item={item} />;
       }
     }
   };

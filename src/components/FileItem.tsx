@@ -78,6 +78,7 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
           handleShareFile={handleShareFile(mimetype)}
           mimetype={mimetype}
           isPlayerView={isPlayerView}
+          item={item}
         />
       );
     } else if (MIME_TYPES.AUDIO.includes(mimetype)) {
@@ -86,6 +87,7 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
           filePath={filePath}
           handleShareFile={handleShareFile(mimetype)}
           isPlayerView={isPlayerView}
+          item={item}
         />
       );
     } else if (MIME_TYPES.VIDEO.includes(mimetype)) {
@@ -95,6 +97,7 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
           itemId={item.id}
           mimetype={mimetype}
           isPlayerView={isPlayerView}
+          item={item}
         />
       );
     } else if (MIME_TYPES.PDF.includes(mimetype)) {
@@ -104,6 +107,7 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
           itemId={item.id}
           mimetype={mimetype}
           isPlayerView={isPlayerView}
+          item={item}
         />
       );
     }
@@ -114,6 +118,7 @@ const FileItem: FC<FileItemProps> = ({ item, isPlayerView = false }) => {
         filePath={filePath}
         handleShareFile={handleShareFile(mimetype)}
         isPlayerView={isPlayerView}
+        item={item}
       />
     );
   }

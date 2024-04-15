@@ -6,22 +6,27 @@ import { Button } from 'react-native-elements';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
+import { DiscriminatedItem } from '@graasp/sdk';
+
 import { useNavigation } from '@react-navigation/native';
 
 import { PRIMARY_COLOR } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileAudioProps {
   filePath: string;
   handleShareFile: () => Promise<void>;
   isPlayerView: boolean;
+  item: DiscriminatedItem;
 }
 
 const FileAudio: FC<FileAudioProps> = ({
   filePath,
   handleShareFile,
   isPlayerView,
+  item,
 }) => {
   const [sound, setSound] = useState<any>();
   const navigation =
@@ -47,7 +52,10 @@ const FileAudio: FC<FileAudioProps> = ({
     if (!isPlayerView) {
       navigation.setOptions({
         headerRight: () => (
-          <FileHeaderButton name="ios-share" handler={handleShareFile} />
+          <View style={styles.headerButtons}>
+            <ChatButton item={item} />
+            <FileHeaderButton name="ios-share" handler={handleShareFile} />
+          </View>
         ),
       });
     }
@@ -77,6 +85,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  headerButtons: {
+    flexDirection: 'row',
   },
 });
 

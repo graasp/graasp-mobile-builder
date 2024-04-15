@@ -86,5 +86,12 @@
   "Later": "Plus tard",
   "Add to Bookmarks": "Ajouter aux Signets",
   "Remove from Bookmarks": "Enlever des Signets",
-  "Content": "Contenu"
+  "Content": "Contenu",
+  "Type something....": "Ecrire quelque chose....",
+  "The item cannot be opened in the mobile app": "L'élément {{type}} ne peut pas être ouvert dans l'application mobile",
+  "Please add support for this item": "Envoyer une demande pour\nsupporter cet élément",
+  "ITEM_UNSUPPORTED_MESSAGE": "Le type d'élément {{type}} n'est actuellement pas supporté dans l'application mobile de Graasp. Si le support de cet élément est important, il est possible de nous en faire part en cliquant sur le bouton ci-dessous. Merci d'utiliser Graasp !",
+  "Close": "Fermer",
+  "REQUEST_ITEM_SUPPORT_ALERT_TITLE": "Demande envoyée !",
+  "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "La demande a bien été envoyée."
 }

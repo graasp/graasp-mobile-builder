@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'flex-start',
-    justifyItems: 'flex-start',
     flexDirection: 'column',
     padding: 20,
   },
@@ -108,7 +107,6 @@ const styles = StyleSheet.create({
   titleAndicon: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    justifyItems: 'center',
   },
 });
 
