@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, ListItem, Overlay, Text } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { useReducedMotion } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -65,6 +66,9 @@ const ProfileScreen = () => {
   const { navigate } =
     useNavigation<TabScreenProps<'ProfileTab'>['navigation']>();
   const bottomSheetChangeAvatarModalRef = useRef<BottomSheetModal>(null);
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
   const { data: avatarUrl } = hooks.useAvatarUrl({
     id: currentMember ? currentMember.id : undefined,
   });
@@ -333,6 +337,7 @@ const ProfileScreen = () => {
       </ScrollView>
 
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         ref={bottomSheetChangeAvatarModalRef}
         style={styles.bottomSheetModal}
         index={0}

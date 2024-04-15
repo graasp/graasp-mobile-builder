@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ListItem, Overlay } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
+import { useReducedMotion } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
@@ -52,6 +53,9 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
   }>({
     toggle: false,
   });
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -155,6 +159,7 @@ const AddItem: FC<AddItemProps> = ({ parentId, refresh }) => {
         />
       </Overlay>
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         ref={bottomSheetAddItemModalRef}
         style={styles.bottomSheetModal}
         index={0}
