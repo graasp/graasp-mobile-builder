@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from '../../config/constants/constants';
 
 interface FileHeaderButtonProps {
   name: keyof typeof MaterialIcons.glyphMap;
-  handler?: () => Promise<void>;
+  handler?: (() => Promise<void>) | (() => Promise<boolean>);
   testID?: string;
   disabled?: boolean;
 }
@@ -19,7 +19,8 @@ const FileHeaderButton = ({
 }: FileHeaderButtonProps) => {
   return (
     <Button
-      buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
+      iconContainerStyle={{ width: 25 }}
+      buttonStyle={{ backgroundColor: PRIMARY_COLOR, width: 40 }}
       disabled={disabled}
       disabledStyle={{ backgroundColor: PRIMARY_COLOR }}
       icon={<MaterialIcons name={name} color="#ffffff" size={25} />}

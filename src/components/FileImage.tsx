@@ -2,6 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import { DiscriminatedItem } from '@graasp/sdk';
+
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -13,6 +15,7 @@ import { ANALYTICS_EVENTS } from '../config/constants/constants';
 import { ItemScreenProps } from '../navigation/types';
 import { customAnalyticsEvent } from '../utils/functions/analytics';
 import { saveMedia } from '../utils/functions/media';
+import ChatButton from './common/ChatButton';
 import FileHeaderButton from './common/FileHederButton';
 
 interface FileImageProps {
@@ -20,6 +23,7 @@ interface FileImageProps {
   handleShareFile: () => Promise<void>;
   mimetype: string;
   isPlayerView: boolean;
+  item: DiscriminatedItem;
 }
 
 const FileImage: FC<FileImageProps> = ({
@@ -27,6 +31,7 @@ const FileImage: FC<FileImageProps> = ({
   handleShareFile,
   mimetype,
   isPlayerView,
+  item,
 }) => {
   const dimensions = useWindowDimensions();
   const [imageSize, setImageSize] = useState<{
@@ -52,6 +57,7 @@ const FileImage: FC<FileImageProps> = ({
       navigation.setOptions({
         headerRight: () => (
           <View style={styles.headerButtons}>
+            <ChatButton item={item} />
             <FileHeaderButton
               name="save-alt"
               handler={handleSaveImage}
@@ -97,7 +103,6 @@ const FileImage: FC<FileImageProps> = ({
 const styles = StyleSheet.create({
   headerButtons: {
     flexDirection: 'row',
-    width: 82,
   },
   imageContainer: {
     flexDirection: 'row',

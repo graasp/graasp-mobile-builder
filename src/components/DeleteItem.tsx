@@ -18,12 +18,7 @@ import { customAnalyticsEvent } from '../utils/functions/analytics';
 interface DeleteItemProps {
   itemId: UUID;
   item: DiscriminatedItem;
-  setDeleteItemModalVisible: React.Dispatch<
-    React.SetStateAction<{
-      toggle: boolean;
-      itemId: UUID | null;
-    }>
-  >;
+  setDeleteItemModalVisible: React.Dispatch<boolean>;
   bottomSheetModalRef: React.RefObject<BottomSheetModalMethods>;
   refresh: () => void;
 }
@@ -40,7 +35,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
 
   const deleteItem = async () => {
     deleteItemMutation.mutate([itemId]);
-    setDeleteItemModalVisible({ toggle: false, itemId: null });
+    setDeleteItemModalVisible(false);
     bottomSheetModalRef.current?.close();
     await customAnalyticsEvent(ANALYTICS_EVENTS.DELETE_ITEM, {
       itemType: item.type,
@@ -48,7 +43,7 @@ const DeleteItem: FC<DeleteItemProps> = ({
   };
 
   const cancelDeleteItem = () => {
-    setDeleteItemModalVisible({ toggle: false, itemId: null });
+    setDeleteItemModalVisible(false);
   };
 
   return (

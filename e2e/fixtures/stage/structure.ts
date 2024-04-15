@@ -7,8 +7,13 @@ export type TestItem = {
   children?: { id: string }[];
 };
 
+export type TestMember = {
+  name: string;
+};
+
 const fixtures: {
   items: TestItem[];
+  members: TestMember[];
 } = {
   items: [
     //  idx is important when we click on the list
@@ -35,6 +40,11 @@ const fixtures: {
       name: 'Compétences de vie',
       isPublished: true,
       children: [{ id: '8c7b78b5-55a6-4209-a4c2-471ab268d2b4' }],
+    },
+  ],
+  members: [
+    {
+      name: 'graasper',
     },
   ],
 };
