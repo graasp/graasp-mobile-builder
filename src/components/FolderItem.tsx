@@ -6,11 +6,14 @@ import { CompleteMember, Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { ITEM_LIST_OPTIONS } from '../../e2e/constants/testIds';
 import { useQueryClient } from '../context/QueryClientContext';
+import { ItemScreenProps } from '../navigation/types';
 import { checkWriteOrAdminItemMembership } from '../utils/functions/itemMembership';
 import { useFocusQuery } from '../utils/functions/useQuery';
 import ActivityIndicator from './ActivityIndicator';
 import ItemsList from './ItemsList';
+import ItemOptionsButton from './common/ItemOptionsButton';
 import PlayerButton from './common/PlayerButton';
 
 type Props = {
@@ -36,7 +39,8 @@ const FolderItem = ({ item }: Props) => {
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
   useFocusQuery(refetch);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
 
   useEffect(() => {
     if (item) {
@@ -49,6 +53,12 @@ const FolderItem = ({ item }: Props) => {
               name={item.name}
               type={item.type}
               color="white"
+            />
+            <ItemOptionsButton
+              testId={ITEM_LIST_OPTIONS}
+              refresh={refetch}
+              color="white"
+              item={item}
             />
           </View>
         ),
@@ -91,6 +101,7 @@ const styles = StyleSheet.create({
   },
   headerButtons: {
     paddingRight: 10,
+    flexDirection: 'row',
   },
 });
 

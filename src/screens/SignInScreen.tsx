@@ -41,20 +41,14 @@ const SignInScreen = ({
   const { isLoading } = useAsync(null);
   const { t } = useTranslation();
   const { hooks } = useQueryClient();
-  const { data: currentMember, refetch } = hooks.useCurrentMember();
+  const { refetch } = hooks.useCurrentMember();
 
-  // redirect to main if member is signed in
+  // redirect to main if member is signed in and necessary manual refetch because axios interceptor might have change
   useEffect(() => {
-    if (currentMember) {
+    if (userToken) {
       // todo: fix type
       // @ts-ignore
       navigate(ROOT_NAVIGATOR_MAIN);
-    }
-  }, [currentMember]);
-
-  // necessary manual refetch because axios interceptor might have change
-  useEffect(() => {
-    if (userToken) {
       refetch();
     }
   }, [userToken]);

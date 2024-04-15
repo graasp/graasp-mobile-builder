@@ -3,18 +3,20 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Button, CheckBox, Divider, Text } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useReducedMotion } from 'react-native-reanimated';
 
 import { Category, CategoryType } from '@graasp/sdk';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import CustomBackdrop from '../../components/common/CustomBackdrop';
-import { PRIMARY_COLOR } from '../../config/constants/constants';
+import {
+  BOTTOM_SNAP_POINTS_SEARCH_FILTER,
+  PRIMARY_COLOR,
+} from '../../config/constants/constants';
 import { useCategoriesTranslation } from '../../config/i18n';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { bottomSheetModalStyles } from '../../utils/styles';
-
-const snapPoints = ['90%'];
 
 type Props = {
   currentSelection: Category['id'][][];
@@ -35,6 +37,9 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<
     Category['id'][][]
   >(EMPTY_SELECTED_CATEGORIES);
+  /* Disable or enable the bottom sheet animateOnMount property depending on the reduced motion setting of the device. 
+  It solves the bug introduced in react-native-reanimated with SDK 50 and it should be fixed in @gorhom/bottom-sheet v5 */
+  const reducedMotion = useReducedMotion();
 
   const handlePresentModalPress = () => {
     bottomSheetModalRef.current?.present();
@@ -97,10 +102,11 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
       />
       <Divider />
       <BottomSheetModal
+        animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
         style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
-        snapPoints={snapPoints}
+        snapPoints={BOTTOM_SNAP_POINTS_SEARCH_FILTER}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop
             animatedIndex={animatedIndex}
@@ -151,7 +157,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
               );
 
               return (
-                <>
+                <View key={idx}>
                   <Text style={{ fontSize: 16 }}>
                     {translateCategories(ct)}
                   </Text>
@@ -172,7 +178,7 @@ const SearchFilterButton = ({ currentSelection, onSave }: Props) => {
                     />
                   ))}
                   <Divider style={{ marginVertical: 15 }} />
-                </>
+                </View>
               );
             })}
           </View>

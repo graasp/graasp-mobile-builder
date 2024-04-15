@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+
+import * as SplashScreen from 'expo-splash-screen';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SignInScreen from '../screens/SignInScreen';
@@ -13,6 +17,15 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   const screenOptions = { headerShown: false };
+
+  useEffect(() => {
+    // Hide splash screen once RootNavigator is loaded
+    const hideSplashScreen = async () => {
+      await SplashScreen.hideAsync();
+    };
+
+    hideSplashScreen().catch((error) => console.log(error));
+  }, []);
 
   return (
     <RootStack.Navigator id={ROOT_NAVIGATOR} screenOptions={screenOptions}>

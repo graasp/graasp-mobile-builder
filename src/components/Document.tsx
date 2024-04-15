@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,14 +8,35 @@ import {
 import RenderHtml from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { DocumentItemType } from '@graasp/sdk';
+
+import { useNavigation } from '@react-navigation/native';
+
 import { TEXT_ALIGNMENT } from '../config/constants/constants';
+import { ItemScreenProps } from '../navigation/types';
+import ChatButton from './common/ChatButton';
 
 interface DocumentProps {
-  content: any;
+  item: DocumentItemType;
+  isPlayerView?: boolean;
 }
 
-const Document: FC<DocumentProps> = ({ content }) => {
+const Document: FC<DocumentProps> = ({ item, isPlayerView = false }) => {
   const { width } = useWindowDimensions();
+  const navigation =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
+
+  useEffect(() => {
+    if (!isPlayerView) {
+      navigation.setOptions({
+        headerRight: () => (
+          <View style={styles.headerButtons}>
+            <ChatButton item={item} />
+          </View>
+        ),
+      });
+    }
+  }, [isPlayerView]);
 
   const classStyles = {
     'ql-align-right': { textAlign: TEXT_ALIGNMENT.RIGHT },
@@ -31,7 +52,7 @@ const Document: FC<DocumentProps> = ({ content }) => {
           <RenderHtml
             classesStyles={classStyles}
             contentWidth={width}
-            source={{ html: content }}
+            source={{ html: item.extra.document?.content }}
           />
         </ScrollView>
       </View>
@@ -43,6 +64,9 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: 20,
     marginRight: 20,
+  },
+  headerButtons: {
+    flexDirection: 'row',
   },
 });
 
