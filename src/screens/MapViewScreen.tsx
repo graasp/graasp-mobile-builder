@@ -16,13 +16,19 @@ const MapViewScreen = () => {
   const route = useRoute<ItemScreenProps<'ItemStackPlayerFolder'>['route']>();
   const { itemId } = route.params;
 
-  const url = new URL(`${API_HOST}/m/auth/web?token=${userToken}`);
   const redirectionUrl = new URL(`${BUILDER_HOST}/map`);
-
   if (itemId) {
     redirectionUrl.searchParams.set('parentId', itemId);
   }
-  url.searchParams.set('url', redirectionUrl.toString());
+
+  // go to map
+  let url = redirectionUrl;
+
+  // transform usertoken to cookie before accessing to map if user is signed in
+  if (userToken) {
+    url = new URL(`${API_HOST}/m/auth/web?token=${userToken}`);
+    url.searchParams.set('url', redirectionUrl.toString());
+  }
 
   return (
     <WebView
