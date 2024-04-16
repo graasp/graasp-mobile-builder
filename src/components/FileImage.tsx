@@ -48,7 +48,9 @@ const FileImage: FC<FileImageProps> = ({
       (width, height) => {
         setImageSize({ width, height });
       },
-      (error) => console.error(error),
+      (error) => {
+        console.error('error getting the image size', error);
+      },
     );
   }, []);
 
