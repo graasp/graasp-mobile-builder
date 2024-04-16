@@ -13,8 +13,8 @@
   "Share": "Partager",
   "Home": "Accueil",
   "Profile": "Profil",
-  "Shared": "Partagés",
   "Shared Items": "Éléments Partagés",
+  "Shared": "Partagés",
   "Type": "Type",
   "Size": "Taille",
   "Creator": "Créateur",
@@ -70,6 +70,8 @@
   "Local Bookmarks": "Signets Locaux",
   "My Items": "Éléments",
   "url": "lien",
+  "No bookmarks were found": "Aucun signet n'a été trouvé",
+  "Local Bookmarks are not synced with an account.": "Les signets locaux ne sont pas synchronisés avec un compte.",
   "Library": "Bibliothèque",
   "Last Update": "Dernière Modification",
   "FILTERS_NB": "Filtres ({{nb}})",
@@ -77,8 +79,6 @@
   "Filters": "Filtres",
   "Apply": "Appliquer",
   "Clear": "Réinitialiser",
-  "No bookmarks were found": "Aucun signet n'a été trouvé",
-  "Local Bookmarks are not synced with an account.": "Les signets locaux ne sont pas synchronisés avec un compte.",
   "Submit": "Valider",
   "link": "lien",
   "I already have an account": "J'ai déjà un compte",
@@ -93,5 +93,7 @@
   "ITEM_UNSUPPORTED_MESSAGE": "Le type d'élément {{type}} n'est actuellement pas supporté dans l'application mobile de Graasp. Si le support de cet élément est important, il est possible de nous en faire part en cliquant sur le bouton ci-dessous. Merci d'utiliser Graasp !",
   "Close": "Fermer",
   "REQUEST_ITEM_SUPPORT_ALERT_TITLE": "Demande envoyée !",
-  "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "La demande a bien été envoyée."
+  "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "La demande a bien été envoyée.",
+  "Open Chatbox": "Ouvrir la discussion",
+  "Open Map": "Ouvrir la Carte"
 }
