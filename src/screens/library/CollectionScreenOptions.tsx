@@ -1,5 +1,4 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -13,7 +12,14 @@ import { useBookmark } from '../../hooks/bookmark';
 const CollectionScreenOptions = ({ item }: { item: DiscriminatedItem }) => {
   const { isBookmarked, handleBookmarkPress } = useBookmark({ item });
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <PlayerButton
         size={28}
         itemId={item.id}
@@ -33,11 +39,3 @@ const CollectionScreenOptions = ({ item }: { item: DiscriminatedItem }) => {
 };
 
 export default CollectionScreenOptions;
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-});

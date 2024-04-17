@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import {
   Dimensions,
+  Platform,
   StyleSheet,
   View,
   useWindowDimensions,
@@ -75,6 +76,16 @@ const AppItem = ({ item, context }: AppItemProps) => {
     itemMemberships?.map((im) => im.permission),
   );
 
+  // debug code does not work on android
+  let debugCode = '';
+  if (Platform.OS === 'ios') {
+    debugCode = `
+      console.log = window.ReactNativeWebView.postMessage;
+      console.debug = window.ReactNativeWebView.postMessage;
+      console.error = window.ReactNativeWebView.postMessage;
+    `;
+  }
+
   return (
     <WebView
       ref={(r) => (ref.current = r)}
@@ -92,9 +103,7 @@ const AppItem = ({ item, context }: AppItemProps) => {
       }}
       injectedJavaScript={`(function() {
                 window.parent = window.ReactNativeWebView;
-                console.log = window.ReactNativeWebView.postMessage;
-                console.debug = window.ReactNativeWebView.postMessage;
-                console.error = window.ReactNativeWebView.postMessage;
+                ${debugCode}
             })();`}
       onMessage={(event) => {
         console.log('raw message:', event.nativeEvent.data);

@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { Image } from 'react-native';
+import { SvgUri } from 'react-native-svg';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -23,12 +23,22 @@ interface ItemIconProps {
 }
 
 // TODO: use graasp-ui
-const ItemIcon: FC<ItemIconProps> = ({ type, extra, size = 20, style }) => {
+const ItemIcon = ({
+  type,
+  extra,
+  size = 20,
+  style,
+}: ItemIconProps): JSX.Element => {
   if (type === ItemType.LINK) {
     const icon = getEmbeddedLinkExtra(extra as EmbeddedLinkItemExtra)
       ?.icons?.[0];
 
     if (icon) {
+      const isSvg = new RegExp(/\.svg$/i);
+      if (isSvg.test(icon)) {
+        return <SvgUri width={20} height={20} uri={icon} />;
+      }
+
       return <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />;
     }
   }
