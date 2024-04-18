@@ -90,7 +90,7 @@ Notice that major changes in the app need to build a new entire binary file. For
 ### Extra configuration for Android local build on Mac
 
 - Install Android Studio
-- Run `brew install openjdk@11`
+- Run `brew install openjdk@17`
 - Run `export ANDROID_HOME=/Users/<username>/Library/Android/sdk/`
 - Add the following line in your `.env.local` file.
 
