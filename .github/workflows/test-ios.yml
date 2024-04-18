@@ -60,7 +60,7 @@ jobs:
       - name: Prebuild
         env:
           GOOGLE_SERVICES_INFO_PLIST: tmp/GoogleService-Info.plist
-        run: npx expo prebuild --platform ios
+        run: npx expo prebuild --platform ios --assets-dest ios
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
