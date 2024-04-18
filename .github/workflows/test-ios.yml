@@ -14,7 +14,7 @@ jobs:
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          mkdir tmp && echo $DATA | base64 --decode > tmp/GoogleService-Info.plist
+          mkdir tmp && echo $DATA | base64 --decode > ${{ github.workspace }}/tmp/GoogleService-Info.plist
 
       - name: checkout
         uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
 
       - name: Prebuild
         env:
-          GOOGLE_SERVICES_INFO_PLIST: graasp-mobile-builder/tmp/GoogleService-Info.plist
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/tmp/GoogleService-Info.plist
         run: npx expo prebuild --platform ios
 
       # - name: Detox rebuild framework cache
