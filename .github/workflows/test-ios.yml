@@ -57,7 +57,7 @@ jobs:
           version: 1.14.3
 
       - name: create folder
-        run: mkdir -p ios/GraaspBuilder
+        run: mkdir -p ${{ github.workspace }}/ios/GraaspBuilder
 
       - name: Prebuild
         env:
