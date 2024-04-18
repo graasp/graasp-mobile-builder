@@ -43,7 +43,7 @@ android
 
 # API keys and secrets
 google-services.json
-GoogleService-Info.plist
+# GoogleService-Info.plist
 
 # tests
 artifacts/
