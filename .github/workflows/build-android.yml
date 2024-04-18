@@ -1,4 +1,4 @@
-name: Generate build for ios on EAS
+name: Generate builds for android on EAS
 on: [push]
 
 jobs:
