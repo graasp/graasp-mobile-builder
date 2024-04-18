@@ -24,4 +24,4 @@ jobs:
         run: yarn
 
       - name: 🚀 Build app
-        run: eas build --non-interactive
+        run: eas build --non-interactive --platform ios
