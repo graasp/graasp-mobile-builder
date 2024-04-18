@@ -17,6 +17,7 @@ jobs:
         run: |
           mkdir tmp && echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
 
+      - run: chmod 777 ${{ github.workspace }}/GoogleService-Info.plist
       - run: find $PWD -type f | grep "GoogleService"
 
       - name: checkout
@@ -59,10 +60,10 @@ jobs:
         with:
           version: 1.14.3
 
-      # - name: Prebuild
-      #   env:
-      #     GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
-      #   run: yarn prebuild:test:ios
+      - name: Prebuild
+        env:
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
+        run: yarn prebuild:test:ios
 
       - name: Detox rebuild framework cache
         run: yarn detox rebuild-framework-cache
