@@ -9,12 +9,15 @@ jobs:
 
     steps:
       - run: echo ${{ github.workspace }}
+      - run: pwd
 
       - name: create Google Services File
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          mkdir tmp && echo $DATA | base64 --decode > ${{ github.workspace }}/tmp/GoogleService-Info.plist
+          mkdir tmp && echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
+
+      - run: find $PWD -type f | grep "GoogleService"
 
       - name: checkout
         uses: actions/checkout@v4
@@ -22,8 +25,8 @@ jobs:
       - name: set up node
         uses: actions/setup-node@v4
 
-      # - name: Yarn Install and Cache
-      #   uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
+      - name: Yarn Install and Cache
+        uses: graasp/graasp-deploy/.github/actions/yarn-install-and-cache@v1
 
       - name: Install Expo
         run: yarn add expo
@@ -56,13 +59,10 @@ jobs:
         with:
           version: 1.14.3
 
-      - name: create folder
-        run: mkdir -p ${{ github.workspace }}/ios/GraaspBuilder
-
       - name: Prebuild
         env:
-          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/tmp/GoogleService-Info.plist
-        run: npx expo prebuild --platform ios
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
+        run: yarn prebuild:test:ios
 
       # - name: Detox rebuild framework cache
       #   run: yarn detox rebuild-framework-cache
