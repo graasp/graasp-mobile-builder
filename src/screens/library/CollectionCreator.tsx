@@ -29,9 +29,14 @@ function CollectionCreator({ item }: Props) {
         size="small"
         rounded
         title={creatorName[0]?.toUpperCase()}
-        source={{
-          uri: avatar ?? 'broken',
-        }}
+        containerStyle={{ backgroundColor: 'lightgrey' }}
+        {...(avatar
+          ? {
+              source: {
+                uri: avatar,
+              },
+            }
+          : {})}
       />
       <Text>{creatorName}</Text>
     </View>

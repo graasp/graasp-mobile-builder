@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import ActivityIndicator from '../../components/ActivityIndicator';
 import { DEFAULT_LOCALE } from '../../config/constants/constants';
+import i18n from '../../config/i18n';
 import { useQueryClient } from '../../context/QueryClientContext';
 import { LibraryScreenProp } from '../../navigation/types';
 import CollectionContent from './CollectionContent';
@@ -26,7 +27,7 @@ const CollectionScreen = ({
     params: { itemId },
   },
 }: LibraryScreenProp<'CollectionStack'>) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { width, height } = useWindowDimensions();
   const { hooks } = useQueryClient();
   const headerHeight = useHeaderHeight();
@@ -65,15 +66,15 @@ const CollectionScreen = ({
             <CollectionContent item={item} />
             <Divider style={styles.divider} />
             <Text>
-              <Text style={{ fontWeight: 'bold' }}>{t('Creation Date')}:</Text>
+              <Text style={{ fontWeight: 'bold' }}>{t('Creation Date')}: </Text>
               {formatDate(item.createdAt, {
-                locale: i18n.language ?? DEFAULT_LOCALE,
+                locale: i18n.language || DEFAULT_LOCALE,
               })}
             </Text>
             <Text>
-              <Text style={{ fontWeight: 'bold' }}>{t('Last Update')}:</Text>
+              <Text style={{ fontWeight: 'bold' }}>{t('Last Update')}: </Text>
               {formatDate(item.updatedAt, {
-                locale: i18n.language ?? DEFAULT_LOCALE,
+                locale: i18n.language || DEFAULT_LOCALE,
               })}
             </Text>
           </View>
