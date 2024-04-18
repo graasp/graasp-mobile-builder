@@ -24,6 +24,7 @@
     "check": "yarn prettier:check && yarn lint && yarn build:ts",
     "eas-build-pre-install": "./eas-hooks/eas-build-pre-install.sh",
     "eas-build-on-success": "./eas-hooks/eas-build-on-success.sh",
+    "eas:init": "npx eas-cli init",
     "prebuild:local": "env-cmd -f .env.test npx expo prebuild --platform ios",
     "prebuild:test:ios": "npx expo prebuild --platform ios",
     "prebuild:test:android": "npx expo prebuild --platform android",

@@ -1,5 +1,7 @@
 name: Generate builds on EAS
-on: [push]
+on:
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   build:

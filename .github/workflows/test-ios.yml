@@ -59,13 +59,13 @@ jobs:
         with:
           version: 1.14.3
 
-      - name: Prebuild
-        env:
-          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
-        run: yarn prebuild:test:ios
+      # - name: Prebuild
+      #   env:
+      #     GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
+      #   run: yarn prebuild:test:ios
 
-      # - name: Detox rebuild framework cache
-      #   run: yarn detox rebuild-framework-cache
+      - name: Detox rebuild framework cache
+        run: yarn detox rebuild-framework-cache
 
       - name: Cache Detox build
         id: cache-detox-build
