@@ -12,7 +12,7 @@ jobs:
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
         run: |
-          echo $DATA | base64 --decode > ./GoogleService-Info.plist
+          echo $DATA | base64 --decode > tmp/GoogleService-Info.plist
 
       - name: checkout
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
 
       - name: Prebuild
         env:
-          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: /Users/runner/work/graasp-mobile-builder/GoogleService-Info.plist
+          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: tmp/GoogleService-Info.plist
         run: npx expo prebuild --platform ios
 
       # - name: Detox rebuild framework cache
@@ -81,7 +81,7 @@ jobs:
           EXPO_PUBLIC_API_HOST: https://api.stage.graasp.org
           EXPO_PUBLIC_TEST_REFRESH_TOKEN: ${{ secrets.EXPO_PUBLIC_TEST_REFRESH_TOKEN }}
           RN_SRC_EXT: e2e.tsx
-          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: ./GoogleService-Info.plist
+          EXPO_PUBLIC_GOOGLE_SERVICE_INFO_PLIST: tmp/GoogleService-Info.plist
         run: yarn build:test:ios
 
       - name: Detox test
