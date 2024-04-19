@@ -31,7 +31,11 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: graasp/graasp-mobile-builder
           event-type: build-new-version
-          client-payload: ${{steps.set-tag.outputs.json}}
+          client-payload: |-
+            {
+              "tag": "${{ steps.release.outputs.tag_name }}",
+              "release_created": "true"
+            }
 
       - name: Auto Tag
         uses: graasp/graasp-deploy/.github/actions/auto-tag-after-release@v1
