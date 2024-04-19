@@ -14,6 +14,12 @@ jobs:
           node-version: 18.x
           cache: yarn
 
+      - name: create Google Services File
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+        run: |
+          echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
+
       - name: 🏗 Setup EAS
         uses: expo/expo-github-action@v8
         with:
@@ -24,6 +30,8 @@ jobs:
         run: yarn
 
       - name: 🚀 Build app
+        env:
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
         run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/app-release.ipa
 
       - name: Upload IPA artifact
