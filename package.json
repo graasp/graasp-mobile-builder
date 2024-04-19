@@ -31,6 +31,7 @@
     "build:test:ios": "detox build --configuration ios.debug",
     "build:test:android": "detox build --configuration android.debug",
     "test:ios": "env-cmd -f ./.env.test detox test --configuration ios.debug",
+    "test:ios:ci": "detox test --configuration ios.debug",
     "test:android": "env-cmd -f ./.env.test detox test --configuration android.debug",
     "doctor": "npx expo-doctor"
   },

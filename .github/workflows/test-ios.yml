@@ -95,7 +95,13 @@ jobs:
         run: yarn build:test:ios
 
       - name: Detox test
-        run: yarn test:ios --cleanup --headless --record-logs all
+        env:
+          EXPO_PUBLIC_DETOX_MOCKED: true
+          EXPO_PUBLIC_AUTH_HOST: https://auth.stage.graasp.org
+          EXPO_PUBLIC_API_HOST: https://api.stage.graasp.org
+          EXPO_PUBLIC_TEST_REFRESH_TOKEN: ${{ secrets.EXPO_PUBLIC_TEST_REFRESH_TOKEN }}
+          RN_SRC_EXT: e2e.tsx
+        run: yarn test:ios:ci --cleanup --headless --record-logs all
 
       - name: Upload artifacts
         if: failure()

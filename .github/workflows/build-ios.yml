@@ -6,12 +6,11 @@ jobs:
     runs-on: macos-13
     steps:
       - name: 🏗 Setup repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🏗 Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18.x
           cache: yarn
 
       - uses: maxim-lobanov/setup-xcode@v1
@@ -36,10 +35,10 @@ jobs:
       - name: 🚀 Build app
         env:
           GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
-        run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/app-release.ipa
+        run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/ios-release.ipa
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-release
-          path: ${{ github.workspace }}/app-release.ipa
+          name: ios-release
+          path: ${{ github.workspace }}/ios-release.ipa
