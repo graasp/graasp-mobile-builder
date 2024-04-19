@@ -1,0 +1,29 @@
+name: Generate build for android on EAS
+on:
+  push:
+    tags:
+      - '*' # Push events to every tag not containing /
+
+jobs:
+  build-eas-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          cache: yarn
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: yarn
+
+      - name: 🚀 Build app
+        run: eas build --non-interactive --platform android
