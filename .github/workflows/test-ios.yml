@@ -5,7 +5,7 @@ on: [push]
 
 jobs:
   detox-ios:
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
       # - run: echo ${{ github.workspace }}
