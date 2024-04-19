@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.9](https://github.com/graasp/graasp-mobile-builder/compare/v1.0.0...v1.1.9) (2024-04-19)
+
+
+### Features
+
+* fix app json ([972c200](https://github.com/graasp/graasp-mobile-builder/commit/972c200dcf0f4195a78884983341216bcc26b61e))
+* test ([79421eb](https://github.com/graasp/graasp-mobile-builder/commit/79421eb6354e6829b5ff8474955148193461e65a))
+* test ([dc6a59b](https://github.com/graasp/graasp-mobile-builder/commit/dc6a59b5cae2f82884a3a39faac9432d4bf95936))
+
+
+### Miscellaneous Chores
+
+* release 1.1.9 ([8ace133](https://github.com/graasp/graasp-mobile-builder/commit/8ace13351678c6be56ca0b211fed5fe7d28dc365))
+
 ## 1.0.0 (2024-04-19)
 
 
