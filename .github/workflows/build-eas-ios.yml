@@ -2,7 +2,7 @@ name: Generate build for ios on EAS
 on:
   push:
     tags:
-      - '*' # Push events to every tag not containing /
+      - v**
 
 jobs:
   build-eas-ios:
