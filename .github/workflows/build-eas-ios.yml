@@ -1,8 +1,10 @@
 name: Generate build for ios on EAS
+
+# Controls when the action will run
 on:
-  push:
-    tags:
-      - '*'
+  # Triggers the workflow on repository_dispatch events but only for the build-new-version event
+  repository_dispatch:
+    types: [build-new-version]
 
 jobs:
   build-eas-ios:
