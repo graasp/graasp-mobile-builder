@@ -1,11 +1,11 @@
-name: Generate build for android on EAS
+name: Generate build for ios on EAS
 on:
   push:
     tags:
       - '*' # Push events to every tag not containing /
 
 jobs:
-  build-eas-android:
+  build-eas-ios:
     runs-on: ubuntu-latest
     steps:
       - name: 🏗 Setup repo
@@ -26,4 +26,4 @@ jobs:
         run: yarn
 
       - name: 🚀 Build app
-        run: eas build --non-interactive --platform android
+        run: eas build --non-interactive --platform ios
