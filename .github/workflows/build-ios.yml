@@ -14,6 +14,10 @@ jobs:
           node-version: 18.x
           cache: yarn
 
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3.1'
+
       - name: create Google Services File
         env:
           DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
