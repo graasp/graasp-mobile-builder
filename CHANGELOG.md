@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/graasp/graasp-mobile-builder/compare/v1.1.9...v1.1.10) (2024-04-19)
+
+
+### Miscellaneous Chores
+
+* release 1.1.10 ([be5d0c3](https://github.com/graasp/graasp-mobile-builder/commit/be5d0c317af64e92feaec2fb1c26476f9fef86af))
+
 ## [1.1.9](https://github.com/graasp/graasp-mobile-builder/compare/v1.0.0...v1.1.9) (2024-04-19)
 
 
