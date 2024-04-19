@@ -2,7 +2,7 @@ name: Generate build for ios on EAS
 on:
   push:
     tags:
-      - v**
+      - '*'
 
 jobs:
   build-eas-ios:

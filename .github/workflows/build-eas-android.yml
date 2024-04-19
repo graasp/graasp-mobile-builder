@@ -2,7 +2,7 @@ name: Generate build for android on EAS
 on:
   push:
     tags:
-      - v**
+      - 'v*'
 
 jobs:
   build-eas-android:
