@@ -8,17 +8,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - run: echo ${{ github.workspace }}
-      - run: pwd
+      # - run: echo ${{ github.workspace }}
+      # - run: pwd
 
-      - name: create Google Services File
-        env:
-          DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
-        run: |
-          mkdir tmp && echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
+      # - name: create Google Services File
+      #   env:
+      #     DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+      #   run: |
+      #     echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
 
-      - run: chmod 777 ${{ github.workspace }}/GoogleService-Info.plist
-      - run: find $PWD -type f | grep "GoogleService"
+      # - run: chmod 777 ${{ github.workspace }}/GoogleService-Info.plist
+      # - run: find $PWD -type f | grep "GoogleService"
 
       - name: checkout
         uses: actions/checkout@v4
@@ -62,8 +62,12 @@ jobs:
 
       - name: Prebuild
         env:
-          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/e2e/mock-google-service-info.plist
         run: yarn prebuild:test:ios
+
+      - name: Install CocoaPods
+        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: cd ios ; pod install ; cd -
 
       - name: Detox rebuild framework cache
         run: yarn detox rebuild-framework-cache

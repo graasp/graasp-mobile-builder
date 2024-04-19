@@ -66,7 +66,7 @@ module.exports = {
     supportsTablet: true,
     bundleIdentifier: 'org.graasp.mobile',
     buildNumber: '8',
-    googleServicesFile: './e2e/mock-google-service-info.plist',
+    googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST,
     associatedDomains: ['applinks:mobile.graasp.org'],
     infoPlist: {
       NSCameraUsageDescription:

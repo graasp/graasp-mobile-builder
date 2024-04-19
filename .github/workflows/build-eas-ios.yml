@@ -1,7 +1,5 @@
-name: Generate builds for android locally
-on:
-  push:
-    - main
+name: Generate build for ios on EAS
+on: [push]
 
 jobs:
   build:
@@ -26,4 +24,4 @@ jobs:
         run: yarn
 
       - name: 🚀 Build app
-        run: eas build --non-interactive --platform android --local -e production
+        run: eas build --non-interactive --platform ios
