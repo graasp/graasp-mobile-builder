@@ -38,6 +38,7 @@ jobs:
           ruby-version: '2.7'
           bundler-cache: true
 
+      # move this step after prebuild so it's useful?
       - name: Cache CocoaPods
         id: cache-cocoapods
         uses: actions/cache@v3
@@ -47,6 +48,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
+      # necessary before prebuild?
+      # we also install after prebuild
       - name: Install Cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
@@ -69,6 +72,7 @@ jobs:
         run: yarn prebuild:test:ios
 
       # this step is important to correctly install dependencies with hermes
+      # still necessary?
       - name: Install CocoaPods
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: cd ios ; rm .xcode.env.local ; pod install ; cd -
@@ -94,6 +98,7 @@ jobs:
           RN_SRC_EXT: e2e.tsx
         run: yarn build:test:ios
 
+      # todo: set correct env secrets
       - name: Detox test
         env:
           EXPO_PUBLIC_DETOX_MOCKED: true

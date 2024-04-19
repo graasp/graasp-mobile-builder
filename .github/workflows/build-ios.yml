@@ -38,7 +38,7 @@ jobs:
         run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/ios-release.ipa
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ios-release
           path: ${{ github.workspace }}/ios-release.ipa
