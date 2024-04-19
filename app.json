@@ -22,7 +22,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "org.graasp.mobile",
       "buildNumber": "8",
-      "googleServicesFile": "./GoogleService-Info.plist",
       "associatedDomains": ["applinks:mobile.graasp.org"],
       "infoPlist": {
         "NSCameraUsageDescription": "Allow access to the camera to take and upload photos to Graasp. These photos can also be used to update your profile picture.",
@@ -39,7 +38,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "org.graasp.mobile",
-      "googleServicesFile": "./google-services.json",
       "intentFilters": [
         {
           "action": "VIEW",
