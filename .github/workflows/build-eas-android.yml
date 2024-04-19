@@ -1,7 +1,8 @@
 name: Generate build for android on EAS
 on:
   push:
-    - main
+    branches:
+      - main
 
 jobs:
   build:

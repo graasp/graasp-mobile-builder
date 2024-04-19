@@ -1,7 +1,8 @@
 name: Generate build for ios on EAS
 on:
   push:
-    - main
+    branches:
+      - main
 
 jobs:
   build:

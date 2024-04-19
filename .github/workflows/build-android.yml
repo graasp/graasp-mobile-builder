@@ -1,7 +1,8 @@
 name: Generate builds for android locally
 on:
   push:
-    - main
+    branches:
+      - main
 
 jobs:
   build:
