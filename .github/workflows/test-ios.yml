@@ -8,18 +8,6 @@ jobs:
     runs-on: macos-13
 
     steps:
-      # - run: echo ${{ github.workspace }}
-      # - run: pwd
-
-      # - name: create Google Services File
-      #   env:
-      #     DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
-      #   run: |
-      #     echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
-
-      # - run: chmod 777 ${{ github.workspace }}/GoogleService-Info.plist
-      # - run: find $PWD -type f | grep "GoogleService"
-
       - name: checkout
         uses: actions/checkout@v4
 
@@ -64,11 +52,23 @@ jobs:
         with:
           version: 1.14.3
 
+      - name: create Google Services File
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+        run: |
+          echo $DATA | base64 --decode > ${{ github.workspace }}/GoogleService-Info.plist
+
       - name: Prebuild
         env:
-          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/e2e/mock-google-service-info.plist
+          EXPO_PUBLIC_DETOX_MOCKED: true
+          EXPO_PUBLIC_AUTH_HOST: https://auth.stage.graasp.org
+          EXPO_PUBLIC_API_HOST: https://api.stage.graasp.org
+          EXPO_PUBLIC_TEST_REFRESH_TOKEN: ${{ secrets.EXPO_PUBLIC_TEST_REFRESH_TOKEN }}
+          RN_SRC_EXT: e2e.tsx
+          GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
         run: yarn prebuild:test:ios
 
+      # this step is important to correctly install dependencies with hermes
       - name: Install CocoaPods
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: cd ios ; rm .xcode.env.local ; pod install ; cd -
