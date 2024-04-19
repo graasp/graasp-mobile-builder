@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.13](https://github.com/graasp/graasp-mobile-builder/compare/v1.1.11...v1.1.13) (2024-04-19)
+
+
+### Features
+
+* build trigger ([3654e3b](https://github.com/graasp/graasp-mobile-builder/commit/3654e3b7cd0d65176ba43963b97dcf304d838afe))
+* fix workflows ([244ec48](https://github.com/graasp/graasp-mobile-builder/commit/244ec482590382e2bf0243cfa7bec96cb9d65887))
+
+
+### Miscellaneous Chores
+
+* release 1.1.12 ([02186a3](https://github.com/graasp/graasp-mobile-builder/commit/02186a3ebf5a95c04b16dee7c6ef177a36739c11))
+* release 1.1.13 ([3fb09de](https://github.com/graasp/graasp-mobile-builder/commit/3fb09dee1b30fff74f4ea705a31fd86ec6bbd8da))
+
 ## [1.1.11](https://github.com/graasp/graasp-mobile-builder/compare/v1.1.10...v1.1.11) (2024-04-19)
 
 
