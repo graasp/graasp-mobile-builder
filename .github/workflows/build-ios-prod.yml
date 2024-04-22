@@ -46,7 +46,7 @@ jobs:
           EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
           EXPO_PUBLIC_SENTRY_DNS: ${{ secrets.SENTRY_DSN }}
           EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
-          EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.VITE_SENTRY_PROJECT }}
+          EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
           EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
           GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
         run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/ios-release.ipa
