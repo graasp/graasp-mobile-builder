@@ -76,11 +76,11 @@ jobs:
           EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
         with:
           name: android-release
-          path: ${{ github.workspace }}/android-release.${{ EXTENSION }}
+          path: ${{ github.workspace }}/android-release.$EXTENSION
 
       - name: Upload artifact to Release
         if: ${{ github.event.client_payload.release_created == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
           EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
-        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.${{ EXTENSION }}
+        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.$EXTENSION
