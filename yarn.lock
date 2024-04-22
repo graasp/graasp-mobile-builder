@@ -8039,12 +8039,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-av@npm:~13.10.5":
-  version: 13.10.5
-  resolution: "expo-av@npm:13.10.5"
+"expo-av@npm:~13.10.6":
+  version: 13.10.6
+  resolution: "expo-av@npm:13.10.6"
   peerDependencies:
     expo: "*"
-  checksum: 50513f4a9fcf85224c3991d046cf71b7b2503801c3bef978b3eeec3463953cf38a84e2c5ef5b43f260ebba9ad9fda7e691d3d3ac14cc7eff49f963b3246b24b9
+  checksum: 13eb4873e3de1d910f83e1e84e8ddb1c68c1080707292d923c7d6ad82be3dc0a1fee0000dd9e850beb19036419d050a9b53508c80f937944ef3d6b26efc199e0
   languageName: node
   linkType: hard
 
@@ -9165,7 +9165,7 @@ __metadata:
     eslint-plugin-jsx-a11y: "npm:^6.8.0"
     expo: "npm:~50.0.17"
     expo-asset: "npm:~9.0.2"
-    expo-av: "npm:~13.10.5"
+    expo-av: "npm:~13.10.6"
     expo-barcode-scanner: "npm:~12.9.3"
     expo-build-properties: "npm:~0.11.1"
     expo-camera: "npm:~14.1.3"
