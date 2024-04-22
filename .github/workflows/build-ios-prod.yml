@@ -56,3 +56,9 @@ jobs:
         with:
           name: ios-release
           path: ${{ github.workspace }}/ios-release.ipa
+
+      - name: Upload artifact to Release
+        if: ${{ github.event.client_payload.release_created == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/ios-release.ipa
