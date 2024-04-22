@@ -1,4 +1,4 @@
-name: Generate production build for android locally
+name: Build production android app locally
 
 # Controls when the action will run
 on:
@@ -56,15 +56,15 @@ jobs:
 
       - name: 🚀 Build app
         env:
-          EXPO_PUBLIC_API_HOST: https://api.graasp.org
-          EXPO_PUBLIC_AUTH_HOST: https://auth.graasp.org
-          EXPO_PUBLIC_BUILDER_HOST: https://builder.graasp.org
-          EXPO_PUBLIC_LIBRARY_HOST: https://library.graasp.org
-          EXPO_PUBLIC_PLAYER_HOST: https://player.graasp.org
-          EXPO_PUBLIC_SENTRY_DNS:
-          EXPO_PUBLIC_SENTRY_ORG: graasp
-          EXPO_PUBLIC_SENTRY_PROJECT: graasp-mobile
-          EXPO_PUBLIC_SHORT_HOST: https://go.graasp.org
+          EXPO_PUBLIC_API_HOST: ${{ vars.API_HOST }}
+          EXPO_PUBLIC_AUTH_HOST: ${{ vars.AUTH_HOST }}
+          EXPO_PUBLIC_BUILDER_HOST: ${{ vars.BUILDER_HOST }}
+          EXPO_PUBLIC_LIBRARY_HOST: ${{ vars.LIBRARY_HOST }}
+          EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
+          EXPO_PUBLIC_SENTRY_DNS: ${{ secrets.SENTRY_DSN }}
+          EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.VITE_SENTRY_PROJECT }}
+          EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
           GOOGLE_SERVICES_JSON: ${{ github.workspace }}/google-services.json
           ENVIRONMENT: ${{ inputs.environment || 'production' }}
           EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}

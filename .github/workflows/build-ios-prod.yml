@@ -1,4 +1,4 @@
-name: Generate production build for ios locally
+name: Build production ios app locally
 
 # Controls when the action will run
 on:
@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: macos-13
+    environment: production
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
@@ -38,6 +39,15 @@ jobs:
 
       - name: 🚀 Build app
         env:
+          EXPO_PUBLIC_API_HOST: ${{ vars.API_HOST }}
+          EXPO_PUBLIC_AUTH_HOST: ${{ vars.AUTH_HOST }}
+          EXPO_PUBLIC_BUILDER_HOST: ${{ vars.BUILDER_HOST }}
+          EXPO_PUBLIC_LIBRARY_HOST: ${{ vars.LIBRARY_HOST }}
+          EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
+          EXPO_PUBLIC_SENTRY_DNS: ${{ secrets.SENTRY_DSN }}
+          EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.VITE_SENTRY_PROJECT }}
+          EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
           GOOGLE_SERVICES_INFO_PLIST: ${{ github.workspace }}/GoogleService-Info.plist
         run: eas build --non-interactive --platform ios --local -e production --output ${{ github.workspace }}/ios-release.ipa
 
