@@ -1,0 +1,86 @@
+name: Generate production build for android locally
+
+# Controls when the action will run
+on:
+  # Triggers the workflow on repository_dispatch events but only for the build-new-version event
+  repository_dispatch:
+    types: [build-new-version]
+
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'environment'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview # build an apk given eas.json
+          - production # build an abb
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - run: echo ${{ github.event.client_payload.release_created }}
+
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          cache: yarn
+
+      - name: create Google Services Json File
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo $DATA | base64 --decode > ${{ github.workspace }}/google-services.json
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+
+      - name: 📦 Install dependencies
+        run: yarn
+
+      - name: 🚀 Build app
+        env:
+          EXPO_PUBLIC_API_HOST: https://api.graasp.org
+          EXPO_PUBLIC_AUTH_HOST: https://auth.graasp.org
+          EXPO_PUBLIC_BUILDER_HOST: https://builder.graasp.org
+          EXPO_PUBLIC_LIBRARY_HOST: https://library.graasp.org
+          EXPO_PUBLIC_PLAYER_HOST: https://player.graasp.org
+          EXPO_PUBLIC_SENTRY_DNS:
+          EXPO_PUBLIC_SENTRY_ORG: graasp
+          EXPO_PUBLIC_SENTRY_PROJECT: graasp-mobile
+          EXPO_PUBLIC_SHORT_HOST: https://go.graasp.org
+          GOOGLE_SERVICES_JSON: ${{ github.workspace }}/google-services.json
+          ENVIRONMENT: ${{ inputs.environment || 'production' }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
+        run: eas build --non-interactive --platform android --local -e $ENVIRONMENT --output ${{ github.workspace }}/android-release.aab
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        env:
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
+        with:
+          name: android-release
+          path: ${{ github.workspace }}/android-release.${{ EXTENSION }}
+
+      - name: Upload artifact to Release
+        if: ${{ github.event.client_payload.release_created == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
+        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.${{ EXTENSION }}
