@@ -6,6 +6,9 @@ on:
   repository_dispatch:
     types: [build-new-version]
 
+  # Allows to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: macos-13
@@ -44,7 +47,7 @@ jobs:
           EXPO_PUBLIC_BUILDER_HOST: ${{ vars.BUILDER_HOST }}
           EXPO_PUBLIC_LIBRARY_HOST: ${{ vars.LIBRARY_HOST }}
           EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
-          EXPO_PUBLIC_SENTRY_DNS: ${{ secrets.SENTRY_DSN }}
+          EXPO_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
           EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}

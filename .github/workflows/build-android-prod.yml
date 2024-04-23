@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - run: echo ${{ github.event.client_payload.release_created }}
+      - run: echo ${{ github.event.client_payload.releases_created }}
 
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
           EXPO_PUBLIC_BUILDER_HOST: ${{ vars.BUILDER_HOST }}
           EXPO_PUBLIC_LIBRARY_HOST: ${{ vars.LIBRARY_HOST }}
           EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
-          EXPO_PUBLIC_SENTRY_DNS: ${{ secrets.SENTRY_DSN }}
+          EXPO_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
           EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
