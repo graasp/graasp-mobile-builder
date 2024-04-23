@@ -1,4 +1,4 @@
-name: Generate production build for android locally
+name: Build production android app locally
 
 # Controls when the action will run
 on:
@@ -56,31 +56,31 @@ jobs:
 
       - name: 🚀 Build app
         env:
-          EXPO_PUBLIC_API_HOST: https://api.graasp.org
-          EXPO_PUBLIC_AUTH_HOST: https://auth.graasp.org
-          EXPO_PUBLIC_BUILDER_HOST: https://builder.graasp.org
-          EXPO_PUBLIC_LIBRARY_HOST: https://library.graasp.org
-          EXPO_PUBLIC_PLAYER_HOST: https://player.graasp.org
-          EXPO_PUBLIC_SENTRY_DNS:
-          EXPO_PUBLIC_SENTRY_ORG: graasp
-          EXPO_PUBLIC_SENTRY_PROJECT: graasp-mobile
-          EXPO_PUBLIC_SHORT_HOST: https://go.graasp.org
+          EXPO_PUBLIC_API_HOST: ${{ vars.API_HOST }}
+          EXPO_PUBLIC_AUTH_HOST: ${{ vars.AUTH_HOST }}
+          EXPO_PUBLIC_BUILDER_HOST: ${{ vars.BUILDER_HOST }}
+          EXPO_PUBLIC_LIBRARY_HOST: ${{ vars.LIBRARY_HOST }}
+          EXPO_PUBLIC_PLAYER_HOST: ${{ vars.PLAYER_HOST }}
+          EXPO_PUBLIC_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          EXPO_PUBLIC_SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          EXPO_PUBLIC_SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
           GOOGLE_SERVICES_JSON: ${{ github.workspace }}/google-services.json
           ENVIRONMENT: ${{ inputs.environment || 'production' }}
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
-        run: eas build --non-interactive --platform android --local -e $ENVIRONMENT --output ${{ github.workspace }}/android-release.aab
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
+        run: eas build --non-interactive --platform android --local -e $ENVIRONMENT --output ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         env:
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
         with:
           name: android-release
-          path: ${{ github.workspace }}/android-release.${{ EXTENSION }}
+          path: ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
 
       - name: Upload artifact to Release
         if: ${{ github.event.client_payload.release_created == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb }}
-        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.${{ EXTENSION }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
+        run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
