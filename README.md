@@ -78,7 +78,7 @@ Secondly, you need to generate a binary file of the app to install in the previo
 
 - **Remote**: One solution is to build on expo servers by running the command `eas build --profile development-simulator` inside the project terminal. **You need to be part of the Graasp expo organization to build on EAS servers**. Then the prompt will ask which operating systems binary files you want to generate. This build takes time. You can download it from Expo Services or the link generated in the terminal once the build process is completed.
   - **For iOS:** it generates an `.app` file.
-  - **For Android:** it generates a `.ipa` file. Notice that this format differs from the one generated on production, an `.abb` file.
+  - **For Android:** it generates a `.ipa` file. Notice that this format differs from the one generated on production, an `.aab` file.
 - **Local**: Otherwise you can build locally following [this guide](https://graasp.github.io/docs/developer/mobile-app/local-setup).
 
 Then you can drag and drop the file directly inside a running simulator to install it.
@@ -140,7 +140,7 @@ This file can be added to [the Transporter app](https://apps.apple.com/us/app/tr
 
 #### Android
 
-You can either generate a `.apk` file so users can install it directly on their devices, or a `.abb` file that can be submitted to the PlayStore and downloaded by internal testers.
+You can either generate a `.apk` file so users can install it directly on their devices, or a `.aab` file that can be submitted to the PlayStore and downloaded by internal testers.
 
 ## Testing
 

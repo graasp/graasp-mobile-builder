@@ -16,7 +16,7 @@ on:
         type: choice
         options:
           - preview # build an apk given eas.json
-          - production # build an abb
+          - production # build an aab
 
 jobs:
   build:
@@ -67,13 +67,13 @@ jobs:
           EXPO_PUBLIC_SHORT_HOST: ${{ vars.SHORT_HOST }}
           GOOGLE_SERVICES_JSON: ${{ github.workspace }}/google-services.json
           ENVIRONMENT: ${{ inputs.environment || 'production' }}
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'aab' }}
         run: eas build --non-interactive --platform android --local -e $ENVIRONMENT --output ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         env:
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'aab' }}
         with:
           name: android-release
           path: ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
@@ -82,5 +82,5 @@ jobs:
         if: ${{ github.event.client_payload.release_created == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'abb' }}
+          EXTENSION: ${{ inputs.environment == 'preview' && 'apk' || 'aab' }}
         run: gh release upload ${{ github.event.client_payload.tag }} ${{ github.workspace }}/android-release.${{ env.EXTENSION }}
