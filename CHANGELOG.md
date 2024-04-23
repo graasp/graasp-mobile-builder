@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.15](https://github.com/graasp/graasp-mobile-builder/compare/v1.1.14...v1.1.15) (2024-04-23)
+
+
+### Bug Fixes
+
+* build aab app ([e1e3c83](https://github.com/graasp/graasp-mobile-builder/commit/e1e3c8367ee1211d07d7859044caab7a4b9f1883))
+
 ## [1.1.14](https://github.com/graasp/graasp-mobile-builder/compare/v1.1.13...v1.1.14) (2024-04-23)
 
 
