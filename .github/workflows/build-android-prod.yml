@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - run: echo ${{ github.event.client_payload.releases_created }}
+      - run: echo ${{ github.event.client_payload.release_created }}
 
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
