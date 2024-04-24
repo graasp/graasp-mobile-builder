@@ -131,7 +131,7 @@ export const LOGIN_URI = {
     PATH: 'auth',
   },
   APP_SCHEME: {
-    SCHEME: 'graasp-mobile-builder',
+    SCHEME: 'graasp-mobile',
     HOSTNAME: 'auth',
   },
 };
