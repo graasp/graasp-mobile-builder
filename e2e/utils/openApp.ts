@@ -54,9 +54,7 @@ async function openAppForDebugBuild(platform: string, launchArgs: LaunchArgs) {
 }
 
 const getDeepLinkUrl = (url: string) =>
-  `exp+graasp-mobile-builder://expo-development-client/?url=${encodeURIComponent(
-    url,
-  )}`;
+  `exp+graasp-mobile://expo-development-client/?url=${encodeURIComponent(url)}`;
 
 const getDevLauncherPackagerUrl = (platform: string) =>
   `http://localhost:8081?platform=${platform}&dev=true&minify=false&disableOnboarding=1`;

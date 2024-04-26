@@ -1,8 +1,11 @@
-# Graasp Mobile Builder
+# Graasp Mobile
 
 <a href="https://gitlocalize.com/repo/9168?utm_source=badge"> <img src="https://gitlocalize.com/repo/9168/whole_project/badge.svg" /> </a>
 
 This repository hosts the source code of the mobile app for the [Graasp Learning Experience Platform](graasp.org).
+
+> [!WARNING]  
+> The project name is _Graasp Mobile_, but the slug is _graasp-mobile-builder_.
 
 ## Technology stack
 

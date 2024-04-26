@@ -1,5 +1,5 @@
 {
-  "name": "graasp-mobile-builder",
+  "name": "graasp-mobile",
   "version": "1.1.14",
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
