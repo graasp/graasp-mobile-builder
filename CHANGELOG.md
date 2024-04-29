@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/graasp/graasp-mobile/compare/v1.1.14...v1.2.0) (2024-04-29)
+
+
+### Features
+
+* change application name to Graasp ([#200](https://github.com/graasp/graasp-mobile/issues/200)) ([09c1005](https://github.com/graasp/graasp-mobile/commit/09c10054da416954f42cd5a138ad6015295c7556))
+* update ios sdk ([#203](https://github.com/graasp/graasp-mobile/issues/203)) ([56211af](https://github.com/graasp/graasp-mobile/commit/56211af95bff7a2e19d43e47205a8eb3a27d3012))
+
+
+### Bug Fixes
+
+* build aab app ([e1e3c83](https://github.com/graasp/graasp-mobile/commit/e1e3c8367ee1211d07d7859044caab7a4b9f1883))
+
 ## [1.1.14](https://github.com/graasp/graasp-mobile/compare/v1.1.13...v1.1.14) (2024-04-23)
 
 ### Miscellaneous Chores
