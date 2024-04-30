@@ -6,7 +6,7 @@ import { Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { buildPlayerButtonId } from '../../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
-import { useNavigateToPlayer } from '../../navigation/ItemStackNavigator';
+import { useNavigateToPlayer } from '../../navigation/useNavigateToPlayer';
 
 type Props = {
   itemId: DiscriminatedItem['id'];
