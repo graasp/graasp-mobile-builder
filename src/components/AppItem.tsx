@@ -33,6 +33,16 @@ type AppItemProps = {
   context: `${Context}`;
 };
 
+// debug code does not work on android
+let debugCode = '';
+if (Platform.OS === 'ios') {
+  debugCode = `
+      console.log = window.ReactNativeWebView.postMessage;
+      console.debug = window.ReactNativeWebView.postMessage;
+      console.error = window.ReactNativeWebView.postMessage;
+    `;
+}
+
 const AppItem = ({ item, context }: AppItemProps) => {
   const navigation =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
@@ -76,16 +86,6 @@ const AppItem = ({ item, context }: AppItemProps) => {
     itemMemberships?.map((im) => im.permission),
   );
 
-  // debug code does not work on android
-  let debugCode = '';
-  if (Platform.OS === 'ios') {
-    debugCode = `
-      console.log = window.ReactNativeWebView.postMessage;
-      console.debug = window.ReactNativeWebView.postMessage;
-      console.error = window.ReactNativeWebView.postMessage;
-    `;
-  }
-
   return (
     <WebView
       ref={(r) => (ref.current = r)}
@@ -101,6 +101,7 @@ const AppItem = ({ item, context }: AppItemProps) => {
         marginLeft: insets.left,
         marginBottom: insets.bottom,
       }}
+      // necessary for android
       injectedJavaScript={`(function() {
                 window.parent = window.ReactNativeWebView;
                 ${debugCode}

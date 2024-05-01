@@ -135,5 +135,5 @@
     "expo-image-loader": "4.6.0",
     "i18next": "^23.7.7"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.1.1"
 }

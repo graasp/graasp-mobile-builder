@@ -2,18 +2,11 @@ import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { Context, DiscriminatedItem, ItemType } from '@graasp/sdk';
-
-import { useNavigation } from '@react-navigation/native';
+import { Context, DiscriminatedItem } from '@graasp/sdk';
 
 import { buildPlayerButtonId } from '../../../e2e/constants/testIds';
 import { ITEMS_TABLE_ROW_ICON_COLOR } from '../../config/constants/constants';
-import {
-  ITEM_NAVIGATOR,
-  ITEM_NAVIGATOR_ITEM,
-  ITEM_NAVIGATOR_PLAYER_FOLDER,
-} from '../../navigation/names';
-import { ItemScreenProps } from '../../navigation/types';
+import { useNavigateToPlayer } from '../../navigation/useNavigateToPlayer';
 
 type Props = {
   itemId: DiscriminatedItem['id'];
@@ -34,33 +27,7 @@ const PlayerButton = ({
   size = 24,
   color = ITEMS_TABLE_ROW_ICON_COLOR,
 }: Props) => {
-  const { navigate } =
-    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
-
-  function handleItemPress() {
-    switch (type) {
-      case ItemType.FOLDER:
-        navigate(ITEM_NAVIGATOR, {
-          screen: ITEM_NAVIGATOR_PLAYER_FOLDER,
-          params: {
-            itemId,
-            headerTitle: name,
-            origin,
-          },
-        });
-
-        break;
-      case ItemType.LINK:
-      case ItemType.APP:
-      case ItemType.DOCUMENT:
-      case ItemType.S3_FILE:
-        navigate(ITEM_NAVIGATOR, {
-          screen: ITEM_NAVIGATOR_ITEM,
-          params: { itemId, headerTitle: name },
-        });
-        break;
-    }
-  }
+  const navigateToPlayer = useNavigateToPlayer();
 
   return (
     <Button
@@ -73,7 +40,7 @@ const PlayerButton = ({
           color={color}
         />
       }
-      onPress={() => handleItemPress()}
+      onPress={() => navigateToPlayer({ type, itemId, name, origin })}
       testID={buildPlayerButtonId(itemId)}
     ></Button>
   );
