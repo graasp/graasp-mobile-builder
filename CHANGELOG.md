@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/graasp/graasp-mobile/compare/v1.2.0...v1.3.0) (2024-05-01)
+
+
+### Features
+
+* add message event to open item in player view ([#205](https://github.com/graasp/graasp-mobile/issues/205)) ([6203971](https://github.com/graasp/graasp-mobile/commit/620397154a5af29b48e8473cc4e8a158f0a5684e))
+
 ## [1.2.0](https://github.com/graasp/graasp-mobile/compare/v1.1.14...v1.2.0) (2024-04-29)
 
 
