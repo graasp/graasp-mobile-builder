@@ -22,6 +22,15 @@ const plugins = [
     },
   ],
   [
+    'expo-location',
+    {
+      locationWhenInUsePermission:
+        'Allow $(PRODUCT_NAME) to use your location.',
+      isAndroidForegroundServiceEnabled:
+        'Allow $(PRODUCT_NAME) to use your location.',
+    },
+  ],
+  [
     '@config-plugins/detox',
     {
       skipProguard: false,

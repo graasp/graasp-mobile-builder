@@ -50,6 +50,7 @@ const MapViewScreen = () => {
       source={{
         uri: url.toString(),
       }}
+      geolocationEnabled
       testID={MAP_SCREEN}
       scalesPageToFit={false}
       startInLoadingState={true}

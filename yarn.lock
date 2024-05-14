@@ -8242,6 +8242,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-location@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "expo-location@npm:17.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: be9bf57cba0bf28b747d24be9342085068943e1081cc489ed5efc69d07ae3a87cc20329a3e6b3dd1738dd12a2603125fb70cf9d8b2d9e95e59baa2d1011b140d
+  languageName: node
+  linkType: hard
+
 "expo-manifests@npm:~0.13.0":
   version: 0.13.2
   resolution: "expo-manifests@npm:0.13.2"
@@ -9156,6 +9165,7 @@ __metadata:
     expo-font: "npm:~11.10.3"
     expo-image-picker: "npm:~14.7.1"
     expo-linking: "npm:~6.2.2"
+    expo-location: "npm:^17.0.1"
     expo-media-library: "npm:~15.9.2"
     expo-secure-store: "npm:~12.8.1"
     expo-sharing: "npm:~11.10.0"
