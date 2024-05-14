@@ -16,12 +16,6 @@ const plugins = [
     },
   ],
   [
-    'expo-barcode-scanner',
-    {
-      cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
-    },
-  ],
-  [
     'expo-location',
     {
       locationWhenInUsePermission:

@@ -63,13 +63,19 @@ const MapViewScreen = () => {
                 ${debugCode}
             })();`}
       onMessage={(event) => {
-        const data = JSON.parse(event.nativeEvent.data);
-        navigateToPlayer({
-          type: data.item.type,
-          itemId: data.item.id,
-          name: data.item.name,
-          origin: { rootId: data.item.id, context: Context.Builder },
-        });
+        try {
+          const data = JSON.parse(event.nativeEvent.data);
+          if (data.item) {
+            navigateToPlayer({
+              type: data.item.type,
+              itemId: data.item.id,
+              name: data.item.name,
+              origin: { rootId: data.item.id, context: Context.Builder },
+            });
+          }
+        } catch (e) {
+          console.error(e);
+        }
       }}
       style={{
         width: dimensions.width - insets.left,

@@ -20,7 +20,11 @@ function ShortUrlInput() {
   const { navigate } = useNavigation<TabScreenProps<'HomeTab'>['navigation']>();
 
   const submitUrl = () => {
-    const itemId = getItemIdFromUrl(url);
+    // allow to
+    // this works as long as there is only one id in the url!
+    // todo: use uuid
+    const isUuid = /((\w{4,12}-?)){5}/.exec(url) && url.length === 36;
+    const itemId = isUuid ? url : getItemIdFromUrl(url);
     if (itemId) {
       setUrl('');
       navigate(ITEM_NAVIGATOR, {
@@ -32,52 +36,41 @@ function ShortUrlInput() {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flex: 1,
-          flexBasis: 'auto',
-          flexGrow: 3,
+      <Input
+        value={url}
+        onChangeText={(value) => setUrl(value)}
+        style={{}}
+        placeholder={t('GO_TO_LINK_INPUT')}
+        underlineColorAndroid={'black'}
+        labelStyle={{
+          color: 'black',
+          fontWeight: '700',
         }}
-      >
-        <Input
-          value={url}
-          onChangeText={(value) => setUrl(value)}
-          style={{}}
-          placeholder={t('link')}
-          underlineColorAndroid={'black'}
-          labelStyle={{
-            color: 'black',
-            fontWeight: '700',
-          }}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholderTextColor="#cccccc"
-          testID={URL_INPUT}
-        />
-      </View>
-      <View
-        style={{
-          flex: 2,
-          flexBasis: 'auto',
-          flexGrow: 1,
-        }}
-      >
-        <Button
-          title={t('Submit')}
-          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-          onPress={submitUrl}
-          testID={URL_INPUT_SUBMIT_BUTTON}
-        />
-      </View>
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholderTextColor="#cccccc"
+        testID={URL_INPUT}
+      />
+      <Button
+        title={t('Submit')}
+        buttonStyle={{ backgroundColor: PRIMARY_COLOR, maxWidth: 100 }}
+        onPress={submitUrl}
+        testID={URL_INPUT_SUBMIT_BUTTON}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  input: {
+    width: '100%',
+  },
   container: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    width: '100%',
     marginVertical: 10,
     marginHorizontal: 20,
+    alignItems: 'center',
   },
 });
 

@@ -1,3 +1,3 @@
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { CameraView } from 'expo-camera/next';
 
-export const GraaspBarCodeScanner = BarCodeScanner;
+export const GraaspBarCodeScanner = CameraView;

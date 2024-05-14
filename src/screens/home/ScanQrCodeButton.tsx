@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
-import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 
 import { useNavigation } from '@react-navigation/native';
@@ -21,7 +20,7 @@ const ScanQrCodeButton = (): JSX.Element | null => {
     useNavigation<MainStackScreenProps<'QrCamera'>['navigation']>();
 
   const checkPermissions = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const { status } = await Camera.requestCameraPermissionsAsync();
     return status === 'granted';
   };
 
