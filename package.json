@@ -102,7 +102,8 @@
     "react-native-toast-message": "^2.1.7",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.9",
-    "react-native-webview": "13.6.4"
+    "react-native-webview": "13.6.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -113,6 +114,7 @@
     "@types/lodash.truncate": "^4",
     "@types/node": "^20.9.0",
     "@types/react": "~18.2.45",
+    "@types/uuid": "^9",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "babel-jest": "^29.7.0",

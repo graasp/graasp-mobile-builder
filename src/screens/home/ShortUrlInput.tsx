@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 
 import { useNavigation } from '@react-navigation/native';
+import { validate as uuidValidate } from 'uuid';
 
 import {
   URL_INPUT,
@@ -20,10 +21,8 @@ function ShortUrlInput() {
   const { navigate } = useNavigation<TabScreenProps<'HomeTab'>['navigation']>();
 
   const submitUrl = () => {
-    // allow to
-    // this works as long as there is only one id in the url!
-    // todo: use uuid
-    const isUuid = /((\w{4,12}-?)){5}/.exec(url) && url.length === 36;
+    // allow to get item by id
+    const isUuid = uuidValidate(url);
     const itemId = isUuid ? url : getItemIdFromUrl(url);
     if (itemId) {
       setUrl('');

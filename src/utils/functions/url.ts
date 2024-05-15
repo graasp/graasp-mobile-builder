@@ -1,3 +1,5 @@
+import { validate as uuidValidate } from 'uuid';
+
 import {
   BUILDER_HOST,
   LIBRARY_HOST,
@@ -27,8 +29,8 @@ export const getItemIdFromUrl = (url: string): string | null => {
     // this works as long as there is only one id in the url!
     const match = /((\w{4,12}-?)){5}/.exec(url);
 
-    if (!match?.length) {
-      throw new Error();
+    if (!match?.length || !uuidValidate(match[0])) {
+      throw new Error(match?.[0]);
     }
 
     return match[0];
