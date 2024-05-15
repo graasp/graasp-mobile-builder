@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.1](https://github.com/graasp/graasp-mobile/compare/v1.3.0...v1.3.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* allow scroll when keyboard is open on home screen
+* allow uuid in input to go to item
+* fix crash for ios on view map: postmessage could get non-json data
+* fix ios cannot read qr: it needed to use `expo-camera`, also because it was deprecated. I took this opportunity to add a close button on the camera view.
+* add map button to Shared Elements screen: this solution is faster than using accessible for now
+* officially request location from app config
+* display "submit" button (go to item by url) under input field.
+
 ## [1.3.0](https://github.com/graasp/graasp-mobile/compare/v1.2.0...v1.3.0) (2024-05-01)
 
 
