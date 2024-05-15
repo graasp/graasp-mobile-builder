@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import { useReducedMotion } from 'react-native-reanimated';
@@ -39,22 +39,14 @@ const ItemOptionsButton = ({
 
   return (
     <>
-      <Icon
-        type="material"
-        name="more-vert"
-        size={24}
-        color={color}
-        onPress={() => openOptions()}
-        containerStyle={{ paddingHorizontal: 10, paddingVertical: 10 }}
-        testID={testId}
-      />
+      <Pressable testID={testId} onPress={() => openOptions()}>
+        <Icon type="material" name="more-vert" size={24} color={color} />
+      </Pressable>
       <BottomSheetModal
         animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
-        // style={bottomSheetModalStyles.bottomSheetModal}
         index={0}
         snapPoints={BOTTOM_SNAP_POINTS_ITEM_LIST}
-        // onChange={handleSheetChanges}
         backdropComponent={({ animatedIndex, style: backDropStyle }) => (
           <CustomBackdrop
             animatedIndex={animatedIndex}

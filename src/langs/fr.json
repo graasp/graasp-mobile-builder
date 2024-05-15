@@ -65,7 +65,7 @@
   "Your account will be deleted permanently": "Votre compte va être supprimé définitivement",
   "Sign In": "Se Connecter",
   "Scan QR Code": "Scanner un code QR",
-  "or enter short URL below": "ou entrer un lien ci-dessous",
+  "GO_TO_LINK_TEXT": "ou entrer un lien ci-dessous",
   "Bookmarks": "Signets",
   "Local Bookmarks": "Signets Locaux",
   "My Items": "Éléments",
@@ -80,7 +80,7 @@
   "Apply": "Appliquer",
   "Clear": "Réinitialiser",
   "Submit": "Valider",
-  "link": "lien",
+  "GO_TO_LINK_INPUT": "lien ou id de l'élément",
   "I already have an account": "J'ai déjà un compte",
   "Create a new account": "Créer un nouveau compte",
   "Later": "Plus tard",
@@ -95,5 +95,6 @@
   "REQUEST_ITEM_SUPPORT_ALERT_TITLE": "Demande envoyée !",
   "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "La demande a bien été envoyée.",
   "Open Chatbox": "Ouvrir la discussion",
-  "Open Map": "Ouvrir la Carte"
+  "Open Map": "Ouvrir la Carte",
+  "My Map": "Ma Carte"
 }

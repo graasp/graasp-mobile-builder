@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -12,20 +12,28 @@ const HomeScreen = () => {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.container} edges={['left']}>
-      <GraaspLogo color={PRIMARY_COLOR} height={200} width={200} />
-      <ScanQrCodeButton />
+    <SafeAreaView style={styles.area} edges={['left']}>
+      <KeyboardAvoidingView behavior="padding">
+        <View style={styles.container}>
+          <GraaspLogo color={PRIMARY_COLOR} height={200} width={200} />
+          <ScanQrCodeButton />
 
-      <Text>{t('or enter short URL below')}</Text>
-      <ShortUrlInput />
+          <Text>{t('GO_TO_LINK_TEXT')}</Text>
+          <ShortUrlInput />
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  area: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  container: {
+    flex: 1,
     justifyContent: 'center',
     flexDirection: 'column',
     padding: 20,

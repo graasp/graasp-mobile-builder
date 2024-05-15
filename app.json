@@ -17,16 +17,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.graasp.mobile",
       "buildNumber": "1.3.0",
-      "associatedDomains": [
-        "applinks:mobile.graasp.org"
-      ],
+      "associatedDomains": ["applinks:mobile.graasp.org"],
       "infoPlist": {
         "NSCameraUsageDescription": "Allow access to the camera to take and upload photos to Graasp. These photos can also be used to update your profile picture.",
         "NSPhotoLibraryUsageDescription": "Allow access to photos in order to upload photos from your library to Graasp. These photos can be then used within your account on Graasp."
@@ -53,10 +49,7 @@
               "pathPrefix": "/auth"
             }
           ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ]
     },

@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   headerButtons: {
-    paddingRight: 10,
+    paddingRight: 20,
     flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

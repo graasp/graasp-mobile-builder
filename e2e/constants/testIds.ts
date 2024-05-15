@@ -76,5 +76,6 @@ export const SLEEP_TIME_MINIMUM = 1000;
 export const buildLibraryCardId = (id: string) => `library-card-${id}`;
 export const COLLECTION_BOOKMARK_BUTTON = 'collection-bookmark-button';
 export const MY_ITEMS_MAP_BUTTON = 'my-items-map-button';
+export const SHARED_ITEMS_MAP_BUTTON = 'shared-items-map-button';
 export const ITEM_LIST_OPTIONS_MAP = 'item-list-options-map';
 export const MAP_SCREEN = 'map-screen';

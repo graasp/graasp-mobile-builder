@@ -30,7 +30,7 @@ const MyItemsStackNavigator = () => {
           headerRight: () => (
             <MapButton
               testId={MY_ITEMS_MAP_BUTTON}
-              name={t('My Items')}
+              name={t('My Map')}
               color="white"
             />
           ),

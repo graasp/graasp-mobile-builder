@@ -4,6 +4,8 @@ We cannot use native maps since android always requires the use of google to dis
 
 Our implementation is to display a fullscreen view of the map within Graasp Builder. This is displayed in a `WebView` in the mobile application.
 
+One must be careful with the rights to access geolocation, that might differ from browser, browser on phone and webview within a mobile app.
+
 ## Opening an item in player
 
 Given `isMobileApp` and `postMessage` mechanism, we can open an item in the Player View of the mobile application. However it does not work in Android Simulator (like apps).

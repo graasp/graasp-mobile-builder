@@ -4771,6 +4771,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9":
+  version: 9.0.8
+  resolution: "@types/uuid@npm:9.0.8"
+  checksum: 10/b8c60b7ba8250356b5088302583d1704a4e1a13558d143c549c408bf8920535602ffc12394ede77f8a8083511b023704bc66d1345792714002bfa261b17c5275
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.2
   resolution: "@types/yargs-parser@npm:21.0.2"
@@ -8028,17 +8035,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-barcode-scanner@npm:~12.9.3":
-  version: 12.9.3
-  resolution: "expo-barcode-scanner@npm:12.9.3"
-  dependencies:
-    expo-image-loader: "npm:~4.6.0"
-  peerDependencies:
-    expo: "*"
-  checksum: 10/7fce148925ddaad05b310967341af115cdd104b05327993943a721886a113b6eb58c2db7d1577f78e13e6d5d29a14a2f378841fd54e7f31bf601978c6c05be3f
-  languageName: node
-  linkType: hard
-
 "expo-build-properties@npm:~0.11.1":
   version: 0.11.1
   resolution: "expo-build-properties@npm:0.11.1"
@@ -8239,6 +8235,15 @@ __metadata:
     expo-constants: "npm:~15.4.3"
     invariant: "npm:^2.2.4"
   checksum: 10/30d750881b1003fabff17929e1b6062ed6cd243ca35cedd41082df5fd775d0c457f50e4a9e696dedc53459caac4f26d493a2819cef692633822d893c788e0f06
+  languageName: node
+  linkType: hard
+
+"expo-location@npm:^16.5.5":
+  version: 16.5.5
+  resolution: "expo-location@npm:16.5.5"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/460c5c16e8c6c1c8035b246e37a9bd7b49dcf180a7ae442984e6e81cf14971a7ec6414c02b2a467f629d4ab3f2a5fcc6681799601b530a081ab6333fe92c4790
   languageName: node
   linkType: hard
 
@@ -9133,6 +9138,7 @@ __metadata:
     "@types/lodash.truncate": "npm:^4"
     "@types/node": "npm:^20.9.0"
     "@types/react": "npm:~18.2.45"
+    "@types/uuid": "npm:^9"
     "@typescript-eslint/eslint-plugin": "npm:^6.9.1"
     "@typescript-eslint/parser": "npm:^6.9.1"
     axios: "npm:^1.6.0"
@@ -9146,7 +9152,6 @@ __metadata:
     expo: "npm:~50.0.17"
     expo-asset: "npm:~9.0.2"
     expo-av: "npm:~13.10.6"
-    expo-barcode-scanner: "npm:~12.9.3"
     expo-build-properties: "npm:~0.11.1"
     expo-camera: "npm:~14.1.3"
     expo-constants: "npm:~15.4.6"
@@ -9156,6 +9161,7 @@ __metadata:
     expo-font: "npm:~11.10.3"
     expo-image-picker: "npm:~14.7.1"
     expo-linking: "npm:~6.2.2"
+    expo-location: "npm:^16.5.5"
     expo-media-library: "npm:~15.9.2"
     expo-secure-store: "npm:~12.8.1"
     expo-sharing: "npm:~11.10.0"
@@ -9195,6 +9201,7 @@ __metadata:
     react-test-renderer: "npm:18.2.0"
     ts-jest: "npm:^29.1.1"
     typescript: "npm:^5.3.0"
+    uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
 
@@ -16024,7 +16031,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:9.0.1":
+"uuid@npm:9.0.1, uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:

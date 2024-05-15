@@ -16,9 +16,12 @@ const plugins = [
     },
   ],
   [
-    'expo-barcode-scanner',
+    'expo-location',
     {
-      cameraPermission: 'Allow $(PRODUCT_NAME) to access the camera.',
+      locationWhenInUsePermission:
+        'Allow $(PRODUCT_NAME) to use your location.',
+      isAndroidForegroundServiceEnabled:
+        'Allow $(PRODUCT_NAME) to use your location.',
     },
   ],
   [

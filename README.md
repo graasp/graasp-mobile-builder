@@ -141,6 +141,8 @@ General guidance on version numbers:
 Running `yarn build:ios:prod` should generate a local build of the iOS bundle. The file will be called something like `build-1701795453442.ipa`.
 This file can be added to [the Transporter app](https://apps.apple.com/us/app/transporter/id1450874784) which allows you to send app bundles to AppStore Connect where you can manage them.
 
+For beta testing, you can deliver the app on Testflight, and chosen testers will be able to install the app on their iOS phone. The build number should be bumped each time you deploy a new build, but you can keep the same main version number.
+
 #### Android
 
 You can either generate a `.apk` file so users can install it directly on their devices, or a `.aab` file that can be submitted to the PlayStore and downloaded by internal testers.

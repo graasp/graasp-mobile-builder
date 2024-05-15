@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Camera } from 'expo-camera/next';
 
 import { useIsFocused } from '@react-navigation/native';
 
@@ -25,7 +26,7 @@ export const QrCameraScreen = ({
     (async () => {
       // double check on the permission, go back if does not have permission
       if (isFocused) {
-        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        const { status } = await Camera.requestCameraPermissionsAsync();
         if (status !== 'granted') {
           goBack();
         }
@@ -39,7 +40,6 @@ export const QrCameraScreen = ({
     // @ts-ignore
     navigate(MAIN_NAVIGATOR_MAIN);
 
-    // todo: host manager
     const itemId = getItemIdFromUrl(data);
     if (itemId) {
       navigate(ITEM_NAVIGATOR, {
@@ -49,16 +49,25 @@ export const QrCameraScreen = ({
         },
       });
     }
-
-    // todo: get value and navigate
   };
   return (
     <View style={styles.cameraContainer}>
       <GraaspBarCodeScanner
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.QR]}
-        onBarCodeScanned={onBarCodeScanned}
+        barcodeScannerSettings={{
+          barcodeTypes: ['qr'],
+        }}
+        onBarcodeScanned={onBarCodeScanned}
         style={styles.camera}
-      />
+      >
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            goBack();
+          }}
+        >
+          <MaterialIcons name="close" size={24} color="white" />
+        </TouchableOpacity>
+      </GraaspBarCodeScanner>
     </View>
   );
 };
@@ -76,16 +85,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginVertical: 20,
-    borderRadius: 5,
+    marginTop: 40,
+    marginLeft: 15,
+    padding: 10,
+    borderRadius: 50,
+    width: 45,
     backgroundColor: PRIMARY_COLOR,
-    width: '100%',
-  },
-  addItemButton: {
-    position: 'absolute',
-    flex: 1,
-    zIndex: 9999,
-    top: 0,
   },
 });
 
