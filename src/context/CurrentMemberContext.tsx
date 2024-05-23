@@ -1,5 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 
+import * as Localization from 'expo-localization';
+
 import { DEFAULT_LANG } from '@graasp/sdk';
 
 import i18n from '../config/i18n';
@@ -34,6 +36,14 @@ const CurrentMemberProvider = (props: any) => {
       _changeLang(currentMember.extra.lang);
     }
   }, [currentMember]);
+
+  // set lang to phone language if logged out
+  useEffect(() => {
+    const l = Localization.getLocales()[0].languageCode;
+    if (l && !currentMember) {
+      _changeLang(l);
+    }
+  }, [currentMember, Localization.getLocales()[0].languageCode]);
 
   const _changeLang = (newLang: string) => {
     setLang(newLang);

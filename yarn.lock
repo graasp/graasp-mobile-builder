@@ -8238,6 +8238,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-localization@npm:~14.8.4":
+  version: 14.8.4
+  resolution: "expo-localization@npm:14.8.4"
+  dependencies:
+    rtl-detect: "npm:^1.0.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 10/acf8da7a680626ba1a08eb85b1dfef361f1e441d9631bd222a446f49b80fcb17d26b8647a06b44f651f1df85ea3e09308dbc2b11deda07ce0a70124cfe11acca
+  languageName: node
+  linkType: hard
+
 "expo-location@npm:^16.5.5":
   version: 16.5.5
   resolution: "expo-location@npm:16.5.5"
@@ -9161,6 +9172,7 @@ __metadata:
     expo-font: "npm:~11.10.3"
     expo-image-picker: "npm:~14.7.1"
     expo-linking: "npm:~6.2.2"
+    expo-localization: "npm:~14.8.4"
     expo-location: "npm:^16.5.5"
     expo-media-library: "npm:~15.9.2"
     expo-secure-store: "npm:~12.8.1"
@@ -14283,6 +14295,13 @@ __metadata:
   bin:
     rimraf: ./bin.js
   checksum: 10/756419f2fa99aa119c46a9fc03e09d84ecf5421a80a72d1944c5088c9e4671e77128527a900a313ed9d3fdbdd37e2ae05486cd7e9116d5812d8c31f2399d7c86
+  languageName: node
+  linkType: hard
+
+"rtl-detect@npm:^1.0.2":
+  version: 1.1.2
+  resolution: "rtl-detect@npm:1.1.2"
+  checksum: 10/d19089c3b5f7a6fbabfa2c4724fcdf8694f313d196d44c8eee3625ba2e46418afe65b4da38e3e92822985291efd0656d85daa4b2ef296a46a65a702d0b156876
   languageName: node
   linkType: hard
 

@@ -83,7 +83,7 @@
   "GO_TO_LINK_INPUT": "lien ou id de l'élément",
   "I already have an account": "J'ai déjà un compte",
   "Create a new account": "Créer un nouveau compte",
-  "Later": "Plus tard",
+  "CONTINUE_NO_ACCOUNT_BUTTON": "Continuer sans compte",
   "Add to Bookmarks": "Ajouter aux Signets",
   "Remove from Bookmarks": "Enlever des Signets",
   "Content": "Contenu",
