@@ -10,16 +10,20 @@ import { useBookmark } from '../hooks/bookmark';
 
 type Props = {
   item: DiscriminatedItem;
+  onClick?: () => void;
 };
 
-function BookmarkListItem({ item }: Props) {
+function BookmarkListItem({ item, onClick }: Props) {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { isBookmarked, handleBookmarkPress } = useBookmark({ item });
 
   return (
     <ListItem
-      onPress={() => handleBookmarkPress()}
+      onPress={() => {
+        handleBookmarkPress();
+        onClick?.();
+      }}
       style={{ paddingLeft: insets.left }}
     >
       <MaterialCommunityIcons

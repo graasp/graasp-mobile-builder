@@ -4,11 +4,12 @@ import WebView from 'react-native-webview';
 
 import { Context } from '@graasp/sdk';
 
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { MAP_SCREEN } from '../../e2e/constants/testIds';
 import { API_HOST, BUILDER_HOST } from '../config/env';
 import { useAuth } from '../context/AuthContext';
+import { ITEM_NAVIGATOR, ITEM_NAVIGATOR_ITEM } from '../navigation/names';
 import { ItemScreenProps } from '../navigation/types';
 import { useNavigateToPlayer } from '../navigation/useNavigateToPlayer';
 
@@ -27,6 +28,8 @@ const MapViewScreen = () => {
   const dimensions = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const navigateToPlayer = useNavigateToPlayer();
+  const { navigate: navigateToBuilder } =
+    useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
   const route = useRoute<ItemScreenProps<'ItemStackPlayerFolder'>['route']>();
   const { itemId } = route.params;
 
@@ -65,13 +68,27 @@ const MapViewScreen = () => {
       onMessage={(event) => {
         try {
           const data = JSON.parse(event.nativeEvent.data);
-          if (data.item) {
-            navigateToPlayer({
-              type: data.item.type,
-              itemId: data.item.id,
-              name: data.item.name,
-              origin: { rootId: data.item.id, context: Context.Builder },
-            });
+          switch (data.action) {
+            case 'open-player':
+              if (data.item) {
+                navigateToPlayer({
+                  type: data.item.type,
+                  itemId: data.item.id,
+                  name: data.item.name,
+                  origin: { rootId: data.item.id, context: Context.Builder },
+                });
+              }
+              break;
+            case 'open-builder':
+              if (data.item) {
+                navigateToBuilder(ITEM_NAVIGATOR, {
+                  screen: ITEM_NAVIGATOR_ITEM,
+                  params: { itemId: data.item.id, headerTitle: data.item.name },
+                });
+              }
+              break;
+            default:
+              break;
           }
         } catch (e) {
           console.error(e);

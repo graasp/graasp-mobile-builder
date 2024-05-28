@@ -289,7 +289,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
             <ListItem.Title style={{ flex: 2 }}>{t('Share')}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
-        <BookmarkListItem item={item} />
+        <BookmarkListItem item={item} onClick={closeSheet} />
         {displayEditOrDeleteItem && (
           <ListItem
             onPress={() => handleDeleteItemPress()}
