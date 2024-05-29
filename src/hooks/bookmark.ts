@@ -47,7 +47,9 @@ export const useBookmark = ({ item }: { item: DiscriminatedItem }) => {
   }, [isLocalBookmarked, bookmarkedItems]);
 
   const handleBookmarkPress = async () => {
+    // remove from bookmarks
     if (isBookmarked) {
+      // local bookmark
       if (isLocalBookmarked) {
         try {
           AsyncStorage.removeItem(key);
@@ -64,21 +66,22 @@ export const useBookmark = ({ item }: { item: DiscriminatedItem }) => {
       }
     }
 
+    // add to bookmarks
     // online bookmark
     if (currentMember) {
       addToFavorite(item.id);
-    }
-
-    try {
-      // value does not matter
-      AsyncStorage.setItem(key, JSON.stringify({ isBookmarked: true }));
-      // optimistic mutation
-      return setIsLocalBookmarked(true);
-    } catch (e) {
-      // rollback
-      setIsLocalBookmarked(false);
-      // saving error
-      console.error(e);
+    } else {
+      try {
+        // value does not matter
+        AsyncStorage.setItem(key, JSON.stringify({ isBookmarked: true }));
+        // optimistic mutation
+        return setIsLocalBookmarked(true);
+      } catch (e) {
+        // rollback
+        setIsLocalBookmarked(false);
+        // saving error
+        console.error(e);
+      }
     }
   };
 
