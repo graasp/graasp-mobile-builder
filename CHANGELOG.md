@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/graasp/graasp-mobile/compare/v1.4.0...v1.4.1) (2024-05-29)
+
+
+### Bug Fixes
+
+* fix bookmark changes ([548a135](https://github.com/graasp/graasp-mobile/commit/548a135a2eab846eb2605aba5e300618de3c4b11))
+
 ## [1.4.0](https://github.com/graasp/graasp-mobile/compare/v1.3.1...v1.4.0) (2024-05-29)
 
 

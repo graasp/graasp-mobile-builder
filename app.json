@@ -3,7 +3,7 @@
     "name": "Graasp",
     "slug": "graasp-mobile-builder",
     "owner": "graasp",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "graasp-mobile",
@@ -23,7 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.graasp.mobile",
-      "buildNumber": "1.4.0",
+      "buildNumber": "1.4.1",
       "associatedDomains": [
         "applinks:mobile.graasp.org"
       ],
@@ -36,7 +36,7 @@
       }
     },
     "android": {
-      "versionCode": 500010400,
+      "versionCode": 500010401,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
