@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/graasp/graasp-mobile/compare/v1.3.1...v1.4.0) (2024-05-29)
+
+
+### Features
+
+* use phone lang on signed out, add more langs, remove toast on signed out ([#215](https://github.com/graasp/graasp-mobile/issues/215)) ([e371cee](https://github.com/graasp/graasp-mobile/commit/e371ceec62c4849d539457ee7468c328a00c8a13))
+
 ## [1.3.1](https://github.com/graasp/graasp-mobile/compare/v1.3.0...v1.3.1) (2024-05-15)
 
 
