@@ -11,3 +11,6 @@ export const LIBRARY_HOST =
   process.env.EXPO_PUBLIC_LIBRARY_HOST || 'http://localhost:3005';
 export const SHORT_HOST =
   process.env.EXPO_PUBLIC_SHORT_HOST || 'http://localhost:4444';
+
+export const DEFAULT_LIBRARY_SEARCH_KEYWORDS =
+  process.env.EXPO_PUBLIC_DEFAULT_LIBRARY_SEARCH_KEYWORDS || '';

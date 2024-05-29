@@ -1,12 +1,15 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
 import { DiscriminatedItem, ItemType } from '@graasp/sdk';
 
+import { useNavigation } from '@react-navigation/native';
+
 import ItemIcon from '../../components/ItemIcon';
 import { useQueryClient } from '../../context/QueryClientContext';
+import { LIBRARY_NAVIGATOR_COLLECTION } from '../../navigation/names';
+import { LibraryScreenProp } from '../../navigation/types';
 
 type Props = {
   item: DiscriminatedItem;
@@ -15,6 +18,8 @@ type Props = {
 function CollectionContent({ item }: Props) {
   const { t } = useTranslation();
   const { hooks } = useQueryClient();
+  const { navigate } =
+    useNavigation<LibraryScreenProp<'CollectionStack'>['navigation']>();
   const isFolder = item.type === ItemType.FOLDER;
   const { data: children } = hooks.useChildren(item.id, {
     enabled: isFolder,
@@ -32,10 +37,16 @@ function CollectionContent({ item }: Props) {
         </Text>
         {children?.length ? (
           children.map((c) => (
-            <View key={c.id} style={styles.files}>
-              <ItemIcon type={c.type} extra={c.extra} />
-              <Text>{c.name}</Text>
-            </View>
+            <Pressable
+              onPress={() =>
+                navigate(LIBRARY_NAVIGATOR_COLLECTION, { itemId: c.id })
+              }
+            >
+              <View key={c.id} style={styles.files}>
+                <ItemIcon type={c.type} extra={c.extra} />
+                <Text style={styles.name}>{c.name}</Text>
+              </View>
+            </Pressable>
           ))
         ) : (
           <>
@@ -60,6 +71,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 5,
     gap: 7,
+  },
+  name: {
+    textDecorationLine: 'underline',
   },
 });
 

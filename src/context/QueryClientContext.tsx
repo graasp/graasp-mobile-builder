@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Toast from 'react-native-toast-message';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -87,7 +86,7 @@ export const QueryClientProvider = ({ children }: any) => {
                   SECURE_STORE_VALUES.REFRESH_TOKEN,
                 );
                 if (!refreshToken) {
-                  Toast.show({
+                  console.error({
                     type: 'error',
                     text1: t('You must sign in again'),
                   });
@@ -107,10 +106,6 @@ export const QueryClientProvider = ({ children }: any) => {
                 return axios(originalRequest);
               } catch (e) {
                 console.error(e);
-                Toast.show({
-                  type: 'error',
-                  text1: t('You must sign in again'),
-                });
                 signOut();
                 return Promise.reject(error);
               }

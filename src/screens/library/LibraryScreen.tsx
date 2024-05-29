@@ -12,6 +12,7 @@ import { Category, CategoryType, DiscriminatedItem } from '@graasp/sdk';
 
 import { LIBRARY_SEARCH_BAR } from '../../../e2e/constants/testIds';
 import ActivityIndicator from '../../components/ActivityIndicator';
+import { DEFAULT_LIBRARY_SEARCH_KEYWORDS } from '../../config/env';
 import { useQueryClient } from '../../context/QueryClientContext';
 import CollectionCard from './CollectionCard';
 import SearchFilterButton from './SearchFilterButton';
@@ -27,7 +28,10 @@ const LibraryScreen = () => {
     hasEndReachedCalledDuringMomentum,
     sethasEndReachedCalledDuringMomentum,
   ] = useState(false);
-  const [searchKeywords, setSearchKeywords] = useState('');
+  // default search field to avoid showing recent garbage
+  const [searchKeywords, setSearchKeywords] = useState(
+    DEFAULT_LIBRARY_SEARCH_KEYWORDS,
+  );
   const dimensions = useWindowDimensions();
   const [filters, setFilters] = useState<Category['id'][][]>(
     Array.from({ length: Object.values(CategoryType).length }, () => []),

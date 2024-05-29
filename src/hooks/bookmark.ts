@@ -10,9 +10,9 @@ import { buildBookmarkKey } from '../utils/bookmark';
 export const useBookmark = ({ item }: { item: DiscriminatedItem }) => {
   const { hooks, mutations } = useQueryClient();
   const { data: currentMember } = hooks.useCurrentMember();
-  const { data: favoriteItems } = hooks.useFavoriteItems();
-  const { mutate: addToFavorite } = mutations.useAddFavoriteItem();
-  const { mutate: removeToFavorite } = mutations.useRemoveFavoriteItem();
+  const { data: bookmarkedItems } = hooks.useFavoriteItems();
+  const { mutateAsync: addToFavorite } = mutations.useAddFavoriteItem();
+  const { mutateAsync: removeToFavorite } = mutations.useRemoveFavoriteItem();
 
   /**
    * whether the item is bookmarked locally
@@ -40,18 +40,22 @@ export const useBookmark = ({ item }: { item: DiscriminatedItem }) => {
   }, [item]);
 
   useEffect(() => {
-    const isOnlineBookmarked = favoriteItems?.some(
+    const isOnlineBookmarked = bookmarkedItems?.some(
       ({ item: { id } }) => id === item.id,
     );
     setIsBookmarked(isLocalBookmarked || isOnlineBookmarked || false);
-  }, [isLocalBookmarked, favoriteItems]);
+  }, [isLocalBookmarked, bookmarkedItems]);
 
   const handleBookmarkPress = async () => {
     if (isBookmarked) {
       if (isLocalBookmarked) {
         try {
-          return await AsyncStorage.removeItem(key);
+          AsyncStorage.removeItem(key);
+          // optimistic mutation
+          return setIsLocalBookmarked(false);
         } catch (e) {
+          // rollback
+          setIsLocalBookmarked(true);
           // saving error
           console.error(e);
         }
@@ -63,14 +67,18 @@ export const useBookmark = ({ item }: { item: DiscriminatedItem }) => {
     // online bookmark
     if (currentMember) {
       addToFavorite(item.id);
-    } else {
-      try {
-        // value does not matter
-        await AsyncStorage.setItem(key, JSON.stringify({ isBookmarked: true }));
-      } catch (e) {
-        // saving error
-        console.error(e);
-      }
+    }
+
+    try {
+      // value does not matter
+      AsyncStorage.setItem(key, JSON.stringify({ isBookmarked: true }));
+      // optimistic mutation
+      return setIsLocalBookmarked(true);
+    } catch (e) {
+      // rollback
+      setIsLocalBookmarked(false);
+      // saving error
+      console.error(e);
     }
   };
 

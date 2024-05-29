@@ -158,7 +158,7 @@ const SignInScreen = ({
             marginTop: 16,
           }}
           titleStyle={{ color: '#fff', fontWeight: '700' }}
-          title={t('Later')}
+          title={t('CONTINUE_NO_ACCOUNT_BUTTON')}
           disabled={isLoading}
           onPress={() => {
             // todo: fix type
