@@ -1,5 +1,4 @@
 import { Pressable } from 'react-native';
-import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
 

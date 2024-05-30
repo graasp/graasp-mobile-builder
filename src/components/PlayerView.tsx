@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-elements';
 
 import { Context, DiscriminatedItem } from '@graasp/sdk';
 
