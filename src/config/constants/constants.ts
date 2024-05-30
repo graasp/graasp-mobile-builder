@@ -43,6 +43,7 @@ export const DEFAULT_LOCALE = 'en-US';
 export const ITEMS_TABLE_ROW_ICON_COLOR = '#333333';
 
 export const USERNAME_MAX_LENGTH = 30;
+export const HEADER_ITEM_NAME_MAX_LENGTH = 30;
 
 export const LOADING_CONTENT = '…';
 

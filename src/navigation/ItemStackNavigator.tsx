@@ -1,5 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
+import truncate from 'lodash.truncate';
 
+import { HEADER_ITEM_NAME_MAX_LENGTH } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import ChatScreen from '../screens/ChatScreen';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -31,7 +33,9 @@ const ItemStackNavigator = () => {
           return params?.itemId;
         }}
         options={({ route: { params } }) => ({
-          title: params?.headerTitle,
+          title: truncate(params?.headerTitle, {
+            length: HEADER_ITEM_NAME_MAX_LENGTH,
+          }),
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
         })}
@@ -43,7 +47,9 @@ const ItemStackNavigator = () => {
           return params?.itemId;
         }}
         options={({ route: { params } }) => ({
-          title: params?.headerTitle,
+          title: truncate(params?.headerTitle, {
+            length: HEADER_ITEM_NAME_MAX_LENGTH,
+          }),
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
         })}
@@ -59,7 +65,9 @@ const ItemStackNavigator = () => {
             params: { headerTitle },
           },
         }) => ({
-          title: headerTitle,
+          title: truncate(headerTitle, {
+            length: HEADER_ITEM_NAME_MAX_LENGTH,
+          }),
           headerTitleAlign: 'center',
           headerBackTitleVisible: false,
         })}
@@ -80,7 +88,9 @@ const ItemStackNavigator = () => {
             params: { headerTitle },
           },
         }) => ({
-          title: headerTitle,
+          title: truncate(headerTitle, {
+            length: HEADER_ITEM_NAME_MAX_LENGTH,
+          }),
           headerTitleAlign: 'center',
         })}
       />

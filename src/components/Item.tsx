@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
@@ -23,7 +22,12 @@ interface ItemProps {
   refresh: ItemOptionsButtonProps['refresh'];
 }
 
-const Item: FC<ItemProps> = ({ item, showOptions = false, index, refresh }) => {
+const Item = ({
+  item,
+  showOptions = false,
+  index,
+  refresh,
+}: ItemProps): JSX.Element => {
   const { id, name, type, extra } = item;
   const { navigate } =
     useNavigation<ItemScreenProps<'ItemStackItem'>['navigation']>();
@@ -34,41 +38,44 @@ const Item: FC<ItemProps> = ({ item, showOptions = false, index, refresh }) => {
     });
   }
 
-  function renderListItem() {
-    return (
-      <ListItem testID={`${ITEM_LIST}-${index + 1}`}>
-        <ItemIcon type={type} extra={extra} />
-        <ListItem.Content style={{ flexDirection: 'row' }}>
-          <ListItem.Title style={{ flex: 2 }}>{name}</ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
-    );
-  }
-
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Pressable onPress={() => handleItemPress()} style={{ flex: 2 }}>
-        {renderListItem()}
-      </Pressable>
-      {showOptions && (
-        <>
-          {type === ItemType.FOLDER && (
-            <PlayerButton
-              name={name}
-              type={type}
-              itemId={id}
-              origin={{ rootId: id, context: Context.Builder }}
-            />
+    <ListItem testID={`${ITEM_LIST}-${index + 1}`}>
+      <ListItem.Content style={{ width: '100%' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Pressable
+            onPress={() => handleItemPress()}
+            style={{ flex: 2, flexDirection: 'row', gap: 10 }}
+          >
+            <ItemIcon type={type} extra={extra} />
+            <ListItem.Title style={{ flex: 2 }}>{name}</ListItem.Title>
+          </Pressable>
+          {showOptions && (
+            <>
+              {type === ItemType.FOLDER && (
+                <PlayerButton
+                  name={name}
+                  type={type}
+                  itemId={id}
+                  origin={{ rootId: id, context: Context.Builder }}
+                />
+              )}
+              <ItemOptionsButton
+                refresh={refresh}
+                item={item}
+                color={ITEMS_TABLE_ROW_ICON_COLOR}
+                testId={`${ITEM_LIST_OPTIONS}-${index + 1}`}
+              />
+            </>
           )}
-          <ItemOptionsButton
-            refresh={refresh}
-            item={item}
-            color={ITEMS_TABLE_ROW_ICON_COLOR}
-            testId={`${ITEM_LIST_OPTIONS}-${index + 1}`}
-          />
-        </>
-      )}
-    </View>
+        </View>
+      </ListItem.Content>
+    </ListItem>
   );
 };
 

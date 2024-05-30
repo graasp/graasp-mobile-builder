@@ -96,5 +96,7 @@
   "REQUEST_ITEM_SUPPORT_ALERT_MESSAGE": "La demande a bien été envoyée.",
   "Open Chatbox": "Ouvrir la discussion",
   "Open Map": "Ouvrir la Carte",
-  "My Map": "Ma Carte"
+  "My Map": "Ma Carte",
+  "Show QR code": "Montrer le code QR",
+  "FOLDER_CONTAINS_ONLY_FOLDERS": "Ce dossier ne contient que des dossiers.\nCliquez sur le bouton ci-dessous pour naviguer plus bas."
 }

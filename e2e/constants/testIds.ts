@@ -20,6 +20,7 @@ export const ITEM_LIST_OPTIONS_OPEN_CHAT = 'item-list-options-open-chat';
 export const ITEM_LIST_OPTIONS_OPEN_MAP = 'item-list-options-open-map';
 export const ITEM_LIST_OPTIONS_DELETE = 'item-list-options-delete';
 export const ITEM_LIST_OPTIONS_SHARE = 'item-list-options-share';
+export const ITEM_LIST_OPTIONS_SHOW_QR_CODE = 'item-list-options-show-qr-code';
 export const CONFIRM_EDIT_ITEM = 'confirm-edit-item';
 export const CANCEL_EDIT_ITEM = 'cancel-edit-item';
 export const EDIT_ITEM_NAME_INPUT = 'edit-item-name-input';

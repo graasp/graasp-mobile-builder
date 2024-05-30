@@ -39,7 +39,11 @@ const ItemOptionsButton = ({
 
   return (
     <>
-      <Pressable testID={testId} onPress={() => openOptions()}>
+      <Pressable
+        testID={testId}
+        onPress={() => openOptions()}
+        style={{ paddingHorizontal: 2 }}
+      >
         <Icon type="material" name="more-vert" size={24} color={color} />
       </Pressable>
       <BottomSheetModal

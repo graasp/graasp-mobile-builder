@@ -1,3 +1,4 @@
+import { Pressable } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -30,19 +31,17 @@ const PlayerButton = ({
   const navigateToPlayer = useNavigateToPlayer();
 
   return (
-    <Button
-      buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)' }}
-      icon={
-        <MaterialIcons
-          type="material"
-          name="play-circle-outline"
-          size={size}
-          color={color}
-        />
-      }
+    <Pressable
       onPress={() => navigateToPlayer({ type, itemId, name, origin })}
       testID={buildPlayerButtonId(itemId)}
-    ></Button>
+    >
+      <MaterialIcons
+        type="material"
+        name="play-circle-outline"
+        size={size}
+        color={color}
+      />
+    </Pressable>
   );
 };
 

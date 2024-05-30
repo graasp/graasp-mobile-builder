@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import { DiscriminatedItem, UUID } from '@graasp/sdk';
@@ -47,9 +47,9 @@ const ItemsList: FC<ItemsListProps> = ({
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={<EmptyList />}
         ItemSeparatorComponent={() => (
-          <Divider
-            style={{ width: '90%', marginHorizontal: 10, marginBottom: 10 }}
-          />
+          <View style={{ alignItems: 'center' }}>
+            <Divider style={{ width: '90%' }} />
+          </View>
         )}
       />
       {displayAddItem && <AddItem parentId={parentId} refresh={refresh} />}
