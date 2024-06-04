@@ -78,7 +78,7 @@ const ChatScreen: FC<ItemScreenProps<'ItemStackChat'>> = ({ route }) => {
           buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
           icon={<MaterialIcons name={'refresh'} color="#ffffff" size={25} />}
           onPress={() => refetchChat()}
-        ></Button>
+        />
       ),
     });
   }, []);

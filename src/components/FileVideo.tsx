@@ -78,6 +78,11 @@ const FileVideo: FC<FileVideoProps> = ({
   useEffect(() => {
     if (!isPlayerView) {
       navigation.setOptions({
+        headerTitleAlign: 'left',
+        // corresponds to the max space available for title on the left and 3 buttons on the right
+        // to remove when right content has at most 2 buttons
+        headerTitleContainerStyle: { maxWidth: '50%' },
+        headerBackTitleVisible: false,
         headerRight: () => (
           <View style={styles.headerButtons}>
             <ChatButton item={item} />

@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Header from '../components/common/Header';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import CollectionScreen from '../screens/library/CollectionScreen';
 import LibraryScreen from '../screens/library/LibraryScreen';
@@ -27,9 +26,8 @@ const LibraryStackNavigator = () => {
         name={LIBRARY_NAVIGATOR_LIBRARY}
         component={LibraryScreen}
         options={{
-          title: '',
-          headerLeft: () => <Header title={t('Library')} />,
-          headerTitleAlign: 'center',
+          title: t('Library'),
+          headerTitleAlign: 'left',
           headerBackTitleVisible: false,
         }}
       />
@@ -41,8 +39,9 @@ const LibraryStackNavigator = () => {
         }}
         options={() => ({
           title: '',
+          // trick to enable ellipsis for 2 right buttons
+          headerBackTitle: ' ',
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
         })}
       />
     </Stack.Navigator>

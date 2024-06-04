@@ -73,7 +73,7 @@ const PlayerFolderScreen = (): JSX.Element | null => {
               screen: MY_ITEMS_NAVIGATOR_MY_ITEMS,
             });
           }}
-        ></Button>
+        />
       ),
     });
   }, [navigation]);

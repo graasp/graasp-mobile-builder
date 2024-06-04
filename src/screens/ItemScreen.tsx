@@ -7,7 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Context, ItemType } from '@graasp/sdk';
 
 import { useNavigation } from '@react-navigation/native';
-import truncate from 'lodash.truncate';
 
 import { ITEM_NAVIGATOR_ITEM_ERROR } from '../../e2e/constants/testIds';
 import ActivityIndicator from '../components/ActivityIndicator';
@@ -32,7 +31,7 @@ const ItemScreen = ({ route }: ItemScreenProps<'ItemStackItem'>) => {
 
   useEffect(() => {
     if (item) {
-      setOptions({ title: truncate(item.name, { length: 20 }) });
+      setOptions({ title: item.name });
     }
   }, [item]);
 

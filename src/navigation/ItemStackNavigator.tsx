@@ -1,7 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import truncate from 'lodash.truncate';
 
-import { HEADER_ITEM_NAME_MAX_LENGTH } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import ChatScreen from '../screens/ChatScreen';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -33,11 +31,10 @@ const ItemStackNavigator = () => {
           return params?.itemId;
         }}
         options={({ route: { params } }) => ({
-          title: truncate(params?.headerTitle, {
-            length: HEADER_ITEM_NAME_MAX_LENGTH,
-          }),
+          title: params?.headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -47,11 +44,10 @@ const ItemStackNavigator = () => {
           return params?.itemId;
         }}
         options={({ route: { params } }) => ({
-          title: truncate(params?.headerTitle, {
-            length: HEADER_ITEM_NAME_MAX_LENGTH,
-          }),
+          title: params?.headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -65,11 +61,10 @@ const ItemStackNavigator = () => {
             params: { headerTitle },
           },
         }) => ({
-          title: truncate(headerTitle, {
-            length: HEADER_ITEM_NAME_MAX_LENGTH,
-          }),
+          title: headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -77,7 +72,6 @@ const ItemStackNavigator = () => {
         component={DetailsScreen}
         options={{
           title: '',
-          headerBackTitleVisible: false,
         }}
       />
       <ItemStack.Screen
@@ -88,10 +82,10 @@ const ItemStackNavigator = () => {
             params: { headerTitle },
           },
         }) => ({
-          title: truncate(headerTitle, {
-            length: HEADER_ITEM_NAME_MAX_LENGTH,
-          }),
+          title: headerTitle,
           headerTitleAlign: 'center',
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
     </ItemStack.Navigator>

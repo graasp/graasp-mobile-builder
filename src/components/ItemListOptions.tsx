@@ -221,9 +221,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         }}
       />
 
-      <BottomSheetScrollView
-        contentContainerStyle={{ backgroundColor: 'white' }}
-      >
+      <BottomSheetScrollView>
         <ListItem
           onPress={() => handleDetailsPress()}
           style={{ paddingLeft: insets.left }}
