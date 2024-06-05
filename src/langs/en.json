@@ -98,5 +98,5 @@
   "Open Map": "Open Map",
   "My Map": "My Map",
   "Show QR code": "Show QR code",
-  "FOLDER_CONTAINS_ONLY_FOLDERS": "This folder contains only folders.\nClick on the button below to navigate to the next content."
+  "FOLDER_CONTAINS_ONLY_FOLDERS": "{{title}} only contains folders.\nClick on the button below to navigate to the next content."
 }

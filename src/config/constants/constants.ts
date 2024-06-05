@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 import { UUID } from '@graasp/sdk';
 
 export const APP_NAME = 'Graasp';
@@ -174,3 +176,13 @@ export const BOTTOM_SNAP_POINTS_SEARCH_FILTER = ['90%'];
 
 export const CHAT_MAX_LENGTH = 400;
 export const CHAT_WIDTH_IMAGE_MESSAGE = 0.65;
+
+// platform dependent value to allow correct automatic title truncation when defining headerRight in ItemStack
+// align center does not work well in android https://github.com/software-mansion/react-native-screens/issues/1573
+export const HEADER_TITLE_ALIGN_FOR_TRUNCATION: 'center' | 'left' =
+  Platform.select({
+    // width is acting weird with align left
+    ios: 'center',
+    // truncation does not work well with center align
+    android: 'left',
+  }) ?? 'center';

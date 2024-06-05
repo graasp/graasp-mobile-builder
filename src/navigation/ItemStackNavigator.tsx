@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { HEADER_TITLE_ALIGN_FOR_TRUNCATION } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import ChatScreen from '../screens/ChatScreen';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -32,7 +33,7 @@ const ItemStackNavigator = () => {
         }}
         options={({ route: { params } }) => ({
           title: params?.headerTitle,
-          headerTitleAlign: 'center',
+          headerTitleAlign: HEADER_TITLE_ALIGN_FOR_TRUNCATION,
           // trick to force title ellipsis
           headerBackTitle: ' ',
         })}
@@ -45,7 +46,7 @@ const ItemStackNavigator = () => {
         }}
         options={({ route: { params } }) => ({
           title: params?.headerTitle,
-          headerTitleAlign: 'center',
+          headerTitleAlign: HEADER_TITLE_ALIGN_FOR_TRUNCATION,
           // trick to force title ellipsis
           headerBackTitle: ' ',
         })}
@@ -62,7 +63,7 @@ const ItemStackNavigator = () => {
           },
         }) => ({
           title: headerTitle,
-          headerTitleAlign: 'center',
+          headerTitleAlign: HEADER_TITLE_ALIGN_FOR_TRUNCATION,
           // trick to force title ellipsis
           headerBackTitle: ' ',
         })}
@@ -83,7 +84,7 @@ const ItemStackNavigator = () => {
           },
         }) => ({
           title: headerTitle,
-          headerTitleAlign: 'center',
+          headerTitleAlign: HEADER_TITLE_ALIGN_FOR_TRUNCATION,
           // trick to force title ellipsis
           headerBackTitle: ' ',
         })}
