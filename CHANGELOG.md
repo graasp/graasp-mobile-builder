@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/graasp/graasp-mobile/compare/v1.4.1...v1.5.0) (2024-06-05)
+
+
+### Features
+
+* add corrections ([#218](https://github.com/graasp/graasp-mobile/issues/218)) ([ea2d09c](https://github.com/graasp/graasp-mobile/commit/ea2d09c7d202dbb2813c6b386d06d80cdf176de0))
+
 ## [1.4.1](https://github.com/graasp/graasp-mobile/compare/v1.4.0...v1.4.1) (2024-05-29)
 
 
