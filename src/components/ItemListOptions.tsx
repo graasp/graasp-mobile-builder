@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Share, StyleSheet } from 'react-native';
-import { Button, Divider, ListItem, Overlay } from 'react-native-elements';
+import { Divider, ListItem, Overlay, Text } from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import QRCode from 'react-qr-code';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -18,12 +19,10 @@ import {
   ITEM_LIST_OPTIONS_MAP,
   ITEM_LIST_OPTIONS_OPEN_CHAT,
   ITEM_LIST_OPTIONS_SHARE,
-  SHARE_ITEM_BUILDER,
-  SHARE_ITEM_PLAYER,
+  ITEM_LIST_OPTIONS_SHOW_QR_CODE,
 } from '../../e2e/constants/testIds';
 import {
   ANALYTICS_EVENTS,
-  PRIMARY_COLOR,
   SHARE_HOST,
   SHARE_OPTIONS,
   VIEWS,
@@ -76,7 +75,8 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     isLoading: isLoadingCurrentMember,
     isError: isErrorCurrentMember,
   } = hooks.useCurrentMember();
-  const [shareModalVisible, setShareModalVisible] = useState<boolean>(false);
+  const [showQrCodeModalVisible, setShowQrCodeModalVisible] =
+    useState<boolean>(false);
   const [editItemModalVisible, setEditItemModalVisible] =
     useState<boolean>(false);
   const [deleteItemModalVisible, setDeleteItemModalVisible] =
@@ -116,7 +116,11 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
   };
 
   const handleSharePress = () => {
-    setShareModalVisible(true);
+    onShare(item.id, SHARE_OPTIONS.BUILDER);
+  };
+
+  const handleShowQrCodePress = () => {
+    setShowQrCodeModalVisible(true);
   };
 
   const handleOpenChat = async () => {
@@ -133,7 +137,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         throw new Error('No itemId');
       }
       const result = await Share.share({
-        message: `Check out this on Graasp: ${
+        message: `Check out ${item.name} on Graasp: ${
           linkType === SHARE_OPTIONS.BUILDER
             ? `${SHARE_HOST.BUILDER}/${itemId}`
             : `${SHARE_HOST.PLAYER}/${itemId}`
@@ -141,16 +145,16 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          setShareModalVisible(false);
+          setShowQrCodeModalVisible(false);
         } else {
-          setShareModalVisible(false);
+          setShowQrCodeModalVisible(false);
         }
         await customAnalyticsEvent(ANALYTICS_EVENTS.SHARE_GRAASP_LINK, {
           method:
             linkType === SHARE_OPTIONS.BUILDER ? VIEWS.BUILDER : VIEWS.PLAYER,
         });
       } else if (result.action === Share.dismissedAction) {
-        //setModalVisible({ toggle: false, itemId: null });
+        // do nothing
       }
     } catch (error: any) {
       alert(error.message);
@@ -166,29 +170,12 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
     <>
       <Overlay
         overlayStyle={styles.modalView}
-        isVisible={shareModalVisible}
-        onBackdropPress={() => setShareModalVisible(false)}
+        isVisible={showQrCodeModalVisible}
+        onBackdropPress={() => setShowQrCodeModalVisible(false)}
       >
-        <Button
-          title="Player"
-          raised={true}
-          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-          containerStyle={{ marginBottom: 20 }}
-          onPress={async () => {
-            await onShare(item.id, SHARE_OPTIONS.PLAYER);
-          }}
-          testID={SHARE_ITEM_PLAYER}
-        />
-        <Divider />
-        <Button
-          title="Builder"
-          raised={true}
-          buttonStyle={{ backgroundColor: PRIMARY_COLOR }}
-          onPress={async () => {
-            await onShare(item.id, SHARE_OPTIONS.BUILDER);
-          }}
-          testID={SHARE_ITEM_BUILDER}
-        />
+        <QRCode value={`${SHARE_HOST.BUILDER}/${item.id}`} />
+        <Text style={{ fontSize: 20, marginTop: 5 }}>{item.name}</Text>
+        <Text>{item.creator?.name}</Text>
       </Overlay>
       <Overlay
         overlayStyle={styles.modalEditItemView}
@@ -234,9 +221,7 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
         }}
       />
 
-      <BottomSheetScrollView
-        contentContainerStyle={{ backgroundColor: 'white' }}
-      >
+      <BottomSheetScrollView>
         <ListItem
           onPress={() => handleDetailsPress()}
           style={{ paddingLeft: insets.left }}
@@ -287,6 +272,18 @@ const ItemListOptions: FC<ItemListOptionsProps> = ({
           <MaterialIcons name="share" size={24} color="grey" />
           <ListItem.Content style={{ flexDirection: 'row' }}>
             <ListItem.Title style={{ flex: 2 }}>{t('Share')}</ListItem.Title>
+          </ListItem.Content>
+        </ListItem>
+        <ListItem
+          onPress={() => handleShowQrCodePress()}
+          style={{ paddingLeft: insets.left }}
+          testID={ITEM_LIST_OPTIONS_SHOW_QR_CODE}
+        >
+          <MaterialIcons name="qr-code" size={24} color="grey" />
+          <ListItem.Content style={{ flexDirection: 'row' }}>
+            <ListItem.Title style={{ flex: 2 }}>
+              {t('Show QR code')}
+            </ListItem.Title>
           </ListItem.Content>
         </ListItem>
         <BookmarkListItem item={item} onClick={closeSheet} />

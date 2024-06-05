@@ -7,6 +7,7 @@ import { divideContentAndFolderItems } from '../utils/functions/item';
 import ActivityIndicator from './ActivityIndicator';
 import PlayerFolderMenu from './PlayerFolderMenu';
 import PlayerItem from './PlayerItem';
+import ContainsOnlyFolderContent from './common/ContainsOnlyFolderContent';
 import EmptyList from './common/EmptyList';
 
 interface PlayerViewProps {
@@ -38,8 +39,9 @@ const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
     // do not add a view here because it might contain a link - webview
     <>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        {contentItems.length === 0 ? (
-          <EmptyList />
+        {children.length === 0 && <EmptyList />}
+        {contentItems.length === 0 && folderItems.length !== 0 ? (
+          <ContainsOnlyFolderContent />
         ) : (
           contentItems.map((item) => (
             <>
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   bottomSpace: {
-    height: 100,
+    height: 20,
   },
 });
 

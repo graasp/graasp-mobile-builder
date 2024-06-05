@@ -99,11 +99,12 @@
     "react-native-root-siblings": "^4.1.1",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
-    "react-native-svg": "^14.1.0",
+    "react-native-svg": "14.1.0",
     "react-native-toast-message": "^2.1.7",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.9",
     "react-native-webview": "13.6.4",
+    "react-qr-code": "^2.0.13",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

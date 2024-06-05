@@ -39,10 +39,26 @@ const ItemOptionsButton = ({
 
   return (
     <>
-      <Pressable testID={testId} onPress={() => openOptions()}>
+      <Pressable
+        testID={testId}
+        onPress={() => openOptions()}
+        style={{ paddingHorizontal: 2 }}
+      >
         <Icon type="material" name="more-vert" size={24} color={color} />
       </Pressable>
       <BottomSheetModal
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.34,
+          shadowRadius: 6.27,
+
+          elevation: 10,
+          backgroundColor: 'white',
+        }}
         animateOnMount={!reducedMotion}
         ref={bottomSheetModalRef}
         index={0}

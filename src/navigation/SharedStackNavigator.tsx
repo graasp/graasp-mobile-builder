@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { SHARED_ITEMS_MAP_BUTTON } from '../../e2e/constants/testIds';
-import Header from '../components/common/Header';
 import MapButton from '../components/common/MapButton';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import SharedScreen from '../screens/SharedScreen';
@@ -25,9 +24,7 @@ const SharedStackNavigator = () => {
         name={SHARED_NAVIGATOR_SHARED}
         component={SharedScreen}
         options={{
-          title: '',
-          headerLeft: () => <Header title={t('Shared Items')} />,
-          headerLeftContainerStyle: { paddingLeft: 10 },
+          title: t('Shared Items'),
           headerRight: () => (
             <MapButton
               testId={SHARED_ITEMS_MAP_BUTTON}

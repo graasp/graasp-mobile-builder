@@ -57,6 +57,11 @@ const FileImage: FC<FileImageProps> = ({
   useEffect(() => {
     if (!isPlayerView) {
       navigation.setOptions({
+        headerTitleAlign: 'left',
+        // move to headerBackTitle: ' ' when we have only 2 buttons
+        // corresponds to the max space available for title on the left and 3 buttons on the right
+        headerTitleContainerStyle: { maxWidth: '50%' },
+        headerBackTitleVisible: false,
         headerRight: () => (
           <View style={styles.headerButtons}>
             <ChatButton item={item} />

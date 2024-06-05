@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   headerButtons: {
-    paddingRight: 20,
+    paddingRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },

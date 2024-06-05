@@ -33,7 +33,8 @@ const ItemStackNavigator = () => {
         options={({ route: { params } }) => ({
           title: params?.headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -45,7 +46,8 @@ const ItemStackNavigator = () => {
         options={({ route: { params } }) => ({
           title: params?.headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -61,7 +63,8 @@ const ItemStackNavigator = () => {
         }) => ({
           title: headerTitle,
           headerTitleAlign: 'center',
-          headerBackTitleVisible: false,
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
       <ItemStack.Screen
@@ -69,7 +72,6 @@ const ItemStackNavigator = () => {
         component={DetailsScreen}
         options={{
           title: '',
-          headerBackTitleVisible: false,
         }}
       />
       <ItemStack.Screen
@@ -82,6 +84,8 @@ const ItemStackNavigator = () => {
         }) => ({
           title: headerTitle,
           headerTitleAlign: 'center',
+          // trick to force title ellipsis
+          headerBackTitle: ' ',
         })}
       />
     </ItemStack.Navigator>
