@@ -64,13 +64,13 @@ const PlayerView: FC<PlayerViewProps> = ({ origin, children }) => {
 
 const styles = StyleSheet.create({
   topSpace: {
-    height: 20,
+    height: 10,
   },
   flatList: {
     height: '100%',
   },
   bottomSpace: {
-    height: 20,
+    height: 10,
   },
 });
 

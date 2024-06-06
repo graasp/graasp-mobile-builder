@@ -39,35 +39,46 @@ const Document: FC<DocumentProps> = ({ item, isPlayerView = false }) => {
   }, [isPlayerView]);
 
   const classStyles = {
-    'ql-align-right': { textAlign: TEXT_ALIGNMENT.RIGHT },
-    'ql-align-center': { textAlign: TEXT_ALIGNMENT.CENTER },
-    'ql-align-left': { textAlign: TEXT_ALIGNMENT.LEFT },
-    'ql-align-justify': { textAlign: TEXT_ALIGNMENT.JUSTIFY },
+    'ql-align-right': {
+      textAlign: TEXT_ALIGNMENT.RIGHT,
+    },
+    'ql-align-center': {
+      textAlign: TEXT_ALIGNMENT.CENTER,
+    },
+    'ql-align-left': {
+      textAlign: TEXT_ALIGNMENT.LEFT,
+    },
+    'ql-align-justify': {
+      textAlign: TEXT_ALIGNMENT.JUSTIFY,
+    },
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      width,
+      paddingHorizontal: 20,
+    },
+    headerButtons: {
+      flexDirection: 'row',
+    },
+  });
 
   return (
     <SafeAreaView edges={['left']}>
-      <View style={styles.container}>
-        <ScrollView>
+      <ScrollView>
+        <View style={styles.container}>
           <RenderHtml
+            tagsStyles={{
+              p: { marginBottom: 1 },
+            }}
             classesStyles={classStyles}
             contentWidth={width}
             source={{ html: item.extra.document?.content }}
           />
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  headerButtons: {
-    flexDirection: 'row',
-  },
-});
 
 export default Document;

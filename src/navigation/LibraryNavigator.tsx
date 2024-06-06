@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { HEADER_TITLE_ALIGN_FOR_TRUNCATION } from '../config/constants/constants';
 import { defaultScreenOptions } from '../config/constants/navigation';
 import CollectionScreen from '../screens/library/CollectionScreen';
 import LibraryScreen from '../screens/library/LibraryScreen';
@@ -41,7 +42,7 @@ const LibraryStackNavigator = () => {
           title: '',
           // trick to enable ellipsis for 2 right buttons
           headerBackTitle: ' ',
-          headerTitleAlign: 'center',
+          headerTitleAlign: HEADER_TITLE_ALIGN_FOR_TRUNCATION,
         })}
       />
     </Stack.Navigator>
