@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/graasp/graasp-mobile/compare/v1.5.0...v1.5.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* truncate titles on android, change text, fix document styles ([#221](https://github.com/graasp/graasp-mobile/issues/221)) ([d4333ec](https://github.com/graasp/graasp-mobile/commit/d4333ec9777efdb7ad4c6e75acde75147ea0b8d4))
+
 ## [1.5.0](https://github.com/graasp/graasp-mobile/compare/v1.4.1...v1.5.0) (2024-06-05)
 
 
