@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
+
+import * as Location from 'expo-location';
 
 import { Context } from '@graasp/sdk';
 
@@ -33,9 +36,21 @@ const MapViewScreen = () => {
   const route = useRoute<ItemScreenProps<'ItemStackPlayerFolder'>['route']>();
   const { itemId } = route.params;
 
+  const [allowLocation, setAllowLocation] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      setAllowLocation(status === 'granted');
+    })();
+  }, []);
+
   const redirectionUrl = new URL(`${BUILDER_HOST}/map`);
   if (itemId) {
     redirectionUrl.searchParams.set('parentId', itemId);
+  }
+  if (allowLocation) {
+    redirectionUrl.searchParams.set('enableGeolocation', 'true');
   }
   redirectionUrl.searchParams.set('isMobileApp', 'true');
 

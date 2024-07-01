@@ -4,7 +4,7 @@ We cannot use native maps since android always requires the use of google to dis
 
 Our implementation is to display a fullscreen view of the map within Graasp Builder. This is displayed in a `WebView` in the mobile application.
 
-One must be careful with the rights to access geolocation, that might differ from browser, browser on phone and webview within a mobile app.
+One must be careful with the rights to access geolocation, that might differ from browser, browser on phone and webview within a mobile app. The app still requests the permissions as Graasp. If granted, the browser might request permissions again to finally show the current position.
 
 ## Opening an item in player
 
