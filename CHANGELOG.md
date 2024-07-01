@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/graasp/graasp-mobile/compare/v1.5.1...v1.5.2) (2024-07-01)
+
+
+### Bug Fixes
+
+* allow showing current position ([4d9fe49](https://github.com/graasp/graasp-mobile/commit/4d9fe49fd771f2d1b466415bdefc1991929c4574))
+
 ## [1.5.1](https://github.com/graasp/graasp-mobile/compare/v1.5.0...v1.5.1) (2024-06-06)
 
 
